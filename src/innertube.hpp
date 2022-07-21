@@ -14,8 +14,8 @@ public:
         return it;
     }
 
-    InnertubeAuthStore* auth() { return _authStore; }
-    InnertubeContext* context() { return _context; }
+    InnertubeAuthStore* authStore() const { return _authStore; }
+    InnertubeContext* context() const { return _context; }
 
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
                        const InnertubeRequestConfig& requestConfig = InnertubeRequestConfig(), const InnertubeUserConfig& userConfig = InnertubeUserConfig())
@@ -24,12 +24,12 @@ public:
     }
 
     template<typename T>
-    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(InnertubeAuthStore* authStore = new InnertubeAuthStore, bool useShelves = false)
+    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(InnertubeAuthStore* authStore = instance().authStore())
     {
         if constexpr (std::is_same_v<T, InnertubeEndpoints::AccountMenu>)
             return InnertubeEndpoints::AccountMenu(context(), networkAccessManager(), authStore);
         if constexpr (std::is_same_v<T, InnertubeEndpoints::Browse>)
-            return InnertubeEndpoints::Browse(context(), networkAccessManager(), authStore, useShelves);
+            return InnertubeEndpoints::Browse(context(), networkAccessManager(), authStore);
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;

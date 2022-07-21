@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString data;
-
+    private:
         AccountMenu(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
             QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/account/account_menu?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"));

@@ -12,15 +12,9 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString data;
-
-        Browse(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore = new InnertubeAuthStore, bool useShelves = false)
+    private:
+        Browse(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
-            if (useShelves)
-            {
-                context->client.clientName = "ANDROID";
-                context->client.clientVersion = "15.14.33";
-            }
-
             QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"));
 
             if (authStore->populated)
