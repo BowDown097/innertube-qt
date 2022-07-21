@@ -1,6 +1,7 @@
 #ifndef BASEENDPOINTOBJECT_H
 #define BASEENDPOINTOBJECT_H
-#include <QNetworkAccessManager>
+#include <QJsonDocument>
+#include <QtNetwork>
 
 class InnerTube;
 namespace InnertubeEndpoints

@@ -1,7 +1,6 @@
 #ifndef AUTH_HPP
 #define AUTH_HPP
 #include "innertubecontext.h"
-#include <chrono>
 #include <QCryptographicHash>
 #include <QEventLoop>
 #include <QWebEngineCookieStore>
@@ -36,27 +35,22 @@ public:
         loop.exec();
 
         delete view.page();
-        QByteArray visitorData("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(ts()));
+        QByteArray visitorData("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(NULL)));
         context.client.visitorData = visitorData.toBase64().toPercentEncoding();
     }
 
-    QString generateSAPISIDHash() const
+    QString generateSAPISIDHash()
     {
-        const QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(ts()).arg(sapisid);
+        const QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
         const QString hash(QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex());
-        return QStringLiteral("SAPISIDHASH %1_%2").arg(ts()).arg(hash);
+        return QStringLiteral("SAPISIDHASH %1_%2").arg(time(NULL)).arg(hash);
     }
 
-    QString getNecessaryLoginCookies() const
+    QString getNecessaryLoginCookies()
     {
         return QStringLiteral("SID=%1; HSID=%2; SSID=%3; SAPISID=%4; APISID=%5").arg(sid, hsid, ssid, sapisid, apisid);
     }
 private:
-    int ts() const
-    {
-        return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    }
-
     QByteArray uleb128(uint64_t val)
     {
         uint8_t buf[128];

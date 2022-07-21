@@ -1,9 +1,7 @@
 #ifndef ACCOUNTMENU_H
 #define ACCOUNTMENU_H
-#include "baseendpoint.h"
+#include "base/baseendpoint.h"
 #include "itc-objects/innertubeauthstore.h"
-#include <QJsonDocument>
-#include <QNetworkReply>
 
 namespace InnertubeEndpoints
 {

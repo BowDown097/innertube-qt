@@ -2,18 +2,15 @@
 #define BROWSE_H
 #include "baseendpoint.h"
 #include "itc-objects/innertubeauthstore.h"
-#include <QJsonDocument>
-#include <QNetworkReply>
 
 namespace InnertubeEndpoints
 {
-    class Browse : BaseEndpoint
+    class BaseBrowseEndpoint : BaseEndpoint
     {
-        friend class ::InnerTube;
     public:
         QString data;
-    private:
-        Browse(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
+    protected:
+        explicit BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
             QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"));
 
@@ -32,7 +29,7 @@ namespace InnertubeEndpoints
 
             QJsonObject body = {
                 { "context", context->toJson() },
-                { "browseId", "FEwhat_to_watch" }
+                { "browseId", browseId }
             };
 
             QNetworkReply* reply = manager->post(request, QJsonDocument(body).toJson());

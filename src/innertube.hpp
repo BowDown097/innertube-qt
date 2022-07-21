@@ -2,7 +2,6 @@
 #define INNERTUBE_H
 #include "endpoints/innertubeendpoints.h"
 #include "itc-objects/innertubeauthstore.h"
-#include <QtNetwork>
 #include <type_traits>
 
 class InnerTube
@@ -24,12 +23,12 @@ public:
     }
 
     template<typename T>
-    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(InnertubeAuthStore* authStore = instance().authStore())
+    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(const QString& data = "")
     {
-        if constexpr (std::is_same_v<T, InnertubeEndpoints::AccountMenu>)
-            return InnertubeEndpoints::AccountMenu(context(), networkAccessManager(), authStore);
-        if constexpr (std::is_same_v<T, InnertubeEndpoints::Browse>)
-            return InnertubeEndpoints::Browse(context(), networkAccessManager(), authStore);
+        if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel>)
+            return InnertubeEndpoints::BrowseChannel(data, context(), networkAccessManager(), authStore());
+        else
+            return T(context(), networkAccessManager(), authStore());
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;

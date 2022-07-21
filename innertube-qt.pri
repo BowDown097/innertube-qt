@@ -4,9 +4,17 @@ DEPENDPATH += $$PWD/src
 DEFINES += INNERTUBE
 
 HEADERS += \
+    $$PWD/src/endpoints/base/basebrowseendpoint.h \
+    $$PWD/src/endpoints/base/baseendpoint.h \
+    $$PWD/src/endpoints/browse/browsechannel.h \
+    $$PWD/src/endpoints/browse/browseexplore.h \
+    $$PWD/src/endpoints/browse/browsehistory.h \
+    $$PWD/src/endpoints/browse/browsehome.h \
+    $$PWD/src/endpoints/browse/browselibrary.h \
+    $$PWD/src/endpoints/browse/browsestorefront.h \
+    $$PWD/src/endpoints/browse/browsesubscriptions.h \
+    $$PWD/src/endpoints/browse/browsetrending.h \
     $$PWD/src/endpoints/accountmenu.h \
-    $$PWD/src/endpoints/baseendpoint.h \
-    $$PWD/src/endpoints/browse.h \
     $$PWD/src/endpoints/innertubeendpoints.h \
     $$PWD/src/itc-objects/innertubeauthstore.h \
     $$PWD/src/itc-objects/innertubeclicktracking.h \
