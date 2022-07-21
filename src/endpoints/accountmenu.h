@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
     private:
         AccountMenu(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
-            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/account/account_menu?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"));
+            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/account/account_menu?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
             request.setRawHeader("Authorization", authStore->generateSAPISIDHash().toUtf8());
             request.setRawHeader("Cookie", authStore->getNecessaryLoginCookies().toUtf8());
             request.setRawHeader("X-Goog-AuthUser", "0");

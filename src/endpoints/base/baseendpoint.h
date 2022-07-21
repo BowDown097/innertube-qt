@@ -1,5 +1,5 @@
-#ifndef BASEENDPOINTOBJECT_H
-#define BASEENDPOINTOBJECT_H
+#ifndef BASEENDPOINT_H
+#define BASEENDPOINT_H
 #include <QJsonDocument>
 #include <QtNetwork>
 
@@ -9,4 +9,4 @@ namespace InnertubeEndpoints
     class BaseEndpoint { };
 }
 
-#endif // BASEENDPOINTOBJECT_H
+#endif // BASEENDPOINT_H

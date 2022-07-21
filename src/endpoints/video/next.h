@@ -1,18 +1,20 @@
-#ifndef BASEBROWSEENDPOINT_H
-#define BASEBROWSEENDPOINT_H
-#include "baseendpoint.h"
-#include "itc-objects/innertubeauthstore.h"
+#ifndef NEXT_H
+#define NEXT_H
+#include <endpoints/base/baseendpoint.h>
+#include <itc-objects/innertubeauthstore.h>
+#include <itc-objects/innertubeplaybackcontext.h>
 
 namespace InnertubeEndpoints
 {
-    class BaseBrowseEndpoint : BaseEndpoint
+    class NextVideo : BaseEndpoint
     {
+        friend class ::InnerTube;
     public:
         QString data;
     protected:
-        explicit BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
+        explicit NextVideo(const QString& videoId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
-            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
+            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/next?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
 
             if (authStore->populated)
             {
@@ -28,8 +30,13 @@ namespace InnertubeEndpoints
             request.setRawHeader("X-ORIGIN", "https://www.youtube.com");
 
             QJsonObject body = {
+                { "autonavState", "STATE_ON" },
+                { "captionsRequested", false },
+                { "contentCheckOk", false },
                 { "context", context->toJson() },
-                { "browseId", browseId }
+                { "playbackContext", InnertubePlaybackContext(false, "").toJson() },
+                { "racyCheckOk", false },
+                { "videoId", videoId }
             };
 
             QNetworkReply* reply = manager->post(request, QJsonDocument(body).toJson());
@@ -42,4 +49,4 @@ namespace InnertubeEndpoints
     };
 }
 
-#endif // BASEBROWSEENDPOINT_H
+#endif // NEXT_H

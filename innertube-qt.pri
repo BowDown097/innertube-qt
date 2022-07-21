@@ -14,6 +14,8 @@ HEADERS += \
     $$PWD/src/endpoints/browse/browsestorefront.h \
     $$PWD/src/endpoints/browse/browsesubscriptions.h \
     $$PWD/src/endpoints/browse/browsetrending.h \
+    $$PWD/src/endpoints/video/next.h \
+    $$PWD/src/endpoints/video/player.h \
     $$PWD/src/endpoints/accountmenu.h \
     $$PWD/src/endpoints/innertubeendpoints.h \
     $$PWD/src/itc-objects/innertubeauthstore.h \
@@ -21,6 +23,7 @@ HEADERS += \
     $$PWD/src/itc-objects/innertubeclient.h \
     $$PWD/src/itc-objects/innertubeconfiginfo.h \
     $$PWD/src/itc-objects/innertubecontext.h \
+    $$PWD/src/itc-objects/innertubeplaybackcontext.h \
     $$PWD/src/itc-objects/innertuberequestconfig.h \
     $$PWD/src/itc-objects/innertubeuserconfig.h \
     $$PWD/src/innertube.hpp

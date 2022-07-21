@@ -1,5 +1,5 @@
-#ifndef AUTH_HPP
-#define AUTH_HPP
+#ifndef INNERTUBEAUTHSTORE_H
+#define INNERTUBEAUTHSTORE_H
 #include "innertubecontext.h"
 #include <QCryptographicHash>
 #include <QEventLoop>
@@ -99,4 +99,4 @@ private slots:
     }
 };
 
-#endif // AUTH_HPP
+#endif // INNERTUBEAUTHSTORE_H

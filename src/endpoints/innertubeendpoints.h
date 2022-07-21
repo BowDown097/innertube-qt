@@ -11,5 +11,7 @@
 #include "browse/browsestorefront.h"
 #include "browse/browsesubscriptions.h"
 #include "browse/browsetrending.h"
+#include "video/next.h"
+#include "video/player.h"
 
 #endif // INNERTUBEENDPOINTS_H
