@@ -3,6 +3,8 @@ INCLUDEPATH += $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += INNERTUBE
 
+PRECOMPILED_HEADER = $$PWD/src/endpoints/innertubeendpoints.h
+
 HEADERS += \
     $$PWD/src/endpoints/base/basebrowseendpoint.h \
     $$PWD/src/endpoints/base/baseendpoint.h \
@@ -26,4 +28,9 @@ HEADERS += \
     $$PWD/src/itc-objects/innertubeplaybackcontext.h \
     $$PWD/src/itc-objects/innertuberequestconfig.h \
     $$PWD/src/itc-objects/innertubeuserconfig.h \
-    $$PWD/src/innertube.hpp
+    $$PWD/src/objects/video/video.h \
+    $$PWD/src/objects/video/videoowner.h \
+    $$PWD/src/objects/video/videothumbnail.h \
+    $$PWD/src/objects/innertubestring.h \
+    $$PWD/src/innertube.hpp \
+    $$PWD/src/innertubeexception.hpp

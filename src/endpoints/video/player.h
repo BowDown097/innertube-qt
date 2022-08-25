@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <endpoints/base/baseendpoint.h>
-#include <itc-objects/innertubeauthstore.h>
 #include <itc-objects/innertubeplaybackcontext.h>
 
 namespace InnertubeEndpoints
@@ -9,25 +8,11 @@ namespace InnertubeEndpoints
     class Player : BaseEndpoint
     {
         friend class ::InnerTube;
-    public:
-        QString data;
-    protected:
+    private:
         explicit Player(const QString& videoId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
         {
             QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
-
-            if (authStore->populated)
-            {
-                request.setRawHeader("Authorization", authStore->generateSAPISIDHash().toUtf8());
-                request.setRawHeader("Cookie", authStore->getNecessaryLoginCookies().toUtf8());
-                request.setRawHeader("X-Goog-AuthUser", "0");
-            }
-
-            request.setHeader(QNetworkRequest::ContentTypeHeader, "text/plain;charset=UTF-8");
-            request.setRawHeader("X-Goog-Visitor-Id", context->client.visitorData.toLatin1());
-            request.setRawHeader("X-YOUTUBE-CLIENT-NAME", context->client.clientName.toLatin1());
-            request.setRawHeader("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
-            request.setRawHeader("X-ORIGIN", "https://www.youtube.com");
+            setNeededHeaders(request, context, authStore);
 
             QJsonObject body = {
                 { "contentCheckOk", false },
@@ -41,8 +26,6 @@ namespace InnertubeEndpoints
             QEventLoop event;
             QObject::connect(reply, &QNetworkReply::finished, &event, &QEventLoop::quit);
             event.exec();
-
-            data = reply->readAll();
         }
     };
 }
