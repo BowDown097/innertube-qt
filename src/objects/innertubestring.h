@@ -1,5 +1,7 @@
 #ifndef INNERTUBESTRING_H
 #define INNERTUBESTRING_H
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QString>
 
 namespace InnertubeObjects

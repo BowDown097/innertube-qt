@@ -11,12 +11,6 @@ namespace InnertubeEndpoints
     class BaseEndpoint
     {
     protected:
-        QString getText(const QJsonValueRef& textObj)
-        {
-            const QJsonObject& obj = textObj.toObject();
-            return obj.contains("simpleText") ? obj["simpleText"].toString() : obj["runs"].toArray()[0].toObject()["text"].toString();
-        }
-
         void setNeededHeaders(QNetworkRequest& request, InnertubeContext* context, InnertubeAuthStore* authStore)
         {
             if (authStore->populated)
