@@ -30,21 +30,22 @@ public:
     {
         if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel> || std::is_same_v<T, InnertubeEndpoints::NextVideo>
                       || std::is_same_v<T, InnertubeEndpoints::Player>)
-            return T(data, context(), networkAccessManager(), authStore());
+            return T(data, context(), easy(), authStore());
         else
-            return T(context(), networkAccessManager(), authStore());
+            return T(context(), easy(), authStore());
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
     InnertubeContext* _context;
-    static QNetworkAccessManager* networkAccessManager() {
-        static thread_local QNetworkAccessManager* nam = [] {
-            QNetworkAccessManager* nam = new QNetworkAccessManager();
-            nam->setTransferTimeout(10000);
-            nam->setRedirectPolicy(QNetworkRequest::RedirectPolicy::NoLessSafeRedirectPolicy);
-            return nam;
+    static CurlEasy* easy() {
+        static thread_local CurlEasy* e = [] {
+            CurlEasy* e = new CurlEasy;
+            e->set(CURLOPT_CONNECTTIMEOUT_MS, 10000L);
+            e->set(CURLOPT_FAILONERROR, 1L);
+            e->set(CURLOPT_FOLLOWLOCATION, true);
+            return e;
         }();
-        return nam;
+        return e;
     }
 };
 

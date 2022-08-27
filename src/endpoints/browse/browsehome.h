@@ -11,10 +11,9 @@ namespace InnertubeEndpoints
         QVector<InnertubeObjects::Video> videos;
     private:
         friend class ::InnerTube;
-        explicit BrowseHome(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
-            : BaseBrowseEndpoint("FEwhat_to_watch", context, manager, authStore)
+        explicit BrowseHome(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEwhat_to_watch", context, easy, authStore)
         {
-            QJsonObject contents = QJsonDocument::fromJson(data.toUtf8()).object()["contents"].toObject();
+            QJsonObject contents = QJsonDocument::fromJson(data).object()["contents"].toObject();
             if (contents.isEmpty())
                 throw InnertubeException("[BrowseHome] No contents, or contents is not an object");
 

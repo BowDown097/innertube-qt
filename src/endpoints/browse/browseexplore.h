@@ -8,8 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit BrowseExplore(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
-            : BaseBrowseEndpoint("FEexplore", context, manager, authStore) {}
+        explicit BrowseExplore(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEexplore", context, easy, authStore) {}
     };
 }
 

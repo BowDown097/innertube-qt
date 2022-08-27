@@ -9,10 +9,10 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit Player(const QString& videoId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
+        explicit Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         {
-            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
-            setNeededHeaders(request, context, authStore);
+            easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
+            setNeededHeaders(easy, context, authStore);
 
             QJsonObject body = {
                 { "contentCheckOk", false },
@@ -22,9 +22,18 @@ namespace InnertubeEndpoints
                 { "videoId", videoId }
             };
 
-            QNetworkReply* reply = manager->post(request, QJsonDocument(body).toJson());
+            QByteArray data;
+            QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
+            easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
+            easy->set(CURLOPT_VERBOSE, 1L);
+            easy->setWriteFunction([&data](char* d, size_t size)->size_t {
+               data.append(d);
+               return size;
+            });
+
+            easy->perform();
             QEventLoop event;
-            QObject::connect(reply, &QNetworkReply::finished, &event, &QEventLoop::quit);
+            QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
             event.exec();
         }
     };

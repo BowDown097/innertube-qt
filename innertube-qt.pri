@@ -2,6 +2,8 @@ QT *= network webenginewidgets
 INCLUDEPATH += $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += INNERTUBE
+LIBS += -lcurl
+include(lib/qtcurl/qtcurl.pri)
 
 PRECOMPILED_HEADER = $$PWD/src/endpoints/innertubeendpoints.h
 

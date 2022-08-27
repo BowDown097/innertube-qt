@@ -8,8 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit BrowseTrending(InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
-            : BaseBrowseEndpoint("FEtrending", context, manager, authStore) {}
+        explicit BrowseTrending(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEtrending", context, easy, authStore) {}
     };
 }
 

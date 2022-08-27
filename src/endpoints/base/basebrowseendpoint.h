@@ -7,23 +7,29 @@ namespace InnertubeEndpoints
     class BaseBrowseEndpoint : public BaseEndpoint
     {
     protected:
-        QString data;
-        explicit BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, QNetworkAccessManager* manager, InnertubeAuthStore* authStore)
+        QByteArray data;
+        explicit BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         {
-            QNetworkRequest request(QUrl("https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false"));
-            setNeededHeaders(request, context, authStore);
+            easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
+            setNeededHeaders(easy, context, authStore);
 
             QJsonObject body = {
                 { "context", context->toJson() },
                 { "browseId", browseId }
             };
 
-            QNetworkReply* reply = manager->post(request, QJsonDocument(body).toJson());
-            QEventLoop event;
-            QObject::connect(reply, &QNetworkReply::finished, &event, &QEventLoop::quit);
-            event.exec();
+            QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
+            easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
+            easy->set(CURLOPT_VERBOSE, 1L);
+            easy->setWriteFunction([this](char* d, size_t size)->size_t {
+               data.append(d);
+               return size;
+            });
 
-            data = reply->readAll();
+            easy->perform();
+            QEventLoop event;
+            QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
+            event.exec();
         }
     };
 }
