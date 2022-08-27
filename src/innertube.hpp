@@ -26,13 +26,13 @@ public:
     }
 
     template<typename T>
-    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(const QString& data = "")
+    typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(const QString& data = "", const QString& continuationToken = "")
     {
         if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel> || std::is_same_v<T, InnertubeEndpoints::NextVideo>
                       || std::is_same_v<T, InnertubeEndpoints::Player>)
             return T(data, context(), easy(), authStore());
         else
-            return T(context(), easy(), authStore());
+            return T(context(), easy(), authStore(), continuationToken);
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;

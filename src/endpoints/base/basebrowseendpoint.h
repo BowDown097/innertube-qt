@@ -8,15 +8,16 @@ namespace InnertubeEndpoints
     {
     protected:
         QByteArray data;
-        explicit BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+        BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& continuationToken = "")
         {
             easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
             setNeededHeaders(easy, context, authStore);
 
-            QJsonObject body = {
-                { "context", context->toJson() },
-                { "browseId", browseId }
-            };
+            QJsonObject body = {{ "context", context->toJson() }};
+            if (continuationToken.isEmpty())
+                body.insert("browseId", browseId);
+            else
+                body.insert("continuation", continuationToken);
 
             QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
             easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
