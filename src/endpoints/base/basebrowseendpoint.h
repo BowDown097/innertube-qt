@@ -20,7 +20,6 @@ namespace InnertubeEndpoints
 
             QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
             easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
-            easy->set(CURLOPT_VERBOSE, 1L);
             easy->setWriteFunction([this](char* d, size_t size)->size_t {
                data.append(d);
                return size;

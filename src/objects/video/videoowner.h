@@ -10,7 +10,7 @@ namespace InnertubeObjects
     public:
         QString icon{}, id{}, name{};
         VideoOwner() {}
-        VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal)
+        VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, bool isGridVideo)
         {
             const QJsonObject& text = textVal.toObject();
             const QJsonObject& thumbnail = thumbnailVal.toObject();
@@ -19,7 +19,9 @@ namespace InnertubeObjects
             id = run["navigationEndpoint"].toObject()["browseEndpoint"].toObject()["browseId"].toString();
             name = run["text"].toString();
 
-            QJsonArray thumbnails = thumbnail.begin().value().toObject()["thumbnail"].toObject()["thumbnails"].toArray();
+            QJsonArray thumbnails = isGridVideo
+                    ? thumbnail.begin().value().toArray()
+                    : thumbnail.begin().value().toObject()["thumbnail"].toObject()["thumbnails"].toArray();
             icon = thumbnails[thumbnails.count() - 1].toObject()["url"].toString();
         }
     };

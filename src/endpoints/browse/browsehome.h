@@ -15,11 +15,11 @@ namespace InnertubeEndpoints
         {
             QJsonObject contents = QJsonDocument::fromJson(data).object()["contents"].toObject();
             if (contents.isEmpty())
-                throw InnertubeException("[BrowseHome] No contents, or contents is not an object");
+                throw InnertubeException("[BrowseHome] contents not found");
 
             QJsonObject resultsRenderer = contents["twoColumnBrowseResultsRenderer"].toObject();
             if (resultsRenderer.isEmpty())
-                throw InnertubeException("[BrowseHome] No twoColumnBrowseResultsRenderer, or twoColumnBrowseResultsRenderer is not an object");
+                throw InnertubeException("[BrowseHome] twoColumnBrowseResultsRenderer not found");
 
             QJsonArray tabs = resultsRenderer["tabs"].toArray();
             if (tabs.count() != 1)
@@ -27,7 +27,7 @@ namespace InnertubeEndpoints
 
             QJsonObject tabRenderer = tabs[0].toObject()["tabRenderer"].toObject()["content"].toObject();
             if (tabRenderer.isEmpty())
-                throw InnertubeException("[BrowseHome] No tabRenderer, or tabRenderer is not an object");
+                throw InnertubeException("[BrowseHome] tabRenderer not found");
             if (!tabRenderer.contains("richGridRenderer"))
                 throw InnertubeException("[BrowseHome] No grid in tabRenderer");
 
@@ -40,7 +40,7 @@ namespace InnertubeEndpoints
                 QJsonObject videoRenderer = richItemRenderer["content"].toObject()["videoRenderer"].toObject();
                 if (videoRenderer.isEmpty()) continue;
 
-                videos.append(InnertubeObjects::Video(videoRenderer));
+                videos.append(InnertubeObjects::Video(videoRenderer, false));
             }
         };
     };
