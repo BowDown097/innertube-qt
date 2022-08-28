@@ -1,6 +1,5 @@
 #ifndef BASEENDPOINT_H
 #define BASEENDPOINT_H
-#include "CurlEasy.h"
 #include <itc-objects/innertubeauthstore.h>
 #include <innertubeexception.hpp>
 #include <QJsonDocument>

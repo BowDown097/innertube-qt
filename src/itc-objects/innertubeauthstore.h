@@ -2,7 +2,6 @@
 #define INNERTUBEAUTHSTORE_H
 #include "innertubecontext.h"
 #include <QCryptographicHash>
-#include <QEventLoop>
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
@@ -35,7 +34,7 @@ public:
         loop.exec();
 
         delete view.page();
-        context.client.genVisitorData(visitorInfo);
+        context.client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
     }
 
     QString generateSAPISIDHash()
@@ -48,6 +47,29 @@ public:
     QString getNecessaryLoginCookies()
     {
         return QStringLiteral("SID=%1; HSID=%2; SSID=%3; SAPISID=%4; APISID=%5").arg(sid, hsid, ssid, sapisid, apisid);
+    }
+private:
+    QByteArray uleb128(uint64_t val)
+    {
+        uint8_t buf[128];
+        size_t i = 0;
+        do
+        {
+            if (i < 255)
+            {
+                uint8_t b = val & 0x7F;
+                val >>= 7;
+                if (val != 0)
+                    b |= 0x80;
+                buf[i++] = b;
+            }
+            else
+            {
+                return 0;
+            }
+        } while (val != 0);
+
+        return QByteArray(reinterpret_cast<char*>(buf), i);
     }
 signals:
     void gotSids();

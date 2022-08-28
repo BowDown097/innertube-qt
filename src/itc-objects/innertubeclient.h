@@ -1,6 +1,8 @@
 #ifndef INNERTUBECLIENT_H
 #define INNERTUBECLIENT_H
+#include "CurlEasy.h"
 #include "innertubeconfiginfo.h"
+#include <QEventLoop>
 
 class InnertubeClient
 {
@@ -11,16 +13,32 @@ public:
     int screenDensityFloat, screenPixelDensity;
 
     InnertubeClient() {}
-    InnertubeClient(const QString& cliName, const QString& cliVer, const QString& plat, const QString& theme, const QString& visitor = "",
-                    const QString& bName = "Firefox", const QString& bVer = "103.0", const QString& cFF = "UNKNOWN_FORM_FACTOR",
-                    const InnertubeConfigInfo& cI = InnertubeConfigInfo(), const QString& dMake = "", const QString& dModel = "", const QString& _gl = "US",
-                    const QString& _hl = "en", const QString& origUrl = "", const QString& _osName = "", const QString& osVer = "", const QString& rHost = "",
-                    int sDF = 2, int sPD = 2, const QString& tz = "", const QString& agent = "")
-        : browserName(bName), browserVersion(bVer), clientFormFactor(cFF), clientName(cliName), clientVersion(cliVer), deviceMake(dMake),
-          deviceModel(dModel), gl(_gl), hl(_hl), originalUrl(origUrl), osName(_osName), osVersion(osVer), platform(plat), remoteHost(rHost), timeZone(tz),
-          userAgent(agent), userInterfaceTheme(theme), configInfo(cI), screenDensityFloat(sDF), screenPixelDensity(sPD)
+    InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userInterfaceTheme,
+                    const QString& browserName = "Firefox", const QString& browserVersion = "103.0", const QString& clientFormFactor = "UNKNOWN_FORM_FACTOR",
+                    const InnertubeConfigInfo& configInfo = InnertubeConfigInfo(), const QString& deviceMake = "", const QString& deviceModel = "",
+                    const QString& gl = "US", const QString& hl = "en", const QString& originalUrl = "", const QString& osName = "",
+                    const QString& osVersion = "", const QString& remoteHost = "", int screenDensityFloat = 2, int screenPixelDensity = 2,
+                    const QString& timeZone = "", const QString& userAgent = "")
+        : browserName(browserName), browserVersion(browserVersion), clientFormFactor(clientFormFactor), clientName(clientName), clientVersion(clientVersion),
+          deviceMake(deviceMake), deviceModel(deviceModel), gl(gl), hl(hl), originalUrl(originalUrl), osName(osName), osVersion(osVersion), platform(platform),
+          remoteHost(remoteHost), timeZone(timeZone), userAgent(userAgent), userInterfaceTheme(userInterfaceTheme), configInfo(configInfo),
+          screenDensityFloat(screenDensityFloat), screenPixelDensity(screenPixelDensity)
     {
-        genVisitorData(visitor);
+        // get home page data
+        QString hpData;
+        CurlEasy* easy = new CurlEasy;
+        easy->set(CURLOPT_URL, "https://www.youtube.com");
+        easy->setWriteFunction([&hpData](char* d, size_t size)->size_t { hpData.append(d); return size; });
+        easy->perform();
+        QEventLoop event;
+        QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
+        event.exec();
+        easy->deleteLater();
+
+        // get/set visitor data
+        QString visitorBlock = hpData.mid(hpData.indexOf("visitorData") + 14);
+        visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
+        visitorData = visitorBlock;
     }
 
     QJsonObject toJson() const
@@ -48,34 +66,6 @@ public:
             { "userInterfaceTheme", userInterfaceTheme },
             { "visitorData", visitorData }
         };
-    }
-
-    void genVisitorData(const QString& visitor)
-    {
-        visitorData = QByteArray("\x0a" + uleb128(visitor.length()) + visitor.toLatin1() + "\x28" + uleb128(time(NULL))).toBase64().toPercentEncoding();
-    }
-private:
-    QByteArray uleb128(uint64_t val)
-    {
-        uint8_t buf[128];
-        size_t i = 0;
-        do
-        {
-            if (i < 255)
-            {
-                uint8_t b = val & 0x7F;
-                val >>= 7;
-                if (val != 0)
-                    b |= 0x80;
-                buf[i++] = b;
-            }
-            else
-            {
-                return 0;
-            }
-        } while (val != 0);
-
-        return QByteArray(reinterpret_cast<char*>(buf), i);
     }
 };
 
