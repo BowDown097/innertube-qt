@@ -13,7 +13,7 @@ class InnertubeAuthStore : public QObject
 public:
     bool populated = false;
     QString apisid, hsid, sapisid, sid, ssid, visitorInfo;
-    explicit InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
+    InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
 
     void authenticate(InnertubeContext& context)
     {
@@ -47,6 +47,31 @@ public:
     QString getNecessaryLoginCookies()
     {
         return QStringLiteral("SID=%1; HSID=%2; SSID=%3; SAPISID=%4; APISID=%5").arg(sid, hsid, ssid, sapisid, apisid);
+    }
+
+    void populateFromJson(const QJsonObject& obj, InnertubeContext& context)
+    {
+        apisid = obj["apisid"].toString();
+        hsid = obj["hsid"].toString();
+        sapisid = obj["sapisid"].toString();
+        sid = obj["sid"].toString();
+        ssid = obj["ssid"].toString();
+        visitorInfo = obj["visitorInfo"].toString();
+
+        context.client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
+        populated = true;
+    }
+
+    QJsonObject toJson() const
+    {
+        return {
+            { "apisid", apisid },
+            { "hsid", hsid },
+            { "sapisid", sapisid },
+            { "sid", sid },
+            { "ssid", ssid },
+            { "visitorInfo", visitorInfo }
+        };
     }
 private:
     QByteArray uleb128(uint64_t val)
