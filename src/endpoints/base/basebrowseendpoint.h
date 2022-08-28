@@ -1,6 +1,7 @@
 #ifndef BASEBROWSEENDPOINT_H
 #define BASEBROWSEENDPOINT_H
 #include "baseendpoint.h"
+#include <objects/video/video.h>
 
 namespace InnertubeEndpoints
 {
@@ -30,6 +31,27 @@ namespace InnertubeEndpoints
             QEventLoop event;
             QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
             event.exec();
+        }
+
+        QJsonObject getTabRenderer(const QString& name)
+        {
+            QJsonObject contents = QJsonDocument::fromJson(data).object()["contents"].toObject();
+            if (contents.isEmpty())
+                throw InnertubeException(QStringLiteral("[%1] contents not found").arg(name));
+
+            QJsonObject resultsRenderer = contents["twoColumnBrowseResultsRenderer"].toObject();
+            if (resultsRenderer.isEmpty())
+                throw InnertubeException(QStringLiteral("[%1] twoColumnBrowseResultsRenderer not found").arg(name));
+
+            QJsonArray tabs = resultsRenderer["tabs"].toArray();
+            if (tabs.count() != 1)
+                throw InnertubeException(QStringLiteral("[%1] Expected 1 element in tabs, got %2").arg(name, tabs.count()));
+
+            QJsonObject tabRenderer = tabs[0].toObject()["tabRenderer"].toObject()["content"].toObject();
+            if (tabRenderer.isEmpty())
+                throw InnertubeException(QStringLiteral("[%1] tabRenderer not found").arg(name));
+
+            return tabRenderer;
         }
     };
 }

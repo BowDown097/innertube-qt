@@ -7,8 +7,52 @@ namespace InnertubeEndpoints
     class BrowseHistory : public BaseBrowseEndpoint
     {
         friend class ::InnerTube;
+    public:
+        QString continuationToken;
+        QVector<InnertubeObjects::Video> videos;
     private:
-        explicit BrowseHistory(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEhistory", context, easy, authStore) {}
+        explicit BrowseHistory(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
+            : BaseBrowseEndpoint("FEhistory", context, easy, authStore, tokenIn)
+        {
+            QJsonArray sectionListRenderer;
+            if (tokenIn.isEmpty())
+            {
+                QJsonObject tabRenderer = getTabRenderer("BrowseHistory");
+                sectionListRenderer = tabRenderer["sectionListRenderer"].toObject()["contents"].toArray();
+                if (sectionListRenderer.count() < 1)
+                    throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
+            }
+            else
+            {
+                QJsonObject appendItemsAction = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray()[0].toObject()["appendContinuationItemsAction"].toObject();
+                if (appendItemsAction.isEmpty())
+                    throw InnertubeException("[BrowseHistory] Continuation has no appendContinuationItemsAction");
+
+                sectionListRenderer = appendItemsAction["continuationItems"].toArray();
+            }
+
+            for (auto&& v : sectionListRenderer)
+            {
+                const QJsonObject& o = v.toObject();
+                if (o.contains("itemSectionRenderer"))
+                {
+                    QJsonArray itemSectionContents = o["itemSectionRenderer"].toObject()["contents"].toArray();
+                    if (itemSectionContents.isEmpty())
+                        throw InnertubeException("[BrowseHistory] itemSectionRenderer not found or has no content");
+
+                    for (auto&& v2 : itemSectionContents)
+                    {
+                        QJsonObject videoRenderer = v2.toObject()["videoRenderer"].toObject();
+                        if (videoRenderer.isEmpty()) continue;
+                        videos.append(InnertubeObjects::Video(videoRenderer, false));
+                    }
+                }
+                else if (o.contains("continuationItemRenderer"))
+                {
+                    continuationToken = o["continuationItemRenderer"].toObject()["continuationEndpoint"].toObject()["continuationCommand"].toObject()["token"].toString();
+                }
+            }
+        }
     };
 }
 
