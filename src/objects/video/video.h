@@ -3,6 +3,7 @@
 #include "../innertubestring.h"
 #include "videoowner.h"
 #include "videothumbnail.h"
+#include <QLocale>
 
 namespace InnertubeObjects
 {
@@ -41,7 +42,20 @@ namespace InnertubeObjects
                     lengthText = InnertubeString(videoRenderer["lengthText"]);
                 }
 
-                publishedTimeText = InnertubeString(videoRenderer["publishedTimeText"]);
+                if (videoRenderer.contains("upcomingEventData"))
+                {
+                    QJsonObject upcomingEventData = videoRenderer["upcomingEventData"].toObject();
+                    InnertubeString upcomingEventText = InnertubeString(upcomingEventData["upcomingEventText"]);
+                    long startTime = upcomingEventData["startTime"].toString().toLong();
+                    QString fmt = QStringLiteral("%1, %2").arg(QLocale::system().dateFormat(QLocale::ShortFormat), QLocale::system().timeFormat(QLocale::ShortFormat));
+
+                    upcomingEventText.text = upcomingEventText.text.replace("DATE_PLACEHOLDER", QDateTime::fromSecsSinceEpoch(startTime).toString(fmt));
+                    publishedTimeText = upcomingEventText;
+                }
+                else
+                {
+                    publishedTimeText = InnertubeString(videoRenderer["publishedTimeText"]);
+                }
             }
 
             videoId = videoRenderer["videoId"].toString();
