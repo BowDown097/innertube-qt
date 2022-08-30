@@ -18,9 +18,10 @@ HEADERS += \
     $$PWD/src/endpoints/browse/browsestorefront.h \
     $$PWD/src/endpoints/browse/browsesubscriptions.h \
     $$PWD/src/endpoints/browse/browsetrending.h \
+    $$PWD/src/endpoints/misc/accountmenu.h \
+    $$PWD/src/endpoints/misc/search.h \
     $$PWD/src/endpoints/video/next.h \
     $$PWD/src/endpoints/video/player.h \
-    $$PWD/src/endpoints/accountmenu.h \
     $$PWD/src/endpoints/innertubeendpoints.h \
     $$PWD/src/itc-objects/innertubeauthstore.h \
     $$PWD/src/itc-objects/innertubeclicktracking.h \
@@ -30,6 +31,8 @@ HEADERS += \
     $$PWD/src/itc-objects/innertubeplaybackcontext.h \
     $$PWD/src/itc-objects/innertuberequestconfig.h \
     $$PWD/src/itc-objects/innertubeuserconfig.h \
+    $$PWD/src/objects/channel/channel.h \
+    $$PWD/src/objects/genericthumbnail.h \
     $$PWD/src/objects/video/video.h \
     $$PWD/src/objects/video/videoowner.h \
     $$PWD/src/objects/video/videothumbnail.h \

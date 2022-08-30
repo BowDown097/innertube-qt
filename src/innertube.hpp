@@ -31,6 +31,8 @@ public:
         if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel> || std::is_same_v<T, InnertubeEndpoints::NextVideo>
                       || std::is_same_v<T, InnertubeEndpoints::Player>)
             return T(data, context(), easy(), authStore());
+        else if constexpr (std::is_same_v<T, InnertubeEndpoints::Search>)
+            return T(data, context(), easy(), authStore(), continuationToken);
         else
             return T(context(), easy(), authStore(), continuationToken);
     }

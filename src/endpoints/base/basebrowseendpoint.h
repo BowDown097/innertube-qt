@@ -20,17 +20,7 @@ namespace InnertubeEndpoints
             else
                 body.insert("continuation", continuationToken);
 
-            QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
-            easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
-            easy->setWriteFunction([this](char* d, size_t size)->size_t {
-               data.append(d);
-               return size;
-            });
-
-            easy->perform();
-            QEventLoop event;
-            QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
-            event.exec();
+            getData(easy, body, data);
         }
 
         QJsonObject getTabRenderer(const QString& name)
