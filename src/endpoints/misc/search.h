@@ -29,13 +29,13 @@ namespace InnertubeEndpoints
             QByteArray data;
             getData(easy, body, data);
 
-            QJsonObject docObj = QJsonDocument::fromJson(data).object();
-            estimatedResults = docObj["estimatedResults"].toString().toLong();
+            QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+            estimatedResults = dataObj["estimatedResults"].toString().toLong();
 
             QJsonArray sectionListRenderer;
             if (tokenIn.isEmpty())
             {
-                QJsonObject contents = docObj["contents"].toObject();
+                QJsonObject contents = dataObj["contents"].toObject();
                 if (contents.isEmpty())
                     throw InnertubeException("[Search] contents not found");
 
@@ -49,7 +49,7 @@ namespace InnertubeEndpoints
             }
             else
             {
-                QJsonObject appendItemsAction = docObj["onResponseReceivedCommands"].toArray()[0].toObject()["appendContinuationItemsAction"].toObject();
+                QJsonObject appendItemsAction = dataObj["onResponseReceivedCommands"].toArray()[0].toObject()["appendContinuationItemsAction"].toObject();
                 if (appendItemsAction.isEmpty())
                     throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction");
 

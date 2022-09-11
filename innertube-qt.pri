@@ -33,6 +33,11 @@ HEADERS += \
     $$PWD/src/itc-objects/innertubeuserconfig.h \
     $$PWD/src/objects/channel/channel.h \
     $$PWD/src/objects/genericthumbnail.h \
+    $$PWD/src/objects/player/captiontrack.h \
+    $$PWD/src/objects/player/playbacktracking.h \
+    $$PWD/src/objects/player/playervideodetails.h \
+    $$PWD/src/objects/player/streamingdata.h \
+    $$PWD/src/objects/player/streamingformat.h \
     $$PWD/src/objects/video/video.h \
     $$PWD/src/objects/video/videoowner.h \
     $$PWD/src/objects/video/videothumbnail.h \

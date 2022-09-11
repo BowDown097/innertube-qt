@@ -22,12 +22,9 @@ namespace InnertubeObjects
             subscriberCountText(InnertubeString(channelRenderer["subscriberCountText"])), title(InnertubeString(channelRenderer["title"])),
             videoCountText(InnertubeString(channelRenderer["videoCountText"]))
         {
-            qDebug() << "kanal";
             for (auto&& v : channelRenderer["thumbnail"].toObject()["thumbnails"].toArray())
             {
-                qDebug() << "kanal thumb";
                 const QJsonObject& o = v.toObject();
-                qDebug() << o.keys().join(", ");
                 thumbnails.append(GenericThumbnail(o["height"].toInt(), o["url"].toString(), o["width"].toInt()));
             }
         }

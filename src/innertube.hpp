@@ -28,7 +28,7 @@ public:
     template<typename T>
     typename std::enable_if_t<std::is_base_of_v<InnertubeEndpoints::BaseEndpoint, T>, T> get(const QString& data = "", const QString& continuationToken = "")
     {
-        if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel> || std::is_same_v<T, InnertubeEndpoints::NextVideo>
+        if constexpr (std::is_same_v<T, InnertubeEndpoints::BrowseChannel> || std::is_same_v<T, InnertubeEndpoints::Next>
                       || std::is_same_v<T, InnertubeEndpoints::Player>)
             return T(data, context(), easy(), authStore());
         else if constexpr (std::is_same_v<T, InnertubeEndpoints::Search>)
