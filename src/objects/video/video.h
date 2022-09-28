@@ -15,6 +15,7 @@ namespace InnertubeObjects
         VideoOwner owner;
         InnertubeString publishedTimeText;
         InnertubeString shortViewCountText;
+        int startTimeSeconds;
         VideoThumbnail thumbnail;
         InnertubeString title;
         QString videoId;
@@ -66,6 +67,7 @@ namespace InnertubeObjects
             title = InnertubeString(videoRenderer["title"]);
             viewCountText = InnertubeString(videoRenderer["viewCountText"]);
             thumbnail = VideoThumbnail(videoId);
+            startTimeSeconds = videoRenderer["navigationEndpoint"].toObject()["watchEndpoint"].toObject()["startTimeSeconds"].toInt();
         }
     };
 }
