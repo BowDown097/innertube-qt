@@ -37,11 +37,11 @@ namespace InnertubeEndpoints
 
             QJsonObject playabilityObj = dataObj["playabilityStatus"].toObject();
             QString playabilityStatus = playabilityObj["status"].toString();
-            if (playabilityStatus != "OK")
+            if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE")
             {
                 QString errorReason = playabilityObj["reason"].toString();
                 if (!errorReason.isEmpty())
-                    throw InnertubeException("[Player] Error: " + errorReason);
+                    throw InnertubeException(QStringLiteral("[Player] Error: %1 - Playability status: %2").arg(errorReason, playabilityStatus));
                 else
                     throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(playabilityStatus));
             }
