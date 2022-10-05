@@ -49,9 +49,13 @@ namespace InnertubeEndpoints
             }
             else
             {
-                QJsonObject appendItemsAction = dataObj["onResponseReceivedCommands"].toArray()[0].toObject()["appendContinuationItemsAction"].toObject();
+                QJsonArray onResponseReceivedCommands = dataObj["onResponseReceivedCommands"].toArray();
+                if (onResponseReceivedCommands.isEmpty())
+                    throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Minor); // this can just happen sometimes
+
+                QJsonObject appendItemsAction = onResponseReceivedCommands[0].toObject()["appendContinuationItemsAction"].toObject();
                 if (appendItemsAction.isEmpty())
-                    throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction");
+                    throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
                 sectionListRenderer = appendItemsAction["continuationItems"].toArray();
             }

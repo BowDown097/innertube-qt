@@ -24,9 +24,13 @@ namespace InnertubeEndpoints
             }
             else
             {
-                QJsonObject appendItemsAction = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray()[0].toObject()["appendContinuationItemsAction"].toObject();
+                QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+                if (onResponseReceivedActions.isEmpty())
+                    throw InnertubeException("[BrowseHistory] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
+
+                QJsonObject appendItemsAction = onResponseReceivedActions[0].toObject()["appendContinuationItemsAction"].toObject();
                 if (appendItemsAction.isEmpty())
-                    throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction");
+                    throw InnertubeException("[BrowseHistory] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
                 gridContents = appendItemsAction["continuationItems"].toArray();
             }
