@@ -6,6 +6,7 @@
 #include "browse/browseexplore.h"
 #include "browse/browsehistory.h"
 #include "browse/browsehome.h"
+#include "browse/browsehomeshelves.h"
 #include "browse/browselibrary.h"
 #include "browse/browsestorefront.h"
 #include "browse/browsesubscriptions.h"

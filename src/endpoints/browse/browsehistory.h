@@ -19,7 +19,7 @@ namespace InnertubeEndpoints
             {
                 QJsonObject tabRenderer = getTabRenderer("BrowseHistory");
                 sectionListRenderer = tabRenderer["sectionListRenderer"].toObject()["contents"].toArray();
-                if (sectionListRenderer.count() < 1)
+                if (sectionListRenderer.isEmpty())
                     throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
             }
             else

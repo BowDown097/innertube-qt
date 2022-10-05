@@ -28,6 +28,9 @@ namespace InnertubeObjects
             if (!accessibility.isEmpty())
                 accessibilityLabel = accessibility["accessibilityData"].toObject()["label"].toString();
         }
+
+        bool operator ==(const InnertubeString& s) const { return !text.isEmpty() ? text == s.text : accessibilityLabel == s.accessibilityLabel; }
+        bool operator !=(const InnertubeString& s) const { return !text.isEmpty() ? text != s.text : accessibilityLabel != s.accessibilityLabel; }
     };
 }
 

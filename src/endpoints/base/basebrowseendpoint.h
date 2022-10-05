@@ -23,15 +23,15 @@ namespace InnertubeEndpoints
             getData(easy, body, data);
         }
 
-        QJsonObject getTabRenderer(const QString& name)
+        QJsonObject getTabRenderer(const QString& name, const QString& baseRenderer = "twoColumnBrowseResultsRenderer")
         {
             QJsonObject contents = QJsonDocument::fromJson(data).object()["contents"].toObject();
             if (contents.isEmpty())
                 throw InnertubeException(QStringLiteral("[%1] contents not found").arg(name));
 
-            QJsonObject resultsRenderer = contents["twoColumnBrowseResultsRenderer"].toObject();
+            QJsonObject resultsRenderer = contents[baseRenderer].toObject();
             if (resultsRenderer.isEmpty())
-                throw InnertubeException(QStringLiteral("[%1] twoColumnBrowseResultsRenderer not found").arg(name));
+                throw InnertubeException(QStringLiteral("[%1] %2 not found").arg(name, baseRenderer));
 
             QJsonArray tabs = resultsRenderer["tabs"].toArray();
             if (tabs.count() != 1)

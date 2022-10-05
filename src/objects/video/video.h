@@ -14,6 +14,7 @@ namespace InnertubeObjects
         InnertubeString lengthText;
         VideoOwner owner;
         InnertubeString publishedTimeText;
+        InnertubeString shelf;
         InnertubeString shortViewCountText;
         int startTimeSeconds;
         VideoThumbnail thumbnail;
@@ -21,7 +22,7 @@ namespace InnertubeObjects
         QString videoId;
         InnertubeString viewCountText;
 
-        Video(const QJsonObject& videoRenderer, bool isGridVideo)
+        Video(const QJsonObject& videoRenderer, bool isGridVideo, const InnertubeString& shelf = InnertubeString()) : shelf(shelf)
         {
             isLive = videoRenderer.contains("badges")
                     ? videoRenderer["badges"].toArray()[0].toObject()["metadataBadgeRenderer"].toObject()["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW"

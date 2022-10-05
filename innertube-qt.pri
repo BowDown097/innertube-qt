@@ -14,6 +14,7 @@ HEADERS += \
     $$PWD/src/endpoints/browse/browseexplore.h \
     $$PWD/src/endpoints/browse/browsehistory.h \
     $$PWD/src/endpoints/browse/browsehome.h \
+    $$PWD/src/endpoints/browse/browsehomeshelves.h \
     $$PWD/src/endpoints/browse/browselibrary.h \
     $$PWD/src/endpoints/browse/browsestorefront.h \
     $$PWD/src/endpoints/browse/browsesubscriptions.h \
