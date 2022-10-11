@@ -7,7 +7,7 @@ class InnertubeClickTracking
 {
 public:
     QString clickTrackingParams;
-    InnertubeClickTracking(const QString& ctp = "") : clickTrackingParams(ctp) {}
+    explicit InnertubeClickTracking(const QString& ctp = "") : clickTrackingParams(ctp) {}
     QJsonObject toJson() const { return {{ "clickTrackingParams", clickTrackingParams }}; }
 };
 

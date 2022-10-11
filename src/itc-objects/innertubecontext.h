@@ -14,7 +14,7 @@ public:
     InnertubeUserConfig user;
 
     InnertubeContext() {}
-    InnertubeContext(const InnertubeClient& ic, const InnertubeClickTracking& ict = InnertubeClickTracking(),
+    explicit InnertubeContext(const InnertubeClient& ic, const InnertubeClickTracking& ict = InnertubeClickTracking(),
                      const InnertubeRequestConfig& irc = InnertubeRequestConfig(), const InnertubeUserConfig& iuc = InnertubeUserConfig())
         : clickTracking(ict), client(ic), request(irc), user(iuc) {}
 

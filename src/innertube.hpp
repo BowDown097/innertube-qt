@@ -38,7 +38,7 @@ public:
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
-    InnertubeContext* _context;
+    InnertubeContext* _context = new InnertubeContext;
     static CurlEasy* easy() {
         static thread_local CurlEasy* e = [] {
             CurlEasy* e = new CurlEasy;

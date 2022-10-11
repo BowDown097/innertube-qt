@@ -6,7 +6,7 @@ class InnertubeRequestConfig
 {
 public:
     bool useSsl;
-    InnertubeRequestConfig(bool ssl = true) : useSsl(ssl) {}
+    explicit InnertubeRequestConfig(bool ssl = true) : useSsl(ssl) {}
     QJsonObject toJson() const { return {{ "useSsl", useSsl }}; }
 };
 

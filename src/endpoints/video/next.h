@@ -9,7 +9,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+        Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         {
             easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/next?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
             setNeededHeaders(easy, context, authStore);

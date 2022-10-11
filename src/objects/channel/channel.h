@@ -16,7 +16,7 @@ namespace InnertubeObjects
         InnertubeString title;
         InnertubeString videoCountText;
 
-        Channel(const QJsonObject& channelRenderer) : channelId(channelRenderer["channelId"].toString()),
+        explicit Channel(const QJsonObject& channelRenderer) : channelId(channelRenderer["channelId"].toString()),
             descriptionSnippet(InnertubeString(channelRenderer["descriptionSnippet"])),
             subscribed(channelRenderer["subscriptionButton"].toObject()["subscribed"].toBool()),
             subscriberCountText(InnertubeString(channelRenderer["subscriberCountText"])), title(InnertubeString(channelRenderer["title"])),

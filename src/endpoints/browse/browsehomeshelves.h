@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
         QVector<InnertubeObjects::InnertubeString> shelves;
         QVector<InnertubeObjects::Video> videos;
     private:
-        explicit BrowseHomeShelves(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
+        BrowseHomeShelves(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
             : BaseBrowseEndpoint("FEwhat_to_watch", context, easy, authStore, tokenIn)
         {
             if (!(context->client.clientName == "ANDROID" && context->client.clientVersion == "15.14.33"))

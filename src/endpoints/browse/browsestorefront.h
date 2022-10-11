@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit BrowseStorefront(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEstorefront", context, easy, authStore) {}
+        BrowseStorefront(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore) : BaseBrowseEndpoint("FEstorefront", context, easy, authStore) {}
     };
 }
 

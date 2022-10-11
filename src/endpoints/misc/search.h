@@ -15,7 +15,7 @@ namespace InnertubeEndpoints
         long estimatedResults;
         QVector<InnertubeObjects::Video> videos;
     private:
-        explicit Search(const QString& query, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
+        Search(const QString& query, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
         {
             easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/search?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
             setNeededHeaders(easy, context, authStore);

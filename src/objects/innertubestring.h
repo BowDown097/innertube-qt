@@ -11,7 +11,7 @@ namespace InnertubeObjects
     public:
         QString accessibilityLabel{}, text{};
         InnertubeString() {}
-        InnertubeString(const QJsonValue& textVal)
+        explicit InnertubeString(const QJsonValue& textVal)
         {
             const QJsonObject& obj = textVal.toObject();
             if (obj.contains("simpleText"))

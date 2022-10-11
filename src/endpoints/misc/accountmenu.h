@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     private:
-        explicit AccountMenu(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+        AccountMenu(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         {
             easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/account/account_menu?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
             setNeededHeaders(easy, context, authStore);

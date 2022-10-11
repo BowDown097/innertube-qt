@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
         QString continuationToken;
         QVector<InnertubeObjects::Video> videos;
     private:
-        explicit BrowseHome(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
+        BrowseHome(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "")
             : BaseBrowseEndpoint("FEwhat_to_watch", context, easy, authStore, tokenIn)
         {
             QJsonArray gridContents;

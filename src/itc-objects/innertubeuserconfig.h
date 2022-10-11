@@ -6,7 +6,7 @@ class InnertubeUserConfig
 {
 public:
     bool lockedSafetyMode;
-    InnertubeUserConfig(bool lsm = false) : lockedSafetyMode(lsm) {}
+    explicit InnertubeUserConfig(bool lsm = false) : lockedSafetyMode(lsm) {}
     QJsonObject toJson() const { return {{ "lockedSafetyMode", lockedSafetyMode }}; }
 };
 

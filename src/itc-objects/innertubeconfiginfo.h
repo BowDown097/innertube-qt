@@ -7,7 +7,7 @@ class InnertubeConfigInfo
 {
 public:
     QString appInstallData;
-    InnertubeConfigInfo(const QString& aid = "") : appInstallData(aid) {}
+    explicit InnertubeConfigInfo(const QString& aid = "") : appInstallData(aid) {}
     QJsonObject toJson() const { return {{ "appInstallData", appInstallData }}; }
 };
 

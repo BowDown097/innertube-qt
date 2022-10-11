@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
         InnertubeObjects::StreamingData streamingData;
         InnertubeObjects::PlayerVideoDetails videoDetails;
     private:
-        explicit Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+        Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         {
             easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
             setNeededHeaders(easy, context, authStore);

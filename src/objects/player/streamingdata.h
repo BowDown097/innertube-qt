@@ -14,12 +14,9 @@ namespace InnertubeObjects
         QString hlsManifestUrl;
 
         StreamingData() {}
-        StreamingData(const QJsonObject& streamingData)
+        explicit StreamingData(const QJsonObject& streamingData) : dashManifestUrl(streamingData["dashManifestUrl"].toString()),
+            expiresInSeconds(streamingData["expiresInSeconds"].toString()), hlsManifestUrl(streamingData["hlsManifestUrl"].toString())
         {
-            dashManifestUrl = streamingData["dashManifestUrl"].toString();
-            expiresInSeconds = streamingData["expiresInSeconds"].toString();
-            hlsManifestUrl = streamingData["hlsManifestUrl"].toString();
-
             for (auto&& v : streamingData["adaptiveFormats"].toArray())
                 adaptiveFormats.append(StreamingFormat(v.toObject()));
             for (auto&& v : streamingData["formats"].toArray())

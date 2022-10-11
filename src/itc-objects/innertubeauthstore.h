@@ -13,7 +13,7 @@ class InnertubeAuthStore : public QObject
 public:
     bool populated = false;
     QString apisid, hsid, sapisid, sid, ssid, visitorInfo;
-    InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
+    explicit InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
 
     void authenticate(InnertubeContext& context)
     {
