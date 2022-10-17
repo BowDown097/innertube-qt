@@ -13,6 +13,7 @@ public:
     InnertubeContext* context() const { return _context; }
     bool hasAuthenticated() const { return _authStore->populated; }
     void authenticate() { _authStore->authenticate(_context); }
+    void authenticateFromJson(const QJsonObject& obj) { _authStore->authenticateFromJson(obj, _context); }
 
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
                        const InnertubeRequestConfig& requestConfig = InnertubeRequestConfig(),

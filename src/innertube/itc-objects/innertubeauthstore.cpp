@@ -26,14 +26,7 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     context->client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
 }
 
-QString InnertubeAuthStore::generateSAPISIDHash()
-{
-    QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
-    QString hash(QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex());
-    return QStringLiteral("SAPISIDHASH %1_%2").arg(time(NULL)).arg(hash);
-}
-
-void InnertubeAuthStore::populateFromJson(const QJsonObject& obj, InnertubeContext& context)
+void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context)
 {
     apisid = obj["apisid"].toString();
     hsid = obj["hsid"].toString();
@@ -42,8 +35,15 @@ void InnertubeAuthStore::populateFromJson(const QJsonObject& obj, InnertubeConte
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
 
-    context.client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
+    context->client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
     populated = true;
+}
+
+QString InnertubeAuthStore::generateSAPISIDHash()
+{
+    QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
+    QString hash(QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex());
+    return QStringLiteral("SAPISIDHASH %1_%2").arg(time(NULL)).arg(hash);
 }
 
 QJsonObject InnertubeAuthStore::toJson() const

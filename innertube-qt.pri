@@ -42,6 +42,8 @@ HEADERS += \
     $$PWD/src/innertube/objects/player/streamingformat.h \
     $$PWD/src/innertube/objects/video/video.h \
     $$PWD/src/innertube/objects/video/videoowner.h \
+    $$PWD/src/innertube/objects/video/videoprimaryinfo.h \
+    $$PWD/src/innertube/objects/video/videosecondaryinfo.h \
     $$PWD/src/innertube/objects/video/videothumbnail.h \
     $$PWD/src/innertube/objects/innertubestring.h \
     $$PWD/src/innertube.h \
@@ -68,4 +70,6 @@ SOURCES += \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
     $$PWD/src/innertube/objects/player/streamingformat.cpp \
     $$PWD/src/innertube/objects/video/video.cpp \
-    $$PWD/src/innertube/objects/video/videoowner.cpp
+    $$PWD/src/innertube/objects/video/videoowner.cpp \
+    $$PWD/src/innertube/objects/video/videoprimaryinfo.cpp \
+    $$PWD/src/innertube/objects/video/videosecondaryinfo.cpp
