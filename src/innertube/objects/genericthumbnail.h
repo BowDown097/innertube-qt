@@ -10,7 +10,7 @@ namespace InnertubeObjects
         int height;
         QString url;
         int width;
-        GenericThumbnail(int height, const QString& url, int width) : height(height), url("https:" + url), width(width) {}
+        GenericThumbnail(int height, const QString& url, int width) : height(height), url(url), width(width) {}
     };
 }
 

@@ -12,7 +12,7 @@ namespace InnertubeObjects
         for (auto&& v : channelRenderer["thumbnail"].toObject()["thumbnails"].toArray())
         {
             const QJsonObject& o = v.toObject();
-            thumbnails.append(GenericThumbnail(o["height"].toInt(), o["url"].toString(), o["width"].toInt()));
+            thumbnails.append(GenericThumbnail(o["height"].toInt(), "https:" + o["url"].toString(), o["width"].toInt()));
         }
     }
 }
