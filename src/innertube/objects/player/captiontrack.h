@@ -1,6 +1,6 @@
 #ifndef CAPTIONTRACK_H
 #define CAPTIONTRACK_H
-#include "../innertubestring.h"
+#include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {

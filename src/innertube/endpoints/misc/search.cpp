@@ -7,20 +7,16 @@ namespace InnertubeEndpoints
 {
     Search::Search(const QString& query, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
     {
-        easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/search?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
-        setNeededHeaders(easy, context, authStore);
-
+        QByteArray data;
         QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
             body.insert("query", query);
         else
             body.insert("continuation", tokenIn);
-
-        QByteArray data;
-        getData(easy, body, data);
+        get("search", context, authStore, easy, body, data);
 
         QJsonObject dataObj = QJsonDocument::fromJson(data).object();
-        estimatedResults = dataObj["estimatedResults"].toString().toLong();
+        response.estimatedResults = dataObj["estimatedResults"].toString().toLong();
 
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
@@ -62,9 +58,9 @@ namespace InnertubeEndpoints
                 {
                     QJsonObject o2 = v2.toObject();
                     if (o2.contains("videoRenderer"))
-                        videos.append(InnertubeObjects::Video(o2["videoRenderer"].toObject(), false));
+                        response.videos.append(InnertubeObjects::Video(o2["videoRenderer"].toObject(), false));
                     else if (o2.contains("channelRenderer"))
-                        channels.append(InnertubeObjects::Channel(o2["channelRenderer"].toObject()));
+                        response.channels.append(InnertubeObjects::Channel(o2["channelRenderer"].toObject()));
                 }
             }
             else if (o.contains("continuationItemRenderer"))

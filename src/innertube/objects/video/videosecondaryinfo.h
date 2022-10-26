@@ -1,7 +1,7 @@
 #ifndef VIDEOSECONDARYINFO_H
 #define VIDEOSECONDARYINFO_H
-#include "../genericthumbnail.h"
-#include "../innertubestring.h"
+#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {

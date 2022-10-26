@@ -1,7 +1,7 @@
 #ifndef BROWSEHOME_H
 #define BROWSEHOME_H
-#include "../base/basebrowseendpoint.h"
-#include "innertube/objects/video/video.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
+#include "innertube/responses/browse/homeresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString continuationToken;
-        QVector<InnertubeObjects::Video> videos;
+        HomeResponse response;
     private:
         BrowseHome(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };

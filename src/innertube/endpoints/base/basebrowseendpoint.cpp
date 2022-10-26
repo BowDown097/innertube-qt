@@ -7,16 +7,12 @@ namespace InnertubeEndpoints
 {
     BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& continuationToken)
     {
-        easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
-        setNeededHeaders(easy, context, authStore);
-
         QJsonObject body = {{ "context", context->toJson() }};
         if (continuationToken.isEmpty())
             body.insert("browseId", browseId);
         else
             body.insert("continuation", continuationToken);
-
-        getData(easy, body, data);
+        get("browse", context, authStore, easy, body, data);
     }
 
     QJsonObject BaseBrowseEndpoint::getTabRenderer(const QString& name, const QString& baseRenderer)

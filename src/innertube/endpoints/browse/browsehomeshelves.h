@@ -1,7 +1,7 @@
 #ifndef BROWSEHOMESHELVES_H
 #define BROWSEHOMESHELVES_H
-#include "../base/basebrowseendpoint.h"
-#include "innertube/objects/video/video.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
+#include "innertube/responses/browse/homeshelvesresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,8 +10,7 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString continuationToken;
-        QVector<InnertubeObjects::InnertubeString> shelves;
-        QVector<InnertubeObjects::Video> videos;
+        HomeShelvesResponse response;
     private:
         BrowseHomeShelves(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };

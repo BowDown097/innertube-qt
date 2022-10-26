@@ -39,14 +39,14 @@ namespace InnertubeEndpoints
             {
                 QJsonObject shelfRenderer = o["shelfRenderer"].toObject();
                 InnertubeObjects::InnertubeString shelfTitle(shelfRenderer["title"]);
-                shelves.append(shelfTitle);
+                response.shelves.append(shelfTitle);
 
                 QJsonArray shelfContents = shelfRenderer["content"].toObject()["horizontalListRenderer"].toObject()["items"].toArray();
                 for (auto&& v2 : shelfContents)
                 {
                     QJsonObject gridVideoRenderer = v2.toObject()["gridVideoRenderer"].toObject();
                     if (gridVideoRenderer.isEmpty()) continue;
-                    videos.append(InnertubeObjects::Video(gridVideoRenderer, true, shelfTitle));
+                    response.videos.append(InnertubeObjects::Video(gridVideoRenderer, true, shelfTitle));
                 }
             }
             else if (o.contains("continuationItemRenderer"))

@@ -40,7 +40,7 @@ namespace InnertubeEndpoints
                 QJsonObject videoRenderer = richItemRenderer["content"].toObject()["videoRenderer"].toObject();
                 if (videoRenderer.isEmpty()) continue;
 
-                videos.append(InnertubeObjects::Video(videoRenderer, false));
+                response.videos.append(InnertubeObjects::Video(videoRenderer, false));
             }
             else if (o.contains("continuationItemRenderer"))
             {

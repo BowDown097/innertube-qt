@@ -1,6 +1,6 @@
 #ifndef BROWSEEXPLORE_H
 #define BROWSEEXPLORE_H
-#include "../base/basebrowseendpoint.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
 
 namespace InnertubeEndpoints
 {

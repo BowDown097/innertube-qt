@@ -1,7 +1,7 @@
 #ifndef BROWSESUBSCRIPTIONS_H
 #define BROWSESUBSCRIPTIONS_H
-#include "../base/basebrowseendpoint.h"
-#include "innertube/objects/video/video.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
+#include "innertube/responses/browse/subscriptionsresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString continuationToken;
-        QVector<InnertubeObjects::Video> videos;
+        SubscriptionsResponse response;
     private:
         BrowseSubscriptions(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };

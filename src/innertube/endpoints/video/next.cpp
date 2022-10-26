@@ -8,9 +8,7 @@ namespace InnertubeEndpoints
 {
     Next::Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
     {
-        easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/next?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
-        setNeededHeaders(easy, context, authStore);
-
+        QByteArray data;
         QJsonObject body = {
             { "autonavState", "STATE_ON" },
             { "captionsRequested", false },
@@ -20,9 +18,7 @@ namespace InnertubeEndpoints
             { "racyCheckOk", false },
             { "videoId", videoId }
         };
-
-        QByteArray data;
-        getData(easy, body, data);
+        get("next", context, authStore, easy, body, data);
 
         QJsonObject dataObj = QJsonDocument::fromJson(data).object();
         if (tokenIn.isEmpty())
@@ -35,8 +31,8 @@ namespace InnertubeEndpoints
             if (resultContents.isEmpty())
                 throw InnertubeException("[Next] watchNextResults has no contents");
 
-            primaryInfo = InnertubeObjects::VideoPrimaryInfo(resultContents[0].toObject()["videoPrimaryInfoRenderer"]);
-            secondaryInfo = InnertubeObjects::VideoSecondaryInfo(resultContents[1].toObject()["videoSecondaryInfoRenderer"]);
+            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(resultContents[0].toObject()["videoPrimaryInfoRenderer"]);
+            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(resultContents[1].toObject()["videoSecondaryInfoRenderer"]);
         }
         // TODO: comments (and thus continuations)
     }

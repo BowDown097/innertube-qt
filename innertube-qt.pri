@@ -47,7 +47,14 @@ HEADERS += \
     $$PWD/src/innertube/objects/video/videothumbnail.h \
     $$PWD/src/innertube/objects/innertubestring.h \
     $$PWD/src/innertube.h \
-    $$PWD/src/innertube.tpp
+    $$PWD/src/innertube.tpp \
+    $$PWD/src/innertube/responses/browse/historyresponse.h \
+    $$PWD/src/innertube/responses/browse/homeresponse.h \
+    $$PWD/src/innertube/responses/browse/homeshelvesresponse.h \
+    $$PWD/src/innertube/responses/browse/subscriptionsresponse.h \
+    $$PWD/src/innertube/responses/misc/searchresponse.h \
+    $$PWD/src/innertube/responses/video/nextresponse.h \
+    $$PWD/src/innertube/responses/video/playerresponse.h
 
 SOURCES += \
     $$PWD/src/innertube/endpoints/base/basebrowseendpoint.cpp \

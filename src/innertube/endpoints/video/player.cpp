@@ -8,9 +8,7 @@ namespace InnertubeEndpoints
 {
     Player::Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
     {
-        easy->set(CURLOPT_URL, "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
-        setNeededHeaders(easy, context, authStore);
-
+        QByteArray data;
         QJsonObject body = {
             { "contentCheckOk", false },
             { "context", context->toJson() },
@@ -18,11 +16,9 @@ namespace InnertubeEndpoints
             { "racyCheckOk", false },
             { "videoId", videoId }
         };
+        get("player", context, authStore, easy, body, data);
 
-        QByteArray data;
-        getData(easy, body, data);
         QJsonObject dataObj = QJsonDocument::fromJson(data).object();
-
         QJsonObject playabilityObj = dataObj["playabilityStatus"].toObject();
         QString playabilityStatus = playabilityObj["status"].toString();
         if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE")
@@ -34,11 +30,11 @@ namespace InnertubeEndpoints
                 throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(playabilityStatus));
         }
 
-        playbackTracking = InnertubeObjects::PlaybackTracking(dataObj["playbackTracking"].toObject());
-        streamingData = InnertubeObjects::StreamingData(dataObj["streamingData"].toObject());
-        videoDetails = InnertubeObjects::PlayerVideoDetails(dataObj["videoDetails"].toObject());
+        response.playbackTracking = InnertubeObjects::PlaybackTracking(dataObj["playbackTracking"].toObject());
+        response.streamingData = InnertubeObjects::StreamingData(dataObj["streamingData"].toObject());
+        response.videoDetails = InnertubeObjects::PlayerVideoDetails(dataObj["videoDetails"].toObject());
 
         for (auto&& v : dataObj["captions"].toObject()["playerCaptionsTracklistRenderer"].toObject()["captionTracks"].toArray())
-            captions.append(InnertubeObjects::CaptionTrack(v.toObject()));
+            response.captions.append(InnertubeObjects::CaptionTrack(v.toObject()));
     }
 }

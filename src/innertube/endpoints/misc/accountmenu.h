@@ -1,6 +1,6 @@
 #ifndef ACCOUNTMENU_H
 #define ACCOUNTMENU_H
-#include "../base/baseendpoint.h"
+#include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
 {

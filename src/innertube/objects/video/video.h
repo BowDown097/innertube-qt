@@ -1,6 +1,6 @@
 #ifndef VIDEO_H
 #define VIDEO_H
-#include "../innertubestring.h"
+#include "innertube/objects/innertubestring.h"
 #include "videoowner.h"
 #include "videothumbnail.h"
 #include <QJsonObject>

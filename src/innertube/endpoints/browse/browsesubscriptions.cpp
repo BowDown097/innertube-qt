@@ -48,7 +48,7 @@ namespace InnertubeEndpoints
                     {
                         QJsonObject gridVideoRenderer = v3.toObject()["gridVideoRenderer"].toObject();
                         if (gridVideoRenderer.isEmpty()) continue;
-                        videos.append(InnertubeObjects::Video(gridVideoRenderer, true));
+                        response.videos.append(InnertubeObjects::Video(gridVideoRenderer, true));
                     }
                 }
             }

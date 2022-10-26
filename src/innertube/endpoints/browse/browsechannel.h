@@ -1,6 +1,6 @@
 #ifndef BROWSECHANNEL_H
 #define BROWSECHANNEL_H
-#include "../base/basebrowseendpoint.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
 
 namespace InnertubeEndpoints
 {

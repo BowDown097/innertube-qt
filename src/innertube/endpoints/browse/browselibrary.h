@@ -1,6 +1,6 @@
 #ifndef BROWSELIBRARY_H
 #define BROWSELIBRARY_H
-#include "../base/basebrowseendpoint.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
 
 namespace InnertubeEndpoints
 {

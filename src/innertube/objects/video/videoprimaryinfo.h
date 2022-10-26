@@ -1,6 +1,6 @@
 #ifndef VIDEOPRIMARYINFO_H
 #define VIDEOPRIMARYINFO_H
-#include "../innertubestring.h"
+#include "innertube/objects/innertubestring.h"
 #include <QJsonObject>
 #include <QRegularExpression>
 

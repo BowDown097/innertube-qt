@@ -1,6 +1,6 @@
 #ifndef PLAYERVIDEODETAILS_H
 #define PLAYERVIDEODETAILS_H
-#include "../genericthumbnail.h"
+#include "innertube/objects/genericthumbnail.h"
 #include <QList>
 #include <QJsonObject>
 

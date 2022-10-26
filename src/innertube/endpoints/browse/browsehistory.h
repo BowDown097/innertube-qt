@@ -1,7 +1,7 @@
 #ifndef BROWSEHISTORY_H
 #define BROWSEHISTORY_H
-#include "../base/basebrowseendpoint.h"
-#include "innertube/objects/video/video.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
+#include "innertube/responses/browse/historyresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         friend class ::InnerTube;
     public:
         QString continuationToken;
-        QVector<InnertubeObjects::Video> videos;
+        HistoryResponse response;
     private:
         BrowseHistory(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };

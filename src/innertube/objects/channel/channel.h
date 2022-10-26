@@ -1,7 +1,7 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
-#include "../genericthumbnail.h"
-#include "../innertubestring.h"
+#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/innertubestring.h"
 #include <QJsonObject>
 
 namespace InnertubeObjects

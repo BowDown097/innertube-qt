@@ -1,8 +1,7 @@
 #ifndef SEARCH_H
 #define SEARCH_H
-#include "../base/baseendpoint.h"
-#include "innertube/objects/channel/channel.h"
-#include "innertube/objects/video/video.h"
+#include "innertube/endpoints/base/baseendpoint.h"
+#include "innertube/responses/misc/searchresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,10 +9,8 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     public:
-        QVector<InnertubeObjects::Channel> channels;
         QString continuationToken;
-        long estimatedResults;
-        QVector<InnertubeObjects::Video> videos;
+        SearchResponse response;
     private:
         Search(const QString& query, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };
