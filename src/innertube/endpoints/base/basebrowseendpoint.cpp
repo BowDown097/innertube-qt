@@ -26,8 +26,8 @@ namespace InnertubeEndpoints
             throw InnertubeException(QStringLiteral("[%1] %2 not found").arg(name, baseRenderer));
 
         QJsonArray tabs = resultsRenderer["tabs"].toArray();
-        if (tabs.count() != 1)
-            throw InnertubeException(QStringLiteral("[%1] Expected 1 element in tabs, got %2").arg(name, tabs.count()));
+        if (tabs.isEmpty())
+            throw InnertubeException(QStringLiteral("[%1] tabs not found or is empty").arg(name));
 
         QJsonObject tabRenderer = tabs[0].toObject()["tabRenderer"].toObject()["content"].toObject();
         if (tabRenderer.isEmpty())

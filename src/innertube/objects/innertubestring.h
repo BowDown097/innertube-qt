@@ -10,6 +10,7 @@ namespace InnertubeObjects
     public:
         QString accessibilityLabel{}, text{};
         InnertubeString() {}
+        explicit InnertubeString(const QString& text) : accessibilityLabel(text), text(text) {}
         explicit InnertubeString(const QJsonValue& textVal);
 
         bool operator ==(const InnertubeString& s) const { return !text.isEmpty() ? text == s.text : accessibilityLabel == s.accessibilityLabel; }

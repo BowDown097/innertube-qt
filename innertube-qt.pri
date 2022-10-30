@@ -52,6 +52,7 @@ HEADERS += \
     $$PWD/src/innertube/responses/browse/homeresponse.h \
     $$PWD/src/innertube/responses/browse/homeshelvesresponse.h \
     $$PWD/src/innertube/responses/browse/subscriptionsresponse.h \
+    $$PWD/src/innertube/responses/browse/trendingresponse.h \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
     $$PWD/src/innertube/responses/video/playerresponse.h
@@ -63,6 +64,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/browse/browsehome.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehomeshelves.cpp \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.cpp \
+    $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
