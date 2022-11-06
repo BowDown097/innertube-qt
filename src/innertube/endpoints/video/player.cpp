@@ -21,7 +21,7 @@ namespace InnertubeEndpoints
         QJsonObject dataObj = QJsonDocument::fromJson(data).object();
         QJsonObject playabilityObj = dataObj["playabilityStatus"].toObject();
         QString playabilityStatus = playabilityObj["status"].toString();
-        if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE")
+        if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE" && playabilityStatus != "CONTENT_CHECK_REQUIRED")
         {
             QString errorReason = playabilityObj["reason"].toString();
             if (!errorReason.isEmpty())
