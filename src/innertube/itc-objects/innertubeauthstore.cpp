@@ -1,4 +1,5 @@
 #include "innertubeauthstore.h"
+#include "protobuf/simpleprotobuf.h"
 #include <QCryptographicHash>
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
@@ -23,7 +24,7 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     loop.exec();
 
     delete view.page();
-    context->client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
+    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
 }
 
 void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context)
@@ -35,7 +36,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
 
-    context->client.visitorData = QByteArray("\x0a" + uleb128(visitorInfo.length()) + visitorInfo.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
+    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
     populated = true;
 }
 
@@ -56,29 +57,6 @@ QJsonObject InnertubeAuthStore::toJson() const
         { "ssid", ssid },
         { "visitorInfo", visitorInfo }
     };
-}
-
-QByteArray InnertubeAuthStore::uleb128(uint64_t val)
-{
-    uint8_t buf[128];
-    size_t i = 0;
-    do
-    {
-        if (i < 255)
-        {
-            uint8_t b = val & 0x7F;
-            val >>= 7;
-            if (val != 0)
-                b |= 0x80;
-            buf[i++] = b;
-        }
-        else
-        {
-            return 0;
-        }
-    } while (val != 0);
-
-    return QByteArray(reinterpret_cast<char*>(buf), i);
 }
 
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)

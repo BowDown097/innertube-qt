@@ -21,7 +21,7 @@ public:
     { _context = new InnertubeContext(client, clickTracking, requestConfig, userConfig); }
 
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint>
-    T get(const QString& data = "", const QString& continuationToken = "");
+    T get(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
     InnertubeContext* _context = new InnertubeContext;

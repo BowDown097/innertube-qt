@@ -55,7 +55,8 @@ HEADERS += \
     $$PWD/src/innertube/responses/browse/trendingresponse.h \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
-    $$PWD/src/innertube/responses/video/playerresponse.h
+    $$PWD/src/innertube/responses/video/playerresponse.h \
+    $$PWD/src/protobuf/simpleprotobuf.h
 
 SOURCES += \
     $$PWD/src/innertube/endpoints/base/basebrowseendpoint.cpp \
@@ -81,4 +82,5 @@ SOURCES += \
     $$PWD/src/innertube/objects/video/video.cpp \
     $$PWD/src/innertube/objects/video/videoowner.cpp \
     $$PWD/src/innertube/objects/video/videoprimaryinfo.cpp \
-    $$PWD/src/innertube/objects/video/videosecondaryinfo.cpp
+    $$PWD/src/innertube/objects/video/videosecondaryinfo.cpp \
+    $$PWD/src/protobuf/simpleprotobuf.cpp

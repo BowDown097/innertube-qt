@@ -17,8 +17,6 @@ public:
     QString generateSAPISIDHash();
     QString getNecessaryLoginCookies() { return QStringLiteral("SID=%1; HSID=%2; SSID=%3; SAPISID=%4; APISID=%5").arg(sid, hsid, ssid, sapisid, apisid); }
     QJsonObject toJson() const;
-private:
-    QByteArray uleb128(uint64_t val);
 signals:
     void gotSids();
 private slots:
