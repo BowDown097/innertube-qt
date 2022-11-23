@@ -52,26 +52,26 @@ namespace InnertubeEndpoints
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (auto&& v : sectionListRenderer)
+        for (const QJsonValue& v : qAsConst(sectionListRenderer))
         {
-            QJsonObject o = v.toObject();
+            const QJsonObject o = v.toObject();
             if (o.contains("itemSectionRenderer"))
             {
-                QJsonArray itemSectionRenderer = v.toObject()["itemSectionRenderer"].toObject()["contents"].toArray();
+                const QJsonArray itemSectionRenderer = v["itemSectionRenderer"]["contents"].toArray();
                 if (itemSectionRenderer.isEmpty()) continue;
 
-                for (auto&& v2 : itemSectionRenderer)
+                for (const QJsonValue& v2 : itemSectionRenderer)
                 {
-                    QJsonObject o2 = v2.toObject();
+                    const QJsonObject o2 = v2.toObject();
                     if (o2.contains("videoRenderer"))
-                        response.videos.append(InnertubeObjects::Video(o2["videoRenderer"].toObject(), false));
+                        response.videos.append(InnertubeObjects::Video(o2["videoRenderer"], false));
                     else if (o2.contains("channelRenderer"))
-                        response.channels.append(InnertubeObjects::Channel(o2["channelRenderer"].toObject()));
+                        response.channels.append(InnertubeObjects::Channel(o2["channelRenderer"]));
                 }
             }
             else if (o.contains("continuationItemRenderer"))
             {
-                continuationToken = o["continuationItemRenderer"].toObject()["continuationEndpoint"].toObject()["continuationCommand"].toObject()["token"].toString();
+                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }

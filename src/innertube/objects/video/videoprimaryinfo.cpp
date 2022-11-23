@@ -1,15 +1,15 @@
 #include "videoprimaryinfo.h"
 #include <QJsonArray>
+#include <QJsonObject>
 
 namespace InnertubeObjects
 {
     VideoPrimaryInfo::VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer) : dateText(primaryInfoRenderer["dateText"]),
-        relativeDateText(primaryInfoRenderer["relativeDateText"]), title(primaryInfoRenderer["title"]), primaryInfoRenderer(primaryInfoRenderer)
+        relativeDateText(primaryInfoRenderer["relativeDateText"]),
+        shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
+        title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]),
+        primaryInfoRenderer(primaryInfoRenderer)
     {
-        QJsonObject viewCountRenderer = primaryInfoRenderer["viewCount"]["videoViewCountRenderer"].toObject();
-        shortViewCount = InnertubeObjects::InnertubeString(viewCountRenderer["shortViewCount"]);
-        viewCount = InnertubeObjects::InnertubeString(viewCountRenderer["viewCount"]);
-
         // this is awful
         QString likeLabel = retrieveTopLevelButton("watch-like")["toggleButtonRenderer"]["accessibility"]["label"].toString();
         QString countStr;

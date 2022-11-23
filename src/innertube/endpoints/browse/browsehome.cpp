@@ -29,22 +29,18 @@ namespace InnertubeEndpoints
             gridContents = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (auto&& v : gridContents)
+        for (const QJsonValue& v : qAsConst(gridContents))
         {
-            QJsonObject o = v.toObject();
+            const QJsonObject o = v.toObject();
             if (o.contains("richItemRenderer"))
             {
-                QJsonObject richItemRenderer = v.toObject()["richItemRenderer"].toObject();
-                if (richItemRenderer.isEmpty()) continue;
-
-                QJsonObject videoRenderer = richItemRenderer["content"].toObject()["videoRenderer"].toObject();
+                const QJsonObject videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"].toObject();
                 if (videoRenderer.isEmpty()) continue;
-
                 response.videos.append(InnertubeObjects::Video(videoRenderer, false));
             }
             else if (o.contains("continuationItemRenderer"))
             {
-                continuationToken = o["continuationItemRenderer"].toObject()["continuationEndpoint"].toObject()["continuationCommand"].toObject()["token"].toString();
+                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }

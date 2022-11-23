@@ -4,21 +4,17 @@
 
 namespace InnertubeObjects
 {
-    VideoSecondaryInfo::VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer) : description(secondaryInfoRenderer["description"])
+    VideoSecondaryInfo::VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer)
+        : channelId(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["channelId"].toString()),
+          channelName(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["title"]),
+          description(secondaryInfoRenderer["description"]),
+          subscribed(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["subscribed"].toBool()),
+          subscriberCountText(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["subscriberCountText"]),
+          subscriptionsEnabled(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["enabled"].toBool()),
+          subscriptionType(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["type"].toString())
     {
-        QJsonObject videoOwnerRenderer = secondaryInfoRenderer["owner"]["videoOwnerRenderer"].toObject();
-        channelName = InnertubeString(videoOwnerRenderer["title"]);
-        subscriberCountText = InnertubeString(videoOwnerRenderer["subscriberCountText"]);
-        for (auto&& v : videoOwnerRenderer["thumbnail"].toObject()["thumbnails"].toArray())
-        {
-            QJsonObject o = v.toObject();
-            channelIcons.append(GenericThumbnail(o["height"].toInt(), o["url"].toString(), o["width"].toInt()));
-        }
-
-        QJsonObject subscribeButtonRenderer = secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"].toObject();
-        channelId = subscribeButtonRenderer["channelId"].toString();
-        subscribed = subscribeButtonRenderer["subscribed"].toBool();
-        subscriptionsEnabled = subscribeButtonRenderer["enabled"].toBool();
-        subscriptionType = subscribeButtonRenderer["type"].toString();
+        const QJsonArray thumbnails = secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["thumbnail"]["thumbnails"].toArray();
+        for (const QJsonValue& v : thumbnails)
+            channelIcons.append(GenericThumbnail(v["height"].toInt(), v["url"].toString(), v["width"].toInt()));
     }
 }

@@ -20,19 +20,15 @@ namespace InnertubeEndpoints
         };
         get("next", context, authStore, easy, body, data);
 
-        QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
         if (tokenIn.isEmpty())
         {
-            QJsonObject watchNextResults = dataObj["contents"].toObject()["twoColumnWatchNextResults"].toObject();
-            if (watchNextResults.isEmpty())
+            QJsonArray watchNextContents = dataObj["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"].toArray();
+            if (watchNextContents.isEmpty())
                 throw InnertubeException("[Next] watchNextResults not found or is empty");
 
-            QJsonArray resultContents = watchNextResults["results"].toObject()["results"].toObject()["contents"].toArray();
-            if (resultContents.isEmpty())
-                throw InnertubeException("[Next] watchNextResults has no contents");
-
-            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(resultContents[0].toObject()["videoPrimaryInfoRenderer"]);
-            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(resultContents[1].toObject()["videoSecondaryInfoRenderer"]);
+            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(watchNextContents[0].toObject()["videoPrimaryInfoRenderer"]);
+            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(watchNextContents[1].toObject()["videoSecondaryInfoRenderer"]);
         }
         // TODO: comments (and thus continuations)
     }

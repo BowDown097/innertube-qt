@@ -3,16 +3,14 @@
 
 namespace InnertubeObjects
 {
-    Channel::Channel(const QJsonObject& channelRenderer) : channelId(channelRenderer["channelId"].toString()),
+    Channel::Channel(const QJsonValue& channelRenderer) : channelId(channelRenderer["channelId"].toString()),
         descriptionSnippet(InnertubeString(channelRenderer["descriptionSnippet"])),
-        subscribed(channelRenderer["subscriptionButton"].toObject()["subscribed"].toBool()),
+        subscribed(channelRenderer["subscriptionButton"]["subscribed"].toBool()),
         subscriberCountText(InnertubeString(channelRenderer["subscriberCountText"])), title(InnertubeString(channelRenderer["title"])),
         videoCountText(InnertubeString(channelRenderer["videoCountText"]))
     {
-        for (auto&& v : channelRenderer["thumbnail"].toObject()["thumbnails"].toArray())
-        {
-            const QJsonObject& o = v.toObject();
-            thumbnails.append(GenericThumbnail(o["height"].toInt(), "https:" + o["url"].toString(), o["width"].toInt()));
-        }
+        const QJsonArray thumbnailsJson = channelRenderer["thumbnail"]["thumbnails"].toArray();
+        for (const QJsonValue& v : thumbnailsJson)
+            thumbnails.append(GenericThumbnail(v["height"].toInt(), "https:" + v["url"].toString(), v["width"].toInt()));
     }
 }

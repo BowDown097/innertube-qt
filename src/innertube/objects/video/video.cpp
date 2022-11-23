@@ -1,12 +1,14 @@
 #include "video.h"
 #include <QJsonArray>
+#include <QJsonObject>
 #include <QLocale>
 
 namespace InnertubeObjects
 {
-    Video::Video(const QJsonObject& videoRenderer, bool isGridVideo, const InnertubeString& shelf) : shelf(shelf)
+    Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf) : shelf(shelf)
     {
-        isLive = videoRenderer.contains("badges")
+        const QJsonObject rendererObj = videoRenderer.toObject();
+        isLive = rendererObj.contains("badges")
                 ? videoRenderer["badges"].toArray()[0].toObject()["metadataBadgeRenderer"].toObject()["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW"
                 : false;
 
@@ -14,9 +16,10 @@ namespace InnertubeObjects
         {
             if (isGridVideo)
             {
-                for (auto&& v : videoRenderer["thumbnailOverlays"].toArray())
+                const QJsonArray thumbnailOverlays = videoRenderer["thumbnailOverlays"].toArray();
+                for (const QJsonValue& v : thumbnailOverlays)
                 {
-                    QJsonObject timeStatus = v.toObject()["thumbnailOverlayTimeStatusRenderer"].toObject();
+                    const QJsonObject timeStatus = v["thumbnailOverlayTimeStatusRenderer"].toObject();
                     if (timeStatus.isEmpty()) continue;
                     lengthText = InnertubeString(timeStatus["text"]);
                 }
@@ -26,9 +29,9 @@ namespace InnertubeObjects
                 lengthText = InnertubeString(videoRenderer["lengthText"]);
             }
 
-            if (videoRenderer.contains("upcomingEventData"))
+            if (rendererObj.contains("upcomingEventData"))
             {
-                QJsonObject upcomingEventData = videoRenderer["upcomingEventData"].toObject();
+                QJsonValue upcomingEventData = videoRenderer["upcomingEventData"];
                 InnertubeString upcomingEventText = InnertubeString(upcomingEventData["upcomingEventText"]);
                 long startTime = upcomingEventData["startTime"].toString().toLong();
                 QString fmt = QStringLiteral("%1, %2").arg(QLocale::system().dateFormat(QLocale::ShortFormat), QLocale::system().timeFormat(QLocale::ShortFormat));
@@ -50,6 +53,6 @@ namespace InnertubeObjects
         title = InnertubeString(videoRenderer["title"]);
         viewCountText = InnertubeString(videoRenderer["viewCountText"]);
         thumbnail = VideoThumbnail(videoId);
-        startTimeSeconds = videoRenderer["navigationEndpoint"].toObject()["watchEndpoint"].toObject()["startTimeSeconds"].toInt();
+        startTimeSeconds = videoRenderer["navigationEndpoint"]["watchEndpoint"]["startTimeSeconds"].toInt();
     }
 }

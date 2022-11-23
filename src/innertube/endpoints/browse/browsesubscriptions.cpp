@@ -29,24 +29,24 @@ namespace InnertubeEndpoints
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (auto&& v : sectionListRenderer)
+        for (const QJsonValue& v : qAsConst(sectionListRenderer))
         {
-            QJsonObject o = v.toObject();
+            const QJsonObject o = v.toObject();
             if (o.contains("itemSectionRenderer"))
             {
-                QJsonArray itemSectionContents = o["itemSectionRenderer"].toObject()["contents"].toArray();
+                const QJsonArray itemSectionContents = v["itemSectionRenderer"]["contents"].toArray();
                 if (itemSectionContents.isEmpty())
                     throw InnertubeException("[BrowseSubscriptions] itemSectionRenderer not found or has no content");
 
-                for (auto&& v2 : itemSectionContents)
+                for (const QJsonValue& v2 : itemSectionContents)
                 {
-                    QJsonObject shelfRenderer = v2.toObject()["shelfRenderer"].toObject();
+                    const QJsonObject shelfRenderer = v2["shelfRenderer"].toObject();
                     if (shelfRenderer.isEmpty()) continue;
 
-                    QJsonArray gridContents = shelfRenderer["content"].toObject()["gridRenderer"].toObject()["items"].toArray();
-                    for (auto&& v3 : gridContents)
+                    const QJsonArray gridContents = shelfRenderer["content"].toObject()["gridRenderer"].toObject()["items"].toArray();
+                    for (const QJsonValue& v3 : gridContents)
                     {
-                        QJsonObject gridVideoRenderer = v3.toObject()["gridVideoRenderer"].toObject();
+                        const QJsonObject gridVideoRenderer = v3["gridVideoRenderer"].toObject();
                         if (gridVideoRenderer.isEmpty()) continue;
                         response.videos.append(InnertubeObjects::Video(gridVideoRenderer, true));
                     }
@@ -54,7 +54,7 @@ namespace InnertubeEndpoints
             }
             else if (o.contains("continuationItemRenderer"))
             {
-                continuationToken = o["continuationItemRenderer"].toObject()["continuationEndpoint"].toObject()["continuationCommand"].toObject()["token"].toString();
+                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }

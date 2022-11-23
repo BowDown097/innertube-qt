@@ -2,7 +2,7 @@
 #define CHANNEL_H
 #include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/innertubestring.h"
-#include <QJsonObject>
+#include <QJsonValue>
 
 namespace InnertubeObjects
 {
@@ -16,7 +16,7 @@ namespace InnertubeObjects
         QVector<GenericThumbnail> thumbnails;
         InnertubeString title;
         InnertubeString videoCountText;
-        explicit Channel(const QJsonObject& channelRenderer);
+        explicit Channel(const QJsonValue& channelRenderer);
     };
 }
 

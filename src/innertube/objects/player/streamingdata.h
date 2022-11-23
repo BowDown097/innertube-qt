@@ -14,7 +14,7 @@ namespace InnertubeObjects
         QString hlsManifestUrl;
 
         StreamingData() {}
-        explicit StreamingData(const QJsonObject& streamingData);
+        explicit StreamingData(const QJsonValue& streamingData);
     };
 }
 

@@ -3,12 +3,14 @@
 
 namespace InnertubeObjects
 {
-    StreamingData::StreamingData(const QJsonObject& streamingData) : dashManifestUrl(streamingData["dashManifestUrl"].toString()),
+    StreamingData::StreamingData(const QJsonValue& streamingData) : dashManifestUrl(streamingData["dashManifestUrl"].toString()),
         expiresInSeconds(streamingData["expiresInSeconds"].toString()), hlsManifestUrl(streamingData["hlsManifestUrl"].toString())
     {
-        for (auto&& v : streamingData["adaptiveFormats"].toArray())
-            adaptiveFormats.append(StreamingFormat(v.toObject()));
-        for (auto&& v : streamingData["formats"].toArray())
-            formats.append(StreamingFormat(v.toObject()));
+        const QJsonArray adaptiveFormatsJson = streamingData["adaptiveFormats"].toArray();
+        const QJsonArray formatsJson = streamingData["formats"].toArray();
+        for (const QJsonValue& v : adaptiveFormatsJson)
+            adaptiveFormats.append(StreamingFormat(v));
+        for (const QJsonValue& v : formatsJson)
+            formats.append(StreamingFormat(v));
     }
 }

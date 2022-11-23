@@ -29,25 +29,25 @@ namespace InnertubeEndpoints
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (auto&& v : sectionListRenderer)
+        for (const QJsonValue& v : qAsConst(sectionListRenderer))
         {
-            QJsonObject o = v.toObject();
+            const QJsonObject o = v.toObject();
             if (o.contains("itemSectionRenderer"))
             {
-                QJsonArray itemSectionContents = o["itemSectionRenderer"].toObject()["contents"].toArray();
+                const QJsonArray itemSectionContents = v["itemSectionRenderer"]["contents"].toArray();
                 if (itemSectionContents.isEmpty())
                     throw InnertubeException("[BrowseHistory] itemSectionRenderer not found or has no content");
 
-                for (auto&& v2 : itemSectionContents)
+                for (const QJsonValue& v2 : itemSectionContents)
                 {
-                    QJsonObject videoRenderer = v2.toObject()["videoRenderer"].toObject();
+                    const QJsonObject videoRenderer = v2["videoRenderer"].toObject();
                     if (videoRenderer.isEmpty()) continue;
                     response.videos.append(InnertubeObjects::Video(videoRenderer, false));
                 }
             }
             else if (o.contains("continuationItemRenderer"))
             {
-                continuationToken = o["continuationItemRenderer"].toObject()["continuationEndpoint"].toObject()["continuationCommand"].toObject()["token"].toString();
+                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }

@@ -78,7 +78,6 @@ SOURCES += \
     $$PWD/src/innertube/objects/innertubestring.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
-    $$PWD/src/innertube/objects/player/streamingformat.cpp \
     $$PWD/src/innertube/objects/video/video.cpp \
     $$PWD/src/innertube/objects/video/videoowner.cpp \
     $$PWD/src/innertube/objects/video/videoprimaryinfo.cpp \

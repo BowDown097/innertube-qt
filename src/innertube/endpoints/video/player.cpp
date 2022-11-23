@@ -18,23 +18,23 @@ namespace InnertubeEndpoints
         };
         get("player", context, authStore, easy, body, data);
 
-        QJsonObject dataObj = QJsonDocument::fromJson(data).object();
-        QJsonObject playabilityObj = dataObj["playabilityStatus"].toObject();
-        QString playabilityStatus = playabilityObj["status"].toString();
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
+        QString playabilityStatus = dataObj["playabilityStatus"]["status"].toString();
         if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE" && playabilityStatus != "CONTENT_CHECK_REQUIRED")
         {
-            QString errorReason = playabilityObj["reason"].toString();
+            QString errorReason = dataObj["playabilityStatus"]["reason"].toString();
             if (!errorReason.isEmpty())
                 throw InnertubeException(QStringLiteral("[Player] Error: %1 - Playability status: %2").arg(errorReason, playabilityStatus));
             else
                 throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(playabilityStatus));
         }
 
-        response.playbackTracking = InnertubeObjects::PlaybackTracking(dataObj["playbackTracking"].toObject());
-        response.streamingData = InnertubeObjects::StreamingData(dataObj["streamingData"].toObject());
-        response.videoDetails = InnertubeObjects::PlayerVideoDetails(dataObj["videoDetails"].toObject());
+        response.playbackTracking = InnertubeObjects::PlaybackTracking(dataObj["playbackTracking"]);
+        response.streamingData = InnertubeObjects::StreamingData(dataObj["streamingData"]);
+        response.videoDetails = InnertubeObjects::PlayerVideoDetails(dataObj["videoDetails"]);
 
-        for (auto&& v : dataObj["captions"].toObject()["playerCaptionsTracklistRenderer"].toObject()["captionTracks"].toArray())
-            response.captions.append(InnertubeObjects::CaptionTrack(v.toObject()));
+        const QJsonArray captionTracks = dataObj["captions"]["playerCaptionsTracklistRenderer"]["captionTracks"].toArray();
+        for (const QJsonValue& v : captionTracks)
+            response.captions.append(InnertubeObjects::CaptionTrack(v));
     }
 }

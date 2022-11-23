@@ -2,7 +2,7 @@
 #define PLAYERVIDEODETAILS_H
 #include "innertube/objects/genericthumbnail.h"
 #include <QList>
-#include <QJsonObject>
+#include <QJsonValue>
 
 namespace InnertubeObjects
 {
@@ -31,7 +31,7 @@ namespace InnertubeObjects
         QString videoId;
 
         PlayerVideoDetails() {}
-        explicit PlayerVideoDetails(const QJsonObject& videoDetails);
+        explicit PlayerVideoDetails(const QJsonValue& videoDetails);
     };
 }
 

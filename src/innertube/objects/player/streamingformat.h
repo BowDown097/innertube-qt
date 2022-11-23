@@ -1,6 +1,6 @@
 #ifndef STREAMINGFORMAT_H
 #define STREAMINGFORMAT_H
-#include <QJsonObject>
+#include <QJsonValue>
 #include <QString>
 
 namespace InnertubeObjects
@@ -26,7 +26,14 @@ namespace InnertubeObjects
         QString qualityLabel;
         QString url;
         int width;
-        explicit StreamingFormat(const QJsonObject& format);
+        explicit StreamingFormat(const QJsonValue& format) : approxDurationMs(format["approxDurationMs"].toString()),
+            averageBitrate(format["averageBitrate"].toInteger()), bitrate(format["bitrate"].toInteger()),
+            contentLength(format["contentLength"].toString()), fps(format["fps"].toInt()), height(format["height"].toInt()),
+            indexRangeStart(format["indexRange"]["start"].toString()), indexRangeEnd(format["indexRange"]["end"].toString()),
+            initRangeStart(format["initRange"]["start"].toString()), initRangeEnd(format["initRange"]["end"].toString()),
+            itag(format["itag"].toInt()), lastModified(format["lastModified"].toString()), mimeType(format["mimeType"].toString()),
+            projectionType(format["projectionType"].toString()), quality(format["quality"].toString()),
+            qualityLabel(format["qualityLabel"].toString()), url(format["url"].toString()), width(format["width"].toInt()) {}
     };
 }
 
