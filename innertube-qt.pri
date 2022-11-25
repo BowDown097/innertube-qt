@@ -21,6 +21,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/browse/browsetrending.h \
     $$PWD/src/innertube/endpoints/misc/accountmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
+    $$PWD/src/innertube/endpoints/misc/unseencount.h \
     $$PWD/src/innertube/endpoints/video/next.h \
     $$PWD/src/innertube/endpoints/video/player.h \
     $$PWD/src/innertube/endpoints/innertubeendpoints.h \
@@ -68,6 +69,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
+    $$PWD/src/innertube/endpoints/misc/unseencount.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
     $$PWD/src/innertube/endpoints/video/player.cpp \
     $$PWD/src/innertube/itc-objects/innertubeauthstore.cpp \

@@ -35,9 +35,10 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
     sid = obj["sid"].toString();
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
-
     context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-    populated = true;
+
+    if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
+        populated = true;
 }
 
 QString InnertubeAuthStore::generateSAPISIDHash()
@@ -57,6 +58,18 @@ QJsonObject InnertubeAuthStore::toJson() const
         { "ssid", ssid },
         { "visitorInfo", visitorInfo }
     };
+}
+
+void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)
+{
+    apisid = "";
+    hsid = "";
+    populated = false;
+    sapisid = "";
+    sid = "";
+    ssid = "";
+    visitorInfo = "";
+    context->client.visitorData = "";
 }
 
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)

@@ -13,6 +13,7 @@
 #include "browse/browsetrending.h"
 #include "misc/accountmenu.h"
 #include "misc/search.h"
+#include "misc/unseencount.h"
 #include "video/next.h"
 #include "video/player.h"
 
