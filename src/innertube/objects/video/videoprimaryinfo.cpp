@@ -4,11 +4,12 @@
 
 namespace InnertubeObjects
 {
-    VideoPrimaryInfo::VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer) : dateText(primaryInfoRenderer["dateText"]),
-        relativeDateText(primaryInfoRenderer["relativeDateText"]),
-        shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
-        title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]),
-        primaryInfoRenderer(primaryInfoRenderer)
+    VideoPrimaryInfo::VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer)
+        : dateText(primaryInfoRenderer["dateText"]),
+          relativeDateText(primaryInfoRenderer["relativeDateText"]),
+          shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
+          title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]),
+          primaryInfoRenderer(primaryInfoRenderer)
     {
         // this is awful
         QString likeLabel = retrieveTopLevelButton("watch-like")["toggleButtonRenderer"]["accessibility"]["label"].toString();

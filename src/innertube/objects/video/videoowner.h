@@ -8,7 +8,10 @@ namespace InnertubeObjects
     class VideoOwner
     {
     public:
-        QString icon{}, id{}, name{};
+        QString icon;
+        QString id;
+        QString name;
+
         VideoOwner() {}
         VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, bool isGridVideo);
     };

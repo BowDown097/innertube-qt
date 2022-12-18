@@ -15,6 +15,6 @@ namespace InnertubeObjects
     {
         const QJsonArray thumbnails = secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["thumbnail"]["thumbnails"].toArray();
         for (const QJsonValue& v : thumbnails)
-            channelIcons.append(GenericThumbnail(v["height"].toInt(), v["url"].toString(), v["width"].toInt()));
+            channelIcons.append(GenericThumbnail(v));
     }
 }

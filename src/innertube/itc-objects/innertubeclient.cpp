@@ -1,16 +1,32 @@
 #include "innertubeclient.h"
 #include "CurlEasy.h"
 
-InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userInterfaceTheme,
-                                 const QString& browserName, const QString& browserVersion, const QString& clientFormFactor,
-                                 const InnertubeConfigInfo& configInfo, const QString& deviceMake, const QString& deviceModel, const QString& gl,
-                                 const QString& hl, const QString& originalUrl, const QString& osName, const QString& osVersion,
-                                 const QString& remoteHost, int screenDensityFloat, int screenPixelDensity, const QString& timeZone,
-                                 const QString& userAgent)
-    : browserName(browserName), browserVersion(browserVersion), clientFormFactor(clientFormFactor), clientName(clientName), clientVersion(clientVersion),
-      deviceMake(deviceMake), deviceModel(deviceModel), gl(gl), hl(hl), originalUrl(originalUrl), osName(osName), osVersion(osVersion), platform(platform),
-      remoteHost(remoteHost), timeZone(timeZone), userAgent(userAgent), userInterfaceTheme(userInterfaceTheme), configInfo(configInfo),
-      screenDensityFloat(screenDensityFloat), screenPixelDensity(screenPixelDensity)
+InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
+                                 const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
+                                 const QString& clientFormFactor, const InnertubeConfigInfo& configInfo, const QString& deviceMake,
+                                 const QString& deviceModel, const QString& gl, const QString& hl, const QString& originalUrl, const QString& osName,
+                                 const QString& osVersion, const QString& remoteHost, int screenDensityFloat, int screenPixelDensity,
+                                 const QString& timeZone)
+    : browserName(browserName),
+      browserVersion(browserVersion),
+      clientFormFactor(clientFormFactor),
+      clientName(clientName),
+      clientVersion(clientVersion),
+      configInfo(configInfo),
+      deviceMake(deviceMake),
+      deviceModel(deviceModel),
+      gl(gl),
+      hl(hl),
+      originalUrl(originalUrl),
+      osName(osName),
+      osVersion(osVersion),
+      platform(platform),
+      remoteHost(remoteHost),
+      screenDensityFloat(screenDensityFloat),
+      screenPixelDensity(screenPixelDensity),
+      timeZone(timeZone),
+      userAgent(userAgent),
+      userInterfaceTheme(userInterfaceTheme)
 {
     // get home page data
     QString hpData;
@@ -31,7 +47,7 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
 
 QJsonObject InnertubeClient::toJson() const
 {
-    return {
+    QJsonObject object = {
         { "browserName", browserName },
         { "browserVersion", browserVersion },
         { "clientFormFactor", clientFormFactor },
@@ -45,7 +61,6 @@ QJsonObject InnertubeClient::toJson() const
         { "originalUrl", originalUrl },
         { "osName", osName },
         { "osVersion", osVersion },
-        { "platform", platform },
         { "remoteHost", remoteHost },
         { "screenDensityFloat", screenDensityFloat },
         { "screenPixelDensity", screenPixelDensity },
@@ -54,4 +69,9 @@ QJsonObject InnertubeClient::toJson() const
         { "userInterfaceTheme", userInterfaceTheme },
         { "visitorData", visitorData }
     };
+
+    if (!platform.isEmpty())
+        object.insert("platform", platform);
+
+    return object;
 }

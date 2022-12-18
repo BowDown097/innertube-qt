@@ -8,8 +8,13 @@ class InnertubeAuthStore : public QObject
 {
     Q_OBJECT
 public:
+    QString apisid;
+    QString hsid;
     bool populated = false;
-    QString apisid, hsid, sapisid, sid, ssid, visitorInfo;
+    QString sapisid;
+    QString sid;
+    QString ssid;
+    QString visitorInfo;
 
     explicit InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
     void authenticate(InnertubeContext*& context);

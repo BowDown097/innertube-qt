@@ -8,7 +8,9 @@ namespace InnertubeObjects
     class InnertubeString
     {
     public:
-        QString accessibilityLabel{}, text{};
+        QString accessibilityLabel;
+        QString text;
+
         InnertubeString() {}
         explicit InnertubeString(const QString& text) : accessibilityLabel(text), text(text) {}
         explicit InnertubeString(const QJsonValue& textVal);

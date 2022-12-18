@@ -36,6 +36,9 @@ private:
         }();
         return e;
     }
+
+    template<class _Tp, class... _Up>
+    static constexpr bool is_any_v = std::disjunction_v<std::is_same<_Tp, _Up>...>;
 };
 
 #include "innertube.tpp"

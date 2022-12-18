@@ -1,6 +1,6 @@
 #ifndef GENERICTHUMBNAIL_H
 #define GENERICTHUMBNAIL_H
-#include <QString>
+#include <QJsonValue>
 
 namespace InnertubeObjects
 {
@@ -10,7 +10,16 @@ namespace InnertubeObjects
         int height;
         QString url;
         int width;
-        GenericThumbnail(int height, const QString& url, int width) : height(height), url(url), width(width) {}
+
+        GenericThumbnail(const QJsonValue& value)
+            : height(value["height"].toInt()),
+              url(value["url"].toString()),
+              width(value["width"].toInt()) {}
+
+        GenericThumbnail(int height, const QString& url, int width)
+            : height(height),
+              url(url),
+              width(width) {}
     };
 }
 

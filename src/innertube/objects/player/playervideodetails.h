@@ -2,7 +2,6 @@
 #define PLAYERVIDEODETAILS_H
 #include "innertube/objects/genericthumbnail.h"
 #include <QList>
-#include <QJsonValue>
 
 namespace InnertubeObjects
 {

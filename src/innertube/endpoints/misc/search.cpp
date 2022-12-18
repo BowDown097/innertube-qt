@@ -58,8 +58,6 @@ namespace InnertubeEndpoints
             if (o.contains("itemSectionRenderer"))
             {
                 const QJsonArray itemSectionRenderer = v["itemSectionRenderer"]["contents"].toArray();
-                if (itemSectionRenderer.isEmpty()) continue;
-
                 for (const QJsonValue& v2 : itemSectionRenderer)
                 {
                     const QJsonObject o2 = v2.toObject();

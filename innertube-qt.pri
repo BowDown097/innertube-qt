@@ -20,6 +20,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.h \
     $$PWD/src/innertube/endpoints/browse/browsetrending.h \
     $$PWD/src/innertube/endpoints/misc/accountmenu.h \
+    $$PWD/src/innertube/endpoints/misc/getnotificationmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
     $$PWD/src/innertube/endpoints/misc/unseencount.h \
     $$PWD/src/innertube/endpoints/video/next.h \
@@ -36,6 +37,7 @@ HEADERS += \
     $$PWD/src/innertube/itc-objects/innertubeuserconfig.h \
     $$PWD/src/innertube/objects/channel/channel.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
+    $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
     $$PWD/src/innertube/objects/player/playbacktracking.h \
     $$PWD/src/innertube/objects/player/playervideodetails.h \
@@ -49,11 +51,13 @@ HEADERS += \
     $$PWD/src/innertube/objects/innertubestring.h \
     $$PWD/src/innertube.h \
     $$PWD/src/innertube.tpp \
+    $$PWD/src/innertube/responses/browse/channelresponse.h \
     $$PWD/src/innertube/responses/browse/historyresponse.h \
     $$PWD/src/innertube/responses/browse/homeresponse.h \
     $$PWD/src/innertube/responses/browse/homeshelvesresponse.h \
     $$PWD/src/innertube/responses/browse/subscriptionsresponse.h \
     $$PWD/src/innertube/responses/browse/trendingresponse.h \
+    $$PWD/src/innertube/responses/misc/notificationmenuresponse.h \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
     $$PWD/src/innertube/responses/video/playerresponse.h \
@@ -62,12 +66,14 @@ HEADERS += \
 SOURCES += \
     $$PWD/src/innertube/endpoints/base/basebrowseendpoint.cpp \
     $$PWD/src/innertube/endpoints/base/baseendpoint.cpp \
+    $$PWD/src/innertube/endpoints/browse/browsechannel.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehistory.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehome.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehomeshelves.cpp \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.cpp \
     $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \
+    $$PWD/src/innertube/endpoints/misc/getnotificationmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
     $$PWD/src/innertube/endpoints/misc/unseencount.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
@@ -78,6 +84,7 @@ SOURCES += \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.cpp \
     $$PWD/src/innertube/objects/channel/channel.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
+    $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
     $$PWD/src/innertube/objects/video/video.cpp \

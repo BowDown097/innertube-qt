@@ -12,6 +12,7 @@
 #include "browse/browsesubscriptions.h"
 #include "browse/browsetrending.h"
 #include "misc/accountmenu.h"
+#include "misc/getnotificationmenu.h"
 #include "misc/search.h"
 #include "misc/unseencount.h"
 #include "video/next.h"

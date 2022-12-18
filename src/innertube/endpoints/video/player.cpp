@@ -10,10 +10,10 @@ namespace InnertubeEndpoints
     {
         QByteArray data;
         QJsonObject body = {
-            { "contentCheckOk", false },
+            { "contentCheckOk", true },
             { "context", context->toJson() },
             { "playbackContext", InnertubePlaybackContext(true, QStringLiteral("/watch?v=%1").arg(videoId)).toJson() },
-            { "racyCheckOk", false },
+            { "racyCheckOk", true },
             { "videoId", videoId }
         };
         get("player", context, authStore, easy, body, data);
