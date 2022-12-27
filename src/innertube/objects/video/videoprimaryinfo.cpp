@@ -28,7 +28,7 @@ namespace InnertubeObjects
     {
         QJsonArray topLevelButtons = primaryInfoRenderer["videoActions"]["menuRenderer"]["topLevelButtons"].toArray();
         if (topLevelButtons.isEmpty()) return QJsonValue();
-        return *std::ranges::find_if(topLevelButtons, [&targetId](const QJsonValue& v) {
+        return *std::find_if(topLevelButtons.cbegin(), topLevelButtons.cend(), [&targetId](const QJsonValue& v) {
             return (*v.toObject().constBegin()).toObject()["targetId"].toString() == targetId;
         });
     }
