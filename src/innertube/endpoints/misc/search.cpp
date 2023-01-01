@@ -64,7 +64,7 @@ namespace InnertubeEndpoints
                     if (o2.contains("videoRenderer"))
                         response.videos.append(InnertubeObjects::Video(o2["videoRenderer"], false));
                     else if (o2.contains("channelRenderer"))
-                        response.channels.append(InnertubeObjects::Channel(o2["channelRenderer"]));
+                        response.channels.append(InnertubeObjects::SearchChannel(o2["channelRenderer"]));
                 }
             }
             else if (o.contains("continuationItemRenderer"))

@@ -1,4 +1,5 @@
 #include "browsechannel.h"
+#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -17,5 +18,8 @@ namespace InnertubeEndpoints
 
         QByteArray data;
         get("browse", context, authStore, easy, body, data);
+
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
+        response.header.append(InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]));
     }
 }

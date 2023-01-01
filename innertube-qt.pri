@@ -35,8 +35,14 @@ HEADERS += \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.h \
     $$PWD/src/innertube/itc-objects/innertuberequestconfig.h \
     $$PWD/src/innertube/itc-objects/innertubeuserconfig.h \
-    $$PWD/src/innertube/objects/channel/channel.h \
+    $$PWD/src/innertube/objects/channel/channelheader.h \
+    $$PWD/src/innertube/objects/channel/channelheaderlink.h \
+    $$PWD/src/innertube/objects/channel/searchchannel.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
+    $$PWD/src/innertube/objects/navigation/commandmetadata.h \
+    $$PWD/src/innertube/objects/navigation/navigationbrowseendpoint.h \
+    $$PWD/src/innertube/objects/navigation/navigationendpoint.h \
+    $$PWD/src/innertube/objects/navigation/urlendpoint.h \
     $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
     $$PWD/src/innertube/objects/player/playbacktracking.h \
@@ -82,8 +88,10 @@ SOURCES += \
     $$PWD/src/innertube/itc-objects/innertubeclient.cpp \
     $$PWD/src/innertube/itc-objects/innertubecontext.cpp \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.cpp \
-    $$PWD/src/innertube/objects/channel/channel.cpp \
+    $$PWD/src/innertube/objects/channel/channelheader.cpp \
+    $$PWD/src/innertube/objects/channel/searchchannel.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
+    $$PWD/src/innertube/objects/navigation/commandmetadata.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
