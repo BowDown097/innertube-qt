@@ -6,6 +6,7 @@ namespace InnertubeObjects
     ChannelHeader::ChannelHeader(const QJsonValue& headerRenderer)
         : channelHandleText(headerRenderer["channelHandleText"]),
           channelId(headerRenderer["channelId"].toString()),
+          subscribeButton(headerRenderer["subscribeButton"]["subscribeButtonRenderer"]),
           subscriberCountText(headerRenderer["subscriberCountText"]),
           title(headerRenderer["title"].toString()),
           videosCountText(headerRenderer["videosCountText"])

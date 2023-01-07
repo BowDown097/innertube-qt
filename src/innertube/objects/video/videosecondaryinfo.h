@@ -1,7 +1,7 @@
 #ifndef VIDEOSECONDARYINFO_H
 #define VIDEOSECONDARYINFO_H
 #include "innertube/objects/genericthumbnail.h"
-#include "innertube/objects/innertubestring.h"
+#include "innertube/objects/channel/subscribebutton.h"
 
 namespace InnertubeObjects
 {
@@ -9,13 +9,10 @@ namespace InnertubeObjects
     {
     public:
         QList<GenericThumbnail> channelIcons;
-        QString channelId;
         InnertubeString channelName;
-        InnertubeString description; // this will be more complex later for easy usage of timestamps, urls, etc.
-        bool subscribed;
+        InnertubeString description;
+        SubscribeButton subscribeButton;
         InnertubeString subscriberCountText;
-        bool subscriptionsEnabled;
-        QString subscriptionType;
 
         VideoSecondaryInfo() {}
         explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer);

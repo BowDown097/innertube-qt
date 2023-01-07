@@ -5,13 +5,10 @@
 namespace InnertubeObjects
 {
     VideoSecondaryInfo::VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer)
-        : channelId(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["channelId"].toString()),
-          channelName(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["title"]),
+        : channelName(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["title"]),
           description(secondaryInfoRenderer["description"]),
-          subscribed(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["subscribed"].toBool()),
-          subscriberCountText(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["subscriberCountText"]),
-          subscriptionsEnabled(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["enabled"].toBool()),
-          subscriptionType(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]["type"].toString())
+          subscribeButton(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]),
+          subscriberCountText(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["subscriberCountText"])
     {
         const QJsonArray thumbnails = secondaryInfoRenderer["owner"]["videoOwnerRenderer"]["thumbnail"]["thumbnails"].toArray();
         for (const QJsonValue& v : thumbnails)

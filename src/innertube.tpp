@@ -1,7 +1,7 @@
 #ifndef INNERTUBE_TPP
 #define INNERTUBE_TPP
 
-template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint>
+template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
 T InnerTube::get(const QString& data, const QString& continuationToken, const QString& params)
 {
     if constexpr (std::is_same_v<T, InnertubeEndpoints::Player>)

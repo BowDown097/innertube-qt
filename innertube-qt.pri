@@ -23,6 +23,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
     $$PWD/src/innertube/endpoints/misc/unseencount.h \
+    $$PWD/src/innertube/endpoints/subscription/subscribe.h \
     $$PWD/src/innertube/endpoints/video/next.h \
     $$PWD/src/innertube/endpoints/video/player.h \
     $$PWD/src/innertube/endpoints/innertubeendpoints.h \
@@ -38,10 +39,12 @@ HEADERS += \
     $$PWD/src/innertube/objects/channel/channelheader.h \
     $$PWD/src/innertube/objects/channel/channelheaderlink.h \
     $$PWD/src/innertube/objects/channel/searchchannel.h \
+    $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
     $$PWD/src/innertube/objects/navigation/commandmetadata.h \
     $$PWD/src/innertube/objects/navigation/navigationbrowseendpoint.h \
     $$PWD/src/innertube/objects/navigation/navigationendpoint.h \
+    $$PWD/src/innertube/objects/navigation/navigationsubscribeendpoint.h \
     $$PWD/src/innertube/objects/navigation/urlendpoint.h \
     $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
@@ -82,6 +85,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
     $$PWD/src/innertube/endpoints/misc/unseencount.cpp \
+    $$PWD/src/innertube/endpoints/subscription/subscribe.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
     $$PWD/src/innertube/endpoints/video/player.cpp \
     $$PWD/src/innertube/itc-objects/innertubeauthstore.cpp \
@@ -90,8 +94,10 @@ SOURCES += \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.cpp \
     $$PWD/src/innertube/objects/channel/channelheader.cpp \
     $$PWD/src/innertube/objects/channel/searchchannel.cpp \
+    $$PWD/src/innertube/objects/channel/subscribebutton.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
     $$PWD/src/innertube/objects/navigation/commandmetadata.cpp \
+    $$PWD/src/innertube/objects/navigation/navigationsubscribeendpoint.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \

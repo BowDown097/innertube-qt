@@ -1,6 +1,7 @@
 #ifndef CHANNELHEADER_H
 #define CHANNELHEADER_H
 #include "channelheaderlink.h"
+#include "subscribebutton.h"
 #include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/innertubestring.h"
 
@@ -15,8 +16,8 @@ namespace InnertubeObjects
         QString channelId;
         QList<GenericThumbnail> mobileBanner;
         QList<ChannelHeaderLink> primaryLinks;
-        // TODO: subscribeButton
         QList<ChannelHeaderLink> secondaryLinks;
+        SubscribeButton subscribeButton;
         InnertubeString subscriberCountText;
         QString title;
         QList<GenericThumbnail> tvBanner;

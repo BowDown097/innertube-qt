@@ -21,8 +21,11 @@ public:
                        const InnertubeUserConfig& userConfig = InnertubeUserConfig())
     { _context = new InnertubeContext(client, clickTracking, requestConfig, userConfig); }
 
-    template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint>
+    template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
     T get(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
+
+    void subscribe(const InnertubeObjects::NavigationSubscribeEndpoint& endpoint, bool subscribing)
+    { InnertubeEndpoints::Subscribe(endpoint.channelIds, endpoint.params, subscribing, _context, easy(), _authStore); }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
     InnertubeContext* _context = new InnertubeContext;
