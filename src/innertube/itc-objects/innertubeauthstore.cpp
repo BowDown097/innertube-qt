@@ -41,6 +41,20 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
         populated = true;
 }
 
+void InnertubeAuthStore::authenticateFromSettings(const QSettings& settings, InnertubeContext*& context)
+{
+    apisid = settings.value("apisid").toString();
+    hsid = settings.value("hsid").toString();
+    sapisid = settings.value("sapisid").toString();
+    sid = settings.value("sid").toString();
+    ssid = settings.value("ssid").toString();
+    visitorInfo = settings.value("visitorInfo").toString();
+    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
+
+    if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
+        populated = true;
+}
+
 QString InnertubeAuthStore::generateSAPISIDHash()
 {
     QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
@@ -70,6 +84,16 @@ void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)
     ssid = "";
     visitorInfo = "";
     context->client.visitorData = "";
+}
+
+void InnertubeAuthStore::writeToSettings(QSettings& settings)
+{
+    settings.setValue("apisid", apisid);
+    settings.setValue("hsid", hsid);
+    settings.setValue("sapisid", sapisid);
+    settings.setValue("sid", sid);
+    settings.setValue("ssid", ssid);
+    settings.setValue("visitorInfo", visitorInfo);
 }
 
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
