@@ -11,7 +11,6 @@ namespace InnertubeEndpoints
         int unseenCount;
     private:
         UnseenCount(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
-        QJsonValue rfind(const QString& key, const QJsonValue& val);
     };
 }
 

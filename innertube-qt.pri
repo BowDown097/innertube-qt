@@ -70,6 +70,7 @@ HEADERS += \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
     $$PWD/src/innertube/responses/video/playerresponse.h \
+    $$PWD/src/jsonutil.h \
     $$PWD/src/protobuf/simpleprotobuf.h
 
 SOURCES += \
@@ -105,4 +106,5 @@ SOURCES += \
     $$PWD/src/innertube/objects/video/videoowner.cpp \
     $$PWD/src/innertube/objects/video/videoprimaryinfo.cpp \
     $$PWD/src/innertube/objects/video/videosecondaryinfo.cpp \
+    $$PWD/src/jsonutil.cpp \
     $$PWD/src/protobuf/simpleprotobuf.cpp

@@ -1,6 +1,7 @@
 #include "next.h"
 #include "innertube/innertubeexception.h"
 #include "innertube/itc-objects/innertubeplaybackcontext.h"
+#include "jsonutil.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 
@@ -27,8 +28,8 @@ namespace InnertubeEndpoints
             if (watchNextContents.isEmpty())
                 throw InnertubeException("[Next] watchNextResults not found or is empty");
 
-            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(watchNextContents[0].toObject()["videoPrimaryInfoRenderer"]);
-            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(watchNextContents[1].toObject()["videoSecondaryInfoRenderer"]);
+            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(JsonUtil::rfind("videoPrimaryInfoRenderer", watchNextContents));
+            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(JsonUtil::rfind("videoSecondaryInfoRenderer", watchNextContents));
         }
         // TODO: comments (and thus continuations)
     }
