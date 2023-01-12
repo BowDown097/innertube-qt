@@ -1,9 +1,12 @@
 #ifndef INNERTUBEAUTHSTORE_H
 #define INNERTUBEAUTHSTORE_H
 #include "innertubecontext.h"
-#include <QNetworkCookie>
 #include <QObject>
 #include <QSettings>
+
+#ifndef NO_WEBENGINE
+#include <QNetworkCookie>
+#endif
 
 class InnertubeAuthStore : public QObject
 {
@@ -28,8 +31,10 @@ public:
     void unauthenticate(InnertubeContext*& context);
 signals:
     void gotSids();
+#ifndef NO_WEBENGINE
 private slots:
     void cookieAdded(const QNetworkCookie& cookie);
+#endif
 };
 
 #endif // INNERTUBEAUTHSTORE_H

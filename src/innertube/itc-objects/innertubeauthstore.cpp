@@ -1,12 +1,19 @@
 #include "innertubeauthstore.h"
 #include "protobuf/simpleprotobuf.h"
 #include <QCryptographicHash>
+
+#ifndef NO_WEBENGINE
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
+#else
+#include "settingsstore.h"
+#include <QMessageBox>
+#endif
 
 void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 {
+#ifndef NO_WEBENGINE
     QWidget authWindow;
     authWindow.setFixedSize(authWindow.size());
     authWindow.setWindowTitle("YouTube Login");
@@ -25,6 +32,27 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 
     delete view.page();
     context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
+#else
+    QMessageBox::StandardButton box = QMessageBox::information(nullptr, "YouTube Login",
+        QStringLiteral("Could not bring up the YouTube login page because the Qt web engine is not available.\n") +
+        QStringLiteral("You will need to provide authentication credentials manually to log in.\n") +
+        QStringLiteral("For info on how to do this, see https://github.com/BowDown097/innertube-qt/wiki/Manually-getting-login-credentials."));
+    if (box != QMessageBox::StandardButton::Ok)
+        return;
+
+    QSettings store(SettingsStore::configPath.filePath("store.ini"), QSettings::IniFormat);
+    authenticateFromSettings(store, context);
+    if (!populated)
+    {
+        QMessageBox::information(nullptr, "Not Logged In",
+            QStringLiteral("You didn't provide authentication credentials or the credentials you provided weren't accepted.\n") +
+            QStringLiteral("If you provided credentials, please check them (refer back to the previously linked guide?) and try again."));
+        return;
+    }
+
+    SettingsStore::instance().restoreLogin = true;
+    SettingsStore::instance().saveToSettingsFile();
+#endif
 }
 
 void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context)
@@ -96,6 +124,7 @@ void InnertubeAuthStore::writeToSettings(QSettings& settings)
     settings.setValue("visitorInfo", visitorInfo);
 }
 
+#ifndef NO_WEBENGINE
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
 {
     if (cookie.name() == "APISID")
@@ -117,3 +146,4 @@ void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
         emit gotSids();
     }
 }
+#endif
