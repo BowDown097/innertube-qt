@@ -1,4 +1,5 @@
 #include "videoprimaryinfo.h"
+#include "jsonutil.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -8,11 +9,14 @@ namespace InnertubeObjects
         : dateText(primaryInfoRenderer["dateText"]),
           relativeDateText(primaryInfoRenderer["relativeDateText"]),
           shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
-          title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]),
-          primaryInfoRenderer(primaryInfoRenderer)
+          title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"])
     {
         // this is awful
-        QString likeLabel = retrieveTopLevelButton("watch-like")["toggleButtonRenderer"]["accessibility"]["label"].toString();
+        QJsonValue likeButton = JsonUtil::rfind("likeButton", primaryInfoRenderer["videoActions"]["menuRenderer"]["topLevelButtons"]);
+        QString likeLabel = likeButton["toggleButtonRenderer"]["defaultText"]["accessibility"]["accessibilityData"]["label"].toString();
+        if (likeLabel.isEmpty())
+            return;
+
         QString countStr;
         QRegularExpressionMatchIterator i = numberRegex.globalMatch(likeLabel);
         while (i.hasNext())
@@ -22,14 +26,5 @@ namespace InnertubeObjects
         }
 
         likeCount = countStr.toInt();
-    }
-
-    QJsonValue VideoPrimaryInfo::retrieveTopLevelButton(const QString& targetId)
-    {
-        QJsonArray topLevelButtons = primaryInfoRenderer["videoActions"]["menuRenderer"]["topLevelButtons"].toArray();
-        if (topLevelButtons.isEmpty()) return QJsonValue();
-        return *std::find_if(topLevelButtons.cbegin(), topLevelButtons.cend(), [&targetId](const QJsonValue& v) {
-            return (*v.toObject().constBegin()).toObject()["targetId"].toString() == targetId;
-        });
     }
 }

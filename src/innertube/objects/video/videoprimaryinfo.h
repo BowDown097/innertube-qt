@@ -20,8 +20,6 @@ namespace InnertubeObjects
         explicit VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer);
     private:
         static inline const QRegularExpression numberRegex = QRegularExpression("\\d");
-        QJsonValue primaryInfoRenderer;
-        QJsonValue retrieveTopLevelButton(const QString& targetId);
     };
 }
 
