@@ -9,7 +9,7 @@ namespace InnertubeEndpoints
     Player::Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
     {
         QByteArray data;
-        QJsonObject body = {
+        const QJsonObject body {
             { "contentCheckOk", true },
             { "context", context->toJson() },
             { "playbackContext", InnertubePlaybackContext(true, QStringLiteral("/watch?v=%1").arg(videoId)).toJson() },

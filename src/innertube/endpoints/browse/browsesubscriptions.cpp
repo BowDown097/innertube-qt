@@ -11,18 +11,18 @@ namespace InnertubeEndpoints
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            QJsonObject tabRenderer = getTabRenderer("BrowseSubscriptions");
-            sectionListRenderer = tabRenderer["sectionListRenderer"].toObject()["contents"].toArray();
+            const QJsonObject tabRenderer = getTabRenderer("BrowseSubscriptions");
+            sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[BrowseSubscriptions] sectionListRenderer has no contents");
         }
         else
         {
-            QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
 
-            QJsonObject appendItemsAction = onResponseReceivedActions[0].toObject()["appendContinuationItemsAction"].toObject();
+            const QJsonObject appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"].toObject();
             if (appendItemsAction.isEmpty())
                 throw InnertubeException("[BrowseSubscriptions] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
@@ -43,7 +43,7 @@ namespace InnertubeEndpoints
                     const QJsonObject shelfRenderer = v2["shelfRenderer"].toObject();
                     if (shelfRenderer.isEmpty()) continue;
 
-                    const QJsonArray gridContents = shelfRenderer["content"].toObject()["gridRenderer"].toObject()["items"].toArray();
+                    const QJsonArray gridContents = shelfRenderer["content"]["gridRenderer"]["items"].toArray();
                     for (const QJsonValue& v3 : gridContents)
                     {
                         const QJsonObject gridVideoRenderer = v3["gridVideoRenderer"].toObject();

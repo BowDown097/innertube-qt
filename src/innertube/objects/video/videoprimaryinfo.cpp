@@ -11,7 +11,7 @@ namespace InnertubeObjects
           shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
           title(primaryInfoRenderer["title"]), viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"])
     {
-        // this is awful
+        // TODO: replace all this trash with actual ToggleButton class
         QJsonValue likeButton = JsonUtil::rfind("likeButton", primaryInfoRenderer["videoActions"]["menuRenderer"]["topLevelButtons"]);
         QString likeLabel = likeButton["toggleButtonRenderer"]["defaultText"]["accessibility"]["accessibilityData"]["label"].toString();
         if (likeLabel.isEmpty())

@@ -21,31 +21,31 @@ namespace InnertubeEndpoints
         QByteArray data;
         get("search", context, authStore, easy, body, data);
 
-        QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+        const QJsonObject dataObj = QJsonDocument::fromJson(data).object();
         response.estimatedResults = dataObj["estimatedResults"].toString().toLong();
 
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            QJsonObject contents = dataObj["contents"].toObject();
+            const QJsonObject contents = dataObj["contents"].toObject();
             if (contents.isEmpty())
                 throw InnertubeException("[Search] contents not found");
 
-            QJsonObject resultsRenderer = contents["twoColumnSearchResultsRenderer"].toObject();
+            const QJsonObject resultsRenderer = contents["twoColumnSearchResultsRenderer"].toObject();
             if (resultsRenderer.isEmpty())
                 throw InnertubeException("[Search] twoColumnSearchResultsRenderer not found");
 
-            sectionListRenderer = resultsRenderer["primaryContents"].toObject()["sectionListRenderer"].toObject()["contents"].toArray();
+            sectionListRenderer = resultsRenderer["primaryContents"]["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[Search] sectionListRenderer not found or is empty");
         }
         else
         {
-            QJsonArray onResponseReceivedCommands = dataObj["onResponseReceivedCommands"].toArray();
+            const QJsonArray onResponseReceivedCommands = dataObj["onResponseReceivedCommands"].toArray();
             if (onResponseReceivedCommands.isEmpty())
                 throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Minor); // this can just happen sometimes
 
-            QJsonObject appendItemsAction = onResponseReceivedCommands[0].toObject()["appendContinuationItemsAction"].toObject();
+            const QJsonObject appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"].toObject();
             if (appendItemsAction.isEmpty())
                 throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 

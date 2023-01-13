@@ -47,7 +47,7 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
 
 QJsonObject InnertubeClient::toJson() const
 {
-    QJsonObject object = {
+    QJsonObject object {
         { "browserName", browserName },
         { "browserVersion", browserVersion },
         { "clientFormFactor", clientFormFactor },

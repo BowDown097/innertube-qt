@@ -11,18 +11,18 @@ namespace InnertubeEndpoints
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            QJsonObject tabRenderer = getTabRenderer("BrowseHistory");
-            sectionListRenderer = tabRenderer["sectionListRenderer"].toObject()["contents"].toArray();
+            const QJsonObject tabRenderer = getTabRenderer("BrowseHistory");
+            sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
         }
         else
         {
-            QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHistory] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
 
-            QJsonObject appendItemsAction = onResponseReceivedActions[0].toObject()["appendContinuationItemsAction"].toObject();
+            const QJsonObject appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"].toObject();
             if (appendItemsAction.isEmpty())
                 throw InnertubeException("[BrowseHistory] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 

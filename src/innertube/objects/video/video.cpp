@@ -7,10 +7,8 @@ namespace InnertubeObjects
 {
     Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf) : shelf(shelf)
     {
-        const QJsonObject rendererObj = videoRenderer.toObject();
-        isLive = rendererObj.contains("badges")
-                ? videoRenderer["badges"].toArray()[0].toObject()["metadataBadgeRenderer"].toObject()["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW"
-                : false;
+        const QJsonArray badges = videoRenderer["badges"].toArray();
+        isLive = badges.isEmpty() ? badges[0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW" : false;
 
         if (!isLive) // lengthText and publishedTimeText do not exist for live videos
         {
@@ -29,7 +27,7 @@ namespace InnertubeObjects
                 lengthText = InnertubeString(videoRenderer["lengthText"]);
             }
 
-            if (rendererObj.contains("upcomingEventData"))
+            if (videoRenderer.toObject().contains("upcomingEventData"))
             {
                 QJsonValue upcomingEventData = videoRenderer["upcomingEventData"];
                 InnertubeString upcomingEventText = InnertubeString(upcomingEventData["upcomingEventText"]);

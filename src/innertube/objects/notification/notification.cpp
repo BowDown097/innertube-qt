@@ -11,7 +11,7 @@ namespace InnertubeObjects
           sentTimeText(notificationRenderer["sentTimeText"]["simpleText"].toString()),
           videoThumbnail(notificationRenderer["videoThumbnail"]["thumbnails"][0])
     {
-        QJsonObject navigationEndpoint = notificationRenderer["navigationEndpoint"].toObject();
+        const QJsonObject navigationEndpoint = notificationRenderer["navigationEndpoint"].toObject();
         bool hasCommentsCommand = navigationEndpoint.contains("getCommentsFromInboxCommand");
         QJsonValue command = hasCommentsCommand
                 ? navigationEndpoint["getCommentsFromInboxCommand"]

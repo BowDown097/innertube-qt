@@ -7,8 +7,8 @@ namespace InnertubeEndpoints
     BrowseTrending::BrowseTrending(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
         : BaseBrowseEndpoint("FEtrending", context, easy, authStore)
     {
-        QJsonObject tabRenderer = getTabRenderer("BrowseTrending");
-        const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"].toObject()["contents"].toArray();
+        const QJsonObject tabRenderer = getTabRenderer("BrowseTrending");
+        const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
         if (sectionListRenderer.isEmpty())
             throw InnertubeException("[BrowseTrending] sectionListRenderer has no contents");
 
@@ -18,11 +18,11 @@ namespace InnertubeEndpoints
             if (itemSectionContents.isEmpty())
                 throw InnertubeException("[BrowseTrending] itemSectionRenderer not found or has no content");
 
-            const QJsonObject shelfRenderer = itemSectionContents[0].toObject()["shelfRenderer"].toObject();
+            const QJsonObject shelfRenderer = itemSectionContents[0]["shelfRenderer"].toObject();
             const QJsonObject shelfContent = shelfRenderer["content"].toObject();
             if (shelfContent.isEmpty()) continue;
 
-            InnertubeObjects::InnertubeString shelfTitle = shelfRenderer.contains("title")
+            auto shelfTitle = shelfRenderer.contains("title")
                     ? InnertubeObjects::InnertubeString(shelfRenderer["title"])
                     : InnertubeObjects::InnertubeString(QString("Now"));
             if (!response.shelves.contains(shelfTitle))

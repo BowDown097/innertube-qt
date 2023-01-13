@@ -11,18 +11,18 @@ namespace InnertubeEndpoints
         QJsonArray gridContents;
         if (tokenIn.isEmpty())
         {
-            QJsonObject tabRenderer = getTabRenderer("BrowseHome");
-            gridContents = tabRenderer["richGridRenderer"].toObject()["contents"].toArray();
+            const QJsonObject tabRenderer = getTabRenderer("BrowseHome");
+            gridContents = tabRenderer["richGridRenderer"]["contents"].toArray();
             if (gridContents.isEmpty())
                 throw InnertubeException("[BrowseHome] richGridRenderer has no contents");
         }
         else
         {
-            QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHome] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
 
-            QJsonObject appendItemsAction = onResponseReceivedActions[0].toObject()["appendContinuationItemsAction"].toObject();
+            const QJsonObject appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"].toObject();
             if (appendItemsAction.isEmpty())
                 throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 

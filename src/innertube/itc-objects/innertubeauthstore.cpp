@@ -25,9 +25,9 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     view.load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
     view.show();
 
-    QObject::connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
+    connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
     QEventLoop loop;
-    QObject::connect(this, &InnertubeAuthStore::gotSids, &loop, &QEventLoop::quit);
+    connect(this, &InnertubeAuthStore::gotSids, &loop, &QEventLoop::quit);
     loop.exec();
 
     delete view.page();

@@ -5,7 +5,7 @@ namespace InnertubeEndpoints
     AccountMenu::AccountMenu(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
     {
         QByteArray data;
-        QJsonObject body = {
+        const QJsonObject body {
             { "context", context->toJson() },
             { "deviceTheme", "DEVICE_THEME_SUPPORTED" },
             { "userInterfaceTheme", context->client.userInterfaceTheme }

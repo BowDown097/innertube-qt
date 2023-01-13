@@ -16,10 +16,10 @@ namespace InnertubeEndpoints
         QByteArray data;
         get("notification/get_notification_menu", context, authStore, easy, body, data);
 
-        QJsonObject action = QJsonDocument::fromJson(data).object()["actions"][0].toObject();
+        const QJsonObject action = QJsonDocument::fromJson(data).object()["actions"][0].toObject();
         if (action.contains("openPopupAction"))
         {
-            QJsonValue menuRenderer = action["openPopupAction"].toObject()["popup"].toObject()["multiPageMenuRenderer"];
+            QJsonValue menuRenderer = action["openPopupAction"]["popup"]["multiPageMenuRenderer"];
             response.headerTitle = menuRenderer["header"]["simpleMenuHeaderRenderer"]["title"]["simpleText"].toString();
             response.multiPageMenuStyle = menuRenderer["style"].toString();
 
@@ -35,7 +35,7 @@ namespace InnertubeEndpoints
         }
         else if (action.contains("appendContinuationItemsAction"))
         {
-            const QJsonArray continuationItems = action["appendContinuationItemsAction"].toObject()["continuationItems"].toArray();
+            const QJsonArray continuationItems = action["appendContinuationItemsAction"]["continuationItems"].toArray();
             for (const QJsonValue& v : continuationItems)
             {
                 const QJsonObject o = v.toObject();

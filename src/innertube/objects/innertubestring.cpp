@@ -5,22 +5,17 @@
 namespace InnertubeObjects
 {
     InnertubeString::InnertubeString(const QJsonValue& textVal)
+        : accessibilityLabel(textVal["accessibility"]["accessibilityData"]["label"].toString())
     {
-        QJsonObject obj = textVal.toObject();
-        if (obj.contains("simpleText"))
+        if (textVal.toObject().contains("simpleText"))
         {
-            text = obj["simpleText"].toString();
+            text = textVal["simpleText"].toString();
         }
         else
         {
-            const QJsonArray runs = obj["runs"].toArray();
-            text = std::accumulate(runs.cbegin(), runs.cend(), QString(), [](const QString& result, const QJsonValue& v) {
-                return result + v["text"].toString();
-            });
+            const QJsonArray runs = textVal["runs"].toArray();
+            for (const QJsonValue& v : runs)
+                text += v["text"].toString();
         }
-
-        QJsonObject accessibility = obj["accessibility"].toObject();
-        if (!accessibility.isEmpty())
-            accessibilityLabel = accessibility["accessibilityData"].toObject()["label"].toString();
     }
 }

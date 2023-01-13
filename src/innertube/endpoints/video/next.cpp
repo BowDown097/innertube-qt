@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
     Next::Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
     {
         QByteArray data;
-        QJsonObject body = {
+        const QJsonObject body {
             { "autonavState", "STATE_ON" },
             { "captionsRequested", false },
             { "contentCheckOk", false },
