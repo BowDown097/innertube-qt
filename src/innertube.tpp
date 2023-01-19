@@ -1,8 +1,28 @@
 #ifndef INNERTUBE_TPP
 #define INNERTUBE_TPP
+#include <QTimer>
 
 template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
-T InnerTube::get(const QString& data, const QString& continuationToken, const QString& params)
+InnertubeReply* InnerTube::get(const QString& data, const QString& continuationToken, const QString& params)
+{
+    InnertubeReply* reply = new InnertubeReply;
+    QTimer::singleShot(0, reply, [this, reply, data, continuationToken, params]
+    {
+        try
+        {
+            T endpoint = getBlocking<T>(data, continuationToken, params);
+            emit reply->finished(endpoint);
+        }
+        catch (const InnertubeException& ie)
+        {
+            emit reply->exception(ie);
+        }
+    });
+    return reply;
+}
+
+template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
+T InnerTube::getBlocking(const QString& data, const QString& continuationToken, const QString& params)
 {
     if constexpr (std::is_same_v<T, InnertubeEndpoints::Player>)
         return T(data, _context, easy(), _authStore);

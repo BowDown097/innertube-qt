@@ -33,6 +33,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/video/player.h \
     $$PWD/src/innertube/endpoints/innertubeendpoints.h \
     $$PWD/src/innertube/innertubeexception.h \
+    $$PWD/src/innertube/innertubereply.h \
     $$PWD/src/innertube/itc-objects/innertubeauthstore.h \
     $$PWD/src/innertube/itc-objects/innertubeclicktracking.h \
     $$PWD/src/innertube/itc-objects/innertubeclient.h \

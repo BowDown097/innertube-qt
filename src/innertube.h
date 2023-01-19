@@ -1,7 +1,7 @@
 #ifndef INNERTUBE_H
 #define INNERTUBE_H
 #include "innertube/innertubeexception.h"
-#include "innertube/endpoints/innertubeendpoints.h"
+#include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
 #include <type_traits>
 
@@ -23,7 +23,10 @@ public:
     { _context = new InnertubeContext(client, clickTracking, requestConfig, userConfig); }
 
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
-    T get(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
+    InnertubeReply* get(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
+
+    template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
+    T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
 
     void subscribe(const InnertubeObjects::NavigationSubscribeEndpoint& endpoint, bool subscribing)
     { InnertubeEndpoints::Subscribe(endpoint.channelIds, endpoint.params, subscribing, _context, easy(), _authStore); }
