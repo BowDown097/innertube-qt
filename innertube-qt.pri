@@ -3,7 +3,11 @@ INCLUDEPATH += $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += INNERTUBE
 
-LIBS += -lcurl
+# WINDOWS USERS (windrones): PLEASE refer to build_instructions.md if you haven't already. You'll probably get some error here if you don't.
+!win32: LIBS += -lcurl
+win32: CONFIG += link_pkgconfig
+win32: PKGCONFIG += libcurl
+
 include(lib/qtcurl/qtcurl.pri)
 
 !contains(DEFINES, NO_WEBENGINE) {
