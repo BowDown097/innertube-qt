@@ -40,7 +40,7 @@ QByteArray SimpleProtobuf::compileKey(const QVariantList &keyField)
     bool numOk, wireOk;
     int num = keyField[0].toInt(&numOk);
     int wireType = keyField[1].toInt(&wireOk);
-    return numOk && wireOk ? uleb128((num << 3) | wireType).toHex() : "00";
+    return numOk && wireOk ? uleb128((num << 3) | wireType).toHex() : QByteArray("00");
 }
 
 QByteArray SimpleProtobuf::compileLd(const QByteArray& in)
