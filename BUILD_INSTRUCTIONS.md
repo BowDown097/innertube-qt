@@ -12,11 +12,11 @@ For other distros, just look up the equivalents.
 You shouldn't have to do anything here at all. Just make sure you have curl and Qt6 WebEngine (the Homebrew version of Qt at least comes bundled with these).
 
 ## Windows
-**Gonna break you some bad news. If you have WebEngine enabled in this build, you can't use the MinGW version of Qt to build this. It does not support WebEngine.** With that out of the way, this is a pain in the ass to get set up on Windows, because of course it is. As I don't use Windows, these instructions are essentially untested. Good luck, soldier.
+**Gonna break you some bad news. If you have WebEngine enabled in this build, you can't use the MinGW version of Qt to build this. It does not support WebEngine.** With that out of the way, this is a pain in the ass to get set up on Windows, because of course it is. Good luck, soldier.
 - [Install vcpkg if you haven't already.](https://vcpkg.io/en/getting-started.html)
 - Install pkg-config. I recommend doing this with [Chocolatey](https://chocolatey.org/install), with which you can simply run ``choco install pkgconfiglite``.
 - If you are building under a 32-bit version of Qt, run ``vcpkg install curl``. If you are building under a 64-bit version of Qt, run ``vcpkg install curl:x64-windows``. Yes, it still assumes 32-bit by default in current year.
-- Navigate to ``Projects > Build Environment`` and click the Details dropdown. Press Add.
+- Navigate to ``Projects > Build Environment`` in Qt Creator and click the Details dropdown. Press Add.
 - In your new entry, change ``<VARIABLE>`` to ``PKG_CONFIG_PATH`` and change ``<VALUE>`` to something along the lines of ``<vcpkg>/installed/x64-windows/lib/pkgconfig``, where \<vcpkg\> is, obviously, your vcpkg directory.
   - Alternatively, you can set this variable for your entire kit if you wish, by going to your kit settings and doing the above in the Environment section.
 - Pray to God it works.
