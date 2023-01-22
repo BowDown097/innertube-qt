@@ -23,7 +23,6 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/browse/browseexplore.h \
     $$PWD/src/innertube/endpoints/browse/browsehistory.h \
     $$PWD/src/innertube/endpoints/browse/browsehome.h \
-    $$PWD/src/innertube/endpoints/browse/browsehomeshelves.h \
     $$PWD/src/innertube/endpoints/browse/browselibrary.h \
     $$PWD/src/innertube/endpoints/browse/browsestorefront.h \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.h \
@@ -73,7 +72,6 @@ HEADERS += \
     $$PWD/src/innertube/responses/browse/channelresponse.h \
     $$PWD/src/innertube/responses/browse/historyresponse.h \
     $$PWD/src/innertube/responses/browse/homeresponse.h \
-    $$PWD/src/innertube/responses/browse/homeshelvesresponse.h \
     $$PWD/src/innertube/responses/browse/subscriptionsresponse.h \
     $$PWD/src/innertube/responses/browse/trendingresponse.h \
     $$PWD/src/innertube/responses/misc/notificationmenuresponse.h \
@@ -89,7 +87,6 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/browse/browsechannel.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehistory.cpp \
     $$PWD/src/innertube/endpoints/browse/browsehome.cpp \
-    $$PWD/src/innertube/endpoints/browse/browsehomeshelves.cpp \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.cpp \
     $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \

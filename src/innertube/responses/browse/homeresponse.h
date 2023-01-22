@@ -6,6 +6,7 @@ namespace InnertubeEndpoints
 {
     struct HomeResponse
     {
+        QList<InnertubeObjects::InnertubeString> shelves;
         QVector<InnertubeObjects::Video> videos;
     };
 }

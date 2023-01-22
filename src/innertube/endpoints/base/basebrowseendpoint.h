@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         QByteArray data;
         BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore,
                            const QString& continuationToken = "", const QString& query = "");
-        QJsonObject getTabRenderer(const QString& name, const QString& baseRenderer = "twoColumnBrowseResultsRenderer") const;
+        QJsonObject getTabRenderer(const QString& name) const;
     };
 }
 

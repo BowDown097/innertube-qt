@@ -12,7 +12,6 @@ signals:
     void finished(InnertubeEndpoints::BrowseExplore);
     void finished(InnertubeEndpoints::BrowseHistory);
     void finished(InnertubeEndpoints::BrowseHome);
-    void finished(InnertubeEndpoints::BrowseHomeShelves);
     void finished(InnertubeEndpoints::BrowseLibrary);
     void finished(InnertubeEndpoints::BrowseStorefront);
     void finished(InnertubeEndpoints::BrowseSubscriptions);
