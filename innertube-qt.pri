@@ -2,6 +2,7 @@ QT *= network
 INCLUDEPATH += $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += INNERTUBE
+CONFIG += c++2a
 
 # WINDOWS USERS (windrones): PLEASE refer to build_instructions.md if you haven't already. You'll probably get some error here if you don't.
 !win32: LIBS += -lcurl

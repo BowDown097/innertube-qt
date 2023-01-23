@@ -1,15 +1,15 @@
 Getting this working is incredibly simple on everything BUT Windows. Here's how to get this guy set up:
 
 ## Linux
-All you need is curl and Qt6 WebEngine.  
+All you need is curl and Qt 5/6 WebEngine.  
 On Arch-based distros, the packages for these, respectively, will be:
 - curl (there's no way you don't have this)
-- qt6-webengine
+- qt5-webengine / qt6-webengine (6 recommended)
 
 For other distros, just look up the equivalents.
 
 ## macOS
-You shouldn't have to do anything here at all. Just make sure you have curl and Qt6 WebEngine (the Homebrew version of Qt at least comes bundled with these).
+You shouldn't have to do anything here at all. Just make sure you have curl and Qt WebEngine (the Homebrew version of Qt at least comes bundled with these).
 
 ## Windows
 **Gonna break you some bad news. If you have WebEngine enabled in this build, you can't use the MinGW version of Qt to build this. It does not support WebEngine.** With that out of the way, this is a pain in the ass to get set up on Windows, because of course it is. Good luck, soldier.
