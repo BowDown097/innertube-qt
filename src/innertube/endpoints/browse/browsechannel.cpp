@@ -20,6 +20,7 @@ namespace InnertubeEndpoints
         get("browse", context, authStore, easy, body, data);
 
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-        response.header.append(InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]));
+        response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]);
+        response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
     }
 }

@@ -10,20 +10,20 @@ namespace InnertubeObjects
     class ChannelHeader
     {
     public:
-        QList<GenericThumbnail> avatar;
-        QList<GenericThumbnail> banner;
+        QList<GenericThumbnail> avatars;
+        QList<GenericThumbnail> banners;
         InnertubeString channelHandleText;
         QString channelId;
-        QList<GenericThumbnail> mobileBanner;
+        QList<GenericThumbnail> mobileBanners;
         QList<ChannelHeaderLink> primaryLinks;
         QList<ChannelHeaderLink> secondaryLinks;
         SubscribeButton subscribeButton;
         InnertubeString subscriberCountText;
         QString title;
-        QList<GenericThumbnail> tvBanner;
+        QList<GenericThumbnail> tvBanners;
         InnertubeString videosCountText;
 
-        ChannelHeader();
+        ChannelHeader() {}
         explicit ChannelHeader(const QJsonValue& headerRenderer);
     };
 }

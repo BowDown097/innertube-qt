@@ -13,15 +13,15 @@ namespace InnertubeObjects
     {
         const QJsonArray avatarJson = headerRenderer["avatar"]["thumbnails"].toArray();
         for (const QJsonValue& v : avatarJson)
-            avatar.append(GenericThumbnail(v));
+            avatars.append(GenericThumbnail(v));
 
         const QJsonArray bannerJson = headerRenderer["banner"]["thumbnails"].toArray();
         for (const QJsonValue& v : bannerJson)
-            banner.append(GenericThumbnail(v));
+            banners.append(GenericThumbnail(v));
 
         const QJsonArray mobileBannerJson = headerRenderer["mobileBanner"]["thumbnails"].toArray();
         for (const QJsonValue& v : mobileBannerJson)
-            mobileBanner.append(GenericThumbnail(v));
+            mobileBanners.append(GenericThumbnail(v));
 
         const QJsonArray primaryLinksJson = headerRenderer["headerLinks"]["channelHeaderLinksRenderer"]["primaryLinks"].toArray();
         for (const QJsonValue& v : primaryLinksJson)
@@ -33,6 +33,6 @@ namespace InnertubeObjects
 
         const QJsonArray tvBannerJson = headerRenderer["tvBanner"].toArray();
         for (const QJsonValue& v : tvBannerJson)
-            tvBanner.append(GenericThumbnail(v));
+            tvBanners.append(GenericThumbnail(v));
     }
 }
