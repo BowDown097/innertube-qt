@@ -11,8 +11,6 @@ namespace InnertubeEndpoints
             { "context", context->toJson() },
             { "params", params }
         };
-
-        QByteArray data;
-        get(subscribing ? "subscription/subscribe" : "subscription/unsubscribe", context, authStore, easy, body, data);
+        get(subscribing ? "subscription/subscribe" : "subscription/unsubscribe", context, authStore, easy, body);
     }
 }

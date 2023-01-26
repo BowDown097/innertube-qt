@@ -13,10 +13,9 @@ namespace InnertubeEndpoints
         else
             body.insert("ctoken", tokenIn);
 
-        QByteArray data;
-        get("notification/get_notification_menu", context, authStore, easy, body, data);
-
+        QByteArray data = get("notification/get_notification_menu", context, authStore, easy, body);
         const QJsonObject action = QJsonDocument::fromJson(data).object()["actions"].toArray()[0].toObject();
+
         if (action.contains("openPopupAction"))
         {
             QJsonValue menuRenderer = action["openPopupAction"]["popup"]["multiPageMenuRenderer"];

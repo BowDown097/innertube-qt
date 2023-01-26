@@ -16,10 +16,9 @@ namespace InnertubeEndpoints
             body.insert("continuation", tokenIn);
         }
 
-        QByteArray data;
-        get("browse", context, authStore, easy, body, data);
-
+        QByteArray data = get("browse", context, authStore, easy, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
+
         response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]);
         response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
     }

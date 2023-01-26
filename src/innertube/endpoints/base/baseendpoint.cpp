@@ -3,18 +3,20 @@
 
 namespace InnertubeEndpoints
 {
-    void BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, CurlEasy* easy,
-                           const QJsonObject& body, QByteArray& data)
+    QByteArray BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, CurlEasy* easy,
+                                 const QJsonObject& body)
     {
         easy->set(CURLOPT_URL, QStringLiteral("https://www.youtube.com/youtubei/v1/%1?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false")
                                .arg(endpoint));
         setNeededHeaders(easy, context, authStore);
-        getData(easy, body, data);
+        return getData(easy, body);
     }
 
-    void BaseEndpoint::getData(CurlEasy* easy, const QJsonObject& body, QByteArray& data)
+    QByteArray BaseEndpoint::getData(CurlEasy* easy, const QJsonObject& body)
     {
+        QByteArray data;
         const QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
+
         easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
         easy->setWriteFunction([&data](char* d, size_t size)->size_t {
            data.append(d);
@@ -25,6 +27,8 @@ namespace InnertubeEndpoints
         QEventLoop event;
         QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
         event.exec();
+
+        return data;
     }
 
     void BaseEndpoint::setNeededHeaders(CurlEasy* easy, InnertubeContext* context, InnertubeAuthStore* authStore)

@@ -18,10 +18,9 @@ namespace InnertubeEndpoints
             body.insert("continuation", tokenIn);
         }
 
-        QByteArray data;
-        get("search", context, authStore, easy, body, data);
-
+        QByteArray data = get("search", context, authStore, easy, body);
         const QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+
         response.estimatedResults = dataObj["estimatedResults"].toString().toLong();
 
         QJsonArray sectionListRenderer;

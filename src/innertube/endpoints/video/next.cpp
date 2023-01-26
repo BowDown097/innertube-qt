@@ -9,7 +9,6 @@ namespace InnertubeEndpoints
 {
     Next::Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
     {
-        QByteArray data;
         const QJsonObject body {
             { "autonavState", "STATE_ON" },
             { "captionsRequested", false },
@@ -19,9 +18,10 @@ namespace InnertubeEndpoints
             { "racyCheckOk", false },
             { "videoId", videoId }
         };
-        get("next", context, authStore, easy, body, data);
 
+        QByteArray data = get("next", context, authStore, easy, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
+
         if (tokenIn.isEmpty())
         {
             QJsonArray watchNextContents = dataObj["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"].toArray();

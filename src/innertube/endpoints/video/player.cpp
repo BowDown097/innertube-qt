@@ -8,7 +8,6 @@ namespace InnertubeEndpoints
 {
     Player::Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
     {
-        QByteArray data;
         const QJsonObject body {
             { "contentCheckOk", true },
             { "context", context->toJson() },
@@ -16,9 +15,10 @@ namespace InnertubeEndpoints
             { "racyCheckOk", true },
             { "videoId", videoId }
         };
-        get("player", context, authStore, easy, body, data);
 
+        QByteArray data = get("player", context, authStore, easy, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
+
         QString playabilityStatus = dataObj["playabilityStatus"]["status"].toString();
         if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE" && playabilityStatus != "CONTENT_CHECK_REQUIRED")
         {

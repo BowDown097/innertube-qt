@@ -9,10 +9,10 @@ namespace InnertubeEndpoints
     class BaseEndpoint
     {
     protected:
-        void get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, CurlEasy* easy, const QJsonObject& body,
-                 QByteArray& data);
+        QByteArray get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, CurlEasy* easy,
+                       const QJsonObject& body);
     private:
-        void getData(CurlEasy* easy, const QJsonObject& body, QByteArray& data);
+        QByteArray getData(CurlEasy* easy, const QJsonObject& body);
         void setNeededHeaders(CurlEasy* easy, InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
