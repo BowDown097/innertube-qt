@@ -49,6 +49,7 @@ HEADERS += \
     $$PWD/src/innertube/objects/channel/channelheader.h \
     $$PWD/src/innertube/objects/channel/channelheaderlink.h \
     $$PWD/src/innertube/objects/channel/channelmetadata.h \
+    $$PWD/src/innertube/objects/channel/microformatdata.h \
     $$PWD/src/innertube/objects/channel/searchchannel.h \
     $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
@@ -104,6 +105,7 @@ SOURCES += \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.cpp \
     $$PWD/src/innertube/objects/channel/channelheader.cpp \
     $$PWD/src/innertube/objects/channel/channelmetadata.cpp \
+    $$PWD/src/innertube/objects/channel/microformatdata.cpp \
     $$PWD/src/innertube/objects/channel/searchchannel.cpp \
     $$PWD/src/innertube/objects/channel/subscribebutton.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \

@@ -2,6 +2,7 @@
 #define CHANNELRESPONSE_H
 #include "innertube/objects/channel/channelheader.h"
 #include "innertube/objects/channel/channelmetadata.h"
+#include "innertube/objects/channel/microformatdata.h"
 
 namespace InnertubeEndpoints
 {
@@ -9,6 +10,7 @@ namespace InnertubeEndpoints
     {
         InnertubeObjects::ChannelHeader header;
         InnertubeObjects::ChannelMetadata metadata;
+        InnertubeObjects::MicroformatData microformat;
     };
 }
 

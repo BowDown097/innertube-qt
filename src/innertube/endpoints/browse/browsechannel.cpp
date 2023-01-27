@@ -21,5 +21,6 @@ namespace InnertubeEndpoints
 
         response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]);
         response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
+        response.microformat = InnertubeObjects::MicroformatData(dataObj["microformat"]["microformatDataRenderer"]);
     }
 }
