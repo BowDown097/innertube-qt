@@ -1,6 +1,6 @@
 #ifndef CHANNELHEADERLINK_H
 #define CHANNELHEADERLINK_H
-#include "innertube/objects/navigation/navigationendpoint.h"
+#include <QJsonValue>
 
 namespace InnertubeObjects
 {
@@ -8,7 +8,7 @@ namespace InnertubeObjects
     {
     public:
         QString icon;
-        NavigationEndpoint navigationEndpoint;
+        QJsonValue navigationEndpoint;
         QString title;
         explicit ChannelHeaderLink(const QJsonValue& linkRenderer)
             : icon(linkRenderer["icon"]["thumbnails"][0]["url"].toString()),

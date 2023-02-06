@@ -1,7 +1,7 @@
 #ifndef SUBSCRIBEBUTTON_H
 #define SUBSCRIBEBUTTON_H
 #include "innertube/objects/innertubestring.h"
-#include "innertube/objects/navigation/navigationsubscribeendpoint.h"
+#include <QJsonArray>
 
 namespace InnertubeObjects
 {
@@ -11,8 +11,8 @@ namespace InnertubeObjects
         InnertubeString buttonText;
         QString channelId;
         bool enabled;
-        QList<NavigationSubscribeEndpoint> onSubscribeEndpoints;
-        QList<NavigationSubscribeEndpoint> onUnsubscribeEndpoints;
+        QJsonArray onSubscribeEndpoints;
+        QJsonArray onUnsubscribeEndpoints;
         // TODO: notificationPreferenceButton
         bool showPreferences;
         QString subscribeAccessibility;
@@ -27,7 +27,23 @@ namespace InnertubeObjects
         InnertubeString unsubscribedButtonText;
 
         SubscribeButton() {}
-        explicit SubscribeButton(const QJsonValue& subscribeButtonRenderer);
+        explicit SubscribeButton(const QJsonValue& subscribeButtonRenderer)
+            : buttonText(subscribeButtonRenderer["buttonText"]),
+              channelId(subscribeButtonRenderer["channelId"].toString()),
+              enabled(subscribeButtonRenderer["enabled"].toBool()),
+              onSubscribeEndpoints(subscribeButtonRenderer["onSubscribeEndpoints"].toArray()),
+              onUnsubscribeEndpoints(subscribeButtonRenderer["onUnsubscribeEndpoints"].toArray()),
+              showPreferences(subscribeButtonRenderer["showPreferences"].toBool()),
+              subscribeAccessibility(subscribeButtonRenderer["subscribeAccessibility"]["accessibilityData"]["label"].toString()),
+              subscribed(subscribeButtonRenderer["subscribed"].toBool()),
+              subscribedButtonText(subscribeButtonRenderer["subscribedButtonText"]),
+              subscribedEntityKey(subscribeButtonRenderer["subscribedEntityKey"].toString()),
+              targetId(subscribeButtonRenderer["targetId"].toString()),
+              trackingParams(subscribeButtonRenderer["trackingParams"].toString()),
+              type(subscribeButtonRenderer["type"].toString()),
+              unsubscribeAccessibility(subscribeButtonRenderer["unsubscribeAccessibility"]["accessibilityData"]["label"].toString()),
+              unsubscribeButtonText(subscribeButtonRenderer["unsubscribeButtonText"]),
+              unsubscribedButtonText(subscribeButtonRenderer["unsubscribedButtonText"]) {}
     };
 }
 

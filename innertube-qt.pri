@@ -53,21 +53,21 @@ HEADERS += \
     $$PWD/src/innertube/objects/channel/searchchannel.h \
     $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
-    $$PWD/src/innertube/objects/navigation/commandmetadata.h \
-    $$PWD/src/innertube/objects/navigation/navigationbrowseendpoint.h \
-    $$PWD/src/innertube/objects/navigation/navigationendpoint.h \
-    $$PWD/src/innertube/objects/navigation/navigationsubscribeendpoint.h \
-    $$PWD/src/innertube/objects/navigation/urlendpoint.h \
     $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
     $$PWD/src/innertube/objects/player/playbacktracking.h \
     $$PWD/src/innertube/objects/player/playervideodetails.h \
     $$PWD/src/innertube/objects/player/streamingdata.h \
     $$PWD/src/innertube/objects/player/streamingformat.h \
+    $$PWD/src/innertube/objects/togglebutton.h \
+    $$PWD/src/innertube/objects/video/primaryinfo/videoactions.h \
+    $$PWD/src/innertube/objects/video/primaryinfo/videoprimaryinfo.h \
+    $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.h \
+    $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h \
+    $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.h \
+    $$PWD/src/innertube/objects/video/secondaryinfo/videosecondaryinfo.h \
     $$PWD/src/innertube/objects/video/video.h \
     $$PWD/src/innertube/objects/video/videoowner.h \
-    $$PWD/src/innertube/objects/video/videoprimaryinfo.h \
-    $$PWD/src/innertube/objects/video/videosecondaryinfo.h \
     $$PWD/src/innertube/objects/video/videothumbnail.h \
     $$PWD/src/innertube/objects/innertubestring.h \
     $$PWD/src/innertube.h \
@@ -107,16 +107,14 @@ SOURCES += \
     $$PWD/src/innertube/objects/channel/channelmetadata.cpp \
     $$PWD/src/innertube/objects/channel/microformatdata.cpp \
     $$PWD/src/innertube/objects/channel/searchchannel.cpp \
-    $$PWD/src/innertube/objects/channel/subscribebutton.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
-    $$PWD/src/innertube/objects/navigation/commandmetadata.cpp \
-    $$PWD/src/innertube/objects/navigation/navigationsubscribeendpoint.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
+    $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.cpp \
+    $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp \
+    $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp \
     $$PWD/src/innertube/objects/video/video.cpp \
     $$PWD/src/innertube/objects/video/videoowner.cpp \
-    $$PWD/src/innertube/objects/video/videoprimaryinfo.cpp \
-    $$PWD/src/innertube/objects/video/videosecondaryinfo.cpp \
     $$PWD/src/jsonutil.cpp \
     $$PWD/src/protobuf/simpleprotobuf.cpp

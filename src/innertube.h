@@ -28,12 +28,19 @@ public:
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
     T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
 
-    void subscribe(const InnertubeObjects::NavigationSubscribeEndpoint& endpoint, bool subscribing)
-    { InnertubeEndpoints::Subscribe(endpoint.channelIds, endpoint.params, subscribing, _context, easy(), _authStore); }
+    void subscribe(const QJsonValue& endpoint, bool subscribing)
+    {
+        QList<QString> channelIds;
+        const QJsonArray channelIdsJson = endpoint["channelIds"].toArray();
+        for (const QJsonValue& v : channelIdsJson)
+            channelIds.append(v.toString());
+        InnertubeEndpoints::Subscribe(channelIds, endpoint["params"].toString(), subscribing, _context, easy(), _authStore);
+    }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
     InnertubeContext* _context = new InnertubeContext;
-    static CurlEasy* easy() {
+    static CurlEasy* easy()
+    {
         static thread_local CurlEasy* e = [] {
             CurlEasy* e = new CurlEasy;
             e->set(CURLOPT_CONNECTTIMEOUT_MS, 10000L);
