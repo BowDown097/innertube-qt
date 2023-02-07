@@ -49,17 +49,21 @@ HEADERS += \
     $$PWD/src/innertube/objects/channel/channelheader.h \
     $$PWD/src/innertube/objects/channel/channelheaderlink.h \
     $$PWD/src/innertube/objects/channel/channelmetadata.h \
+    $$PWD/src/innertube/objects/channel/metadatabadge.h \
     $$PWD/src/innertube/objects/channel/microformatdata.h \
     $$PWD/src/innertube/objects/channel/searchchannel.h \
     $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
+    $$PWD/src/innertube/objects/items/button.h \
+    $$PWD/src/innertube/objects/items/menuflexibleitem.h \
+    $$PWD/src/innertube/objects/items/menuserviceitem.h \
+    $$PWD/src/innertube/objects/items/togglebutton.h \
     $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
     $$PWD/src/innertube/objects/player/playbacktracking.h \
     $$PWD/src/innertube/objects/player/playervideodetails.h \
     $$PWD/src/innertube/objects/player/streamingdata.h \
     $$PWD/src/innertube/objects/player/streamingformat.h \
-    $$PWD/src/innertube/objects/togglebutton.h \
     $$PWD/src/innertube/objects/video/primaryinfo/videoactions.h \
     $$PWD/src/innertube/objects/video/primaryinfo/videoprimaryinfo.h \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.h \
@@ -111,6 +115,7 @@ SOURCES += \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
+    $$PWD/src/innertube/objects/video/primaryinfo/videoactions.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp \

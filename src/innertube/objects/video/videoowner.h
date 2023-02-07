@@ -1,19 +1,19 @@
 #ifndef VIDEOOWNER_H
 #define VIDEOOWNER_H
-#include <QJsonValue>
-#include <QString>
+#include "innertube/objects/channel/metadatabadge.h"
 
 namespace InnertubeObjects
 {
     class VideoOwner
     {
     public:
+        QList<MetadataBadge> badges;
         QString icon;
         QString id;
         QString name;
 
         VideoOwner() {}
-        VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, bool isGridVideo);
+        VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, const QJsonValue& badgesVal, bool isGridVideo);
     };
 }
 

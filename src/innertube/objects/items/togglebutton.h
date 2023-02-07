@@ -1,6 +1,6 @@
 #ifndef TOGGLEBUTTON_H
 #define TOGGLEBUTTON_H
-#include "innertubestring.h"
+#include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {

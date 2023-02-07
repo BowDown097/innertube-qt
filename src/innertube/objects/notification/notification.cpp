@@ -17,7 +17,7 @@ namespace InnertubeObjects
                 ? navigationEndpoint["getCommentsFromInboxCommand"]
                 : navigationEndpoint["watchEndpoint"];
 
-        linkedCommentId = QPair<QString, bool>(command["linkedCommentId"].toString(), hasCommentsCommand);
+        linkedCommentId = std::make_optional<QString>(command["linkedCommentId"].toString());
         videoId = command["videoId"].toString();
     }
 }

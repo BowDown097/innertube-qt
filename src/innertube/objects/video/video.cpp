@@ -5,7 +5,18 @@
 
 namespace InnertubeObjects
 {
-    Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf) : shelf(shelf)
+    Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf)
+        : descriptionSnippet(videoRenderer["descriptionSnippet"]),
+          longBylineText(videoRenderer["longBylineText"]),
+          shelf(shelf),
+          shortBylineText(videoRenderer["shortBylineText"]),
+          shortViewCountText(videoRenderer["shortViewCountText"]),
+          showActionMenu(videoRenderer["showActionMenu"].toBool()),
+          startTimeSeconds(videoRenderer["navigationEndpoint"]["watchEndpoint"]["startTimeSeconds"].toInt()),
+          thumbnail(videoRenderer["videoId"].toString()),
+          title(videoRenderer["title"]),
+          videoId(videoRenderer["videoId"].toString()),
+          viewCountText(videoRenderer["viewCountText"])
     {
         const QJsonArray badges = videoRenderer["badges"].toArray();
         isLive = badges.isEmpty() ? badges[0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW" : false;
@@ -43,14 +54,8 @@ namespace InnertubeObjects
             }
         }
 
-        videoId = videoRenderer["videoId"].toString();
         owner = isGridVideo
-                ? VideoOwner(videoRenderer["shortBylineText"], videoRenderer["channelThumbnail"], true)
-                : VideoOwner(videoRenderer["ownerText"], videoRenderer["channelThumbnailSupportedRenderers"], false);
-        shortViewCountText = InnertubeString(videoRenderer["shortViewCountText"]);
-        title = InnertubeString(videoRenderer["title"]);
-        viewCountText = InnertubeString(videoRenderer["viewCountText"]);
-        thumbnail = VideoThumbnail(videoId);
-        startTimeSeconds = videoRenderer["navigationEndpoint"]["watchEndpoint"]["startTimeSeconds"].toInt();
+                ? VideoOwner(videoRenderer["shortBylineText"], videoRenderer["channelThumbnail"], videoRenderer["ownerBadges"], true)
+                : VideoOwner(videoRenderer["ownerText"], videoRenderer["channelThumbnailSupportedRenderers"], videoRenderer["ownerBadges"], false);
     }
 }

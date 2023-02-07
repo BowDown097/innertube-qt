@@ -1,7 +1,7 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 #include "innertube/objects/genericthumbnail.h"
-#include <QPair>
+#include <optional>
 
 namespace InnertubeObjects
 {
@@ -9,7 +9,7 @@ namespace InnertubeObjects
     {
     public:
         GenericThumbnail channelIcon;
-        QPair<QString, bool> linkedCommentId;
+        std::optional<QString> linkedCommentId;
         long long notificationId;
         bool read;
         QString shortMessage;

@@ -1,7 +1,8 @@
 #ifndef VIDEOACTIONS_H
 #define VIDEOACTIONS_H
-#include "innertube/objects/togglebutton.h"
-#include "jsonutil.h"
+#include "innertube/objects/items/menuflexibleitem.h"
+#include "innertube/objects/items/menuserviceitem.h"
+#include "innertube/objects/items/togglebutton.h"
 
 namespace InnertubeObjects
 {
@@ -10,13 +11,13 @@ namespace InnertubeObjects
     public:
         QString accessibilityLabel;
         ToggleButton dislikeButton;
+        QList<MenuFlexibleItem> flexibleItems;
+        QList<MenuServiceItem> items;
         ToggleButton likeButton;
+        Button shareButton;
 
         VideoActions() {}
-        explicit VideoActions(const QJsonValue& menuRenderer)
-            : accessibilityLabel(menuRenderer["accessibility"]["accessibilityData"]["label"].toString()),
-              dislikeButton(JsonUtil::rfind("dislikeButton", menuRenderer["topLevelButtons"])["toggleButtonRenderer"]),
-              likeButton(JsonUtil::rfind("likeButton", menuRenderer["topLevelButtons"])["toggleButtonRenderer"]) {}
+        explicit VideoActions(const QJsonValue& menuRenderer);
     };
 }
 
