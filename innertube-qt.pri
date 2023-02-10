@@ -36,6 +36,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/video/next.h \
     $$PWD/src/innertube/endpoints/video/player.h \
     $$PWD/src/innertube/endpoints/innertubeendpoints.h \
+    $$PWD/src/innertube/endpoints/video/updatedmetadata.h \
     $$PWD/src/innertube/innertubeexception.h \
     $$PWD/src/innertube/innertubereply.h \
     $$PWD/src/innertube/itc-objects/innertubeauthstore.h \
@@ -85,6 +86,7 @@ HEADERS += \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
     $$PWD/src/innertube/responses/video/playerresponse.h \
+    $$PWD/src/innertube/responses/video/updatedmetadataresponse.h \
     $$PWD/src/jsonutil.h \
     $$PWD/src/protobuf/simpleprotobuf.h
 
@@ -103,6 +105,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/subscription/subscribe.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
     $$PWD/src/innertube/endpoints/video/player.cpp \
+    $$PWD/src/innertube/endpoints/video/updatedmetadata.cpp \
     $$PWD/src/innertube/itc-objects/innertubeauthstore.cpp \
     $$PWD/src/innertube/itc-objects/innertubeclient.cpp \
     $$PWD/src/innertube/itc-objects/innertubecontext.cpp \

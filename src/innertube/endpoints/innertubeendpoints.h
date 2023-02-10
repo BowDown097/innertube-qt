@@ -17,5 +17,6 @@
 #include "subscription/subscribe.h"
 #include "video/next.h"
 #include "video/player.h"
+#include "video/updatedmetadata.h"
 
 #endif // INNERTUBEENDPOINTS_H
