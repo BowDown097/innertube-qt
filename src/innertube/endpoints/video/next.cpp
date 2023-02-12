@@ -30,6 +30,7 @@ namespace InnertubeEndpoints
 
             response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(JsonUtil::rfind("videoPrimaryInfoRenderer", watchNextContents));
             response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(JsonUtil::rfind("videoSecondaryInfoRenderer", watchNextContents));
+            response.videoId = dataObj["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
         }
         // TODO: comments (and thus continuations)
     }

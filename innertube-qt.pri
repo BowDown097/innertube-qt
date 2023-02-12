@@ -47,12 +47,13 @@ HEADERS += \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.h \
     $$PWD/src/innertube/itc-objects/innertuberequestconfig.h \
     $$PWD/src/innertube/itc-objects/innertubeuserconfig.h \
+    $$PWD/src/innertube/objects/channel/aboutfullmetadata.h \
+    $$PWD/src/innertube/objects/channel/channel.h \
     $$PWD/src/innertube/objects/channel/channelheader.h \
     $$PWD/src/innertube/objects/channel/channelheaderlink.h \
     $$PWD/src/innertube/objects/channel/channelmetadata.h \
     $$PWD/src/innertube/objects/channel/metadatabadge.h \
     $$PWD/src/innertube/objects/channel/microformatdata.h \
-    $$PWD/src/innertube/objects/channel/searchchannel.h \
     $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
     $$PWD/src/innertube/objects/items/button.h \
@@ -67,6 +68,7 @@ HEADERS += \
     $$PWD/src/innertube/objects/player/streamingformat.h \
     $$PWD/src/innertube/objects/video/primaryinfo/videoactions.h \
     $$PWD/src/innertube/objects/video/primaryinfo/videoprimaryinfo.h \
+    $$PWD/src/innertube/objects/video/reel.h \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.h \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h \
     $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.h \
@@ -110,15 +112,17 @@ SOURCES += \
     $$PWD/src/innertube/itc-objects/innertubeclient.cpp \
     $$PWD/src/innertube/itc-objects/innertubecontext.cpp \
     $$PWD/src/innertube/itc-objects/innertubeplaybackcontext.cpp \
+    $$PWD/src/innertube/objects/channel/aboutfullmetadata.cpp \
+    $$PWD/src/innertube/objects/channel/channel.cpp \
     $$PWD/src/innertube/objects/channel/channelheader.cpp \
     $$PWD/src/innertube/objects/channel/channelmetadata.cpp \
     $$PWD/src/innertube/objects/channel/microformatdata.cpp \
-    $$PWD/src/innertube/objects/channel/searchchannel.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \
     $$PWD/src/innertube/objects/video/primaryinfo/videoactions.cpp \
+    $$PWD/src/innertube/objects/video/reel.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp \

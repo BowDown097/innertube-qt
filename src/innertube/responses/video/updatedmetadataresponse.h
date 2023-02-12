@@ -12,6 +12,7 @@ namespace InnertubeEndpoints
         QString likeDefaultText;
         QString likeToggledText;
         InnertubeObjects::InnertubeString title;
+        QString videoId;
         QString viewCount;
     };
 }

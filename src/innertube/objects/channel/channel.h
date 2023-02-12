@@ -1,22 +1,23 @@
-#ifndef SEARCHCHANNEL_H
-#define SEARCHCHANNEL_H
+#ifndef CHANNEL_H
+#define CHANNEL_H
 #include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {
-    class SearchChannel
+    class Channel
     {
     public:
         QString channelId;
         InnertubeString descriptionSnippet;
         bool subscribed;
         InnertubeString subscriberCountText;
-        QVector<GenericThumbnail> thumbnails;
+        QList<GenericThumbnail> thumbnails;
         InnertubeString title;
         InnertubeString videoCountText;
-        explicit SearchChannel(const QJsonValue& channelRenderer);
+
+        explicit Channel(const QJsonValue& channelRenderer);
     };
 }
 
-#endif // SEARCHCHANNEL_H
+#endif // CHANNEL_H

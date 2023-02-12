@@ -8,6 +8,7 @@ namespace InnertubeEndpoints
 {
     struct ChannelResponse
     {
+        QJsonValue contents;
         InnertubeObjects::ChannelHeader header;
         InnertubeObjects::ChannelMetadata metadata;
         InnertubeObjects::MicroformatData microformat;

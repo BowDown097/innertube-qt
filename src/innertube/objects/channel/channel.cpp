@@ -1,9 +1,9 @@
-#include "searchchannel.h"
+#include "channel.h"
 #include <QJsonArray>
 
 namespace InnertubeObjects
 {
-    SearchChannel::SearchChannel(const QJsonValue& channelRenderer)
+    Channel::Channel(const QJsonValue& channelRenderer)
         : channelId(channelRenderer["channelId"].toString()),
           descriptionSnippet(InnertubeString(channelRenderer["descriptionSnippet"])),
           subscribed(channelRenderer["subscriptionButton"]["subscribed"].toBool()),

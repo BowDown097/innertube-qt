@@ -9,6 +9,7 @@ namespace InnertubeEndpoints
     {
         InnertubeObjects::VideoPrimaryInfo primaryInfo;
         InnertubeObjects::VideoSecondaryInfo secondaryInfo;
+        QString videoId;
     };
 }
 

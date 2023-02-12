@@ -30,6 +30,7 @@ namespace InnertubeEndpoints
         response.likeDefaultText = updateToggleButtonTextAction["defaultText"]["simpleText"].toString();
         response.likeToggledText = updateToggleButtonTextAction["toggledText"]["simpleText"].toString();
         response.title = InnertubeObjects::InnertubeString(updateTitleAction["title"]);
+        response.videoId = videoId;
         response.viewCount = updateViewershipAction["viewCount"]["videoViewCountRenderer"]["viewCount"]["simpleText"].toString();
     }
 

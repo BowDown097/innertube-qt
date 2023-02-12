@@ -19,6 +19,7 @@ namespace InnertubeEndpoints
         QByteArray data = get("browse", context, authStore, easy, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
+        response.contents = dataObj["contents"];
         response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]);
         response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
         response.microformat = InnertubeObjects::MicroformatData(dataObj["microformat"]["microformatDataRenderer"]);
