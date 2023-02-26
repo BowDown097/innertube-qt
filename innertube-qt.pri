@@ -126,6 +126,7 @@ SOURCES += \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarow.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp \
     $$PWD/src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp \
+    $$PWD/src/innertube/objects/video/secondaryinfo/videosecondaryinfo.cpp \
     $$PWD/src/innertube/objects/video/video.cpp \
     $$PWD/src/innertube/objects/video/videoowner.cpp \
     $$PWD/src/jsonutil.cpp \

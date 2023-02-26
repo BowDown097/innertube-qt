@@ -19,15 +19,7 @@ namespace InnertubeObjects
         SubscribeButton subscribeButton;
 
         VideoSecondaryInfo() {}
-        explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer)
-            : defaultExpanded(secondaryInfoRenderer["defaultExpanded"].toBool()),
-              description(secondaryInfoRenderer["description"]),
-              descriptionCollapsedLines(secondaryInfoRenderer["descriptionCollapsedLines"].toInt()),
-              metadataRowContainer(secondaryInfoRenderer["metadataRowContainer"]["metadataRowContainerRenderer"]),
-              owner(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]),
-              showLessText(secondaryInfoRenderer["showLessText"]["simpleText"].toString()),
-              showMoreText(secondaryInfoRenderer["showMoreText"]["simpleText"].toString()),
-              subscribeButton(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]) {}
+        explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer);
     };
 }
 
