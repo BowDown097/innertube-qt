@@ -10,6 +10,7 @@
 #include "browse/browsestorefront.h"
 #include "browse/browsesubscriptions.h"
 #include "browse/browsetrending.h"
+#include "like/like.h"
 #include "misc/accountmenu.h"
 #include "misc/getnotificationmenu.h"
 #include "misc/search.h"

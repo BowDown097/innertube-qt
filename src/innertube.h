@@ -28,6 +28,23 @@ public:
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
     T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
 
+    void like(const QJsonValue& endpoint, bool liking)
+    {
+        if (endpoint.toObject().contains("removeLikeParams"))
+        {
+            InnertubeEndpoints::Like(endpoint["target"]["videoId"].toString(), endpoint["removeLikeParams"].toString(),
+                liking, true, _context, easy(), _authStore);
+        }
+        else
+        {
+            InnertubeEndpoints::Like(
+                endpoint["target"]["videoId"].toString(),
+                liking ? endpoint["likeParams"].toString() : endpoint["dislikeParams"].toString(),
+                liking, false, _context, easy(), _authStore
+            );
+        }
+    }
+
     void subscribe(const QJsonValue& endpoint, bool subscribing)
     {
         QList<QString> channelIds;

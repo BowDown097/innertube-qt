@@ -28,6 +28,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/browse/browsestorefront.h \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.h \
     $$PWD/src/innertube/endpoints/browse/browsetrending.h \
+    $$PWD/src/innertube/endpoints/like/like.h \
     $$PWD/src/innertube/endpoints/misc/accountmenu.h \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
@@ -100,6 +101,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/browse/browsehome.cpp \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.cpp \
     $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
+    $$PWD/src/innertube/endpoints/like/like.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
