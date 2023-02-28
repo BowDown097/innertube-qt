@@ -5,7 +5,7 @@
 
 namespace InnertubeEndpoints
 {
-    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore,
+    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
                                            const QString& continuationToken, const QString& query)
     {
         QJsonObject body = {{ "context", context->toJson() }};
@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
         if (!query.isEmpty())
             body.insert("query", query);
 
-        data = get("browse", context, authStore, easy, body);
+        data = get("browse", context, authStore, body);
     }
 
     QJsonObject BaseBrowseEndpoint::getTabRenderer(const QString& name) const

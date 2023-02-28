@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
     public:
         int unseenCount;
     private:
-        UnseenCount(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        UnseenCount(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
     public:
         UpdatedMetadataResponse response;
     private:
-        UpdatedMetadata(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        UpdatedMetadata(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore);
         QJsonValue findAction(const QJsonArray& actions, const QString& name);
     };
 }

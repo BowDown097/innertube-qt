@@ -12,8 +12,7 @@ namespace InnertubeEndpoints
         QString continuationToken;
         SearchResponse response;
     private:
-        Search(const QString& query, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "",
-               const QString& params = "");
+        Search(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "", const QString& params = "");
     };
 }
 

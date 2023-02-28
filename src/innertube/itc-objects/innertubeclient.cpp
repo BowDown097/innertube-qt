@@ -1,5 +1,5 @@
 #include "innertubeclient.h"
-#include "CurlEasy.h"
+#include "httplib.h"
 
 InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
                                  const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
@@ -29,15 +29,9 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
       userInterfaceTheme(userInterfaceTheme)
 {
     // get home page data
-    QString hpData;
-    CurlEasy* easy = new CurlEasy;
-    easy->set(CURLOPT_URL, "https://www.youtube.com");
-    easy->setWriteFunction([&hpData](char* d, size_t size)->size_t { hpData.append(d); return size; });
-    easy->perform();
-    QEventLoop event;
-    QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
-    event.exec();
-    easy->deleteLater();
+    httplib::Client cli("https://www.youtube.com");
+    httplib::Result res = cli.Get("/");
+    QString hpData = QString::fromStdString(res->body);
 
     // get/set visitor data
     QString visitorBlock = hpData.mid(hpData.indexOf("visitorData") + 14);

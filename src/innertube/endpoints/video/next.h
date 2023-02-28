@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
     public:
         NextResponse response;
     private:
-        Next(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn);
+        Next(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn);
     };
 }
 

@@ -5,8 +5,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseSubscriptions::BrowseSubscriptions(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
-        : BaseBrowseEndpoint("FEsubscriptions", context, easy, authStore, tokenIn)
+    BrowseSubscriptions::BrowseSubscriptions(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
+        : BaseBrowseEndpoint("FEsubscriptions", context, authStore, tokenIn)
     {
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())

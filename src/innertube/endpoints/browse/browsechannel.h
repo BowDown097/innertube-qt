@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
         QString continuationToken;
         ChannelResponse response;
     private:
-        BrowseChannel(const QString& channelId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn = "",
+        BrowseChannel(const QString& channelId, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "",
                       const QString& params = "");
     };
 }

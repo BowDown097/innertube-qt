@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     {
     protected:
         QByteArray data;
-        BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore,
+        BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
                            const QString& continuationToken = "", const QString& query = "");
         QJsonObject getTabRenderer(const QString& name) const;
     };

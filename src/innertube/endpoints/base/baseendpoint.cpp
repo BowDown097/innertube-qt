@@ -1,49 +1,55 @@
 #include "baseendpoint.h"
+#include <QFutureWatcher>
 #include <QJsonDocument>
+#include <QtConcurrent>
 
 namespace InnertubeEndpoints
 {
-    QByteArray BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, CurlEasy* easy,
-                                 const QJsonObject& body)
+    QByteArray BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, const QJsonObject& body)
     {
-        easy->set(CURLOPT_URL, QStringLiteral("https://www.youtube.com/youtubei/v1/%1?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false")
-                               .arg(endpoint));
-        setNeededHeaders(easy, context, authStore);
-        return getData(easy, body);
+        httplib::Client cli("https://www.youtube.com");
+        setNeededHeaders(cli, context, authStore);
+        return getData(cli, "/youtubei/v1/" + endpoint.toStdString() + "?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false", body);
     }
 
-    QByteArray BaseEndpoint::getData(CurlEasy* easy, const QJsonObject& body)
+    QByteArray BaseEndpoint::getData(httplib::Client& client, const std::string& path, const QJsonObject& body)
     {
-        QByteArray data;
-        const QByteArray bodyBytes = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        const std::string bodyStr = QJsonDocument(body).toJson(QJsonDocument::Compact).toStdString();
 
-        easy->set(CURLOPT_POSTFIELDS, bodyBytes.constData());
-        easy->setWriteFunction([&data](char* d, size_t size)->size_t {
-           data.append(d);
-           return size;
-        });
+        QFutureWatcher<std::string> watcher;
+        watcher.setFuture(QtConcurrent::run([&client, path, bodyStr]() -> std::string {
+            httplib::Result result = client.Post(path, bodyStr, "application/json");
+            return result->body;
+        }));
 
-        easy->perform();
         QEventLoop event;
-        QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
+        QObject::connect(&watcher, &QFutureWatcher<std::string>::finished, &event, &QEventLoop::quit);
         event.exec();
 
-        return data;
+        return QByteArray::fromStdString(watcher.result());
     }
 
-    void BaseEndpoint::setNeededHeaders(CurlEasy* easy, InnertubeContext* context, InnertubeAuthStore* authStore)
+    void BaseEndpoint::setNeededHeaders(httplib::Client& client, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
+        httplib::Headers headers;
+
         if (authStore->populated)
         {
-            easy->setHttpHeaderRaw("Authorization", authStore->generateSAPISIDHash().toUtf8());
-            easy->setHttpHeaderRaw("Cookie", authStore->getNecessaryLoginCookies().toUtf8());
-            easy->setHttpHeaderRaw("X-Goog-AuthUser", "0");
+            headers.insert({
+                { "Authorization", authStore->generateSAPISIDHash().toStdString() },
+                { "Cookie", authStore->getNecessaryLoginCookies().toStdString() },
+                { "X-Goog-AuthUser", "0" }
+            });
         }
 
-        easy->setHttpHeaderRaw("Content-Type", "application/json");
-        easy->setHttpHeaderRaw("X-Goog-Visitor-Id", context->client.visitorData.toLatin1());
-        easy->setHttpHeaderRaw("X-YOUTUBE-CLIENT-NAME", context->client.clientName.toLatin1());
-        easy->setHttpHeaderRaw("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
-        easy->setHttpHeaderRaw("X-ORIGIN", "https://www.youtube.com");
+        headers.insert({
+            { "X-Goog-Visitor-Id", context->client.visitorData.toStdString() },
+            { "X-YOUTUBE-CLIENT-NAME", context->client.clientName.toStdString() },
+            { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toStdString() },
+            { "X-ORIGIN", "https://www.youtube.com" }
+        });
+
+        client.set_default_headers(headers);
     }
 }
+

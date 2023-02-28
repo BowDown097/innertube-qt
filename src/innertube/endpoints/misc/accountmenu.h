@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     class AccountMenu : public BaseEndpoint
     {
         friend class ::InnerTube;
-        AccountMenu(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

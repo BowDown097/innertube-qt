@@ -4,8 +4,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseTrending::BrowseTrending(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
-        : BaseBrowseEndpoint("FEtrending", context, easy, authStore)
+    BrowseTrending::BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore)
+        : BaseBrowseEndpoint("FEtrending", context, authStore)
     {
         const QJsonObject tabRenderer = getTabRenderer("BrowseTrending");
         const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();

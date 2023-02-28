@@ -8,8 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     public:
-        Like(const QString& videoId, const QString& params, bool liking, bool removeLike, InnertubeContext* context, CurlEasy* easy,
-             InnertubeAuthStore* authStore);
+        Like(const QString& videoId, const QString& params, bool liking, bool removeLike, InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 
