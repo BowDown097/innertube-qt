@@ -3,7 +3,11 @@ INCLUDEPATH += $$PWD/include $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += CPPHTTPLIB_OPENSSL_SUPPORT INNERTUBE
 CONFIG += c++2a
-LIBS += -lssl -lcrypto
+
+# WINDOWS USERS (windrones): PLEASE refer to build_instructions.md if you haven't already. You'll probably get some error here if you don't.
+!win32: LIBS += -lssl -lcrypto
+win32: CONFIG += link_pkgconfig
+win32: PKGCONFIG += libcrypto libssl
 
 !contains(DEFINES, NO_WEBENGINE) {
     QT *= webenginewidgets
