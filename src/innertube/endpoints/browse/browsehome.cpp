@@ -5,8 +5,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHome::BrowseHome(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn)
-        : BaseBrowseEndpoint("FEwhat_to_watch", context, easy, authStore, tokenIn)
+    BrowseHome::BrowseHome(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
+        : BaseBrowseEndpoint("FEwhat_to_watch", context, authStore, tokenIn)
     {
         QJsonArray contents;
         if (tokenIn.isEmpty())

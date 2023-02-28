@@ -33,14 +33,14 @@ public:
         if (endpoint.toObject().contains("removeLikeParams"))
         {
             InnertubeEndpoints::Like(endpoint["target"]["videoId"].toString(), endpoint["removeLikeParams"].toString(),
-                liking, true, _context, easy(), _authStore);
+                liking, true, _context, _authStore);
         }
         else
         {
             InnertubeEndpoints::Like(
                 endpoint["target"]["videoId"].toString(),
                 liking ? endpoint["likeParams"].toString() : endpoint["dislikeParams"].toString(),
-                liking, false, _context, easy(), _authStore
+                liking, false, _context, _authStore
             );
         }
     }
@@ -51,22 +51,11 @@ public:
         const QJsonArray channelIdsJson = endpoint["channelIds"].toArray();
         for (const QJsonValue& v : channelIdsJson)
             channelIds.append(v.toString());
-        InnertubeEndpoints::Subscribe(channelIds, endpoint["params"].toString(), subscribing, _context, easy(), _authStore);
+        InnertubeEndpoints::Subscribe(channelIds, endpoint["params"].toString(), subscribing, _context, _authStore);
     }
 private:
     InnertubeAuthStore* _authStore = new InnertubeAuthStore;
     InnertubeContext* _context = new InnertubeContext;
-    static CurlEasy* easy()
-    {
-        static thread_local CurlEasy* e = [] {
-            CurlEasy* e = new CurlEasy;
-            e->set(CURLOPT_CONNECTTIMEOUT_MS, 10000L);
-            e->set(CURLOPT_FAILONERROR, 1L);
-            e->set(CURLOPT_FOLLOWLOCATION, true);
-            return e;
-        }();
-        return e;
-    }
 
     template<class _Tp, class... _Up>
     static constexpr bool is_any_v = std::disjunction_v<std::is_same<_Tp, _Up>...>;

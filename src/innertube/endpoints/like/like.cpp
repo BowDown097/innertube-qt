@@ -2,8 +2,7 @@
 
 namespace InnertubeEndpoints
 {
-    Like::Like(const QString& videoId, const QString& params, bool liking, bool removeLike, InnertubeContext* context, CurlEasy* easy,
-               InnertubeAuthStore* authStore)
+    Like::Like(const QString& videoId, const QString& params, bool liking, bool removeLike, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
         const QJsonObject body {
             { "context", context->toJson() },
@@ -12,8 +11,8 @@ namespace InnertubeEndpoints
         };
 
         if (removeLike)
-            get("like/removelike", context, authStore, easy, body);
+            get("like/removelike", context, authStore, body);
         else
-            get(liking ? "like/like" : "like/dislike", context, authStore, easy, body);
+            get(liking ? "like/like" : "like/dislike", context, authStore, body);
     }
 }

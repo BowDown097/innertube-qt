@@ -4,14 +4,14 @@
 
 namespace InnertubeEndpoints
 {
-    UpdatedMetadata::UpdatedMetadata(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+    UpdatedMetadata::UpdatedMetadata(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
         const QJsonObject body {
             { "context", context->toJson() },
             { "videoId", videoId }
         };
 
-        QByteArray data = get("updated_metadata", context, authStore, easy, body);
+        QByteArray data = get("updated_metadata", context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         QJsonArray actions = dataObj["actions"].toArray();

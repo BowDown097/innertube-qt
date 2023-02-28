@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     public:
-        Subscribe(const QStringList& channelIds, const QString& params, bool subscribing, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        Subscribe(const QStringList& channelIds, const QString& params, bool subscribing, InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

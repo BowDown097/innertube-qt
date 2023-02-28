@@ -3,7 +3,7 @@
 
 namespace InnertubeEndpoints
 {
-    Subscribe::Subscribe(const QStringList& channelIds, const QString& params, bool subscribing, InnertubeContext* context, CurlEasy* easy,
+    Subscribe::Subscribe(const QStringList& channelIds, const QString& params, bool subscribing, InnertubeContext* context,
                          InnertubeAuthStore* authStore)
     {
         const QJsonObject body {
@@ -11,6 +11,6 @@ namespace InnertubeEndpoints
             { "context", context->toJson() },
             { "params", params }
         };
-        get(subscribing ? "subscription/subscribe" : "subscription/unsubscribe", context, authStore, easy, body);
+        get(subscribing ? "subscription/subscribe" : "subscription/unsubscribe", context, authStore, body);
     }
 }

@@ -2,10 +2,9 @@
 
 namespace InnertubeEndpoints
 {
-    AccountMenu::AccountMenu(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+    AccountMenu::AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore)
     {
         Q_UNUSED(context);
-        Q_UNUSED(easy);
         Q_UNUSED(authStore);
         /*
         const QJsonObject body {

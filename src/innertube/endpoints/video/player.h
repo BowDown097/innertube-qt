@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
     public:
         PlayerResponse response;
     private:
-        Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        Player(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

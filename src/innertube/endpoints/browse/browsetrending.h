@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
     public:
         TrendingResponse response;
     private:
-        BrowseTrending(InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore);
+        BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

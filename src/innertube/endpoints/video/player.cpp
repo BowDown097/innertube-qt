@@ -6,7 +6,7 @@
 
 namespace InnertubeEndpoints
 {
-    Player::Player(const QString& videoId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore)
+    Player::Player(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
         const QJsonObject body {
             { "contentCheckOk", true },
@@ -16,7 +16,7 @@ namespace InnertubeEndpoints
             { "videoId", videoId }
         };
 
-        QByteArray data = get("player", context, authStore, easy, body);
+        QByteArray data = get("player", context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         QString playabilityStatus = dataObj["playabilityStatus"]["status"].toString();

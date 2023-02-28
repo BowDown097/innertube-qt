@@ -3,7 +3,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseChannel::BrowseChannel(const QString& channelId, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore, const QString& tokenIn, const QString& params)
+    BrowseChannel::BrowseChannel(const QString& channelId, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn,
+                                 const QString& params)
     {
         QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
@@ -16,7 +17,7 @@ namespace InnertubeEndpoints
             body.insert("continuation", tokenIn);
         }
 
-        QByteArray data = get("browse", context, authStore, easy, body);
+        QByteArray data = get("browse", context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.contents = dataObj["contents"];

@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
         QString continuationToken;
         NotificationMenuResponse response;
     private:
-        GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context, CurlEasy* easy, InnertubeAuthStore* authStore,
+        GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context, InnertubeAuthStore* authStore,
                             const QString& tokenIn = "");
     };
 }
