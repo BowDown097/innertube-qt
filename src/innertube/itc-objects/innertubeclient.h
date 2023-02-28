@@ -28,7 +28,7 @@ public:
     QString userInterfaceTheme;
     QString visitorData;
 
-    InnertubeClient() {}
+    InnertubeClient() = default;
     InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent = "",
                     const QString& browserName = "Firefox", const QString& browserVersion = "103.0",
                     const QString& userInterfaceTheme = "USER_INTERFACE_THEME_DARK", const QString& clientFormFactor = "UNKNOWN_FORM_FACTOR",

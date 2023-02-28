@@ -29,7 +29,7 @@ namespace InnertubeObjects
         QString viewCount;
         QString videoId;
 
-        PlayerVideoDetails() {}
+        PlayerVideoDetails() = default;
         explicit PlayerVideoDetails(const QJsonValue& videoDetails);
     };
 }

@@ -13,7 +13,7 @@ namespace InnertubeObjects
         QString videostatsPlaybackUrl;
         QString videostatsWatchtimeUrl;
 
-        PlaybackTracking() {}
+        PlaybackTracking() = default;
         explicit PlaybackTracking(const QJsonValue& playbackTracking)
             : atrUrl(playbackTracking["atrUrl"]["baseUrl"].toString()),
               ptrackingUrl(playbackTracking["ptrackingUrl"]["baseUrl"].toString()),

@@ -13,7 +13,7 @@ namespace InnertubeObjects
         QList<StreamingFormat> formats;
         QString hlsManifestUrl;
 
-        StreamingData() {}
+        StreamingData() = default;
         explicit StreamingData(const QJsonValue& streamingData);
     };
 }

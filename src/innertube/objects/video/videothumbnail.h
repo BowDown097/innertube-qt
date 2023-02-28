@@ -12,7 +12,7 @@ namespace InnertubeObjects
         QString mqdefault;
         QString sddefault;
 
-        VideoThumbnail() {}
+        VideoThumbnail() = default;
         explicit VideoThumbnail(const QString& videoId)
             : hqdefault(QStringLiteral("https://i.ytimg.com/vi/%1/hqdefault.jpg").arg(videoId)),
               maxresdefault(QStringLiteral("https://i.ytimg.com/vi/%1/maxresdefault.jpg").arg(videoId)),

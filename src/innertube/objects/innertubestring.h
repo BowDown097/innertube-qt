@@ -20,7 +20,7 @@ namespace InnertubeObjects
         QList<InnertubeRun> runs;
         QString text;
 
-        InnertubeString() {}
+        InnertubeString() = default;
         explicit InnertubeString(const QString& text);
         explicit InnertubeString(const QJsonValue& textVal);
 

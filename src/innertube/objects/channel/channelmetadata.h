@@ -25,7 +25,7 @@ namespace InnertubeObjects
         QString title;
         QString vanityChannelUrl;
 
-        ChannelMetadata() {}
+        ChannelMetadata() = default;
         explicit ChannelMetadata(const QJsonValue& channelMetadataRenderer);
     };
 }

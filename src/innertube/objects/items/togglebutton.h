@@ -22,7 +22,7 @@ namespace InnertubeObjects
         InnertubeString toggledText;
         QString toggledTooltip;
 
-        ToggleButton() {}
+        ToggleButton() = default;
         ToggleButton(const QJsonValue& toggleButtonRenderer)
             : accessibilityLabel(toggleButtonRenderer["accessibility"]["label"].toString()),
               defaultIcon(toggleButtonRenderer["defaultIcon"]["iconType"].toString()),

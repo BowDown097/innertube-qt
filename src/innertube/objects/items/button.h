@@ -19,7 +19,7 @@ namespace InnertubeObjects
         InnertubeString text;
         QString tooltip;
 
-        Button() {}
+        Button() = default;
         Button(const QJsonValue& buttonRenderer)
             : accessibilityLabel(buttonRenderer["accessibilityData"]["accessibilityData"]["label"].toString()),
               command(std::make_optional<QJsonValue>(buttonRenderer["command"])),

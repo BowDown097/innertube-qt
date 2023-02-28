@@ -26,7 +26,7 @@ namespace InnertubeObjects
         InnertubeString unsubscribeButtonText;
         InnertubeString unsubscribedButtonText;
 
-        SubscribeButton() {}
+        SubscribeButton() = default;
         explicit SubscribeButton(const QJsonValue& subscribeButtonRenderer)
             : buttonText(subscribeButtonRenderer["buttonText"]),
               channelId(subscribeButtonRenderer["channelId"].toString()),

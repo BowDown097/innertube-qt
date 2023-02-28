@@ -15,7 +15,7 @@ namespace InnertubeObjects
         QList<GenericThumbnail> thumbnails;
         InnertubeString title;
 
-        SecondaryInfoOwner() {}
+        SecondaryInfoOwner() = default;
         explicit SecondaryInfoOwner(const QJsonValue& videoOwnerRenderer);
     };
 }

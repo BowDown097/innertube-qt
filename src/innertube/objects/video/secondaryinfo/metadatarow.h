@@ -10,7 +10,7 @@ namespace InnertubeObjects
         QList<InnertubeString> contents;
         InnertubeString title;
 
-        MetadataRow() {}
+        MetadataRow() = default;
         explicit MetadataRow(const QJsonValue& metadataRowRenderer);
     };
 }

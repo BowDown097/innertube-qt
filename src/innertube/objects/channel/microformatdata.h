@@ -32,7 +32,7 @@ namespace InnertubeObjects
         QString urlTwitterAndroid;
         QString urlTwitterIos;
 
-        MicroformatData() {}
+        MicroformatData() = default;
         explicit MicroformatData(const QJsonValue& microformatDataRenderer);
     };
 }

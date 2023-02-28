@@ -18,7 +18,7 @@ namespace InnertubeObjects
         QString showMoreText;
         SubscribeButton subscribeButton;
 
-        VideoSecondaryInfo() {}
+        VideoSecondaryInfo() = default;
         explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer);
     };
 }

@@ -16,7 +16,7 @@ namespace InnertubeObjects
         ToggleButton likeButton;
         Button shareButton;
 
-        VideoActions() {}
+        VideoActions() = default;
         explicit VideoActions(const QJsonValue& menuRenderer);
     };
 }

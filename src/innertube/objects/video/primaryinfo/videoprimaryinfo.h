@@ -14,7 +14,7 @@ namespace InnertubeObjects
         VideoActions videoActions;
         InnertubeString viewCount;
 
-        VideoPrimaryInfo() {}
+        VideoPrimaryInfo() = default;
         explicit VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer)
             : dateText(primaryInfoRenderer["dateText"]),
               relativeDateText(primaryInfoRenderer["relativeDateText"]),

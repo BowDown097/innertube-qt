@@ -10,7 +10,7 @@ namespace InnertubeObjects
         int collapsedItemCount;
         QList<MetadataRow> rows;
 
-        MetadataRowContainer() {}
+        MetadataRowContainer() = default;
         explicit MetadataRowContainer(const QJsonValue& metadataRowContainerRenderer);
     };
 }

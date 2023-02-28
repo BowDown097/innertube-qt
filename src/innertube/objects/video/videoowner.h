@@ -12,7 +12,7 @@ namespace InnertubeObjects
         QString id;
         QString name;
 
-        VideoOwner() {}
+        VideoOwner() = default;
         VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, const QJsonValue& badgesVal, bool isGridVideo);
     };
 }

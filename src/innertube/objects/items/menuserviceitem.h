@@ -12,7 +12,7 @@ namespace InnertubeObjects
         QJsonValue serviceEndpoint;
         InnertubeString text;
 
-        MenuServiceItem() {}
+        MenuServiceItem() = default;
         MenuServiceItem(const QJsonValue& menuServiceItemRenderer)
             : iconType(menuServiceItemRenderer["icon"]["iconType"].toString()),
               isDisabled(menuServiceItemRenderer["isDisabled"].toBool()),

@@ -23,7 +23,7 @@ namespace InnertubeObjects
         QList<GenericThumbnail> tvBanners;
         InnertubeString videosCountText;
 
-        ChannelHeader() {}
+        ChannelHeader() = default;
         explicit ChannelHeader(const QJsonValue& headerRenderer);
     };
 }
