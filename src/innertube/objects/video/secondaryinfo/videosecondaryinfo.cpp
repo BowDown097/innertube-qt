@@ -53,7 +53,7 @@ namespace InnertubeObjects
                 if (navigationEndpoint.contains("watchEndpoint") && !navigationEndpoint["watchEndpoint"]["continuePlayback"].toBool())
                 {
                     QString fullUrl = "https://www.youtube.com" + navigationEndpoint["commandMetadata"]["webCommandMetadata"]["url"].toString();
-                    run.text = fullUrl.mid(0, 37) + "...";
+                    run.text = fullUrl.left(37) + "...";
                 }
                 else if (navigationEndpoint.contains("browseEndpoint"))
                 {
