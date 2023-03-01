@@ -1,5 +1,5 @@
-QT *= concurrent network
-INCLUDEPATH += $$PWD/include $$PWD/src
+QT *= network
+INCLUDEPATH += $$PWD/src
 DEPENDPATH += $$PWD/src
 DEFINES += CPPHTTPLIB_OPENSSL_SUPPORT INNERTUBE
 CONFIG += c++2a
@@ -8,6 +8,8 @@ CONFIG += c++2a
 !win32: LIBS += -lssl -lcrypto
 win32: CONFIG += link_pkgconfig
 win32: PKGCONFIG += libcrypto libssl
+
+include(lib/qthttplib/qthttplib.pri)
 
 !contains(DEFINES, NO_WEBENGINE) {
     QT *= webenginewidgets

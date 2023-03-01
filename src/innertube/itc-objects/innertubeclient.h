@@ -1,7 +1,6 @@
 #ifndef INNERTUBECLIENT_H
 #define INNERTUBECLIENT_H
 #include "innertubeconfiginfo.h"
-#include <QEventLoop>
 
 class InnertubeClient
 {

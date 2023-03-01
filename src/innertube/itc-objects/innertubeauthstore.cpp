@@ -3,6 +3,7 @@
 #include <QCryptographicHash>
 
 #ifndef NO_WEBENGINE
+#include <QEventLoop>
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
@@ -26,6 +27,7 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     view.show();
 
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
+
     QEventLoop loop;
     connect(this, &InnertubeAuthStore::gotSids, &loop, &QEventLoop::quit);
     loop.exec();

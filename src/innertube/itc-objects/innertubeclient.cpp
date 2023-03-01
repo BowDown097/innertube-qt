@@ -1,5 +1,5 @@
 #include "innertubeclient.h"
-#include "httplib.h"
+#include "qthttplib.h"
 
 InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
                                  const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
@@ -28,13 +28,9 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
       userAgent(userAgent),
       userInterfaceTheme(userInterfaceTheme)
 {
-    // get home page data
-    httplib::Client cli("https://www.youtube.com");
-    httplib::Result res = cli.Get("/");
-    QString hpData = QString::fromStdString(res->body);
-
-    // get/set visitor data
-    QString visitorBlock = hpData.mid(hpData.indexOf("visitorData") + 14);
+    qthttplib::Client cli("https://www.youtube.com");
+    qthttplib::Response res = cli.getBlocking("/");
+    QString visitorBlock = res.body.mid(res.body.indexOf("visitorData") + 14);
     visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
     visitorData = visitorBlock;
 }

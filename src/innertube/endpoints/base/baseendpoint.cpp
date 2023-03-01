@@ -1,35 +1,31 @@
 #include "baseendpoint.h"
-#include <QFutureWatcher>
 #include <QJsonDocument>
-#include <QtConcurrent>
 
 namespace InnertubeEndpoints
 {
     QByteArray BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, const QJsonObject& body)
     {
-        httplib::Client cli("https://www.youtube.com");
+        qthttplib::Client* cli = new qthttplib::Client("https://www.youtube.com");
         setNeededHeaders(cli, context, authStore);
-        return getData(cli, "/youtubei/v1/" + endpoint.toStdString() + "?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false", body);
+        return getData(cli, "/youtubei/v1/" + endpoint + "?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false", body);
     }
 
-    QByteArray BaseEndpoint::getData(httplib::Client& client, const std::string& path, const QJsonObject& body)
+    QByteArray BaseEndpoint::getData(qthttplib::Client* client, const QString& path, const QJsonObject& body)
     {
-        const std::string bodyStr = QJsonDocument(body).toJson(QJsonDocument::Compact).toStdString();
-
-        QFutureWatcher<std::string> watcher;
-        watcher.setFuture(QtConcurrent::run([&client, path, bodyStr]() -> std::string {
-            httplib::Result result = client.Post(path, bodyStr, "application/json");
-            return result->body;
-        }));
+        QByteArray data;
+        client->post(path, QJsonDocument(body).toJson(QJsonDocument::Compact), "application/json");
 
         QEventLoop event;
-        QObject::connect(&watcher, &QFutureWatcher<std::string>::finished, &event, &QEventLoop::quit);
+        QObject::connect(client, &qthttplib::Client::requestFinished, &event, [&data, &event](const qthttplib::Response& response) {
+            event.quit();
+            data = response.body;
+        });
         event.exec();
 
-        return QByteArray::fromStdString(watcher.result());
+        return data;
     }
 
-    void BaseEndpoint::setNeededHeaders(httplib::Client& client, InnertubeContext* context, InnertubeAuthStore* authStore)
+    void BaseEndpoint::setNeededHeaders(qthttplib::Client* client, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
         httplib::Headers headers;
 
@@ -49,7 +45,7 @@ namespace InnertubeEndpoints
             { "X-ORIGIN", "https://www.youtube.com" }
         });
 
-        client.set_default_headers(headers);
+        client->set_default_headers(headers);
     }
 }
 
