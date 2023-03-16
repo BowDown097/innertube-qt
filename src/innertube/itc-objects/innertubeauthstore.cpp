@@ -129,17 +129,19 @@ void InnertubeAuthStore::writeToSettings(QSettings& settings)
 #ifndef NO_WEBENGINE
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
 {
+    qDebug().noquote().nospace() << "New cookie: " << cookie.name() << "=" << cookie.value();
+
     if (cookie.name() == "APISID")
         apisid = cookie.value();
-    if (cookie.name() == "HSID")
+    else if (cookie.name() == "HSID")
         hsid = cookie.value();
-    if (cookie.name() == "SAPISID")
+    else if (cookie.name() == "SAPISID")
         sapisid = cookie.value();
-    if (cookie.name() == "SID")
+    else if (cookie.name() == "SID")
         sid = cookie.value();
-    if (cookie.name() == "SSID")
+    else if (cookie.name() == "SSID")
         ssid = cookie.value();
-    if (cookie.name() == "VISITOR_INFO1_LIVE")
+    else if (cookie.name() == "VISITOR_INFO1_LIVE")
         visitorInfo = cookie.value();
 
     if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
