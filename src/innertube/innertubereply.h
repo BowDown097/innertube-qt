@@ -18,6 +18,7 @@ signals:
     void finished(InnertubeEndpoints::BrowseSubscriptions);
     void finished(InnertubeEndpoints::BrowseTrending);
     void finished(InnertubeEndpoints::GetNotificationMenu);
+    void finished(InnertubeEndpoints::ModifyChannelPreference);
     void finished(InnertubeEndpoints::Next);
     void finished(InnertubeEndpoints::Player);
     void finished(InnertubeEndpoints::Search);

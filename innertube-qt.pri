@@ -33,6 +33,7 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
     $$PWD/src/innertube/endpoints/misc/unseencount.h \
+    $$PWD/src/innertube/endpoints/notification/modifychannelpreference.h \
     $$PWD/src/innertube/endpoints/subscription/subscribe.h \
     $$PWD/src/innertube/endpoints/video/next.h \
     $$PWD/src/innertube/endpoints/video/player.h \
@@ -55,6 +56,8 @@ HEADERS += \
     $$PWD/src/innertube/objects/channel/channelmetadata.h \
     $$PWD/src/innertube/objects/channel/metadatabadge.h \
     $$PWD/src/innertube/objects/channel/microformatdata.h \
+    $$PWD/src/innertube/objects/channel/notificationpreferencebutton.h \
+    $$PWD/src/innertube/objects/channel/notificationstate.h \
     $$PWD/src/innertube/objects/channel/subscribebutton.h \
     $$PWD/src/innertube/objects/genericthumbnail.h \
     $$PWD/src/innertube/objects/items/button.h \
@@ -106,6 +109,7 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
     $$PWD/src/innertube/endpoints/misc/unseencount.cpp \
+    $$PWD/src/innertube/endpoints/notification/modifychannelpreference.cpp \
     $$PWD/src/innertube/endpoints/subscription/subscribe.cpp \
     $$PWD/src/innertube/endpoints/video/next.cpp \
     $$PWD/src/innertube/endpoints/video/player.cpp \
@@ -119,6 +123,7 @@ SOURCES += \
     $$PWD/src/innertube/objects/channel/channelheader.cpp \
     $$PWD/src/innertube/objects/channel/channelmetadata.cpp \
     $$PWD/src/innertube/objects/channel/microformatdata.cpp \
+    $$PWD/src/innertube/objects/channel/notificationpreferencebutton.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \

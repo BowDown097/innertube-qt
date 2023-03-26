@@ -15,6 +15,7 @@
 #include "misc/getnotificationmenu.h"
 #include "misc/search.h"
 #include "misc/unseencount.h"
+#include "notification/modifychannelpreference.h"
 #include "subscription/subscribe.h"
 #include "video/next.h"
 #include "video/player.h"
