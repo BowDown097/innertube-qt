@@ -2,58 +2,37 @@
 #include "protobuf/simpleprotobuf.h"
 #include <QCryptographicHash>
 
-#ifndef NO_WEBENGINE
+#ifndef INNERTUBE_NO_WEBENGINE
 #include <QEventLoop>
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
-#else
-#include "settingsstore.h"
-#include <QMessageBox>
 #endif
 
 void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 {
-#ifndef NO_WEBENGINE
-    QWidget authWindow;
-    authWindow.setFixedSize(authWindow.size());
-    authWindow.setWindowTitle("YouTube Login");
-    authWindow.show();
+#ifndef INNERTUBE_NO_WEBENGINE
+    QWidget* authWindow = new QWidget;
+    authWindow->setFixedSize(authWindow->size());
+    authWindow->setWindowTitle("YouTube Login");
+    authWindow->show();
 
-    QWebEngineView view(&authWindow);
-    view.setPage(new QWebEnginePage);
-    view.setFixedSize(authWindow.size());
-    view.load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
-    view.show();
+    QWebEngineView* view = new QWebEngineView(authWindow);
+    view->setFixedSize(authWindow->size());
+
+    QWebEnginePage* page = new QWebEnginePage(view);
+    view->setPage(page);
+    view->load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
+    view->show();
 
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
 
     QEventLoop loop;
-    connect(this, &InnertubeAuthStore::gotSids, &loop, &QEventLoop::quit);
+    connect(this, &InnertubeAuthStore::gotSIDs, &loop, &QEventLoop::quit);
     loop.exec();
 
-    delete view.page();
+    authWindow->deleteLater();
     context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-#else
-    QMessageBox::StandardButton box = QMessageBox::information(nullptr, "YouTube Login",
-        QStringLiteral("Could not bring up the YouTube login page because the Qt web engine is not available.\n") +
-        QStringLiteral("You will need to provide authentication credentials manually to log in.\n") +
-        QStringLiteral("For info on how to do this, see https://github.com/BowDown097/innertube-qt/wiki/Manually-getting-login-credentials."));
-    if (box != QMessageBox::StandardButton::Ok)
-        return;
-
-    QSettings store(SettingsStore::configPath.filePath("store.ini"), QSettings::IniFormat);
-    authenticateFromSettings(store, context);
-    if (!populated)
-    {
-        QMessageBox::information(nullptr, "Not Logged In",
-            QStringLiteral("You didn't provide authentication credentials or the credentials you provided weren't accepted.\n") +
-            QStringLiteral("If you provided credentials, please check them (refer back to the previously linked guide?) and try again."));
-        return;
-    }
-
-    SettingsStore::instance().restoreLogin = true;
-    SettingsStore::instance().saveToSettingsFile();
 #endif
 }
 
@@ -106,14 +85,14 @@ QJsonObject InnertubeAuthStore::toJson() const
 
 void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)
 {
-    apisid = "";
-    hsid = "";
+    apisid.clear();
+    hsid.clear();
     populated = false;
-    sapisid = "";
-    sid = "";
-    ssid = "";
-    visitorInfo = "";
-    context->client.visitorData = "";
+    sapisid.clear();
+    sid.clear();
+    ssid.clear();
+    visitorInfo.clear();
+    context->client.visitorData.clear();
 }
 
 void InnertubeAuthStore::writeToSettings(QSettings& settings)
@@ -126,7 +105,7 @@ void InnertubeAuthStore::writeToSettings(QSettings& settings)
     settings.setValue("visitorInfo", visitorInfo);
 }
 
-#ifndef NO_WEBENGINE
+#ifndef INNERTUBE_NO_WEBENGINE
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
 {
     qDebug().noquote().nospace() << "New cookie: " << cookie.name() << "=" << cookie.value();
@@ -147,7 +126,7 @@ void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
     if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
     {
         populated = true;
-        emit gotSids();
+        emit gotSIDs();
     }
 }
 #endif

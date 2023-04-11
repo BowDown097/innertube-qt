@@ -11,7 +11,7 @@ win32: PKGCONFIG += libcrypto libssl
 
 include(lib/qthttplib/qthttplib.pri)
 
-!contains(DEFINES, NO_WEBENGINE) {
+!contains(DEFINES, INNERTUBE_NO_WEBENGINE) {
     QT *= webenginewidgets
 }
 
@@ -97,6 +97,7 @@ HEADERS += \
     $$PWD/src/protobuf/simpleprotobuf.h
 
 SOURCES += \
+    $$PWD/src/innertube.cpp \
     $$PWD/src/innertube/endpoints/base/basebrowseendpoint.cpp \
     $$PWD/src/innertube/endpoints/base/baseendpoint.cpp \
     $$PWD/src/innertube/endpoints/browse/browsechannel.cpp \

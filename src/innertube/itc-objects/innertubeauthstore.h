@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSettings>
 
-#ifndef NO_WEBENGINE
+#ifndef INNERTUBE_NO_WEBENGINE
 #include <QNetworkCookie>
 #endif
 
@@ -30,8 +30,8 @@ public:
     void writeToSettings(QSettings& settings);
     void unauthenticate(InnertubeContext*& context);
 signals:
-    void gotSids();
-#ifndef NO_WEBENGINE
+    void gotSIDs();
+#ifndef INNERTUBE_NO_WEBENGINE
 private slots:
     void cookieAdded(const QNetworkCookie& cookie);
 #endif
