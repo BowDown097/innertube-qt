@@ -20,11 +20,11 @@ namespace InnertubeObjects
 
     const NotificationState& NotificationPreferenceButton::getCurrentState() const
     {
-        return *std::find_if(states.cbegin(), states.cend(), [this](const NotificationState& ns) { return ns.stateId == currentStateId; });
+        return *std::ranges::find_if(states, [this](const NotificationState& ns) { return ns.stateId == currentStateId; });
     }
 
     const MenuServiceItem& NotificationPreferenceButton::getService(const QString& iconType) const
     {
-        return *std::find_if(services.cbegin(), services.cend(), [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
+        return *std::ranges::find_if(services, [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
     }
 }
