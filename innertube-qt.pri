@@ -29,6 +29,8 @@ HEADERS += \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.h \
     $$PWD/src/innertube/endpoints/browse/browsetrending.h \
     $$PWD/src/innertube/endpoints/like/like.h \
+    $$PWD/src/innertube/endpoints/live_chat/getlivechat.h \
+    $$PWD/src/innertube/endpoints/live_chat/sendmessage.h \
     $$PWD/src/innertube/endpoints/misc/accountmenu.h \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.h \
     $$PWD/src/innertube/endpoints/misc/search.h \
@@ -64,6 +66,9 @@ HEADERS += \
     $$PWD/src/innertube/objects/items/menuflexibleitem.h \
     $$PWD/src/innertube/objects/items/menuserviceitem.h \
     $$PWD/src/innertube/objects/items/togglebutton.h \
+    $$PWD/src/innertube/objects/live_chat/invalidation.h \
+    $$PWD/src/innertube/objects/live_chat/invalidationcontinuation.h \
+    $$PWD/src/innertube/objects/live_chat/livechat.h \
     $$PWD/src/innertube/objects/notification/notification.h \
     $$PWD/src/innertube/objects/player/captiontrack.h \
     $$PWD/src/innertube/objects/player/playbacktracking.h \
@@ -88,6 +93,7 @@ HEADERS += \
     $$PWD/src/innertube/responses/browse/homeresponse.h \
     $$PWD/src/innertube/responses/browse/subscriptionsresponse.h \
     $$PWD/src/innertube/responses/browse/trendingresponse.h \
+    $$PWD/src/innertube/responses/live_chat/livechatresponse.h \
     $$PWD/src/innertube/responses/misc/notificationmenuresponse.h \
     $$PWD/src/innertube/responses/misc/searchresponse.h \
     $$PWD/src/innertube/responses/video/nextresponse.h \
@@ -106,6 +112,8 @@ SOURCES += \
     $$PWD/src/innertube/endpoints/browse/browsesubscriptions.cpp \
     $$PWD/src/innertube/endpoints/browse/browsetrending.cpp \
     $$PWD/src/innertube/endpoints/like/like.cpp \
+    $$PWD/src/innertube/endpoints/live_chat/getlivechat.cpp \
+    $$PWD/src/innertube/endpoints/live_chat/sendmessage.cpp \
     $$PWD/src/innertube/endpoints/misc/accountmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/getnotificationmenu.cpp \
     $$PWD/src/innertube/endpoints/misc/search.cpp \
@@ -126,6 +134,7 @@ SOURCES += \
     $$PWD/src/innertube/objects/channel/microformatdata.cpp \
     $$PWD/src/innertube/objects/channel/notificationpreferencebutton.cpp \
     $$PWD/src/innertube/objects/innertubestring.cpp \
+    $$PWD/src/innertube/objects/live_chat/livechat.cpp \
     $$PWD/src/innertube/objects/notification/notification.cpp \
     $$PWD/src/innertube/objects/player/playervideodetails.cpp \
     $$PWD/src/innertube/objects/player/streamingdata.cpp \

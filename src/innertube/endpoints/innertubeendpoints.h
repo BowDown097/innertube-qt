@@ -11,6 +11,8 @@
 #include "browse/browsesubscriptions.h"
 #include "browse/browsetrending.h"
 #include "like/like.h"
+#include "live_chat/getlivechat.h"
+#include "live_chat/sendmessage.h"
 #include "misc/accountmenu.h"
 #include "misc/getnotificationmenu.h"
 #include "misc/search.h"

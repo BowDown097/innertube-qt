@@ -28,6 +28,10 @@ namespace InnertubeEndpoints
             if (watchNextContents.isEmpty())
                 throw InnertubeException("[Next] watchNextResults not found or is empty");
 
+            QJsonValue liveChatRenderer = dataObj["contents"]["twoColumnWatchNextResults"]["conversationBar"]["liveChatRenderer"];
+            response.liveChat = liveChatRenderer.isObject()
+                ? std::make_optional<InnertubeObjects::LiveChat>(liveChatRenderer) : std::nullopt;
+
             response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(JsonUtil::rfind("videoPrimaryInfoRenderer", watchNextContents));
             response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(JsonUtil::rfind("videoSecondaryInfoRenderer", watchNextContents));
             response.videoId = dataObj["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();

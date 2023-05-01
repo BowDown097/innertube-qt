@@ -18,10 +18,12 @@ signals:
     void finished(InnertubeEndpoints::BrowseSubscriptions);
     void finished(InnertubeEndpoints::BrowseTrending);
     void finished(InnertubeEndpoints::GetNotificationMenu);
+    void finished(InnertubeEndpoints::GetLiveChat);
     void finished(InnertubeEndpoints::ModifyChannelPreference);
     void finished(InnertubeEndpoints::Next);
     void finished(InnertubeEndpoints::Player);
     void finished(InnertubeEndpoints::Search);
+    void finished(InnertubeEndpoints::SendMessage);
     void finished(InnertubeEndpoints::Subscribe);
     void finished(InnertubeEndpoints::UnseenCount);
     void finished(InnertubeEndpoints::UpdatedMetadata);
