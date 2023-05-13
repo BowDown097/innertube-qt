@@ -8,13 +8,13 @@ namespace InnertubeEndpoints
     BrowseSubscriptions::BrowseSubscriptions(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
         : BaseBrowseEndpoint("FEsubscriptions", context, authStore, tokenIn)
     {
-        QJsonArray sectionListRenderer;
+        QJsonArray richGridRenderer;
         if (tokenIn.isEmpty())
         {
             const QJsonObject tabRenderer = getTabRenderer("BrowseSubscriptions");
-            sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
-            if (sectionListRenderer.isEmpty())
-                throw InnertubeException("[BrowseSubscriptions] sectionListRenderer has no contents");
+            richGridRenderer = tabRenderer["richGridRenderer"]["contents"].toArray();
+            if (richGridRenderer.isEmpty())
+                throw InnertubeException("[BrowseSubscriptions] richGridRenderer has no contents");
         }
         else
         {
@@ -26,31 +26,17 @@ namespace InnertubeEndpoints
             if (appendItemsAction.isEmpty())
                 throw InnertubeException("[BrowseSubscriptions] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
-            sectionListRenderer = appendItemsAction["continuationItems"].toArray();
+            richGridRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (const QJsonValue& v : qAsConst(sectionListRenderer))
+        for (const QJsonValue& v : qAsConst(richGridRenderer))
         {
             const QJsonObject o = v.toObject();
-            if (o.contains("itemSectionRenderer"))
+            if (o.contains("richItemRenderer"))
             {
-                const QJsonArray itemSectionContents = v["itemSectionRenderer"]["contents"].toArray();
-                if (itemSectionContents.isEmpty())
-                    throw InnertubeException("[BrowseSubscriptions] itemSectionRenderer not found or has no content");
-
-                for (const QJsonValue& v2 : itemSectionContents)
-                {
-                    const QJsonObject shelfRenderer = v2["shelfRenderer"].toObject();
-                    if (shelfRenderer.isEmpty()) continue;
-
-                    const QJsonArray gridContents = shelfRenderer["content"]["gridRenderer"]["items"].toArray();
-                    for (const QJsonValue& v3 : gridContents)
-                    {
-                        const QJsonObject gridVideoRenderer = v3["gridVideoRenderer"].toObject();
-                        if (gridVideoRenderer.isEmpty()) continue;
-                        response.videos.append(InnertubeObjects::Video(gridVideoRenderer, true));
-                    }
-                }
+                const QJsonObject richItemContents = v["richItemRenderer"]["content"].toObject();
+                if (richItemContents.contains("videoRenderer"))
+                    response.videos.append(InnertubeObjects::Video(richItemContents["videoRenderer"], false));
             }
             else if (o.contains("continuationItemRenderer"))
             {
