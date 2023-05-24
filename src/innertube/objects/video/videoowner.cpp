@@ -8,7 +8,7 @@ namespace InnertubeObjects
         : id(textVal["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"].toString()),
           name(textVal["runs"][0]["text"].toString())
     {
-        if (!thumbnailVal.isUndefined())
+        if (thumbnailVal.isObject())
         {
             const QJsonArray thumbnails = isGridVideo
                     ? thumbnailVal.toObject().constBegin()->toArray()

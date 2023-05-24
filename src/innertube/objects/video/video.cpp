@@ -1,6 +1,5 @@
 #include "video.h"
 #include <QJsonArray>
-#include <QJsonObject>
 #include <QLocale>
 
 namespace InnertubeObjects
@@ -26,11 +25,12 @@ namespace InnertubeObjects
             if (isGridVideo)
             {
                 const QJsonArray thumbnailOverlays = videoRenderer["thumbnailOverlays"].toArray();
-                for (const QJsonValue& v : thumbnailOverlays)
+                QJsonArray::const_iterator timeOverlay = std::ranges::find_if(thumbnailOverlays, [](const QJsonValue& v)
+                                                                        { return v["thumbnailOverlayTimeStatusRenderer"].isObject(); });
+                if (timeOverlay != thumbnailOverlays.cend())
                 {
-                    const QJsonObject timeStatus = v["thumbnailOverlayTimeStatusRenderer"].toObject();
-                    if (timeStatus.isEmpty()) continue;
-                    lengthText = InnertubeString(timeStatus["text"]);
+                    const QJsonValue& timeOverlayVal = *timeOverlay;
+                    lengthText = InnertubeString(timeOverlayVal["thumbnailOverlayTimeStatusRenderer"]["text"]);
                 }
             }
             else
@@ -38,12 +38,13 @@ namespace InnertubeObjects
                 lengthText = InnertubeString(videoRenderer["lengthText"]);
             }
 
-            if (videoRenderer.toObject().contains("upcomingEventData"))
+            if (videoRenderer["upcomingEventData"].isObject())
             {
                 QJsonValue upcomingEventData = videoRenderer["upcomingEventData"];
                 InnertubeString upcomingEventText = InnertubeString(upcomingEventData["upcomingEventText"]);
                 long startTime = upcomingEventData["startTime"].toString().toLong();
-                QString fmt = QStringLiteral("%1, %2").arg(QLocale::system().dateFormat(QLocale::ShortFormat), QLocale::system().timeFormat(QLocale::ShortFormat));
+                QString fmt = QStringLiteral("%1, %2").arg(QLocale::system().dateFormat(QLocale::ShortFormat),
+                                                           QLocale::system().timeFormat(QLocale::ShortFormat));
 
                 upcomingEventText.text = upcomingEventText.text.replace("DATE_PLACEHOLDER", QDateTime::fromSecsSinceEpoch(startTime).toString(fmt));
                 publishedTimeText = upcomingEventText;

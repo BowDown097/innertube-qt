@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         };
 
         QByteArray data = get("notification/modify_channel_preference", context, authStore, body);
-        const QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         channelId = dataObj["channelId"].toString();
         newNotificationButton = InnertubeObjects::NotificationPreferenceButton(

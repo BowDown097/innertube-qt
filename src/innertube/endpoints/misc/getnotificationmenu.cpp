@@ -14,9 +14,9 @@ namespace InnertubeEndpoints
             body.insert("ctoken", tokenIn);
 
         QByteArray data = get("notification/get_notification_menu", context, authStore, body);
-        const QJsonObject action = QJsonDocument::fromJson(data).object()["actions"].toArray()[0].toObject();
+        QJsonValue action = QJsonDocument::fromJson(data)["actions"][0];
 
-        if (action.contains("openPopupAction"))
+        if (action["openPopupAction"].isObject())
         {
             QJsonValue menuRenderer = action["openPopupAction"]["popup"]["multiPageMenuRenderer"];
             response.headerTitle = menuRenderer["header"]["simpleMenuHeaderRenderer"]["title"]["simpleText"].toString();
@@ -25,22 +25,20 @@ namespace InnertubeEndpoints
             const QJsonArray items = menuRenderer["sections"][0]["multiPageMenuNotificationSectionRenderer"]["items"].toArray();
             for (const QJsonValue& v : items)
             {
-                const QJsonObject o = v.toObject();
-                if (o.contains("notificationRenderer"))
+                if (v["notificationRenderer"].isObject())
                     response.notifications.append(InnertubeObjects::Notification(v["notificationRenderer"]));
-                else if (o.contains("continuationItemRenderer"))
+                else if (v["continuationItemRenderer"].isObject())
                     continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["getNotificationMenuEndpoint"]["ctoken"].toString();
             }
         }
-        else if (action.contains("appendContinuationItemsAction"))
+        else if (action["appendContinuationItemsAction"].isObject())
         {
             const QJsonArray continuationItems = action["appendContinuationItemsAction"]["continuationItems"].toArray();
             for (const QJsonValue& v : continuationItems)
             {
-                const QJsonObject o = v.toObject();
-                if (o.contains("notificationRenderer"))
+                if (v["notificationRenderer"].isObject())
                     response.notifications.append(InnertubeObjects::Notification(v["notificationRenderer"]));
-                else if (o.contains("continuationItemRenderer"))
+                else if (v["continuationItemRenderer"].isObject())
                     continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["getNotificationMenuEndpoint"]["ctoken"].toString();
             }
         }

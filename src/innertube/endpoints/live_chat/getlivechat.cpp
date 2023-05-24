@@ -15,7 +15,7 @@ namespace InnertubeEndpoints
         };
 
         QByteArray data = get("live_chat/get_live_chat", context, authStore, body);
-        const QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.actionPanel = dataObj["continuationContents"]["liveChatContinuation"]["actionPanel"];
         response.actions = dataObj["continuationContents"]["liveChatContinuation"]["actions"].toArray();

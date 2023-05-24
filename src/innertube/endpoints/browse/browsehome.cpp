@@ -11,24 +11,24 @@ namespace InnertubeEndpoints
         QJsonArray contents;
         if (tokenIn.isEmpty())
         {
-            const QJsonObject baseContents = QJsonDocument::fromJson(data).object()["contents"].toObject();
-            if (baseContents.isEmpty())
+            QJsonValue baseContents = QJsonDocument::fromJson(data)["contents"];
+            if (!baseContents.isObject())
                 throw InnertubeException("[BrowseHome] contents not found");
 
-            const QString baseRenderer = baseContents.contains("twoColumnBrowseResultsRenderer")
+            const QString baseRenderer = !baseContents["twoColumnBrowseResultsRenderer"].isUndefined()
                     ? "twoColumnBrowseResultsRenderer"
                     : "singleColumnBrowseResultsRenderer";
 
-            const QJsonObject resultsRenderer = baseContents[baseRenderer].toObject();
-            if (resultsRenderer.isEmpty())
+            QJsonValue resultsRenderer = baseContents[baseRenderer];
+            if (!resultsRenderer.isObject())
                 throw InnertubeException(QStringLiteral("[BrowseHome] %1 not found").arg(baseRenderer));
 
             const QJsonArray tabs = resultsRenderer["tabs"].toArray();
             if (tabs.isEmpty())
                 throw InnertubeException("[BrowseHome] tabs not found or is empty");
 
-            const QJsonObject tabRenderer = tabs[0]["tabRenderer"]["content"].toObject();
-            if (tabRenderer.isEmpty())
+            QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
+            if (!tabRenderer.isObject())
                 throw InnertubeException("[BrowseHome] tabRenderer not found");
 
             // if two column, assume grid; if not, assume shelves
@@ -38,12 +38,12 @@ namespace InnertubeEndpoints
         }
         else
         {
-            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHome] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
 
-            const QJsonObject appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"].toObject();
-            if (appendItemsAction.isEmpty())
+            QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            if (!appendItemsAction.isObject())
                 throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
             contents = appendItemsAction["continuationItems"].toArray();
@@ -51,28 +51,25 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : qAsConst(contents))
         {
-            const QJsonObject o = v.toObject();
-            if (o.contains("richItemRenderer"))
+            if (v["richItemRenderer"].isObject())
             {
-                const QJsonObject videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"].toObject();
-                if (videoRenderer.isEmpty()) continue;
+                QJsonValue videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"];
+                if (!videoRenderer.isObject()) continue;
                 response.videos.append(InnertubeObjects::Video(videoRenderer, false));
             }
-            else if (o.contains("shelfRenderer"))
+            else if (v["shelfRenderer"].isObject())
             {
-                const QJsonObject shelfRenderer = v["shelfRenderer"].toObject();
-                InnertubeObjects::InnertubeString shelfTitle(shelfRenderer["title"]);
+                InnertubeObjects::InnertubeString shelfTitle(v["shelfRenderer"]["title"]);
                 response.shelves.append(shelfTitle);
 
-                const QJsonArray shelfContents = shelfRenderer["content"]["horizontalListRenderer"]["items"].toArray();
+                const QJsonArray shelfContents = v["shelfRenderer"]["content"]["horizontalListRenderer"]["items"].toArray();
                 for (const QJsonValue& v2 : shelfContents)
                 {
-                    const QJsonObject gridVideoRenderer = v2["gridVideoRenderer"].toObject();
-                    if (gridVideoRenderer.isEmpty()) continue;
-                    response.videos.append(InnertubeObjects::Video(gridVideoRenderer, true, shelfTitle));
+                    if (!v2["gridVideoRenderer"].isObject()) continue;
+                    response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], true, shelfTitle));
                 }
             }
-            else if (o.contains("continuationItemRenderer"))
+            else if (v["continuationItemRenderer"].isObject())
             {
                 continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }

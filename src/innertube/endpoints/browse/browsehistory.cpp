@@ -11,19 +11,19 @@ namespace InnertubeEndpoints
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            const QJsonObject tabRenderer = getTabRenderer("BrowseHistory");
+            QJsonValue tabRenderer = getTabRenderer("BrowseHistory");
             sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
         }
         else
         {
-            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data).object()["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHistory] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
 
-            const QJsonObject appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"].toObject();
-            if (appendItemsAction.isEmpty())
+            QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            if (!appendItemsAction.isObject())
                 throw InnertubeException("[BrowseHistory] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
@@ -31,8 +31,7 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : qAsConst(sectionListRenderer))
         {
-            const QJsonObject o = v.toObject();
-            if (o.contains("itemSectionRenderer"))
+            if (v["itemSectionRenderer"].isObject())
             {
                 const QJsonArray itemSectionContents = v["itemSectionRenderer"]["contents"].toArray();
                 if (itemSectionContents.isEmpty())
@@ -40,12 +39,11 @@ namespace InnertubeEndpoints
 
                 for (const QJsonValue& v2 : itemSectionContents)
                 {
-                    const QJsonObject videoRenderer = v2["videoRenderer"].toObject();
-                    if (videoRenderer.isEmpty()) continue;
-                    response.videos.append(InnertubeObjects::Video(videoRenderer, false));
+                    if (!v2["videoRenderer"].isObject()) continue;
+                    response.videos.append(InnertubeObjects::Video(v2["videoRenderer"], false));
                 }
             }
-            else if (o.contains("continuationItemRenderer"))
+            else if (v["continuationItemRenderer"].isObject())
             {
                 continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }

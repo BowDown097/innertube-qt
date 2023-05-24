@@ -1,7 +1,6 @@
 #include "videoactions.h"
 #include "jsonutil.h"
 #include <QJsonArray>
-#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -19,12 +18,12 @@ namespace InnertubeObjects
             items.append(MenuServiceItem(v["menuServiceItemRenderer"]));
 
         const QJsonArray topLevelButtonsJson = menuRenderer["topLevelButtons"].toArray();
-        QJsonArray::const_iterator funny = std::ranges::find_if(topLevelButtonsJson, [](const QJsonValue& v)
+        QJsonArray::const_iterator shareTLB = std::ranges::find_if(topLevelButtonsJson, [](const QJsonValue& v)
                                                                 { return v["buttonRenderer"]["icon"]["iconType"].toString() == "SHARE"; });
-        if (funny != topLevelButtonsJson.cend())
+        if (shareTLB != topLevelButtonsJson.cend())
         {
-            const QJsonValue& funnyVal = *funny;
-            shareButton = Button(funnyVal["buttonRenderer"]);
+            const QJsonValue& shareTLBVal = *shareTLB;
+            shareButton = Button(shareTLBVal["buttonRenderer"]);
         }
     }
 }

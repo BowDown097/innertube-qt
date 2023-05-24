@@ -1,6 +1,5 @@
 #include "innertubestring.h"
 #include <QJsonArray>
-#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -13,10 +12,11 @@ namespace InnertubeObjects
     InnertubeString::InnertubeString(const QJsonValue& textVal)
         : accessibilityLabel(textVal["accessibility"]["accessibilityData"]["label"].toString())
     {
-        if (textVal.toObject().contains("simpleText"))
+        if (textVal["simpleText"].isString())
         {
-            runs.append(InnertubeRun(textVal["simpleText"].toString()));
-            text = textVal["simpleText"].toString();
+            const QString simpleText = textVal["simpleText"].toString();
+            runs.append(InnertubeRun(simpleText));
+            text = simpleText;
         }
         else
         {

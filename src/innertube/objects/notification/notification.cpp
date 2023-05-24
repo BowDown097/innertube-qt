@@ -1,5 +1,4 @@
 #include "notification.h"
-#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -11,12 +10,9 @@ namespace InnertubeObjects
           sentTimeText(notificationRenderer["sentTimeText"]["simpleText"].toString()),
           videoThumbnail(notificationRenderer["videoThumbnail"]["thumbnails"][0])
     {
-        const QJsonObject navigationEndpoint = notificationRenderer["navigationEndpoint"].toObject();
-        bool hasCommentsCommand = navigationEndpoint.contains("getCommentsFromInboxCommand");
-        QJsonValue command = hasCommentsCommand
-                ? navigationEndpoint["getCommentsFromInboxCommand"]
-                : navigationEndpoint["watchEndpoint"];
-
+        QJsonValue command = !notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"].isUndefined()
+                                 ? notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"]
+                                 : notificationRenderer["navigationEndpoint"]["watchEndpoint"];
         linkedCommentId = std::make_optional<QString>(command["linkedCommentId"].toString());
         videoId = command["videoId"].toString();
     }

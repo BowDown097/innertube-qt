@@ -36,7 +36,7 @@ namespace InnertubeEndpoints
 
     QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name)
     {
-        QJsonArray::const_iterator actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v.toObject().contains(name); });
+        QJsonArray::const_iterator actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v[name].isObject(); });
 
         if (actionIt == actions.cend())
         {

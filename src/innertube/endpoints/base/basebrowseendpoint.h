@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         QByteArray data;
         BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
                            const QString& continuationToken = "", const QString& query = "");
-        QJsonObject getTabRenderer(const QString& name) const;
+        QJsonValue getTabRenderer(const QString& name) const;
     };
 }
 

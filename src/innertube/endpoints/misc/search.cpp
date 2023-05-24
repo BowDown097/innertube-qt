@@ -19,19 +19,19 @@ namespace InnertubeEndpoints
         }
 
         QByteArray data = get("search", context, authStore, body);
-        const QJsonObject dataObj = QJsonDocument::fromJson(data).object();
+        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.estimatedResults = dataObj["estimatedResults"].toString().toLong();
 
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            const QJsonObject contents = dataObj["contents"].toObject();
-            if (contents.isEmpty())
+            QJsonValue contents = dataObj["contents"];
+            if (!contents.isObject())
                 throw InnertubeException("[Search] contents not found");
 
-            const QJsonObject resultsRenderer = contents["twoColumnSearchResultsRenderer"].toObject();
-            if (resultsRenderer.isEmpty())
+            QJsonValue resultsRenderer = contents["twoColumnSearchResultsRenderer"];
+            if (!resultsRenderer.isObject())
                 throw InnertubeException("[Search] twoColumnSearchResultsRenderer not found");
 
             sectionListRenderer = resultsRenderer["primaryContents"]["sectionListRenderer"]["contents"].toArray();
@@ -44,8 +44,8 @@ namespace InnertubeEndpoints
             if (onResponseReceivedCommands.isEmpty())
                 throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Minor); // this can just happen sometimes
 
-            const QJsonObject appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"].toObject();
-            if (appendItemsAction.isEmpty())
+            QJsonValue appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"];
+            if (!appendItemsAction.isObject())
                 throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
@@ -53,20 +53,18 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : qAsConst(sectionListRenderer))
         {
-            const QJsonObject o = v.toObject();
-            if (o.contains("itemSectionRenderer"))
+            if (v["itemSectionRenderer"].isObject())
             {
                 const QJsonArray itemSectionRenderer = v["itemSectionRenderer"]["contents"].toArray();
                 for (const QJsonValue& v2 : itemSectionRenderer)
                 {
-                    const QJsonObject o2 = v2.toObject();
-                    if (o2.contains("videoRenderer"))
-                        response.videos.append(InnertubeObjects::Video(o2["videoRenderer"], false));
-                    else if (o2.contains("channelRenderer"))
-                        response.channels.append(InnertubeObjects::Channel(o2["channelRenderer"]));
+                    if (v2["videoRenderer"].isObject())
+                        response.videos.append(InnertubeObjects::Video(v2["videoRenderer"], false));
+                    else if (v2["channelRenderer"].isObject())
+                        response.channels.append(InnertubeObjects::Channel(v2["channelRenderer"]));
                 }
             }
-            else if (o.contains("continuationItemRenderer"))
+            else if (v["continuationItemRenderer"].isObject())
             {
                 continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }

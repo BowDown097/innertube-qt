@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     BrowseTrending::BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore)
         : BaseBrowseEndpoint("FEtrending", context, authStore)
     {
-        const QJsonObject tabRenderer = getTabRenderer("BrowseTrending");
+        QJsonValue tabRenderer = getTabRenderer("BrowseTrending");
         const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
         if (sectionListRenderer.isEmpty())
             throw InnertubeException("[BrowseTrending] sectionListRenderer has no contents");
@@ -18,11 +18,11 @@ namespace InnertubeEndpoints
             if (itemSectionContents.isEmpty())
                 throw InnertubeException("[BrowseTrending] itemSectionRenderer not found or has no content");
 
-            const QJsonObject shelfRenderer = itemSectionContents[0]["shelfRenderer"].toObject();
+            QJsonValue shelfRenderer = itemSectionContents[0]["shelfRenderer"];
             const QJsonObject shelfContent = shelfRenderer["content"].toObject();
             if (shelfContent.isEmpty()) continue;
 
-            auto shelfTitle = shelfRenderer.contains("title")
+            InnertubeObjects::InnertubeString shelfTitle = shelfRenderer["title"].isObject()
                     ? InnertubeObjects::InnertubeString(shelfRenderer["title"])
                     : InnertubeObjects::InnertubeString(QString("Now"));
             if (!response.shelves.contains(shelfTitle))
@@ -33,10 +33,9 @@ namespace InnertubeEndpoints
             const QJsonArray shelfContents = shelfContent[appropriateList]["items"].toArray();
             for (const QJsonValue& v2 : shelfContents)
             {
-                QString rendererType = appropriateList == "expandedShelfContentsRenderer" ? "videoRenderer" : "gridVideoRenderer";
-                const QJsonObject videoRenderer = v2[rendererType].toObject();
-                if (videoRenderer.isEmpty()) continue;
-                response.videos.append(InnertubeObjects::Video(videoRenderer, rendererType == "gridVideoRenderer", shelfTitle));
+                const QString rendererType = appropriateList == "expandedShelfContentsRenderer" ? "videoRenderer" : "gridVideoRenderer";
+                if (!v2[rendererType].isObject()) continue;
+                response.videos.append(InnertubeObjects::Video(v2[rendererType], rendererType == "gridVideoRenderer", shelfTitle));
             }
         }
     }

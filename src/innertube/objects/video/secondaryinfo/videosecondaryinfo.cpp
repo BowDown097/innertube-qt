@@ -1,5 +1,4 @@
 #include "videosecondaryinfo.h"
-#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -12,13 +11,11 @@ namespace InnertubeObjects
           showMoreText(secondaryInfoRenderer["showMoreText"]["simpleText"].toString()),
           subscribeButton(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"])
     {
-        const QJsonObject obj = secondaryInfoRenderer.toObject();
-
         // attributed description conversion logic courtesy of https://github.com/Rehike/Rehike
-        if (obj.contains("attributedDescription"))
+        if (secondaryInfoRenderer["attributedDescription"].isObject())
         {
-            const QJsonObject attrDesc = secondaryInfoRenderer["attributedDescription"].toObject();
-            if (!attrDesc.contains("commandRuns"))
+            QJsonValue attrDesc = secondaryInfoRenderer["attributedDescription"];
+            if (!attrDesc["commandRuns"].isArray())
             {
                 description = InnertubeString(attrDesc["content"].toString());
                 return;
@@ -49,13 +46,12 @@ namespace InnertubeObjects
 
             for (InnertubeObjects::InnertubeRun& run : outDescription.runs)
             {
-                const QJsonObject navigationEndpoint = run.navigationEndpoint.toObject();
-                if (navigationEndpoint.contains("watchEndpoint") && !navigationEndpoint["watchEndpoint"]["continuePlayback"].toBool())
+                if (run.navigationEndpoint["watchEndpoint"].isObject() && !run.navigationEndpoint["watchEndpoint"]["continuePlayback"].toBool())
                 {
-                    QString fullUrl = "https://www.youtube.com" + navigationEndpoint["commandMetadata"]["webCommandMetadata"]["url"].toString();
+                    QString fullUrl = "https://www.youtube.com" + run.navigationEndpoint["commandMetadata"]["webCommandMetadata"]["url"].toString();
                     run.text = fullUrl.left(37) + "...";
                 }
-                else if (navigationEndpoint.contains("browseEndpoint"))
+                else if (run.navigationEndpoint["browseEndpoint"].isObject())
                 {
                     run.text.replace(run.text.indexOf('/'), 1, "");
                     run.text.replace("\xc2\xa0", "");
@@ -67,7 +63,7 @@ namespace InnertubeObjects
 
             description = outDescription;
         }
-        else if (obj.contains("description"))
+        else if (secondaryInfoRenderer["description"].isObject())
         {
             description = InnertubeString(secondaryInfoRenderer["description"]);
         }
