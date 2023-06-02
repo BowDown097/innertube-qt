@@ -1,4 +1,5 @@
 #include "modifychannelpreference.h"
+#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {

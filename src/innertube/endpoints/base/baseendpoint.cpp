@@ -5,29 +5,19 @@ namespace InnertubeEndpoints
 {
     QByteArray BaseEndpoint::get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, const QJsonObject& body)
     {
-        qthttplib::Client* cli = new qthttplib::Client("https://www.youtube.com");
-        setNeededHeaders(cli, context, authStore);
-        return getData(cli, "/youtubei/v1/" + endpoint + "?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false", body);
+        return getData("https://www.youtube.com/youtubei/v1/" + endpoint + "?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false",
+                       std::move(getNeededHeaders(context, authStore)), body);
     }
 
-    QByteArray BaseEndpoint::getData(qthttplib::Client* client, const QString& path, const QJsonObject& body)
+    QByteArray BaseEndpoint::getData(const QString& path, const cpr::Header& headers, const QJsonObject& body)
     {
-        QByteArray data;
-        client->post(path, QJsonDocument(body).toJson(QJsonDocument::Compact), "application/json");
-
-        QEventLoop event;
-        QObject::connect(client, &qthttplib::Client::requestFinished, &event, [&data, &event](const qthttplib::Response& response) {
-            event.quit();
-            data = response.body;
-        });
-        event.exec();
-
-        return data;
+        cpr::Response r = cpr::Post(cpr::Url{path.toStdString()}, cpr::Body{QJsonDocument(body).toJson(QJsonDocument::Compact)}, headers);
+        return QByteArray::fromStdString(r.text);
     }
 
-    void BaseEndpoint::setNeededHeaders(qthttplib::Client* client, InnertubeContext* context, InnertubeAuthStore* authStore)
+    cpr::Header BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
     {
-        httplib::Headers headers;
+        cpr::Header headers;
 
         if (authStore->populated)
         {
@@ -39,13 +29,14 @@ namespace InnertubeEndpoints
         }
 
         headers.insert({
+            { "Content-Type", "application/json" },
             { "X-Goog-Visitor-Id", context->client.visitorData.toStdString() },
             { "X-YOUTUBE-CLIENT-NAME", context->client.clientName.toStdString() },
             { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toStdString() },
             { "X-ORIGIN", "https://www.youtube.com" }
         });
 
-        client->set_default_headers(headers);
+        return headers;
     }
 }
 

@@ -1,4 +1,5 @@
 #include "sendmessage.h"
+#include <QJsonArray>
 
 namespace InnertubeEndpoints
 {

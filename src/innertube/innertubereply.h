@@ -8,25 +8,25 @@ class InnertubeReply : public QObject
     Q_OBJECT
 signals:
     void exception(const InnertubeException&);
-    void finished(InnertubeEndpoints::AccountMenu);
-    void finished(InnertubeEndpoints::BrowseChannel);
-    void finished(InnertubeEndpoints::BrowseExplore);
-    void finished(InnertubeEndpoints::BrowseHistory);
-    void finished(InnertubeEndpoints::BrowseHome);
-    void finished(InnertubeEndpoints::BrowseLibrary);
-    void finished(InnertubeEndpoints::BrowseStorefront);
-    void finished(InnertubeEndpoints::BrowseSubscriptions);
-    void finished(InnertubeEndpoints::BrowseTrending);
-    void finished(InnertubeEndpoints::GetNotificationMenu);
-    void finished(InnertubeEndpoints::GetLiveChat);
-    void finished(InnertubeEndpoints::ModifyChannelPreference);
-    void finished(InnertubeEndpoints::Next);
-    void finished(InnertubeEndpoints::Player);
-    void finished(InnertubeEndpoints::Search);
-    void finished(InnertubeEndpoints::SendMessage);
-    void finished(InnertubeEndpoints::Subscribe);
-    void finished(InnertubeEndpoints::UnseenCount);
-    void finished(InnertubeEndpoints::UpdatedMetadata);
+    void finished(const InnertubeEndpoints::AccountMenu&);
+    void finished(const InnertubeEndpoints::BrowseChannel&);
+    void finished(const InnertubeEndpoints::BrowseExplore&);
+    void finished(const InnertubeEndpoints::BrowseHistory&);
+    void finished(const InnertubeEndpoints::BrowseHome&);
+    void finished(const InnertubeEndpoints::BrowseLibrary&);
+    void finished(const InnertubeEndpoints::BrowseStorefront&);
+    void finished(const InnertubeEndpoints::BrowseSubscriptions&);
+    void finished(const InnertubeEndpoints::BrowseTrending&);
+    void finished(const InnertubeEndpoints::GetNotificationMenu&);
+    void finished(const InnertubeEndpoints::GetLiveChat&);
+    void finished(const InnertubeEndpoints::ModifyChannelPreference&);
+    void finished(const InnertubeEndpoints::Next&);
+    void finished(const InnertubeEndpoints::Player&);
+    void finished(const InnertubeEndpoints::Search&);
+    void finished(const InnertubeEndpoints::SendMessage&);
+    void finished(const InnertubeEndpoints::Subscribe&);
+    void finished(const InnertubeEndpoints::UnseenCount&);
+    void finished(const InnertubeEndpoints::UpdatedMetadata&);
 };
 
 #endif // INNERTUBEREPLY_H
