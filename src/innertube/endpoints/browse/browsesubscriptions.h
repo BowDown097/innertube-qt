@@ -13,6 +13,8 @@ namespace InnertubeEndpoints
         SubscriptionsResponse response;
     private:
         BrowseSubscriptions(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "");
+        void handleItemSection(const QJsonValue& v);
+        void handleRichItem(const QJsonValue& v);
     };
 }
 
