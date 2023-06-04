@@ -1,12 +1,12 @@
 #ifndef INNERTUBE_TPP
 #define INNERTUBE_TPP
-#include <QtConcurrent>
+#include <QTimer>
 
 template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
 InnertubeReply* InnerTube::get(const QString& data, const QString& continuationToken, const QString& params)
 {
     InnertubeReply* reply = new InnertubeReply;
-    [[maybe_unused]] QFuture<void> future = QtConcurrent::run([this, reply, data, continuationToken, params]
+    QTimer::singleShot(0, reply, [this, reply, data, continuationToken, params]
     {
         try
         {

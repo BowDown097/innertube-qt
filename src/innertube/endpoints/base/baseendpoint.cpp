@@ -1,5 +1,8 @@
 #include "baseendpoint.h"
+#include <QEventLoop>
 #include <QJsonDocument>
+#include <QPointer>
+#include <QThread>
 
 namespace InnertubeEndpoints
 {
@@ -11,7 +14,22 @@ namespace InnertubeEndpoints
 
     QByteArray BaseEndpoint::getData(const QString& path, const cpr::Header& headers, const QJsonObject& body)
     {
-        cpr::Response r = cpr::Post(cpr::Url{path.toStdString()}, cpr::Body{QJsonDocument(body).toJson(QJsonDocument::Compact)}, headers);
+        cpr::AsyncResponse ar = cpr::PostAsync(
+            cpr::Url{path.toStdString()},
+            cpr::Body{QJsonDocument(body).toJson(QJsonDocument::Compact)},
+            headers
+        );
+
+        std::shared_future<cpr::Response> fut = ar.share();
+        QPointer<QThread> thread = QThread::create([fut] { fut.wait(); });
+        thread->start();
+
+        QEventLoop loop;
+        QObject::connect(thread, &QThread::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        thread->deleteLater();
+        const cpr::Response& r = fut.get();
         return QByteArray::fromStdString(r.text);
     }
 

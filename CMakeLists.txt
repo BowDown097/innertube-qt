@@ -21,7 +21,7 @@ option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the
 
 # Qt packages
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent Gui Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
 add_library(innertube-qt SHARED
@@ -112,7 +112,7 @@ add_library(innertube-qt SHARED
 # Include directories, libraries
 target_include_directories(innertube-qt PUBLIC src)
 target_compile_definitions(innertube-qt PUBLIC INNERTUBE)
-target_link_libraries(innertube-qt PUBLIC Qt::Concurrent Qt::Core Qt::Gui Qt::Network)
+target_link_libraries(innertube-qt PUBLIC Qt::Core Qt::Gui Qt::Network)
 
 ## CPR
 include(FetchContent)
