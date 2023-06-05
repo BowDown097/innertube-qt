@@ -14,7 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_C_STANDARD_REQUIRED true)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-Wall ${CMAKE_CXX_FLAGS}")
 
 # Compilation options
 option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the wiki before doing this." OFF)
@@ -24,7 +23,7 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
-add_library(innertube-qt SHARED
+add_library(innertube-qt
     src/innertube.cpp src/innertube.h src/innertube.tpp
     src/innertube/endpoints/base/basebrowseendpoint.cpp src/innertube/endpoints/base/basebrowseendpoint.h
     src/innertube/endpoints/base/baseendpoint.cpp src/innertube/endpoints/base/baseendpoint.h
