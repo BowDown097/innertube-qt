@@ -1,7 +1,6 @@
 #ifndef GETLIVECHAT_H
 #define GETLIVECHAT_H
 #include "innertube/endpoints/base/baseendpoint.h"
-#include "innertube/responses/live_chat/livechatresponse.h"
 
 namespace InnertubeEndpoints
 {
@@ -9,7 +8,7 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     public:
-        LiveChatResponse response;
+        QJsonValue liveChatContinuation;
     private:
         GetLiveChat(const QString& continuation, InnertubeContext* context, InnertubeAuthStore* authStore);
     };

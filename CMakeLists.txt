@@ -74,8 +74,6 @@ add_library(innertube-qt
     src/innertube/objects/items/menuflexibleitem.h
     src/innertube/objects/items/menuserviceitem.h
     src/innertube/objects/items/togglebutton.h
-    src/innertube/objects/live_chat/invalidation.h
-    src/innertube/objects/live_chat/invalidationcontinuation.h
     src/innertube/objects/live_chat/livechat.cpp src/innertube/objects/live_chat/livechat.h
     src/innertube/objects/notification/notification.cpp src/innertube/objects/notification/notification.h
     src/innertube/objects/player/captiontrack.h
@@ -98,7 +96,6 @@ add_library(innertube-qt
     src/innertube/responses/browse/homeresponse.h
     src/innertube/responses/browse/subscriptionsresponse.h
     src/innertube/responses/browse/trendingresponse.h
-    src/innertube/responses/live_chat/livechatresponse.h
     src/innertube/responses/misc/notificationmenuresponse.h
     src/innertube/responses/misc/searchresponse.h
     src/innertube/responses/video/nextresponse.h

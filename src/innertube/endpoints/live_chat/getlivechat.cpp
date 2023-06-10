@@ -15,13 +15,6 @@ namespace InnertubeEndpoints
         };
 
         QByteArray data = get("live_chat/get_live_chat", context, authStore, body);
-        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-
-        response.actionPanel = dataObj["continuationContents"]["liveChatContinuation"]["actionPanel"];
-        response.actions = dataObj["continuationContents"]["liveChatContinuation"]["actions"].toArray();
-
-        const QJsonArray continuationsJson = dataObj["continuationContents"]["liveChatContinuation"]["continuations"].toArray();
-        for (const QJsonValue& v : continuationsJson)
-            response.continuations.append(InnertubeObjects::InvalidationContinuation(v["invalidationContinuationData"]));
+        liveChatContinuation = QJsonDocument::fromJson(data)["continuationContents"]["liveChatContinuation"];
     }
 }
