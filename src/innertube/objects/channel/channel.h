@@ -2,6 +2,7 @@
 #define CHANNEL_H
 #include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/innertubestring.h"
+#include "subscribebutton.h"
 
 namespace InnertubeObjects
 {
@@ -10,6 +11,7 @@ namespace InnertubeObjects
     public:
         QString channelId;
         InnertubeString descriptionSnippet;
+        SubscribeButton subscribeButton;
         bool subscribed;
         InnertubeString subscriberCountText;
         QList<GenericThumbnail> thumbnails;
