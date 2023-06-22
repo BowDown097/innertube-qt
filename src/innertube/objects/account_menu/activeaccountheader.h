@@ -8,7 +8,7 @@ namespace InnertubeObjects
     {
     public:
         QString accountName;
-        QList<GenericThumbnail> accountPhoto;
+        QList<GenericThumbnail> accountPhotos;
         QString channelHandle;
 
         ActiveAccountHeader() = default;

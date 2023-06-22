@@ -10,6 +10,7 @@ namespace InnertubeObjects
     {
     public:
         QList<MetadataBadge> badges;
+        QJsonValue navigationEndpoint;
         InnertubeString subscriberCountText;
         QString subscriptionType;
         QList<GenericThumbnail> thumbnails;

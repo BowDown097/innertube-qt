@@ -31,7 +31,7 @@ T InnerTube::getBlocking(const QString& data, const QString& continuationToken, 
         return T(data, m_context, m_authStore, continuationToken);
     else if constexpr (is_any_v<T, InnertubeEndpoints::BrowseChannel, InnertubeEndpoints::Search, InnertubeEndpoints::SendMessage>)
         return T(data, m_context, m_authStore, continuationToken, params);
-    else if constexpr (is_any_v<T, InnertubeEndpoints::BrowseTrending, InnertubeEndpoints::UnseenCount>)
+    else if constexpr (is_any_v<T, InnertubeEndpoints::AccountMenu, InnertubeEndpoints::BrowseTrending, InnertubeEndpoints::UnseenCount>)
         return T(m_context, m_authStore);
     else
         return T(m_context, m_authStore, continuationToken);

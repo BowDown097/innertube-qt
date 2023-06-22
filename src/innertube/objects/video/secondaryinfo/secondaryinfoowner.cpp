@@ -4,7 +4,8 @@
 namespace InnertubeObjects
 {
     SecondaryInfoOwner::SecondaryInfoOwner(const QJsonValue& videoOwnerRenderer)
-        : subscriberCountText(videoOwnerRenderer["subscriberCountText"]),
+        : navigationEndpoint(videoOwnerRenderer["navigationEndpoint"]),
+          subscriberCountText(videoOwnerRenderer["subscriberCountText"]),
           subscriptionType(videoOwnerRenderer["subscriptionButton"]["type"].toString()),
           title(videoOwnerRenderer["title"])
     {
