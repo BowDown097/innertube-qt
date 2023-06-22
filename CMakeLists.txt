@@ -25,6 +25,8 @@ find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
 add_library(innertube-qt
     src/innertube.cpp src/innertube.h src/innertube.tpp
+    src/innertube/innertubeexception.h
+    src/innertube/innertubereply.h
     src/innertube/endpoints/base/basebrowseendpoint.cpp src/innertube/endpoints/base/basebrowseendpoint.h
     src/innertube/endpoints/base/baseendpoint.cpp src/innertube/endpoints/base/baseendpoint.h
     src/innertube/endpoints/browse/browsechannel.cpp src/innertube/endpoints/browse/browsechannel.h
@@ -48,8 +50,6 @@ add_library(innertube-qt
     src/innertube/endpoints/video/next.cpp src/innertube/endpoints/video/next.h
     src/innertube/endpoints/video/player.cpp src/innertube/endpoints/video/player.h
     src/innertube/endpoints/video/updatedmetadata.cpp src/innertube/endpoints/video/updatedmetadata.h
-    src/innertube/innertubeexception.h
-    src/innertube/innertubereply.h
     src/innertube/itc-objects/innertubeauthstore.cpp src/innertube/itc-objects/innertubeauthstore.h
     src/innertube/itc-objects/innertubeclicktracking.h
     src/innertube/itc-objects/innertubeclient.cpp src/innertube/itc-objects/innertubeclient.h
@@ -58,6 +58,10 @@ add_library(innertube-qt
     src/innertube/itc-objects/innertubeplaybackcontext.cpp src/innertube/itc-objects/innertubeplaybackcontext.h
     src/innertube/itc-objects/innertuberequestconfig.h
     src/innertube/itc-objects/innertubeuserconfig.h
+    src/innertube/objects/compactlink.h
+    src/innertube/objects/genericthumbnail.h
+    src/innertube/objects/innertubestring.cpp src/innertube/objects/innertubestring.h
+    src/innertube/objects/account_menu/activeaccountheader.h src/innertube/objects/account_menu/activeaccountheader.cpp
     src/innertube/objects/channel/aboutfullmetadata.cpp src/innertube/objects/channel/aboutfullmetadata.h
     src/innertube/objects/channel/channel.cpp src/innertube/objects/channel/channel.h
     src/innertube/objects/channel/channelheader.cpp src/innertube/objects/channel/channelheader.h
@@ -68,8 +72,6 @@ add_library(innertube-qt
     src/innertube/objects/channel/notificationpreferencebutton.cpp src/innertube/objects/channel/notificationpreferencebutton.h
     src/innertube/objects/channel/notificationstate.h
     src/innertube/objects/channel/subscribebutton.h
-    src/innertube/objects/genericthumbnail.h
-    src/innertube/objects/innertubestring.cpp src/innertube/objects/innertubestring.h
     src/innertube/objects/items/button.h
     src/innertube/objects/items/menuflexibleitem.h
     src/innertube/objects/items/menuserviceitem.h
@@ -96,6 +98,7 @@ add_library(innertube-qt
     src/innertube/responses/browse/homeresponse.h
     src/innertube/responses/browse/subscriptionsresponse.h
     src/innertube/responses/browse/trendingresponse.h
+    src/innertube/responses/misc/accountmenuresponse.h
     src/innertube/responses/misc/notificationmenuresponse.h
     src/innertube/responses/misc/searchresponse.h
     src/innertube/responses/video/nextresponse.h
