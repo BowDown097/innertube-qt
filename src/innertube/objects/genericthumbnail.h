@@ -11,7 +11,7 @@ namespace InnertubeObjects
         QString url;
         int width;
 
-        GenericThumbnail(const QJsonValue& value)
+        explicit GenericThumbnail(const QJsonValue& value)
             : height(value["height"].toInt()),
               url(value["url"].toString()),
               width(value["width"].toInt()) {}

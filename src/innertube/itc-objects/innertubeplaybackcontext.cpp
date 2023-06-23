@@ -56,10 +56,10 @@ int InnertubePlaybackContext::fetchSignatureTimestamp() const
 
     // extract the sts body
     QRegularExpressionMatch stsMatch = signatureTimestampRegex.match(appBody);
-    long signatureTimestamp = stsMatch.captured(1).toInt();
+    int sts = stsMatch.captured(1).toInt();
 
     // clean up and return
     easy->deleteLater();
-    return signatureTimestamp;
+    return sts;
 }
 #endif

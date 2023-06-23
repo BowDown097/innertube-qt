@@ -9,7 +9,7 @@ namespace InnertubeObjects
     {
         QJsonValue navigationEndpoint;
         QString text;
-        InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = QJsonValue())
+        explicit InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = QJsonValue())
             : navigationEndpoint(navigationEndpoint), text(text) {}
     };
 

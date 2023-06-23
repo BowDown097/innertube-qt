@@ -8,12 +8,12 @@ namespace InnertubeObjects
     {
     public:
         QString iconType;
-        bool isDisabled;
+        bool isDisabled = false;
         QJsonValue serviceEndpoint;
         InnertubeString text;
 
         MenuServiceItem() = default;
-        MenuServiceItem(const QJsonValue& menuServiceItemRenderer)
+        explicit MenuServiceItem(const QJsonValue& menuServiceItemRenderer)
             : iconType(menuServiceItemRenderer["icon"]["iconType"].toString()),
               isDisabled(menuServiceItemRenderer["isDisabled"].toBool()),
               serviceEndpoint(menuServiceItemRenderer["serviceEndpoint"]),

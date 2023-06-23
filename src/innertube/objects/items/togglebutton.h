@@ -12,8 +12,8 @@ namespace InnertubeObjects
         QJsonValue defaultServiceEndpoint;
         QString defaultTooltip;
         InnertubeString defaultText;
-        bool isDisabled;
-        bool isToggled;
+        bool isDisabled = false;
+        bool isToggled = false;
         QString style;
         QString targetId;
         QString toggleButtonId;
@@ -23,7 +23,7 @@ namespace InnertubeObjects
         QString toggledTooltip;
 
         ToggleButton() = default;
-        ToggleButton(const QJsonValue& toggleButtonRenderer)
+        explicit ToggleButton(const QJsonValue& toggleButtonRenderer)
             : accessibilityLabel(toggleButtonRenderer["accessibility"]["label"].toString()),
               defaultIcon(toggleButtonRenderer["defaultIcon"]["iconType"].toString()),
               defaultServiceEndpoint(toggleButtonRenderer["defaultServiceEndpoint"]),

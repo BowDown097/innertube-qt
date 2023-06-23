@@ -8,7 +8,7 @@ namespace InnertubeObjects
     class NotificationPreferenceButton
     {
     public:
-        int currentStateId;
+        int currentStateId = 0;
         QString secondaryIconType;
         QList<MenuServiceItem> services;
         QList<NotificationState> states;

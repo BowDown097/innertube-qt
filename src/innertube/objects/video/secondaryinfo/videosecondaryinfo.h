@@ -9,9 +9,9 @@ namespace InnertubeObjects
     class VideoSecondaryInfo
     {
     public:
-        bool defaultExpanded;
+        bool defaultExpanded = false;
         InnertubeString description;
-        int descriptionCollapsedLines;
+        int descriptionCollapsedLines = 0;
         MetadataRowContainer metadataRowContainer;
         SecondaryInfoOwner owner;
         QString showLessText;

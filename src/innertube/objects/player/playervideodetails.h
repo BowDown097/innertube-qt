@@ -8,21 +8,21 @@ namespace InnertubeObjects
     class PlayerVideoDetails
     {
     public:
-        bool allowRatings;
+        bool allowRatings = false;
         QString author;
         QString channelId;
         QList<QString> keywords;
-        bool isCrawlable;
-        bool isLive;
-        bool isLiveContent;
-        bool isLiveDvrEnabled;
-        bool isLowLatencyLiveStream;
-        bool isOwnerViewing;
-        bool isPrivate;
-        bool isUnpluggedCorpus;
+        bool isCrawlable = false;
+        bool isLive = false;
+        bool isLiveContent = false;
+        bool isLiveDvrEnabled = false;
+        bool isLowLatencyLiveStream = false;
+        bool isOwnerViewing = false;
+        bool isPrivate = false;
+        bool isUnpluggedCorpus = false;
         QString latencyClass;
         QString lengthSeconds;
-        int liveChunkReadahead;
+        int liveChunkReadahead = 0;
         QString shortDescription;
         QList<GenericThumbnail> thumbnails;
         QString title;

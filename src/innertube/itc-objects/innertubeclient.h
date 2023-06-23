@@ -20,8 +20,8 @@ public:
     QString osVersion;
     QString platform;
     QString remoteHost;
-    int screenDensityFloat;
-    int screenPixelDensity;
+    int screenDensityFloat = 0;
+    int screenPixelDensity = 0;
     QString timeZone;
     QString userAgent;
     QString userInterfaceTheme;

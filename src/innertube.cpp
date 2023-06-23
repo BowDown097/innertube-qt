@@ -22,7 +22,9 @@ void InnerTube::like(const QJsonValue& endpoint, bool liking)
 
 void InnerTube::sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params)
 {
-    InnertubeEndpoints::SendMessage(textSegments, m_context, m_authStore, clientMessageId, params);
+    QTimer::singleShot(0, [this, textSegments, clientMessageId, params] {
+        InnertubeEndpoints::SendMessage(textSegments, m_context, m_authStore, clientMessageId, params);
+    });
 }
 
 void InnerTube::subscribe(const QJsonValue& endpoint, bool subscribing)

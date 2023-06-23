@@ -7,9 +7,9 @@ namespace InnertubeObjects
     class NotificationState
     {
     public:
-        int nextStateId;
+        int nextStateId = 0;
         Button state;
-        int stateId;
+        int stateId = 0;
 
         NotificationState() = default;
         explicit NotificationState(const QJsonValue& state)

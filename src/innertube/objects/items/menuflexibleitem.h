@@ -12,7 +12,7 @@ namespace InnertubeObjects
         Button topLevelButton;
 
         MenuFlexibleItem() = default;
-        MenuFlexibleItem(const QJsonValue& menuFlexibleItemRenderer)
+        explicit MenuFlexibleItem(const QJsonValue& menuFlexibleItemRenderer)
             : menuItem(menuFlexibleItemRenderer["menuItem"]["menuServiceItemRenderer"]),
               topLevelButton(menuFlexibleItemRenderer["topLevelButton"]["buttonRenderer"]) {}
     };

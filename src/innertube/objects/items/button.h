@@ -11,7 +11,7 @@ namespace InnertubeObjects
         QString accessibilityLabel;
         std::optional<QJsonValue> command; // available if serviceEndpoint is not
         QString iconType;
-        bool isDisabled;
+        bool isDisabled = false;
         std::optional<QJsonValue> serviceEndpoint; // available if command is not
         QString size;
         QString style;
@@ -20,7 +20,7 @@ namespace InnertubeObjects
         QString tooltip;
 
         Button() = default;
-        Button(const QJsonValue& buttonRenderer)
+        explicit Button(const QJsonValue& buttonRenderer)
             : accessibilityLabel(buttonRenderer["accessibilityData"]["accessibilityData"]["label"].toString()),
               command(std::make_optional<QJsonValue>(buttonRenderer["command"])),
               iconType(buttonRenderer["icon"]["iconType"].toString()),
