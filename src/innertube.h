@@ -29,6 +29,7 @@ public:
     T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
 
     void like(const QJsonValue& endpoint, bool liking);
+    void sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params);
     void subscribe(const QJsonValue& endpoint, bool subscribing);
 private:
     InnertubeAuthStore* m_authStore = new InnertubeAuthStore;
