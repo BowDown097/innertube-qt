@@ -48,7 +48,7 @@ namespace InnertubeEndpoints
         {
             const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
-                throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Minor); // this can just happen sometimes
+                throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Severity::Minor); // this can just happen sometimes
 
             const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
             if (!appendItemsAction.isObject())

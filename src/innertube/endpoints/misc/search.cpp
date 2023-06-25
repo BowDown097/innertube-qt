@@ -42,7 +42,7 @@ namespace InnertubeEndpoints
         {
             const QJsonArray onResponseReceivedCommands = dataObj["onResponseReceivedCommands"].toArray();
             if (onResponseReceivedCommands.isEmpty())
-                throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Minor); // this can just happen sometimes
+                throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Severity::Minor); // this can just happen sometimes
 
             QJsonValue appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"];
             if (!appendItemsAction.isObject())
