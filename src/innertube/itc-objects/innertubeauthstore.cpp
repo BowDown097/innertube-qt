@@ -45,23 +45,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
     context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-
-    if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
-        populated = true;
-}
-
-void InnertubeAuthStore::authenticateFromSettings(const QSettings& settings, InnertubeContext*& context)
-{
-    apisid = settings.value("apisid").toString();
-    hsid = settings.value("hsid").toString();
-    sapisid = settings.value("sapisid").toString();
-    sid = settings.value("sid").toString();
-    ssid = settings.value("ssid").toString();
-    visitorInfo = settings.value("visitorInfo").toString();
-    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-
-    if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
-        populated = true;
+    populated = !apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty();
 }
 
 QString InnertubeAuthStore::generateSAPISIDHash()
@@ -93,16 +77,6 @@ void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)
     ssid.clear();
     visitorInfo.clear();
     context->client.visitorData.clear();
-}
-
-void InnertubeAuthStore::writeToSettings(QSettings& settings)
-{
-    settings.setValue("apisid", apisid);
-    settings.setValue("hsid", hsid);
-    settings.setValue("sapisid", sapisid);
-    settings.setValue("sid", sid);
-    settings.setValue("ssid", ssid);
-    settings.setValue("visitorInfo", visitorInfo);
 }
 
 #ifndef INNERTUBE_NO_WEBENGINE

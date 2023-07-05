@@ -36,8 +36,8 @@ namespace InnertubeEndpoints
 
     QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name)
     {
-        QJsonArray::const_iterator actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v[name].isObject(); });
-        if (actionIt == actions.cend())
+        auto actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v[name].isObject(); });
+        if (actionIt == actions.end())
             throw InnertubeException(QStringLiteral("[UpdatedMetadata] %1 not found").arg(name));
         return (*actionIt)[name];
     }

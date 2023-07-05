@@ -18,9 +18,10 @@ namespace InnertubeObjects
             items.append(MenuServiceItem(v["menuServiceItemRenderer"]));
 
         const QJsonArray topLevelButtonsJson = menuRenderer["topLevelButtons"].toArray();
-        QJsonArray::const_iterator shareTLB = std::ranges::find_if(topLevelButtonsJson, [](const QJsonValue& v)
-                                                                { return v["buttonRenderer"]["icon"]["iconType"].toString() == "SHARE"; });
-        if (shareTLB != topLevelButtonsJson.cend())
+        auto shareTLB = std::ranges::find_if(topLevelButtonsJson, [](const QJsonValue& v) {
+            return v["buttonRenderer"]["icon"]["iconType"].toString() == "SHARE";
+        });
+        if (shareTLB != topLevelButtonsJson.end())
         {
             const QJsonValue& shareTLBVal = *shareTLB;
             shareButton = Button(shareTLBVal["buttonRenderer"]);

@@ -25,9 +25,10 @@ namespace InnertubeObjects
             if (isGridVideo)
             {
                 const QJsonArray thumbnailOverlays = videoRenderer["thumbnailOverlays"].toArray();
-                QJsonArray::const_iterator timeOverlay = std::ranges::find_if(thumbnailOverlays, [](const QJsonValue& v)
-                                                                        { return v["thumbnailOverlayTimeStatusRenderer"].isObject(); });
-                if (timeOverlay != thumbnailOverlays.cend())
+                auto timeOverlay = std::ranges::find_if(thumbnailOverlays, [](const QJsonValue& v) {
+                    return v["thumbnailOverlayTimeStatusRenderer"].isObject();
+                });
+                if (timeOverlay != thumbnailOverlays.end())
                 {
                     const QJsonValue& timeOverlayVal = *timeOverlay;
                     lengthText = InnertubeString(timeOverlayVal["thumbnailOverlayTimeStatusRenderer"]["text"]);

@@ -14,7 +14,6 @@ public:
     bool hasAuthenticated() const { return m_authStore->populated; }
     void authenticate() { m_authStore->authenticate(m_context); }
     void authenticateFromJson(const QJsonObject& obj) { m_authStore->authenticateFromJson(obj, m_context); }
-    void authenticateFromSettings(const QSettings& settings) { m_authStore->authenticateFromSettings(settings, m_context); }
     void unauthenticate() { m_authStore->unauthenticate(m_context); }
 
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
