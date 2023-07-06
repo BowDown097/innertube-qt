@@ -1,6 +1,5 @@
-#ifndef SslHttpRequest_H
-#define SslHttpRequest_H
-#include <QRegularExpression>
+#ifndef SSLHTTPREQUEST_H
+#define SSLHTTPREQUEST_H
 #include <QSslSocket>
 #include <QUrl>
 
@@ -26,7 +25,6 @@ public:
 
     QByteArray body() const { return m_requestBody; }
     QMap<QString, QString> headers() const { return m_headers; }
-    RequestMethod method() const { return m_requestMethod; }
     QByteArray payload() const;
     QByteArray response() const { return m_response; }
 
@@ -35,8 +33,6 @@ public:
 signals:
     void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());
 private:
-    static inline const QRegularExpression payloadPattern = QRegularExpression("\r\n\r\n[0-9]+\r\n(.*)\r\n[0-9]", QRegularExpression::DotMatchesEverythingOption);
-
     QString m_contentType;
     QMap<QString, QString> m_headers;
     QByteArray m_requestBody;
@@ -52,4 +48,4 @@ private slots:
     void sslErrors(const QList<QSslError>& errors);
 };
 
-#endif // SslHttpRequest_H
+#endif // SSLHTTPREQUEST_H
