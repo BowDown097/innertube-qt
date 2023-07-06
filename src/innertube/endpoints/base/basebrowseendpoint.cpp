@@ -2,6 +2,7 @@
 #include "innertube/innertubeexception.h"
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QFile>
 
 namespace InnertubeEndpoints
 {

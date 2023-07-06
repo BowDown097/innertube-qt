@@ -1,5 +1,6 @@
 #include "innertubeclient.h"
-#include "cpr/cpr.h"
+#include "sslhttprequest.h"
+#include <QEventLoop>
 
 InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
                                  const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
@@ -28,9 +29,15 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
       userAgent(userAgent),
       userInterfaceTheme(userInterfaceTheme)
 {
-    cpr::Response res = cpr::Get(cpr::Url("https://www.youtube.com/"));
-    QString body = QString::fromStdString(res.text);
-    QString visitorBlock = body.mid(body.indexOf("visitorData") + 14);
+    SslHttpRequest* req = new SslHttpRequest("https://www.youtube.com/", SslHttpRequest::RequestMethod::Get);
+    req->send();
+
+    QEventLoop loop;
+    QObject::connect(req, &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    QByteArray response = req->payload();
+    QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
     visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
     visitorData = visitorBlock;
 }

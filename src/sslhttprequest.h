@@ -1,0 +1,55 @@
+#ifndef SslHttpRequest_H
+#define SslHttpRequest_H
+#include <QRegularExpression>
+#include <QSslSocket>
+#include <QUrl>
+
+struct SslHttpRequestError
+{
+    enum class ErrorType { Success, SocketError, SslError };
+    ErrorType errorType;
+    QAbstractSocket::SocketError socketError;
+    QSslError::SslError sslError;
+
+    SslHttpRequestError(QAbstractSocket::SocketError error) : errorType(ErrorType::SocketError), socketError(error) {}
+    SslHttpRequestError(QSslError::SslError error) : errorType(ErrorType::SslError), sslError(error) {}
+    SslHttpRequestError() = default;
+};
+
+class SslHttpRequest : public QObject
+{
+    Q_OBJECT
+public:
+    enum class RequestMethod { Get, Post };
+    explicit SslHttpRequest(const QString& url, RequestMethod method = RequestMethod::Get, QObject* parent = nullptr);
+    void send();
+
+    QByteArray body() const { return m_requestBody; }
+    QMap<QString, QString> headers() const { return m_headers; }
+    RequestMethod method() const { return m_requestMethod; }
+    QByteArray payload() const;
+    QByteArray response() const { return m_response; }
+
+    void setBody(const QByteArray& requestBody, const QString& contentType) { m_contentType = contentType; m_requestBody = requestBody; }
+    void setHeaders(const QMap<QString, QString>& headers) { m_headers = headers; }
+signals:
+    void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());
+private:
+    static inline const QRegularExpression payloadPattern = QRegularExpression("\r\n\r\n[0-9]+\r\n(.*)\r\n[0-9]", QRegularExpression::DotMatchesEverythingOption);
+
+    QString m_contentType;
+    QMap<QString, QString> m_headers;
+    QByteArray m_requestBody;
+    RequestMethod m_requestMethod;
+    QByteArray m_response;
+    QSslSocket* m_sslSocket;
+    QUrl m_url;
+private slots:
+    void disconnected();
+    void errorOccurred(QAbstractSocket::SocketError error);
+    void makeRequest();
+    void readyRead();
+    void sslErrors(const QList<QSslError>& errors);
+};
+
+#endif // SslHttpRequest_H

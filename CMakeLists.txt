@@ -104,6 +104,7 @@ add_library(innertube-qt
     src/innertube/responses/video/nextresponse.h
     src/innertube/responses/video/playerresponse.h
     src/innertube/responses/video/updatedmetadataresponse.h
+    src/sslhttprequest.cpp src/sslhttprequest.h
     src/jsonutil.cpp src/jsonutil.h
     src/protobuf/simpleprotobuf.cpp src/protobuf/simpleprotobuf.h
 )
@@ -112,12 +113,6 @@ add_library(innertube-qt
 target_include_directories(innertube-qt PUBLIC src)
 target_compile_definitions(innertube-qt PUBLIC INNERTUBE)
 target_link_libraries(innertube-qt PUBLIC Qt::Core Qt::Gui Qt::Network)
-
-## CPR
-include(FetchContent)
-FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git GIT_TAG 2553fc41450301cd09a9271c8d2c3e0cf3546b73)
-FetchContent_MakeAvailable(cpr)
-target_link_libraries(innertube-qt PUBLIC cpr::cpr)
 
 ## Optional
 if(NOT INNERTUBE_NO_WEBENGINE)

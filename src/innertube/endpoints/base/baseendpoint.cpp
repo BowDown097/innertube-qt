@@ -1,8 +1,6 @@
 #include "baseendpoint.h"
 #include <QEventLoop>
 #include <QJsonDocument>
-#include <QPointer>
-#include <QThread>
 
 namespace InnertubeEndpoints
 {
@@ -12,45 +10,39 @@ namespace InnertubeEndpoints
                        std::move(getNeededHeaders(context, authStore)), body);
     }
 
-    QByteArray BaseEndpoint::getData(const QString& path, const cpr::Header& headers, const QJsonObject& body)
+    QByteArray BaseEndpoint::getData(const QString& path, const QMap<QString, QString>& headers, const QJsonObject& body)
     {
-        cpr::AsyncResponse ar = cpr::PostAsync(
-            cpr::Url{path.toStdString()},
-            cpr::Body{QJsonDocument(body).toJson(QJsonDocument::Compact)},
-            headers
-        );
-
-        std::shared_future<cpr::Response> fut = ar.share();
-        QPointer<QThread> thread = QThread::create([fut] { fut.wait(); });
-        thread->start();
+        SslHttpRequest* req = new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post);
+        req->setBody(QJsonDocument(body).toJson(QJsonDocument::Compact), "application/json");
+        req->setHeaders(headers);
+        req->send();
 
         QEventLoop loop;
-        QObject::connect(thread, &QThread::finished, &loop, &QEventLoop::quit);
+        QObject::connect(req, &SslHttpRequest::finished, &loop, &QEventLoop::quit);
         loop.exec();
 
-        thread->deleteLater();
-        const cpr::Response& r = fut.get();
-        return QByteArray::fromStdString(r.text);
+        QByteArray data = req->payload().trimmed();
+        req->deleteLater();
+        return data;
     }
 
-    cpr::Header BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
+    QMap<QString, QString> BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
     {
-        cpr::Header headers;
+        QMap<QString, QString> headers;
 
         if (authStore->populated)
         {
             headers.insert({
-                { "Authorization", authStore->generateSAPISIDHash().toStdString() },
-                { "Cookie", authStore->getNecessaryLoginCookies().toStdString() },
+                { "Authorization", authStore->generateSAPISIDHash() },
+                { "Cookie", authStore->getNecessaryLoginCookies() },
                 { "X-Goog-AuthUser", "0" }
             });
         }
 
         headers.insert({
-            { "Content-Type", "application/json" },
-            { "X-Goog-Visitor-Id", context->client.visitorData.toStdString() },
-            { "X-YOUTUBE-CLIENT-NAME", context->client.clientName.toStdString() },
-            { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toStdString() },
+            { "X-Goog-Visitor-Id", context->client.visitorData },
+            { "X-YOUTUBE-CLIENT-NAME", context->client.clientName },
+            { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion },
             { "X-ORIGIN", "https://www.youtube.com" }
         });
 
