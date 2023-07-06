@@ -7,8 +7,12 @@ struct SslHttpRequestError
 {
     enum class ErrorType { Success, SocketError, SslError };
     ErrorType errorType;
-    QAbstractSocket::SocketError socketError;
-    QSslError::SslError sslError;
+
+    union
+    {
+        QAbstractSocket::SocketError socketError;
+        QSslError::SslError sslError;
+    };
 
     SslHttpRequestError(QAbstractSocket::SocketError error) : errorType(ErrorType::SocketError), socketError(error) {}
     SslHttpRequestError(QSslError::SslError error) : errorType(ErrorType::SslError), sslError(error) {}
