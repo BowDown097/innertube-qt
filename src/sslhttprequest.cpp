@@ -1,5 +1,4 @@
 #include "sslhttprequest.h"
-#include <QFile>
 
 SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject* parent)
     : QObject(parent), m_requestMethod(method), m_sslSocket(new QSslSocket(this)), m_url(QUrl(url))
