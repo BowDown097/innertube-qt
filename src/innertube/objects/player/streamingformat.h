@@ -29,13 +29,8 @@ namespace InnertubeObjects
 
         explicit StreamingFormat(const QJsonValue& format)
             : approxDurationMs(format["approxDurationMs"].toString()),
-      #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-              averageBitrate(format["averageBitrate"].toInteger()),
-              bitrate(format["bitrate"].toInteger()),
-      #else
               averageBitrate(format["averageBitrate"].toVariant().toLongLong()),
               bitrate(format["bitrate"].toVariant().toLongLong()),
-      #endif
               contentLength(format["contentLength"].toString()),
               fps(format["fps"].toInt()),
               height(format["height"].toInt()),

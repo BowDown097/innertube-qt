@@ -19,7 +19,7 @@ set(CMAKE_C_STANDARD 11)
 option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the wiki before doing this." OFF)
 
 # Qt packages
-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 

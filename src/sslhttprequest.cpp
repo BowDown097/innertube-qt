@@ -7,7 +7,7 @@ SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject
     connect(m_sslSocket, &QSslSocket::encrypted, this, &SslHttpRequest::makeRequest);
     connect(m_sslSocket, &QSslSocket::errorOccurred, this, &SslHttpRequest::errorOccurred);
     connect(m_sslSocket, &QSslSocket::readyRead, this, &SslHttpRequest::readyRead);
-    connect(m_sslSocket, &QSslSocket::sslErrors, this, &SslHttpRequest::sslErrors);
+    connect(m_sslSocket, qOverload<const QList<QSslError>&>(&QSslSocket::sslErrors), this, &SslHttpRequest::sslErrors);
 }
 
 void SslHttpRequest::disconnected()
