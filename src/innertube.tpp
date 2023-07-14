@@ -17,6 +17,8 @@ InnertubeReply* InnerTube::get(const QString& data, const QString& continuationT
         {
             emit reply->exception(ie);
         }
+
+        reply->deleteLater();
     });
     return reply;
 }

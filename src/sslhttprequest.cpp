@@ -1,4 +1,5 @@
 #include "sslhttprequest.h"
+#include <QJsonDocument>
 
 SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject* parent)
     : QObject(parent), m_requestMethod(method), m_sslSocket(new QSslSocket(this)), m_url(QUrl(url))
@@ -69,6 +70,12 @@ void SslHttpRequest::send()
 
     m_sslSocket->connectToHostEncrypted(m_url.host(), m_url.scheme() == "http" ? m_url.port(80) : m_url.port(443));
     m_sslSocket->waitForConnected();
+}
+
+void SslHttpRequest::setBody(const QJsonObject& json)
+{
+    m_contentType = "application/json";
+    m_requestBody = QJsonDocument(json).toJson(QJsonDocument::Compact);
 }
 
 void SslHttpRequest::sslErrors(const QList<QSslError>& errors)

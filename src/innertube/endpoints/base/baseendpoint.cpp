@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
     QByteArray BaseEndpoint::getData(const QString& path, const QMap<QString, QString>& headers, const QJsonObject& body)
     {
         SslHttpRequest* req = new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post);
-        req->setBody(QJsonDocument(body).toJson(QJsonDocument::Compact), "application/json");
+        req->setBody(body);
         req->setHeaders(headers);
         req->send();
 
@@ -21,7 +21,7 @@ namespace InnertubeEndpoints
         QObject::connect(req, &SslHttpRequest::finished, &loop, &QEventLoop::quit);
         loop.exec();
 
-        QByteArray data = req->payload().trimmed();
+        QByteArray data = req->payload();
         req->deleteLater();
         return data;
     }

@@ -1,5 +1,6 @@
 #ifndef SSLHTTPREQUEST_H
 #define SSLHTTPREQUEST_H
+#include <QJsonObject>
 #include <QSslSocket>
 #include <QUrl>
 
@@ -33,6 +34,7 @@ public:
     QByteArray response() const { return m_response; }
 
     void setBody(const QByteArray& requestBody, const QString& contentType) { m_contentType = contentType; m_requestBody = requestBody; }
+    void setBody(const QJsonObject& json);
     void setHeaders(const QMap<QString, QString>& headers) { m_headers = headers; }
 signals:
     void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());

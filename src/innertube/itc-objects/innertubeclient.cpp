@@ -40,6 +40,8 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
     QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
     visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
     visitorData = visitorBlock;
+
+    req->deleteLater();
 }
 
 QJsonObject InnertubeClient::toJson() const
