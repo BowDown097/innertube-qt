@@ -1,6 +1,5 @@
 #include "innertubeclient.h"
 #include "sslhttprequest.h"
-#include <QEventLoop>
 
 InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
                                  const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
@@ -29,19 +28,14 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
       userAgent(userAgent),
       userInterfaceTheme(userInterfaceTheme)
 {
-    SslHttpRequest* req = new SslHttpRequest("https://www.youtube.com/", SslHttpRequest::RequestMethod::Get);
+    QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> req(new SslHttpRequest("https://www.youtube.com/"));
     req->send();
 
-    QEventLoop loop;
-    QObject::connect(req, &SslHttpRequest::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    QByteArray response = req->payload();
-    QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
-    visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
-    visitorData = visitorBlock;
-
-    req->deleteLater();
+    QObject::connect(req.data(), &SslHttpRequest::finished, [this](const QByteArray& response, const SslHttpRequestError&) {
+        QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
+        visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
+        visitorData = visitorBlock;
+    });
 }
 
 QJsonObject InnertubeClient::toJson() const

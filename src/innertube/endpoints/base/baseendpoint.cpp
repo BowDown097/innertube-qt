@@ -1,6 +1,5 @@
 #include "baseendpoint.h"
 #include <QEventLoop>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -12,18 +11,16 @@ namespace InnertubeEndpoints
 
     QByteArray BaseEndpoint::getData(const QString& path, const QMap<QString, QString>& headers, const QJsonObject& body)
     {
-        SslHttpRequest* req = new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post);
+        QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));
         req->setBody(body);
         req->setHeaders(headers);
         req->send();
 
         QEventLoop loop;
-        QObject::connect(req, &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+        QObject::connect(req.data(), &SslHttpRequest::finished, &loop, &QEventLoop::quit);
         loop.exec();
 
-        QByteArray data = req->payload();
-        req->deleteLater();
-        return data;
+        return req->payload();
     }
 
     QMap<QString, QString> BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)

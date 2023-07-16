@@ -69,7 +69,6 @@ void SslHttpRequest::send()
     }
 
     m_sslSocket->connectToHostEncrypted(m_url.host(), m_url.scheme() == "http" ? m_url.port(80) : m_url.port(443));
-    m_sslSocket->waitForConnected();
 }
 
 void SslHttpRequest::setBody(const QJsonObject& json)
