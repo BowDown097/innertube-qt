@@ -15,8 +15,8 @@ struct SslHttpRequestError
         QSslError::SslError sslError;
     };
 
-    SslHttpRequestError(QAbstractSocket::SocketError error) : errorType(ErrorType::SocketError), socketError(error) {}
-    SslHttpRequestError(QSslError::SslError error) : errorType(ErrorType::SslError), sslError(error) {}
+    explicit SslHttpRequestError(QAbstractSocket::SocketError error) : errorType(ErrorType::SocketError), socketError(error) {}
+    explicit SslHttpRequestError(QSslError::SslError error) : errorType(ErrorType::SslError), sslError(error) {}
     SslHttpRequestError() = default;
 };
 
