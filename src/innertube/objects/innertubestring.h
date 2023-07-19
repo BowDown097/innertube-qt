@@ -24,8 +24,9 @@ namespace InnertubeObjects
         explicit InnertubeString(const QString& text);
         explicit InnertubeString(const QJsonValue& textVal);
 
-        bool operator ==(const InnertubeString& s) const { return !text.isEmpty() ? text == s.text : accessibilityLabel == s.accessibilityLabel; }
-        bool operator !=(const InnertubeString& s) const { return !text.isEmpty() ? text != s.text : accessibilityLabel != s.accessibilityLabel; }
+        friend bool operator==(const InnertubeString& lhs, const InnertubeString& rhs)
+        { return lhs.text == rhs.text && lhs.accessibilityLabel == rhs.accessibilityLabel; }
+        friend bool operator!=(const InnertubeString& lhs, const InnertubeString& rhs) { return !(lhs == rhs); }
     };
 }
 

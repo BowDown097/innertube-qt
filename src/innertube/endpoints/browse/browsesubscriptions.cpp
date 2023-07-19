@@ -80,8 +80,8 @@ namespace InnertubeEndpoints
             const QJsonArray gridContents = v2["shelfRenderer"]["content"]["gridRenderer"]["items"].toArray();
             for (const QJsonValue& v3 : gridContents)
             {
-                if (!v3["gridVideoRenderer"].isObject()) continue;
-                response.videos.append(InnertubeObjects::Video(v3["gridVideoRenderer"], true));
+                if (v3["gridVideoRenderer"].isObject())
+                    response.videos.append(InnertubeObjects::Video(v3["gridVideoRenderer"], true));
             }
         }
     }

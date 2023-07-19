@@ -7,19 +7,17 @@ namespace InnertubeObjects
     Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf)
         : descriptionSnippet(videoRenderer["descriptionSnippet"]),
           longBylineText(videoRenderer["longBylineText"]),
+          navigationEndpoint(videoRenderer["navigationEndpoint"]),
           shelf(shelf),
           shortBylineText(videoRenderer["shortBylineText"]),
           shortViewCountText(videoRenderer["shortViewCountText"]),
           showActionMenu(videoRenderer["showActionMenu"].toBool()),
-          startTimeSeconds(videoRenderer["navigationEndpoint"]["watchEndpoint"]["startTimeSeconds"].toInt()),
           thumbnail(videoRenderer["videoId"].toString()),
           title(videoRenderer["title"]),
           videoId(videoRenderer["videoId"].toString()),
           viewCountText(videoRenderer["viewCountText"])
     {
-        const QJsonArray badges = videoRenderer["badges"].toArray();
-        isLive = badges.isEmpty() ? badges[0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW" : false;
-
+        isLive = videoRenderer["badges"][0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW";
         if (!isLive) // lengthText and publishedTimeText do not exist for live videos
         {
             if (isGridVideo)

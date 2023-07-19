@@ -13,13 +13,13 @@ namespace InnertubeObjects
         bool isLive;
         InnertubeString lengthText;
         InnertubeString longBylineText;
+        QJsonValue navigationEndpoint;
         VideoOwner owner;
         InnertubeString publishedTimeText;
         InnertubeString shelf;
         InnertubeString shortBylineText;
         InnertubeString shortViewCountText;
         bool showActionMenu;
-        int startTimeSeconds;
         VideoThumbnail thumbnail;
         InnertubeString title;
         QString videoId;
