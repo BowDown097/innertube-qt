@@ -26,7 +26,7 @@ class SslHttpRequest : public QObject
 public:
     enum class RequestMethod { Get, Post };
     explicit SslHttpRequest(const QString& url, RequestMethod method = RequestMethod::Get, QObject* parent = nullptr);
-    void send();
+    void send(bool emitPayload = true);
 
     QByteArray body() const { return m_requestBody; }
     QMap<QString, QString> headers() const { return m_headers; }
@@ -40,6 +40,7 @@ signals:
     void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());
 private:
     QString m_contentType;
+    bool m_emitPayload;
     QMap<QString, QString> m_headers;
     QByteArray m_requestBody;
     RequestMethod m_requestMethod;

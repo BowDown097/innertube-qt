@@ -31,7 +31,7 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
     QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> req(new SslHttpRequest("https://www.youtube.com/"));
     req->send();
 
-    QObject::connect(req.data(), &SslHttpRequest::finished, [this](const QByteArray& response, const SslHttpRequestError&) {
+    QObject::connect(req.data(), &SslHttpRequest::finished, [this](const QByteArray& response) {
         QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
         visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
         visitorData = visitorBlock;

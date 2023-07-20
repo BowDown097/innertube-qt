@@ -13,7 +13,7 @@ SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject
 
 void SslHttpRequest::disconnected()
 {
-    emit finished(m_response);
+    emit finished(m_emitPayload ? payload() : m_response);
 }
 
 void SslHttpRequest::errorOccurred(QAbstractSocket::SocketError error)
@@ -60,7 +60,7 @@ void SslHttpRequest::readyRead()
     m_response.append(m_sslSocket->readAll());
 }
 
-void SslHttpRequest::send()
+void SslHttpRequest::send(bool emitPayload)
 {
     if (!m_url.isValid())
     {
@@ -68,6 +68,7 @@ void SslHttpRequest::send()
         return;
     }
 
+    m_emitPayload = emitPayload;
     m_sslSocket->connectToHostEncrypted(m_url.host(), m_url.scheme() == "http" ? m_url.port(80) : m_url.port(443));
 }
 
