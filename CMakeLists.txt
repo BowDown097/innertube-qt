@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 11)
 
 # Compilation options
+option(INNERTUBE_GET_STS "Fetch the signature timestamp for playback to avoid rate-limiting for custom player implementations." OFF)
 option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the wiki before doing this." OFF)
 
 # Qt packages
@@ -109,9 +110,17 @@ add_library(innertube-qt
     src/protobuf/simpleprotobuf.cpp src/protobuf/simpleprotobuf.h
 )
 
+# Define options in preprocessor
+if(INNERTUBE_GET_STS)
+    target_compile_definitions(innertube-qt PUBLIC INNERTUBE_GET_STS)
+endif()
+
+if(INNERTUBE_NO_WEBENGINE)
+    target_compile_definitions(innertube-qt PUBLIC INNERTUBE_NO_WEBENGINE)
+endif()
+
 # Include directories, libraries
 target_include_directories(innertube-qt PUBLIC src)
-target_compile_definitions(innertube-qt PUBLIC INNERTUBE)
 target_link_libraries(innertube-qt PUBLIC Qt::Core Qt::Gui Qt::Network)
 
 ## Optional

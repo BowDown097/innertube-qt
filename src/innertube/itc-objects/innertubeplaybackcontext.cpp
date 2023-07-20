@@ -1,6 +1,6 @@
 #include "innertubeplaybackcontext.h"
-#ifdef GETSTS
-#include "CurlEasy.h"
+#ifdef INNERTUBE_GET_STS
+#include "sslhttprequest.h"
 #include <QEventLoop>
 #endif
 
@@ -19,7 +19,7 @@ QJsonObject InnertubePlaybackContext::toJson() const
             { "contentPlaybackContext", QJsonObject {
                 { "currentUrl", currentUrl },
                 { "html5Preference", html5Preference },
-#ifdef GETSTS
+#ifdef INNERTUBE_GET_STS
                 { "signatureTimestamp", signatureTimestamp != 0 ? signatureTimestamp : fetchSignatureTimestamp() },
 #endif
                 { "referer", referer }
@@ -28,38 +28,37 @@ QJsonObject InnertubePlaybackContext::toJson() const
     }
 }
 
-#ifdef GETSTS
+#ifdef INNERTUBE_GET_STS
 int InnertubePlaybackContext::fetchSignatureTimestamp() const
 {
     // get the body of the embed for "Me at the zoo", which is almost guaranteed to never go down as long as YouTube exists
-    QString embedBody;
-    CurlEasy* easy = new CurlEasy;
-    easy->set(CURLOPT_URL, "https://www.youtube.com/embed/jNQXAC9IVRw");
-    easy->setWriteFunction([&embedBody](char* d, size_t size)->size_t { embedBody.append(d); return size; });
-    easy->perform();
-    QEventLoop event;
-    QObject::connect(easy, &CurlEasy::done, &event, &QEventLoop::quit);
-    event.exec();
+    QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> embedReq(new SslHttpRequest("https://www.youtube.com/embed/jNQXAC9IVRw"));
+    embedReq->send();
+
+    QEventLoop embedLoop;
+    QObject::connect(embedReq.data(), &SslHttpRequest::finished, &embedLoop, &QEventLoop::quit);
+    embedLoop.exec();
+
+    QByteArray embedBody = embedReq->payload();
 
     // extract application URL
+    static QRegularExpression playerJsRegex("/s/player/[a-zA-Z0-9/\\-_.]*base.js");
     QRegularExpressionMatch match = playerJsRegex.match(embedBody);
     QString playerJsUrl = "https://www.youtube.com" + match.captured();
 
     // get the application body
-    QString appBody;
-    easy->set(CURLOPT_URL, playerJsUrl);
-    easy->setWriteFunction([&appBody](char* d, size_t size)->size_t { appBody.append(d); return size; });
-    easy->perform();
-    QEventLoop appEvent;
-    QObject::connect(easy, &CurlEasy::done, &appEvent, &QEventLoop::quit);
-    appEvent.exec();
+    QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> appReq(new SslHttpRequest(playerJsUrl));
+    appReq->send();
 
-    // extract the sts body
-    QRegularExpressionMatch stsMatch = signatureTimestampRegex.match(appBody);
-    int sts = stsMatch.captured(1).toInt();
+    QEventLoop appLoop;
+    QObject::connect(appReq.data(), &SslHttpRequest::finished, &appLoop, &QEventLoop::quit);
+    appLoop.exec();
 
-    // clean up and return
-    easy->deleteLater();
-    return sts;
+    QByteArray appBody = appReq->payload();
+
+    // extract and return the sts body
+    static QRegularExpression stsRegex("signatureTimestamp:?\\s*([0-9]*)");
+    QRegularExpressionMatch stsMatch = stsRegex.match(appBody);
+    return stsMatch.captured(1).toInt();
 }
 #endif
