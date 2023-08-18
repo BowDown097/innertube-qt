@@ -58,4 +58,12 @@ namespace InnertubeObjects
                 ? VideoOwner(videoRenderer["shortBylineText"], videoRenderer["channelThumbnail"], videoRenderer["ownerBadges"], true)
                 : VideoOwner(videoRenderer["ownerText"], videoRenderer["channelThumbnailSupportedRenderers"], videoRenderer["ownerBadges"], false);
     }
+
+    QTime Video::length() const
+    {
+        QTime out = QTime::fromString(lengthText.text, "h:mm:ss");
+        if (!out.isValid())
+            out = QTime::fromString(lengthText.text, "m:ss");
+        return out;
+    }
 }

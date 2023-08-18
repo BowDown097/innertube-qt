@@ -3,6 +3,7 @@
 #include "innertube/objects/innertubestring.h"
 #include "videoowner.h"
 #include "videothumbnail.h"
+#include <QTime>
 
 namespace InnertubeObjects
 {
@@ -26,6 +27,7 @@ namespace InnertubeObjects
         InnertubeString viewCountText;
 
         Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf = InnertubeString());
+        QTime length() const;
     };
 }
 
