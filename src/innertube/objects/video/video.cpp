@@ -59,6 +59,12 @@ namespace InnertubeObjects
                 : VideoOwner(videoRenderer["ownerText"], videoRenderer["channelThumbnailSupportedRenderers"], videoRenderer["ownerBadges"], false);
     }
 
+    // reels can still be of this type and not of the Reel type. blame innertube
+    bool Video::isReel() const
+    {
+        return navigationEndpoint["reelWatchEndpoint"].isObject();
+    }
+
     QTime Video::length() const
     {
         QTime out = QTime::fromString(lengthText.text, "h:mm:ss");

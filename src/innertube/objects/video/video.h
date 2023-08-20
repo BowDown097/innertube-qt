@@ -27,6 +27,7 @@ namespace InnertubeObjects
         InnertubeString viewCountText;
 
         Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf = InnertubeString());
+        bool isReel() const;
         QTime length() const;
     };
 }
