@@ -21,8 +21,11 @@ option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the
 
 # Qt packages
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
-find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
+
+set(INNERTUBE_QT_VERSION_MAJOR ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use, defaults to ${QT_VERSION_MAJOR}")
+
+find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
+find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
 add_library(innertube-qt
     src/innertube.cpp src/innertube.h src/innertube.tpp
