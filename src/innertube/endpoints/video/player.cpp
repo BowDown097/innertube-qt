@@ -8,13 +8,19 @@ namespace InnertubeEndpoints
 {
     Player::Player(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore)
     {
-        const QJsonObject body {
+        QJsonObject body {
             { "contentCheckOk", true },
             { "context", context->toJson() },
             { "playbackContext", InnertubePlaybackContext(true, QStringLiteral("/watch?v=%1").arg(videoId)).toJson() },
             { "racyCheckOk", true },
             { "videoId", videoId }
         };
+
+        // streaming urls return 403 on ANDROID client without a "params" argument
+        // so we work around this by using a random but authentic value for the argument
+        // courtesy of NewPipe's YoutubeStreamExtractor.fetchAndroidMobileJsonPlayer()
+        if (context->client.clientName == "ANDROID")
+            body.insert("params", "CgIQBg");
 
         QByteArray data = get("player", context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();

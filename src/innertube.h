@@ -3,6 +3,7 @@
 #include "innertube/innertubeexception.h"
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
+#include <QTimer>
 #include <type_traits>
 
 class InnerTube
@@ -22,10 +23,43 @@ public:
     { m_context = new InnertubeContext(client, clickTracking, requestConfig, userConfig); }
 
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
-    InnertubeReply* get(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
+    InnertubeReply* get(const QString& data = "", const QString& continuationToken = "", const QString& params = "")
+    {
+        InnertubeReply* reply = new InnertubeReply;
+        QTimer::singleShot(0, reply, [this, reply, data, continuationToken, params] {
+            try
+            {
+                T endpoint = getBlocking<T>(data, continuationToken, params);
+                emit reply->finished(std::move(endpoint));
+            }
+            catch (const InnertubeException& ie)
+            {
+                emit reply->exception(ie);
+            }
+
+            reply->deleteLater();
+        });
+        return reply;
+    }
 
     template<typename T> requires std::derived_from<T, InnertubeEndpoints::BaseEndpoint> && (!std::same_as<T, InnertubeEndpoints::Subscribe>)
-    T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "");
+    T getBlocking(const QString& data = "", const QString& continuationToken = "", const QString& params = "")
+    {
+        if constexpr (is_any_v<T, InnertubeEndpoints::GetLiveChat, InnertubeEndpoints::ModifyChannelPreference,
+                               InnertubeEndpoints::Player, InnertubeEndpoints::UpdatedMetadata>)
+            return T(data, m_context, m_authStore);
+        else if constexpr (is_any_v<T, InnertubeEndpoints::BrowseHistory, InnertubeEndpoints::GetNotificationMenu,
+                                    InnertubeEndpoints::Next>)
+            return T(data, m_context, m_authStore, continuationToken);
+        else if constexpr (is_any_v<T, InnertubeEndpoints::BrowseChannel, InnertubeEndpoints::Search,
+                                    InnertubeEndpoints::SendMessage>)
+            return T(data, m_context, m_authStore, continuationToken, params);
+        else if constexpr (is_any_v<T, InnertubeEndpoints::AccountMenu, InnertubeEndpoints::BrowseTrending,
+                                    InnertubeEndpoints::UnseenCount>)
+            return T(m_context, m_authStore);
+        else
+            return T(m_context, m_authStore, continuationToken);
+    }
 
     void like(const QJsonValue& endpoint, bool liking);
     void sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params);
@@ -37,7 +71,5 @@ private:
     template<class _Tp, class... _Up>
     static constexpr bool is_any_v = std::disjunction_v<std::is_same<_Tp, _Up>...>;
 };
-
-#include "innertube.tpp"
 
 #endif // INNERTUBE_H

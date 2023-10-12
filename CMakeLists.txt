@@ -28,7 +28,7 @@ find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
 add_library(innertube-qt
-    src/innertube.cpp src/innertube.h src/innertube.tpp
+    src/innertube.cpp src/innertube.h
     src/innertube/innertubeexception.h
     src/innertube/innertubereply.h
     src/innertube/endpoints/base/basebrowseendpoint.cpp src/innertube/endpoints/base/basebrowseendpoint.h
