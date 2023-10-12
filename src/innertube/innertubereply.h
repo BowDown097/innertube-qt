@@ -3,6 +3,9 @@
 #include "endpoints/innertubeendpoints.h"
 #include "innertubeexception.h"
 
+/**
+ * @brief An object that emits signals related to Innertube requests. Used by @ref InnerTube::get.
+ */
 class InnertubeReply : public QObject
 {
     Q_OBJECT
@@ -10,11 +13,8 @@ signals:
     void exception(const InnertubeException&);
     void finished(const InnertubeEndpoints::AccountMenu&);
     void finished(const InnertubeEndpoints::BrowseChannel&);
-    void finished(const InnertubeEndpoints::BrowseExplore&);
     void finished(const InnertubeEndpoints::BrowseHistory&);
     void finished(const InnertubeEndpoints::BrowseHome&);
-    void finished(const InnertubeEndpoints::BrowseLibrary&);
-    void finished(const InnertubeEndpoints::BrowseStorefront&);
     void finished(const InnertubeEndpoints::BrowseSubscriptions&);
     void finished(const InnertubeEndpoints::BrowseTrending&);
     void finished(const InnertubeEndpoints::GetNotificationMenu&);

@@ -5,13 +5,19 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Home page.
+     */
     class BrowseHome : public BaseBrowseEndpoint
     {
         friend class ::InnerTube;
     public:
         QString continuationToken;
         HomeResponse response;
-    private:
+    protected:
+        /**
+         * @param tokenIn  Continuation token.
+         */
         BrowseHome(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };
 }

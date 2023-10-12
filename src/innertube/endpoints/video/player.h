@@ -5,12 +5,15 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Data used for the player, such as streams, for a video.
+     */
     class Player : public BaseEndpoint
     {
         friend class ::InnerTube;
     public:
         PlayerResponse response;
-    private:
+    protected:
         Player(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }

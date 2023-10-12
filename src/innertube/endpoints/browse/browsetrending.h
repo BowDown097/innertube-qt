@@ -5,12 +5,15 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Trending page.
+     */
     class BrowseTrending : public BaseBrowseEndpoint
     {
         friend class ::InnerTube;
     public:
         TrendingResponse response;
-    private:
+    protected:
         BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }

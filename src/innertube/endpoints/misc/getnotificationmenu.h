@@ -5,15 +5,21 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Notifications.
+     */
     class GetNotificationMenu : public BaseEndpoint
     {
         friend class ::InnerTube;
     public:
         QString continuationToken;
         NotificationMenuResponse response;
-    private:
-        GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context, InnertubeAuthStore* authStore,
-                            const QString& tokenIn = "");
+    protected:
+        /**
+         * @param tokenIn  Continuation token.
+         */
+        GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context,
+                            InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };
 }
 

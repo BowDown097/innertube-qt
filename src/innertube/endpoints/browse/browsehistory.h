@@ -5,13 +5,20 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Watch history.
+     * @details Used on the history page - youtube.com/feed/history.
+     */
     class BrowseHistory : public BaseBrowseEndpoint
     {
         friend class ::InnerTube;
     public:
         QString continuationToken;
         HistoryResponse response;
-    private:
+    protected:
+        /**
+         * @param tokenIn  Continuation token.
+         */
         BrowseHistory(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };
 }

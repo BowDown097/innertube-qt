@@ -4,12 +4,15 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Unseen notification count.
+     */
     class UnseenCount : public BaseEndpoint
     {
         friend class ::InnerTube;
     public:
         int unseenCount;
-    private:
+    protected:
         UnseenCount(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }

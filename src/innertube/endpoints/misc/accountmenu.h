@@ -5,12 +5,15 @@
 
 namespace InnertubeEndpoints
 {
+    /**
+     * @brief Account menu.
+     */
     class AccountMenu : public BaseEndpoint
     {
         friend class ::InnerTube;
     public:
         AccountMenuResponse response;
-    private:
+    protected:
         AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }

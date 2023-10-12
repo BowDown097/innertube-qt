@@ -3,8 +3,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseChannel::BrowseChannel(const QString& channelId, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn,
-                                 const QString& params)
+    BrowseChannel::BrowseChannel(const QString& channelId, InnertubeContext* context, InnertubeAuthStore* authStore,
+                                 const QString& tokenIn, const QString& params)
     {
         QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())

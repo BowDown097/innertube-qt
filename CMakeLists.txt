@@ -34,11 +34,8 @@ add_library(innertube-qt
     src/innertube/endpoints/base/basebrowseendpoint.cpp src/innertube/endpoints/base/basebrowseendpoint.h
     src/innertube/endpoints/base/baseendpoint.cpp src/innertube/endpoints/base/baseendpoint.h
     src/innertube/endpoints/browse/browsechannel.cpp src/innertube/endpoints/browse/browsechannel.h
-    src/innertube/endpoints/browse/browseexplore.h
     src/innertube/endpoints/browse/browsehistory.cpp src/innertube/endpoints/browse/browsehistory.h
     src/innertube/endpoints/browse/browsehome.cpp src/innertube/endpoints/browse/browsehome.h
-    src/innertube/endpoints/browse/browselibrary.h
-    src/innertube/endpoints/browse/browsestorefront.h
     src/innertube/endpoints/browse/browsesubscriptions.cpp src/innertube/endpoints/browse/browsesubscriptions.h
     src/innertube/endpoints/browse/browsetrending.cpp src/innertube/endpoints/browse/browsetrending.h
     src/innertube/endpoints/innertubeendpoints.h
