@@ -14,9 +14,10 @@ public:
     InnertubeUserConfig user;
 
     InnertubeContext() = default;
-    explicit InnertubeContext(const InnertubeClient& ic, const InnertubeClickTracking& ict = InnertubeClickTracking(),
-                              const InnertubeRequestConfig& irc = InnertubeRequestConfig(), const InnertubeUserConfig& iuc = InnertubeUserConfig())
-        : clickTracking(ict), client(ic), request(irc), user(iuc) {}
+    explicit InnertubeContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
+                              const InnertubeRequestConfig& request = InnertubeRequestConfig(),
+                              const InnertubeUserConfig& user = InnertubeUserConfig())
+        : clickTracking(clickTracking), client(client), request(request), user(user) {}
     QJsonObject toJson() const;
 };
 

@@ -27,11 +27,11 @@ namespace InnertubeEndpoints
     {
         QMap<QString, QString> headers;
 
-        if (authStore->populated)
+        if (authStore->populated())
         {
             headers.insert({
                 { "Authorization", authStore->generateSAPISIDHash() },
-                { "Cookie", authStore->getNecessaryLoginCookies() },
+                { "Cookie", authStore->toCookieString() },
                 { "X-Goog-AuthUser", "0" }
             });
         }

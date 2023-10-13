@@ -1,12 +1,13 @@
 #include "innertubeclient.h"
 #include "sslhttprequest.h"
 
-InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform, const QString& userAgent,
-                                 const QString& browserName, const QString& browserVersion, const QString& userInterfaceTheme,
-                                 const QString& clientFormFactor, const InnertubeConfigInfo& configInfo, const QString& deviceMake,
-                                 const QString& deviceModel, const QString& gl, const QString& hl, const QString& originalUrl, const QString& osName,
-                                 const QString& osVersion, const QString& remoteHost, int screenDensityFloat, int screenPixelDensity,
-                                 const QString& timeZone)
+InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform,
+                                 const QString& userAgent, const QString& browserName, const QString& browserVersion,
+                                 const QString& userInterfaceTheme, const QString& clientFormFactor,
+                                 const InnertubeConfigInfo& configInfo, const QString& deviceMake, const QString& deviceModel,
+                                 const QString& gl, const QString& hl, const QString& originalUrl, const QString& osName,
+                                 const QString& osVersion, const QString& remoteHost, int screenDensityFloat,
+                                 int screenPixelDensity, const QString& timeZone)
     : browserName(browserName),
       browserVersion(browserVersion),
       clientFormFactor(clientFormFactor),

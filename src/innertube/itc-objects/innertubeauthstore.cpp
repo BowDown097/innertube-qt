@@ -7,11 +7,9 @@
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
-#endif
 
 void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 {
-#ifndef INNERTUBE_NO_WEBENGINE
     QWidget* authWindow = new QWidget;
     authWindow->setFixedSize(authWindow->size());
     authWindow->setWindowTitle("YouTube Login");
@@ -26,15 +24,36 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     view->show();
 
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
-
-    QEventLoop loop;
-    connect(this, &InnertubeAuthStore::gotSIDs, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    authWindow->deleteLater();
-    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-#endif
+    connect(this, &InnertubeAuthStore::authenticateSuccess, this, [this, authWindow, context] {
+        authWindow->deleteLater();
+        context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
+    });
 }
+
+void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
+{
+    if (populated())
+        return;
+
+    qDebug().noquote().nospace() << "New cookie: " << cookie.name() << "=" << cookie.value();
+
+    if (cookie.name() == "APISID")
+        apisid = cookie.value();
+    else if (cookie.name() == "HSID")
+        hsid = cookie.value();
+    else if (cookie.name() == "SAPISID")
+        sapisid = cookie.value();
+    else if (cookie.name() == "SID")
+        sid = cookie.value();
+    else if (cookie.name() == "SSID")
+        ssid = cookie.value();
+    else if (cookie.name() == "VISITOR_INFO1_LIVE")
+        visitorInfo = cookie.value();
+
+    if (populated())
+        emit authenticateSuccess();
+}
+#endif
 
 void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context)
 {
@@ -45,7 +64,6 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
     context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
-    populated = !apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty();
 }
 
 QString InnertubeAuthStore::generateSAPISIDHash()
@@ -71,36 +89,9 @@ void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)
 {
     apisid.clear();
     hsid.clear();
-    populated = false;
     sapisid.clear();
     sid.clear();
     ssid.clear();
     visitorInfo.clear();
     context->client.visitorData.clear();
 }
-
-#ifndef INNERTUBE_NO_WEBENGINE
-void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
-{
-    qDebug().noquote().nospace() << "New cookie: " << cookie.name() << "=" << cookie.value();
-
-    if (cookie.name() == "APISID")
-        apisid = cookie.value();
-    else if (cookie.name() == "HSID")
-        hsid = cookie.value();
-    else if (cookie.name() == "SAPISID")
-        sapisid = cookie.value();
-    else if (cookie.name() == "SID")
-        sid = cookie.value();
-    else if (cookie.name() == "SSID")
-        ssid = cookie.value();
-    else if (cookie.name() == "VISITOR_INFO1_LIVE")
-        visitorInfo = cookie.value();
-
-    if (!apisid.isEmpty() && !hsid.isEmpty() && !sapisid.isEmpty() && !sid.isEmpty() && !ssid.isEmpty() && !visitorInfo.isEmpty())
-    {
-        populated = true;
-        emit gotSIDs();
-    }
-}
-#endif

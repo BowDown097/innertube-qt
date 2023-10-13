@@ -25,27 +25,7 @@ concept EndpointWithData = std::derived_from<T, InnertubeEndpoints::BaseEndpoint
  * and @ref subscribe methods) are built to work with a recent version of the WEB client.
  * If not operating under these conditions, it is likely that they will be mostly or completely useless,
  * in which case you will have to use @ref InnertubeEndpoints::BaseEndpoint::get and work with the raw responses yourself.
- * But feel free to try them still if you wish.<br><br>
- * To get started, use @ref createContext. This example code will create an ideal, working context for you:
- * @code{.cpp}
- * InnerTube::instance().createContext(InnertubeClient("WEB", "2.20230718.01.00", "DESKTOP"));
- * @endcode
- * Here, a context is created around a client of the WEB type, version 2.20230718.01.00, on the DESKTOP platform.<br><br>
- * To make a request, use @ref get. This example code provides a good way to test if things are working:
- * @code{.cpp}
- * InnertubeReply* reply = InnerTube::instance().get<InnertubeEndpoints::Next>("dQw4w9WgXcQ");
- * connect(reply, qOverload<const InnertubeEndpoints::Next&>(&InnertubeReply::finished), this, [](const auto& next) {
- *     qDebug() << next.response.primaryInfo.title.text;
- * });
- * @endcode
- * Here, a request is made to the @ref InnertubeEndpoints::Next "Next endpoint" supplied with the video ID
- * for [the classic Rick Roll video](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
- * Once the request finishes, the response is captured and the video title is printed
- * (which should be "Rick Astley - Never Gonna Give You Up (Official Music Video)").<br><br>
- * If you wish to support logging in, use @ref authenticate.
- * This will open up a browser window on YouTube's login page that captures the necessary credentials
- * for requests to the API to be authenticated and saves them in the
- * @ref instance "global instance"'s @ref InnertubeAuthStore "authentication storage".
+ * But feel free to try them still if you wish.
  */
 class InnerTube
 {
@@ -53,9 +33,27 @@ public:
     static InnerTube& instance() { static InnerTube it; return it; }
     InnertubeAuthStore* authStore() const { return m_authStore; }
     InnertubeContext* context() const { return m_context; }
-    bool hasAuthenticated() const { return m_authStore->populated; }
+
+    /**
+     * @brief Shorthand for @ref InnertubeAuthStore::populated.
+     */
+    bool hasAuthenticated() const { return m_authStore->populated(); }
+
+#ifndef INNERTUBE_NO_WEBENGINE
+    /**
+     * @brief Shorthand for @ref InnertubeAuthStore::authenticate.
+     */
     void authenticate() { m_authStore->authenticate(m_context); }
+#endif
+
+    /**
+     * @brief Shorthand for @ref InnertubeAuthStore::authenticateFromJson.
+     */
     void authenticateFromJson(const QJsonObject& obj) { m_authStore->authenticateFromJson(obj, m_context); }
+
+    /**
+     * @brief Shorthand for @ref InnertubeAuthStore::unauthenticate.
+     */
     void unauthenticate() { m_authStore->unauthenticate(m_context); }
 
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
