@@ -21,8 +21,8 @@ namespace InnertubeEndpoints
          */
         QByteArray get(const QString& endpoint, InnertubeContext* context, InnertubeAuthStore* authStore, const QJsonObject& body);
     private:
-        QByteArray getData(const QString& path, const QMap<QString, QString>& headers, const QJsonObject& body);
-        QMap<QString, QString> getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore);
+        QByteArray getData(const QString& path, const QVariantMap& headers, const QJsonObject& body);
+        QVariantMap getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
 

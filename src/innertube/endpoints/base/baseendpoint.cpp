@@ -9,7 +9,7 @@ namespace InnertubeEndpoints
                        std::move(getNeededHeaders(context, authStore)), body);
     }
 
-    QByteArray BaseEndpoint::getData(const QString& path, const QMap<QString, QString>& headers, const QJsonObject& body)
+    QByteArray BaseEndpoint::getData(const QString& path, const QVariantMap& headers, const QJsonObject& body)
     {
         QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));
         req->setBody(body);
@@ -23,9 +23,9 @@ namespace InnertubeEndpoints
         return req->payload();
     }
 
-    QMap<QString, QString> BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
+    QVariantMap BaseEndpoint::getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
     {
-        QMap<QString, QString> headers;
+        QVariantMap headers;
 
         if (authStore->populated())
         {
@@ -38,7 +38,7 @@ namespace InnertubeEndpoints
 
         headers.insert({
             { "X-Goog-Visitor-Id", context->client.visitorData },
-            { "X-YOUTUBE-CLIENT-NAME", context->client.clientName },
+            { "X-YOUTUBE-CLIENT-NAME", static_cast<int>(context->client.clientType) },
             { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion },
             { "X-ORIGIN", "https://www.youtube.com" }
         });

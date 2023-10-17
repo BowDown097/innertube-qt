@@ -29,19 +29,19 @@ public:
     void send(bool emitPayload = true);
 
     QByteArray body() const { return m_requestBody; }
-    QMap<QString, QString> headers() const { return m_headers; }
+    QVariantMap headers() const { return m_headers; }
     QByteArray payload() const;
     QByteArray response() const { return m_response; }
 
     void setBody(const QByteArray& requestBody, const QString& contentType) { m_contentType = contentType; m_requestBody = requestBody; }
     void setBody(const QJsonObject& json);
-    void setHeaders(const QMap<QString, QString>& headers) { m_headers = headers; }
+    void setHeaders(const QVariantMap& headers) { m_headers = headers; }
 signals:
     void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());
 private:
     QString m_contentType;
     bool m_emitPayload;
-    QMap<QString, QString> m_headers;
+    QVariantMap m_headers;
     QByteArray m_requestBody;
     RequestMethod m_requestMethod;
     QByteArray m_response;

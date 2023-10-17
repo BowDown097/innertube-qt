@@ -29,7 +29,7 @@ namespace InnertubeEndpoints
             sectionListRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (const QJsonValue& v : qAsConst(sectionListRenderer))
+        for (const QJsonValue& v : std::as_const(sectionListRenderer))
         {
             if (v["itemSectionRenderer"].isObject())
             {

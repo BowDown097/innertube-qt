@@ -1,7 +1,7 @@
 #include "innertubeclient.h"
 #include "sslhttprequest.h"
 
-InnertubeClient::InnertubeClient(const QString& clientName, const QString& clientVersion, const QString& platform,
+InnertubeClient::InnertubeClient(const ClientType& clientType, const QString& clientVersion, const QString& platform,
                                  const QString& userAgent, const QString& browserName, const QString& browserVersion,
                                  const QString& userInterfaceTheme, const QString& clientFormFactor,
                                  const InnertubeConfigInfo& configInfo, const QString& deviceMake, const QString& deviceModel,
@@ -11,7 +11,7 @@ InnertubeClient::InnertubeClient(const QString& clientName, const QString& clien
     : browserName(browserName),
       browserVersion(browserVersion),
       clientFormFactor(clientFormFactor),
-      clientName(clientName),
+      clientType(clientType),
       clientVersion(clientVersion),
       configInfo(configInfo),
       deviceMake(deviceMake),
@@ -45,7 +45,7 @@ QJsonObject InnertubeClient::toJson() const
         { "browserName", browserName },
         { "browserVersion", browserVersion },
         { "clientFormFactor", clientFormFactor },
-        { "clientName", clientName },
+        { "clientName", static_cast<int>(clientType) },
         { "clientVersion", clientVersion },
         { "configInfo", configInfo.toJson() },
         { "deviceMake", deviceMake },

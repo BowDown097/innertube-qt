@@ -19,7 +19,7 @@ namespace InnertubeEndpoints
         // streaming urls return 403 on ANDROID client without a "params" argument
         // so we work around this by using a random but authentic value for the argument
         // courtesy of NewPipe's YoutubeStreamExtractor.fetchAndroidMobileJsonPlayer()
-        if (context->client.clientName == "ANDROID")
+        if (context->client.clientType == InnertubeClient::ClientType::ANDROID)
             body.insert("params", "CgIQBg");
 
         QByteArray data = get("player", context, authStore, body);

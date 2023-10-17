@@ -33,7 +33,7 @@ void SslHttpRequest::makeRequest()
     request += QStringLiteral("%1 %2 HTTP/1.0\r\n").arg(m_requestMethod == RequestMethod::Get ? "GET" : "POST", path);
     request += "Host: " + m_url.host() + "\r\n";
     for (auto it = m_headers.cbegin(); it != m_headers.cend(); ++it)
-        request += it.key() + ": " + it.value() + "\r\n";
+        request += it.key() + ": " + it.value().toString() + "\r\n";
 
     if (m_requestMethod == RequestMethod::Post)
     {

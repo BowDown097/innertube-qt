@@ -3,7 +3,7 @@ A Qt library to interface with YouTube's InnerTube API.
 ## Getting Started
 To get started, use @ref InnerTube::createContext. This example code will create an ideal, working context for you:
 ```cpp
-InnerTube::instance().createContext(InnertubeClient("WEB", "2.20230718.01.00", "DESKTOP"));
+InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::WEB, "2.20230718.01.00", "DESKTOP"));
 ```
 Here, a context is created around a client of the WEB type, version 2.20230718.01.00, on the DESKTOP platform.<br><br>
 

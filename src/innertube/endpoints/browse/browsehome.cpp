@@ -49,7 +49,7 @@ namespace InnertubeEndpoints
             contents = appendItemsAction["continuationItems"].toArray();
         }
 
-        for (const QJsonValue& v : qAsConst(contents))
+        for (const QJsonValue& v : std::as_const(contents))
         {
             if (v["richItemRenderer"].isObject())
             {
