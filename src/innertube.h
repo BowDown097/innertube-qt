@@ -116,7 +116,11 @@ public:
 
     void like(const QJsonValue& endpoint, bool liking);
     void sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params);
+
     void subscribe(const QJsonValue& endpoint, bool subscribing);
+    void subscribe(const QStringList& channelIds, bool subscribing);
+    void subscribeBlocking(const QJsonValue& endpoint, bool subscribing);
+    void subscribeBlocking(const QStringList& channelIds, bool subscribing);
 private:
     InnertubeAuthStore* m_authStore = new InnertubeAuthStore;
     InnertubeContext* m_context = new InnertubeContext;

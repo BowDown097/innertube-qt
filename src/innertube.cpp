@@ -31,11 +31,24 @@ void InnerTube::sendMessage(const QJsonArray& textSegments, const QString& clien
 
 void InnerTube::subscribe(const QJsonValue& endpoint, bool subscribing)
 {
-    QThreadPool::globalInstance()->start([this, endpoint, subscribing] {
-        QList<QString> channelIds;
-        const QJsonArray channelIdsJson = endpoint["channelIds"].toArray();
-        for (const QJsonValue& v : channelIdsJson)
-            channelIds.append(v.toString());
-        InnertubeEndpoints::Subscribe(channelIds, endpoint["params"].toString(), subscribing, m_context, m_authStore);
-    });
+    QThreadPool::globalInstance()->start([this, endpoint, subscribing] { subscribeBlocking(endpoint, subscribing); });
+}
+
+void InnerTube::subscribe(const QStringList& channelIds, bool subscribing)
+{
+    QThreadPool::globalInstance()->start([this, channelIds, subscribing] { subscribeBlocking(channelIds, subscribing); });
+}
+
+void InnerTube::subscribeBlocking(const QJsonValue& endpoint, bool subscribing)
+{
+    QList<QString> channelIds;
+    const QJsonArray channelIdsJson = endpoint["channelIds"].toArray();
+    for (const QJsonValue& v : channelIdsJson)
+        channelIds.append(v.toString());
+    InnertubeEndpoints::Subscribe(channelIds, endpoint["params"].toString(), subscribing, m_context, m_authStore);
+}
+
+void InnerTube::subscribeBlocking(const QStringList& channelIds, bool subscribing)
+{
+    subscribeBlocking(QJsonObject { { "channelIds", QJsonArray::fromStringList(channelIds) } }, subscribing);
 }
