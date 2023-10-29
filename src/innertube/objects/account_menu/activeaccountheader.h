@@ -10,6 +10,8 @@ namespace InnertubeObjects
         QString accountName;
         QList<GenericThumbnail> accountPhotos;
         QString channelHandle;
+        QJsonValue manageAccountEndpoint;
+        QJsonValue settingsEndpoint;
 
         ActiveAccountHeader() = default;
         explicit ActiveAccountHeader(const QJsonValue& activeAccountHeaderRenderer);
