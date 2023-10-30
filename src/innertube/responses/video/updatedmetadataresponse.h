@@ -10,6 +10,7 @@ namespace InnertubeEndpoints
         InnertubeObjects::InnertubeString description;
         bool isLive;
         QString likeDefaultText;
+        QString likeNumericalValue;
         QString likeToggledText;
         InnertubeObjects::InnertubeString title;
         QString videoId;

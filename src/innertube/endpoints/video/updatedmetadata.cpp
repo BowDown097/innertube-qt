@@ -28,6 +28,7 @@ namespace InnertubeEndpoints
         response.description = InnertubeObjects::InnertubeString(updateDescriptionAction["description"]);
         response.isLive = updateViewershipAction["viewCount"]["videoViewCountRenderer"]["isLive"].toBool();
         response.likeDefaultText = updateToggleButtonTextAction["defaultText"]["simpleText"].toString();
+        response.likeNumericalValue = updateToggleButtonTextAction["defaultNumericalValue"].toString();
         response.likeToggledText = updateToggleButtonTextAction["toggledText"]["simpleText"].toString();
         response.title = InnertubeObjects::InnertubeString(updateTitleAction["title"]);
         response.videoId = videoId;

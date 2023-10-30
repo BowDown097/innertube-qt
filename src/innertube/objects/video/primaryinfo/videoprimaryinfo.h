@@ -18,7 +18,7 @@ namespace InnertubeObjects
         explicit VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer)
             : dateText(primaryInfoRenderer["dateText"]),
               relativeDateText(primaryInfoRenderer["relativeDateText"]),
-              shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["shortViewCount"]),
+              shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["extraShortViewCount"]),
               title(primaryInfoRenderer["title"]),
               videoActions(primaryInfoRenderer["videoActions"]["menuRenderer"]),
               viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]) {}
