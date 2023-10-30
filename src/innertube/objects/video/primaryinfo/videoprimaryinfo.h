@@ -1,6 +1,7 @@
 #ifndef VIDEOPRIMARYINFO_H
 #define VIDEOPRIMARYINFO_H
 #include "videoactions.h"
+#include "viewcount.h"
 
 namespace InnertubeObjects
 {
@@ -9,19 +10,17 @@ namespace InnertubeObjects
     public:
         InnertubeString dateText;
         InnertubeString relativeDateText;
-        InnertubeString shortViewCount;
         InnertubeString title;
         VideoActions videoActions;
-        InnertubeString viewCount;
+        ViewCount viewCount;
 
         VideoPrimaryInfo() = default;
         explicit VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer)
             : dateText(primaryInfoRenderer["dateText"]),
               relativeDateText(primaryInfoRenderer["relativeDateText"]),
-              shortViewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["extraShortViewCount"]),
               title(primaryInfoRenderer["title"]),
               videoActions(primaryInfoRenderer["videoActions"]["menuRenderer"]),
-              viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]["viewCount"]) {}
+              viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]) {}
     };
 }
 

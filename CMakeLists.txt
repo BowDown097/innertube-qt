@@ -86,6 +86,7 @@ add_library(innertube-qt
     src/innertube/objects/player/streamingformat.h
     src/innertube/objects/video/primaryinfo/videoactions.cpp src/innertube/objects/video/primaryinfo/videoactions.h
     src/innertube/objects/video/primaryinfo/videoprimaryinfo.h
+    src/innertube/objects/video/primaryinfo/viewcount.h
     src/innertube/objects/video/reel.cpp src/innertube/objects/video/reel.h
     src/innertube/objects/video/secondaryinfo/metadatarow.cpp src/innertube/objects/video/secondaryinfo/metadatarow.h
     src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h

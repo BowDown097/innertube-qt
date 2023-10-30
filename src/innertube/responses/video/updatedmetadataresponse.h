@@ -1,6 +1,6 @@
 #ifndef UPDATEDMETADATARESPONSE_H
 #define UPDATEDMETADATARESPONSE_H
-#include "innertube/objects/innertubestring.h"
+#include "innertube/objects/video/primaryinfo/viewcount.h"
 
 namespace InnertubeEndpoints
 {
@@ -8,13 +8,12 @@ namespace InnertubeEndpoints
     {
         QString dateText;
         InnertubeObjects::InnertubeString description;
-        bool isLive;
         QString likeDefaultText;
         QString likeNumericalValue;
         QString likeToggledText;
         InnertubeObjects::InnertubeString title;
         QString videoId;
-        QString viewCount;
+        InnertubeObjects::ViewCount viewCount;
     };
 }
 

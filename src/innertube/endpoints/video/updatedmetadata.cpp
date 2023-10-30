@@ -26,13 +26,12 @@ namespace InnertubeEndpoints
 
         response.dateText = updateDateTextAction["dateText"]["simpleText"].toString();
         response.description = InnertubeObjects::InnertubeString(updateDescriptionAction["description"]);
-        response.isLive = updateViewershipAction["viewCount"]["videoViewCountRenderer"]["isLive"].toBool();
         response.likeDefaultText = updateToggleButtonTextAction["defaultText"]["simpleText"].toString();
         response.likeNumericalValue = updateToggleButtonTextAction["defaultNumericalValue"].toString();
         response.likeToggledText = updateToggleButtonTextAction["toggledText"]["simpleText"].toString();
         response.title = InnertubeObjects::InnertubeString(updateTitleAction["title"]);
         response.videoId = videoId;
-        response.viewCount = updateViewershipAction["viewCount"]["videoViewCountRenderer"]["viewCount"]["simpleText"].toString();
+        response.viewCount = InnertubeObjects::ViewCount(updateViewershipAction["viewCount"]["videoViewCountRenderer"]);
     }
 
     QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name)
