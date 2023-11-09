@@ -1,5 +1,4 @@
 #include "getlivechat.h"
-#include <QJsonArray>
 #include <QJsonDocument>
 
 namespace InnertubeEndpoints

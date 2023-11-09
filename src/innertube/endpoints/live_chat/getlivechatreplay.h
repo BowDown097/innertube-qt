@@ -1,5 +1,5 @@
-#ifndef GETLIVECHAT_H
-#define GETLIVECHAT_H
+#ifndef GETLIVECHATREPLAY_H
+#define GETLIVECHATREPLAY_H
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Live chat data.
      */
-    class GetLiveChat : public BaseEndpoint
+    class GetLiveChatReplay : public BaseEndpoint
     {
         friend class ::InnerTube;
     public:
@@ -16,9 +16,11 @@ namespace InnertubeEndpoints
         /**
          * @param continuation  Continuation token - supplied by @ref InnertubeObjects::LiveChat::continuations
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
+         * @param playerOffsetMs  Position in the video in milliseconds
          */
-        GetLiveChat(const QString& continuation, InnertubeContext* context, InnertubeAuthStore* authStore);
+        GetLiveChatReplay(const QString& continuation, InnertubeContext* context,
+                          InnertubeAuthStore* authStore, const QString& playerOffsetMs);
     };
 }
 
-#endif // GETLIVECHAT_H
+#endif // GETLIVECHATREPLAY_H

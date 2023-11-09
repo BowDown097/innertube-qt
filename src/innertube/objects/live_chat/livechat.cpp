@@ -4,7 +4,9 @@
 
 namespace InnertubeObjects
 {
-    LiveChat::LiveChat(const QJsonValue& liveChatRenderer) : initialDisplayState(liveChatRenderer["initialDisplayState"].toString())
+    LiveChat::LiveChat(const QJsonValue& liveChatRenderer)
+        : initialDisplayState(liveChatRenderer["initialDisplayState"].toString()),
+          isReplay(liveChatRenderer["isReplay"].toBool())
     {
         const QJsonArray continuationsJson = liveChatRenderer["continuations"].toArray();
         for (const QJsonValue& v : continuationsJson)

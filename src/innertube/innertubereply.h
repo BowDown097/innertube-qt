@@ -17,8 +17,9 @@ signals:
     void finished(const InnertubeEndpoints::BrowseHome&);
     void finished(const InnertubeEndpoints::BrowseSubscriptions&);
     void finished(const InnertubeEndpoints::BrowseTrending&);
-    void finished(const InnertubeEndpoints::GetNotificationMenu&);
     void finished(const InnertubeEndpoints::GetLiveChat&);
+    void finished(const InnertubeEndpoints::GetLiveChatReplay&);
+    void finished(const InnertubeEndpoints::GetNotificationMenu&);
     void finished(const InnertubeEndpoints::ModifyChannelPreference&);
     void finished(const InnertubeEndpoints::Next&);
     void finished(const InnertubeEndpoints::Player&);

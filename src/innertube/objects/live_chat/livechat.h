@@ -9,6 +9,7 @@ namespace InnertubeObjects
     public:
         QStringList continuations;
         QString initialDisplayState;
+        bool isReplay;
 
         LiveChat() = default;
         explicit LiveChat(const QJsonValue& liveChatRenderer);

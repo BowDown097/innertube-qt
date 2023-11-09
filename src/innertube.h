@@ -101,8 +101,8 @@ public:
         if constexpr (is_any_v<E, InnertubeEndpoints::GetLiveChat, InnertubeEndpoints::ModifyChannelPreference,
                                InnertubeEndpoints::Player, InnertubeEndpoints::UpdatedMetadata>)
             return E(data, m_context, m_authStore);
-        else if constexpr (is_any_v<E, InnertubeEndpoints::BrowseHistory, InnertubeEndpoints::GetNotificationMenu,
-                                    InnertubeEndpoints::Next>)
+        else if constexpr (is_any_v<E, InnertubeEndpoints::BrowseHistory, InnertubeEndpoints::GetLiveChatReplay,
+                                    InnertubeEndpoints::GetNotificationMenu, InnertubeEndpoints::Next>)
             return E(data, m_context, m_authStore, continuationToken);
         else if constexpr (is_any_v<E, InnertubeEndpoints::BrowseChannel, InnertubeEndpoints::Search,
                                     InnertubeEndpoints::SendMessage>)

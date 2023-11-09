@@ -29,6 +29,8 @@ find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidget
 
 add_library(innertube-qt
     src/innertube.cpp src/innertube.h
+    src/jsonutil.cpp src/jsonutil.h
+    src/sslhttprequest.cpp src/sslhttprequest.h
     src/innertube/innertubeexception.h
     src/innertube/innertubereply.h
     src/innertube/endpoints/base/basebrowseendpoint.cpp src/innertube/endpoints/base/basebrowseendpoint.h
@@ -41,6 +43,7 @@ add_library(innertube-qt
     src/innertube/endpoints/innertubeendpoints.h
     src/innertube/endpoints/like/like.cpp src/innertube/endpoints/like/like.h
     src/innertube/endpoints/live_chat/getlivechat.cpp src/innertube/endpoints/live_chat/getlivechat.h
+    src/innertube/endpoints/live_chat/getlivechatreplay.cpp src/innertube/endpoints/live_chat/getlivechatreplay.h
     src/innertube/endpoints/live_chat/sendmessage.cpp src/innertube/endpoints/live_chat/sendmessage.h
     src/innertube/endpoints/misc/accountmenu.cpp src/innertube/endpoints/misc/accountmenu.h
     src/innertube/endpoints/misc/getnotificationmenu.cpp src/innertube/endpoints/misc/getnotificationmenu.h
@@ -106,8 +109,6 @@ add_library(innertube-qt
     src/innertube/responses/video/nextresponse.h
     src/innertube/responses/video/playerresponse.h
     src/innertube/responses/video/updatedmetadataresponse.h
-    src/sslhttprequest.cpp src/sslhttprequest.h
-    src/jsonutil.cpp src/jsonutil.h
     src/protobuf/simpleprotobuf.cpp src/protobuf/simpleprotobuf.h
 )
 
