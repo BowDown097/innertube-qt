@@ -100,7 +100,7 @@ public:
     E getBlocking(auto&&... args) { return E(m_context, m_authStore, std::forward<decltype(args)>(args)...); }
 
     /**
-     * @brief Get the result of an Innertube request asynchronously.
+     * @brief Get the raw result of an Innertube request asynchronously.
      * @details Use this if you are not using the WEB client.
      * @param body  JSON body for the request. See the endpoint's constructor code for what to do.
      * @return @ref InnertubeReply "An object" that emits signals containing the result.
