@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Live chat data.
      */
-    class GetLiveChat : public BaseEndpoint
+    class GetLiveChat : public BaseEndpoint<"live_chat/get_live_chat">
     {
         friend class ::InnerTube;
     public:
@@ -17,7 +17,7 @@ namespace InnertubeEndpoints
          * @param continuation  Continuation token - supplied by @ref InnertubeObjects::LiveChat::continuations
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
          */
-        GetLiveChat(const QString& continuation, InnertubeContext* context, InnertubeAuthStore* authStore);
+        GetLiveChat(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& continuation);
     };
 }
 

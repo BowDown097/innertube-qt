@@ -9,7 +9,7 @@ namespace InnertubeObjects
     public:
         QString androidAppIndexingLink;
         QString androidDeepLink;
-        QList<QString> availableCountryCodes;
+        QStringList availableCountryCodes;
         QList<GenericThumbnail> avatar;
         QString channelConversionUrl;
         QString channelUrl;
@@ -20,7 +20,7 @@ namespace InnertubeObjects
         QString iosAppIndexingLink;
         bool isFamilySafe = false;
         QString keywords;
-        QList<QString> ownerUrls;
+        QStringList ownerUrls;
         QString rssUrl;
         QString title;
         QString vanityChannelUrl;

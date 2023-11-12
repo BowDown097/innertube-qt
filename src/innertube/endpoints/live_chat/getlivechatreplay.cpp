@@ -3,8 +3,8 @@
 
 namespace InnertubeEndpoints
 {
-    GetLiveChatReplay::GetLiveChatReplay(const QString& continuation, InnertubeContext* context,
-                                         InnertubeAuthStore* authStore, const QString& playerOffsetMs)
+    GetLiveChatReplay::GetLiveChatReplay(InnertubeContext* context, InnertubeAuthStore* authStore,
+                                         const QString& continuation, const QString& playerOffsetMs)
     {
         const QJsonObject body {
             { "context", context->toJson() },
@@ -14,7 +14,7 @@ namespace InnertubeEndpoints
             }}
         };
 
-        QByteArray data = get("live_chat/get_live_chat_replay", context, authStore, body);
+        QByteArray data = get(context, authStore, body);
         liveChatContinuation = QJsonDocument::fromJson(data)["continuationContents"]["liveChatContinuation"];
     }
 }

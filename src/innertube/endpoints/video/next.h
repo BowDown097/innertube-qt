@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Most of the data, such as the title, description, and comments, for a video.
      */
-    class Next : public BaseEndpoint
+    class Next : public BaseEndpoint<"next">
     {
         friend class ::InnerTube;
     public:
@@ -17,7 +17,7 @@ namespace InnertubeEndpoints
         /**
          * @param tokenIn  UNIMPLEMENTED - Continuation token for comments.
          */
-        Next(const QString& videoId, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn);
+        Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn = "");
     };
 }
 

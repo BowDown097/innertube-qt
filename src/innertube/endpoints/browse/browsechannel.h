@@ -9,7 +9,7 @@ namespace InnertubeEndpoints
      * @brief Channel info.
      * @details Used on the channel page - youtube.com/c/XXX, youtube.com/channel/XXX, etc.
      */
-    class BrowseChannel : public BaseEndpoint
+    class BrowseChannel : public BaseEndpoint<"browse">
     {
         friend class ::InnerTube;
     public:
@@ -21,7 +21,7 @@ namespace InnertubeEndpoints
          * @param params  Supplied by response.contents["twoColumnBrowseResultsRenderer"]["tabs"][INDEX]["tabRenderer"]["endpoint"]["browseEndpoint"]["params"]
          * where INDEX is the current tab index.
          */
-        BrowseChannel(const QString& channelId, InnertubeContext* context, InnertubeAuthStore* authStore,
+        BrowseChannel(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& channelId,
                       const QString& tokenIn = "", const QString& params = "");
     };
 }

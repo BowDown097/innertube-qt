@@ -1,10 +1,10 @@
-#include "subscribe.h"
+#include "unsubscribe.h"
 #include <QJsonArray>
 
 namespace InnertubeEndpoints
 {
-    Subscribe::Subscribe(InnertubeContext* context, InnertubeAuthStore* authStore, const QStringList& channelIds,
-                         const QString& params)
+    Unsubscribe::Unsubscribe(InnertubeContext* context, InnertubeAuthStore* authStore, const QStringList& channelIds,
+                             const QString& params)
     {
         const QJsonObject body {
             { "channelIds", QJsonArray::fromStringList(channelIds) },

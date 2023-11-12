@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Account menu.
      */
-    class AccountMenu : public BaseEndpoint
+    class AccountMenu : public BaseEndpoint<"account/account_menu">
     {
         friend class ::InnerTube;
     public:

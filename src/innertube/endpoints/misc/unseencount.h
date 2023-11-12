@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Unseen notification count.
      */
-    class UnseenCount : public BaseEndpoint
+    class UnseenCount : public BaseEndpoint<"notification/get_unseen_count">
     {
         friend class ::InnerTube;
     public:

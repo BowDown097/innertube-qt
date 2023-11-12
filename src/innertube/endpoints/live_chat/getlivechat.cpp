@@ -3,7 +3,7 @@
 
 namespace InnertubeEndpoints
 {
-    GetLiveChat::GetLiveChat(const QString& continuation, InnertubeContext* context, InnertubeAuthStore* authStore)
+    GetLiveChat::GetLiveChat(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& continuation)
     {
         const QJsonObject body {
             { "context", context->toJson() },
@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
             }}
         };
 
-        QByteArray data = get("live_chat/get_live_chat", context, authStore, body);
+        QByteArray data = get(context, authStore, body);
         liveChatContinuation = QJsonDocument::fromJson(data)["continuationContents"]["liveChatContinuation"];
     }
 }

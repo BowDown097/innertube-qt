@@ -4,8 +4,8 @@
 
 namespace InnertubeEndpoints
 {
-    GetNotificationMenu::GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context,
-                                             InnertubeAuthStore* authStore, const QString& tokenIn)
+    GetNotificationMenu::GetNotificationMenu(InnertubeContext* context, InnertubeAuthStore* authStore,
+                                             const QString& notificationsMenuRequestType, const QString& tokenIn)
     {
         QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
         else
             body.insert("ctoken", tokenIn);
 
-        QByteArray data = get("notification/get_notification_menu", context, authStore, body);
+        QByteArray data = get(context, authStore, body);
         QJsonValue action = QJsonDocument::fromJson(data)["actions"][0];
 
         if (action["openPopupAction"].isObject())

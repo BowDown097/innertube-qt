@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Change channel notification preferences.
      */
-    class ModifyChannelPreference : public BaseEndpoint
+    class ModifyChannelPreference : public BaseEndpoint<"notification/modify_channel_preference">
     {
         friend class ::InnerTube;
     public:
@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
         /**
          * @param params  Supplied by @ref InnertubeObjects::MenuServiceItem::serviceEndpoint["modifyChannelNotificationPreferenceEndpoint"]["params"].
          */
-        ModifyChannelPreference(const QString& params, InnertubeContext* context, InnertubeAuthStore* authStore);
+        ModifyChannelPreference(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& params);
     };
 }
 

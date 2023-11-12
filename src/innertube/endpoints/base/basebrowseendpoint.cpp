@@ -19,7 +19,7 @@ namespace InnertubeEndpoints
         if (!query.isEmpty())
             body.insert("query", query);
 
-        data = get("browse", context, authStore, body);
+        data = get(context, authStore, body);
     }
 
     QJsonValue BaseBrowseEndpoint::getTabRenderer(const QString& name) const

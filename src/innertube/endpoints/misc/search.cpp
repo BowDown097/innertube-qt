@@ -5,7 +5,8 @@
 
 namespace InnertubeEndpoints
 {
-    Search::Search(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn, const QString& params)
+    Search::Search(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& query,
+                   const QString& tokenIn, const QString& params)
     {
         QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
@@ -18,7 +19,7 @@ namespace InnertubeEndpoints
             body.insert("continuation", tokenIn);
         }
 
-        QByteArray data = get("search", context, authStore, body);
+        QByteArray data = get(context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.estimatedResults = dataObj["estimatedResults"].toString().toLong();

@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Notifications.
      */
-    class GetNotificationMenu : public BaseEndpoint
+    class GetNotificationMenu : public BaseEndpoint<"notification/get_notification_menu">
     {
         friend class ::InnerTube;
     public:
@@ -18,8 +18,8 @@ namespace InnertubeEndpoints
         /**
          * @param tokenIn  Continuation token.
          */
-        GetNotificationMenu(const QString& notificationsMenuRequestType, InnertubeContext* context,
-                            InnertubeAuthStore* authStore, const QString& tokenIn = "");
+        GetNotificationMenu(InnertubeContext* context, InnertubeAuthStore* authStore,
+                            const QString& notificationsMenuRequestType, const QString& tokenIn = "");
     };
 }
 

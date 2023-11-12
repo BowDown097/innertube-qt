@@ -1,11 +1,11 @@
 A Qt library to interface with YouTube's InnerTube API.
 
-## Getting Started
+## Getting Started {#GettingStarted}
 To get started, use @ref InnerTube::createContext. This example code will create an ideal, working context for you:
 ```cpp
 InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::WEB, "2.20230718.01.00", "DESKTOP"));
 ```
-Here, a context is created around a client of the WEB type, version 2.20230718.01.00, on the DESKTOP platform.<br><br>
+Here, a context is created around a client of the WEB type, version 2.20230718.01.00, on the DESKTOP platform. If you're not using the WEB client, you probably want to take a look at the [Raw Requests](@ref RawRequests) section.<br><br>
 
 To make a request, use @ref InnerTube::get. This example code provides a good way to test if things are working:
 ```cpp
@@ -16,6 +16,24 @@ connect(reply, qOverload<const InnertubeEndpoints::Next&>(&InnertubeReply::finis
 ```
 Here, a request is made to the @ref InnertubeEndpoints::Next "Next endpoint" supplied with the video ID for [the classic Rick Roll video](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
 Once the request finishes, the response is captured and the video title is printed (which should be "Rick Astley - Never Gonna Give You Up (Official Music Video)").
+
+## Raw Requests {#RawRequests}
+The WEB client is the only client officially supported by this library. If you are using other clients, raw requests will likely be the only way to get data without any errors, with the exception of the @ref InnertubeEndpoints::Player "Player", @ref InnertubeEndpoints::SendMessage "SendMessage", @ref InnertubeEndpoints::Subscribe "Subscribe", and @ref InnertubeEndpoints::UnseenCount "UnseenCount" endpoints on most clients (and maybe more from client to client).
+
+To make a **raw** request, use @ref InnerTube::getRaw. Like before, here's example code for getting the Rick Roll video's data, with client setup too as a bonus. We will be using the obscure ANDROID\_TESTSUITE client for this example.
+```cpp
+InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::ANDROID_TESTSUITE, "1.9", "MOBILE"));
+
+InnertubeReply* reply = InnerTube::instance().getRaw<InnertubeEndpoints::Next>({
+    { "playbackContext", InnertubePlaybackContext(false, "").toJson() },
+    { "videoId", "dQw4w9WgXcQ" }
+});
+
+connect(reply, &InnertubeReply::finishedRaw, this, [](const QJsonValue& v) {
+    qDebug() << InnertubeObjects::InnertubeString(v["contents"]["singleColumnWatchNextResults"]["results"]["results"]["contents"][0]["itemSectionRenderer"]["contents"][0]["videoMetadataRenderer"]["title"]).text;
+});
+```
+This does the same thing as the code in the [Getting Started](@ref GettingStarted) section.
 
 ## Authenticating (easily)
 If you wish to support logging in, you can use the authentication methods in the @ref InnerTube class.

@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
                 { "textSegments", textSegments }
             }}
         };
-        get("live_chat/send_message", context, authStore, body);
+        get(context, authStore, body);
     }
 
     SendMessage::SendMessage(const QString& message, InnertubeContext* context, InnertubeAuthStore* authStore,

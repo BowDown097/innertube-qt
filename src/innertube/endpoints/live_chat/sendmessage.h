@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Send a live chat message.
      */
-    class SendMessage : public BaseEndpoint
+    class SendMessage : public BaseEndpoint<"live_chat/send_message">
     {
         friend class ::InnerTube;
     protected:

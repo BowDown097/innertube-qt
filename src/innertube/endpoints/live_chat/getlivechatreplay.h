@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Live chat data.
      */
-    class GetLiveChatReplay : public BaseEndpoint
+    class GetLiveChatReplay : public BaseEndpoint<"live_chat/get_live_chat_replay">
     {
         friend class ::InnerTube;
     public:
@@ -18,8 +18,8 @@ namespace InnertubeEndpoints
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
          * @param playerOffsetMs  Position in the video in milliseconds
          */
-        GetLiveChatReplay(const QString& continuation, InnertubeContext* context,
-                          InnertubeAuthStore* authStore, const QString& playerOffsetMs);
+        GetLiveChatReplay(InnertubeContext* context, InnertubeAuthStore* authStore,
+                          const QString& continuation, const QString& playerOffsetMs);
     };
 }
 

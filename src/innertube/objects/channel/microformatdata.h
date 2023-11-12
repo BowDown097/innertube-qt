@@ -9,17 +9,17 @@ namespace InnertubeObjects
     public:
         QString androidPackage;
         QString appName;
-        QList<QString> availableCountries;
+        QStringList availableCountries;
         QString description;
         bool familySafe = false;
         QString iosAppArguments;
         QString iosAppStoreId;
-        QList<QString> linkAlternates;
+        QStringList linkAlternates;
         bool noIndex = false;
         QString ogType;
         QString schemaDotOrgType;
         QString siteName;
-        QList<QString> tags;
+        QStringList tags;
         QList<GenericThumbnail> thumbnails;
         QString title;
         QString twitterCardType;

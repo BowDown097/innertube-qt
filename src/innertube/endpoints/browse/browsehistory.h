@@ -19,7 +19,8 @@ namespace InnertubeEndpoints
         /**
          * @param tokenIn  Continuation token.
          */
-        BrowseHistory(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "");
+        BrowseHistory(InnertubeContext* context, InnertubeAuthStore* authStore,
+                      const QString& query, const QString& tokenIn = "");
     };
 }
 

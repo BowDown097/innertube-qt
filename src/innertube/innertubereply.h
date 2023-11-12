@@ -4,7 +4,7 @@
 #include "innertubeexception.h"
 
 /**
- * @brief An object that emits signals related to Innertube requests. Used by @ref InnerTube::get.
+ * @brief An object that emits signals related to Innertube requests. Used by @ref InnerTube::get and @ref InnerTube::getRaw.
  */
 class InnertubeReply : public QObject
 {
@@ -28,6 +28,7 @@ signals:
     void finished(const InnertubeEndpoints::Subscribe&);
     void finished(const InnertubeEndpoints::UnseenCount&);
     void finished(const InnertubeEndpoints::UpdatedMetadata&);
+    void finishedRaw(const QJsonValue&);
 };
 
 #endif // INNERTUBEREPLY_H

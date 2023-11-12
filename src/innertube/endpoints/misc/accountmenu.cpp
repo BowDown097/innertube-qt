@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
             { "userInterfaceTheme", context->client.userInterfaceTheme }
         };
 
-        QByteArray data = get("account/account_menu", context, authStore, body);
+        QByteArray data = get(context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         QJsonValue multiPageMenuRenderer = dataObj["actions"][0]["openPopupAction"]["popup"]["multiPageMenuRenderer"];

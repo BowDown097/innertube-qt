@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     /**
      * @brief Search page.
      */
-    class Search : public BaseEndpoint
+    class Search : public BaseEndpoint<"search">
     {
         friend class ::InnerTube;
     public:
@@ -20,7 +20,7 @@ namespace InnertubeEndpoints
          * @param tokenIn  Continuation token.
          * @param params  Protobuf string for search filters - see [QtTube code](https://github.com/search?q=repo%3ABowDown097%2FQtTube+BrowseHelper%3A%3Asearch&type=code) for more details.
          */
-        Search(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore,
+        Search(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& query,
                const QString& tokenIn = "", const QString& params = "");
     };
 }

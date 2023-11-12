@@ -5,7 +5,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHistory::BrowseHistory(const QString& query, InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
+    BrowseHistory::BrowseHistory(InnertubeContext* context, InnertubeAuthStore* authStore,
+                                 const QString& query, const QString& tokenIn)
         : BaseBrowseEndpoint("FEhistory", context, authStore, tokenIn, query)
     {
         QJsonArray sectionListRenderer;

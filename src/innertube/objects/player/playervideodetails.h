@@ -11,7 +11,7 @@ namespace InnertubeObjects
         bool allowRatings = false;
         QString author;
         QString channelId;
-        QList<QString> keywords;
+        QStringList keywords;
         bool isCrawlable = false;
         bool isLive = false;
         bool isLiveContent = false;
