@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QSslSocket>
 #include <QUrl>
+#include <wobjectimpl.h>
 
 struct SslHttpRequestError
 {
@@ -22,7 +23,7 @@ struct SslHttpRequestError
 
 class SslHttpRequest : public QObject
 {
-    Q_OBJECT
+    W_OBJECT(SslHttpRequest)
 public:
     enum class RequestMethod { Get, Post };
     explicit SslHttpRequest(const QString& url, RequestMethod method = RequestMethod::Get, QObject* parent = nullptr);
@@ -36,8 +37,9 @@ public:
     void setBody(const QByteArray& requestBody, const QString& contentType) { m_contentType = contentType; m_requestBody = requestBody; }
     void setBody(const QJsonObject& json);
     void setHeaders(const QVariantMap& headers) { m_headers = headers; }
-signals:
-    void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError());
+
+    void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError())
+    W_SIGNAL(finished, response, error)
 private:
     QString m_contentType;
     bool m_emitPayload;
@@ -47,12 +49,17 @@ private:
     QByteArray m_response;
     QSslSocket* m_sslSocket;
     QUrl m_url;
-private slots:
-    void disconnected();
-    void errorOccurred(QAbstractSocket::SocketError error);
-    void makeRequest();
-    void readyRead();
-    void sslErrors(const QList<QSslError>& errors);
+
+    void disconnected(); W_SLOT(disconnected)
+    void errorOccurred(QAbstractSocket::SocketError error); W_SLOT(errorOccurred)
+    void makeRequest(); W_SLOT(makeRequest)
+    void readyRead(); W_SLOT(readyRead)
+    void sslErrors(const QList<QSslError>& errors); W_SLOT(sslErrors)
 };
+
+W_REGISTER_ARGTYPE(QAbstractSocket::SocketError)
+W_REGISTER_ARGTYPE(QList<QSslError>)
+W_REGISTER_ARGTYPE(SslHttpRequestError)
+W_OBJECT_IMPL_INLINE(SslHttpRequest)
 
 #endif // SSLHTTPREQUEST_H

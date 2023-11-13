@@ -1,17 +1,21 @@
 #ifndef INNERTUBEEXCEPTION_H
 #define INNERTUBEEXCEPTION_H
 #include <QException>
+#include <wobjectdefs.h>
 
 class InnertubeException : public QException
 {
 public:
     enum class Severity { Normal, Minor };
-    explicit InnertubeException(const QString& message, Severity severity = Severity::Normal) : _message(message), _severity(severity) {}
-    QString message() const { return _message; }
-    Severity severity() const { return _severity; }
+    explicit InnertubeException(const QString& message, Severity severity = Severity::Normal)
+        : m_message(message), m_severity(severity) {}
+    QString message() const { return m_message; }
+    Severity severity() const { return m_severity; }
 private:
-    QString _message;
-    Severity _severity;
+    QString m_message;
+    Severity m_severity;
 };
+
+W_REGISTER_ARGTYPE(InnertubeException)
 
 #endif // INNERTUBEEXCEPTION_H

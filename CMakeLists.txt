@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.16)
 project(innertube-qt VERSION 1.0 LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Set up AUTOMOC, AUTORCC, and AUTOUIC
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 include(GNUInstallDirs)
 
 # Compiler flags
@@ -115,6 +110,8 @@ add_library(innertube-qt
     src/innertube/responses/video/updatedmetadataresponse.h
     src/protobuf/simpleprotobuf.cpp src/protobuf/simpleprotobuf.h
 )
+
+target_include_directories(innertube-qt PUBLIC lib/verdigris/src)
 
 # Define options in preprocessor
 if(INNERTUBE_GET_STS)

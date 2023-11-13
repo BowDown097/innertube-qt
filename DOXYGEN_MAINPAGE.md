@@ -9,11 +9,12 @@ Here, a context is created around a client of the WEB type, version 2.20230718.0
 
 To make a request, use @ref InnerTube::get. This example code provides a good way to test if things are working:
 ```cpp
-InnertubeReply* reply = InnerTube::instance().get<InnertubeEndpoints::Next>("dQw4w9WgXcQ");
-connect(reply, qOverload<const InnertubeEndpoints::Next&>(&InnertubeReply::finished), this, [](const auto& next) {
-    qDebug() << next.response.primaryInfo.title.text;
+auto reply = InnerTube::instance().get<InnertubeEndpoints::Next>("dQw4w9WgXcQ");
+connect(reply, &InnertubeReply<InnertubeEndpoints::Next>::finished, this, [](const InnertubeEndpoints::Next& endpoint) {
+    qDebug() << endpoint.response.primaryInfo.title.text;
 });
 ```
+
 Here, a request is made to the @ref InnertubeEndpoints::Next "Next endpoint" supplied with the video ID for [the classic Rick Roll video](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
 Once the request finishes, the response is captured and the video title is printed (which should be "Rick Astley - Never Gonna Give You Up (Official Music Video)").
 
@@ -24,12 +25,12 @@ To make a **raw** request, use @ref InnerTube::getRaw. Like before, here's examp
 ```cpp
 InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::ANDROID_TESTSUITE, "1.9", "MOBILE"));
 
-InnertubeReply* reply = InnerTube::instance().getRaw<InnertubeEndpoints::Next>({
+auto reply = InnerTube::instance().getRaw<InnertubeEndpoints::Next>({
     { "playbackContext", InnertubePlaybackContext(false, "").toJson() },
     { "videoId", "dQw4w9WgXcQ" }
 });
 
-connect(reply, &InnertubeReply::finishedRaw, this, [](const QJsonValue& v) {
+connect(reply, &InnertubeReply<InnertubeEndpoints::Next>::finishedRaw, this, [](const QJsonValue& v) {
     qDebug() << InnertubeObjects::InnertubeString(v["contents"]["singleColumnWatchNextResults"]["results"]["results"]["contents"][0]["itemSectionRenderer"]["contents"][0]["videoMetadataRenderer"]["title"]).text;
 });
 ```

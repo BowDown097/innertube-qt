@@ -3,9 +3,11 @@
 #include "innertubecontext.h"
 #include <QObject>
 #include <QSettings>
+#include <wobjectimpl.h>
 
 #ifndef INNERTUBE_NO_WEBENGINE
 #include <QNetworkCookie>
+W_REGISTER_ARGTYPE(QNetworkCookie)
 #endif
 
 /**
@@ -13,7 +15,7 @@
  */
 class InnertubeAuthStore : public QObject
 {
-    Q_OBJECT
+    W_OBJECT(InnertubeAuthStore)
 public:
     QString apisid;
     QString hsid;
@@ -65,12 +67,14 @@ public:
      * @return The authentication credentials as a JSON object to be used with @ref authenticateFromJson.
      */
     QJsonObject toJson() const;
-signals:
-    void authenticateSuccess();
+
+    void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE
-private slots:
-    void cookieAdded(const QNetworkCookie& cookie);
+private:
+    void cookieAdded(const QNetworkCookie& cookie); W_SLOT(cookieAdded)
 #endif
 };
+
+W_OBJECT_IMPL_INLINE(InnertubeAuthStore)
 
 #endif // INNERTUBEAUTHSTORE_H

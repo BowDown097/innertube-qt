@@ -7,22 +7,6 @@
 #include <QThreadPool>
 #include <type_traits>
 
-template<class T, class... U>
-static constexpr bool innertube_is_any_v = std::disjunction_v<std::is_same<T, U>...>;
-
-/**
- * @brief An @ref InnertubeEndpoints::BaseEndpoint "Innertube endpoint" that returns data.
- * @details The @ref InnertubeEndpoints::Like "Like", @ref InnertubeEndpoints::SendMessage "SendMessage",
- * and @ref InnertubeEndpoints::Subscribe "Subscribe" endpoints cannot be used here.<br>
- * Use their respective methods in the InnerTube class as opposed to the
- * @ref InnerTube::get "get" and @ref InnerTube::getBlocking "getBlocking" methods.
- */
-template<class C>
-concept EndpointWithData = requires(C c)
-{
-    []<InnertubeEndpoints::CompTimeStr X>(InnertubeEndpoints::BaseEndpoint<X>&){}(c);
-} && !innertube_is_any_v<C, InnertubeEndpoints::Like, InnertubeEndpoints::SendMessage, InnertubeEndpoints::Subscribe>;
-
 /**
  * @brief The main attraction. Pretty much all of the interfacing with the library happens here.
  * @details ALL of the endpoint objects (and by extension, the @ref get, @ref getBlocking, @ref like, @ref sendMessage,
@@ -73,9 +57,9 @@ public:
      * Don't worry, it's freed when the request finishes - you don't have to manually delete it.
      */
     template<EndpointWithData E>
-    InnertubeReply* get(auto&&... args)
+    InnertubeReply<E>* get(auto&&... args)
     {
-        InnertubeReply* reply = new InnertubeReply;
+        InnertubeReply<E>* reply = new InnertubeReply<E>;
         QThreadPool::globalInstance()->start([this, reply, ...args = std::forward<decltype(args)>(args)] {
             try
             {
@@ -108,9 +92,9 @@ public:
      * Don't worry, it's freed when the request finishes - you don't have to manually delete it.
      */
     template<EndpointWithData E>
-    InnertubeReply* getRaw(const QJsonObject& body)
+    InnertubeReply<E>* getRaw(const QJsonObject& body)
     {
-        InnertubeReply* reply = new InnertubeReply;
+        InnertubeReply<E>* reply = new InnertubeReply<E>;
         QThreadPool::globalInstance()->start([this, reply, body] {
             QJsonValue v = getRawBlocking<E>(body);
             emit reply->finishedRaw(v);
