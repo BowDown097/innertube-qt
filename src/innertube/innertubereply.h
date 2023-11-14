@@ -5,20 +5,23 @@
 #include "innertubeexception.h"
 
 template<class T, class... U>
-static constexpr bool innertube_is_any_v = std::disjunction_v<std::is_same<T, U>...>;
+concept innertube_is_any_v = std::disjunction_v<std::is_same<T, U>...>;
+
+template<class Derived, template<auto> class Base>
+concept innertube_derived_from_templated = requires(Derived& t) { []<auto X>(Base<X>&){}(t); };
 
 /**
  * @brief An @ref InnertubeEndpoints::BaseEndpoint "Innertube endpoint" that returns data.
- * @details The @ref InnertubeEndpoints::Like "Like", @ref InnertubeEndpoints::SendMessage "SendMessage",
- * and @ref InnertubeEndpoints::Subscribe "Subscribe" endpoints cannot be used here.<br>
+ * @details The @ref InnertubeEndpoints::SendMessage "SendMessage" endpoint
+ * and any of the like or subscribe endpoints cannot be used here.<br>
  * Use their respective methods in the InnerTube class as opposed to the
  * @ref InnerTube::get "get" and @ref InnerTube::getBlocking "getBlocking" methods.
  */
 template<class C>
-concept EndpointWithData = requires(C c)
-{
-    []<InnertubeEndpoints::CompTimeStr X>(InnertubeEndpoints::BaseEndpoint<X>&){}(c);
-} && !innertube_is_any_v<C, InnertubeEndpoints::Like, InnertubeEndpoints::SendMessage, InnertubeEndpoints::Subscribe>;
+concept EndpointWithData =
+    innertube_derived_from_templated<C, InnertubeEndpoints::BaseEndpoint> &&
+    !innertube_derived_from_templated<C, InnertubeEndpoints::BaseLikeEndpoint> &&
+    !innertube_is_any_v<C, InnertubeEndpoints::SendMessage, InnertubeEndpoints::Subscribe, InnertubeEndpoints::Unsubscribe>;
 
 /**
  * @brief An object that emits signals related to Innertube requests. Used by @ref InnerTube::get and @ref InnerTube::getRaw.
