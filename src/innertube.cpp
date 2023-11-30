@@ -1,5 +1,11 @@
 #include "innertube.h"
 
+InnerTube* InnerTube::instance()
+{
+    std::call_once(m_onceFlag, [] { m_instance = new InnerTube; });
+    return m_instance;
+}
+
 void InnerTube::like(const QJsonValue& endpoint, bool liking)
 {
     QThreadPool::globalInstance()->start([this, endpoint, liking] {

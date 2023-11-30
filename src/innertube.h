@@ -3,9 +3,9 @@
 #include "innertube/innertubeexception.h"
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
+#include <mutex>
 #include <QJsonDocument>
 #include <QThreadPool>
-#include <type_traits>
 
 /**
  * @brief The main attraction. Pretty much all of the interfacing with the library happens here.
@@ -15,10 +15,13 @@
  * in which case you will have to use @ref InnertubeEndpoints::BaseEndpoint::get and work with the raw responses yourself.
  * But feel free to try them still if you wish.
  */
-class InnerTube
+class InnerTube : public QObject
 {
 public:
-    static InnerTube& instance() { static InnerTube it; return it; }
+    static InnerTube* instance();
+    InnerTube(QObject* parent = nullptr)
+        : m_authStore(new InnertubeAuthStore(this)), m_context(new InnertubeContext(this)), QObject(parent) {}
+
     InnertubeAuthStore* authStore() const { return m_authStore; }
     InnertubeContext* context() const { return m_context; }
 
@@ -47,7 +50,7 @@ public:
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
                        const InnertubeRequestConfig& requestConfig = InnertubeRequestConfig(),
                        const InnertubeUserConfig& userConfig = InnertubeUserConfig())
-    { m_context = new InnertubeContext(client, clickTracking, requestConfig, userConfig); }
+    { m_context = new InnertubeContext(client, clickTracking, requestConfig, userConfig, this); }
 
     /**
      * @brief Get the result of an Innertube request asynchronously.
@@ -123,8 +126,11 @@ public:
     void subscribeBlocking(const QJsonValue& endpoint, bool subscribing);
     void subscribeBlocking(const QStringList& channelIds, bool subscribing);
 private:
-    InnertubeAuthStore* m_authStore = new InnertubeAuthStore;
-    InnertubeContext* m_context = new InnertubeContext;
+    static inline InnerTube* m_instance;
+    static inline std::once_flag m_onceFlag;
+
+    InnertubeAuthStore* m_authStore;
+    InnertubeContext* m_context;
 };
 
 #endif // INNERTUBE_H

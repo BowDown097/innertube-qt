@@ -5,7 +5,7 @@
 #include "innertuberequestconfig.h"
 #include "innertubeuserconfig.h"
 
-class InnertubeContext
+class InnertubeContext : public QObject
 {
 public:
     InnertubeClickTracking clickTracking;
@@ -13,11 +13,12 @@ public:
     InnertubeRequestConfig request;
     InnertubeUserConfig user;
 
-    InnertubeContext() = default;
+    explicit InnertubeContext(QObject* parent = nullptr) : QObject(parent) {}
     explicit InnertubeContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
                               const InnertubeRequestConfig& request = InnertubeRequestConfig(),
-                              const InnertubeUserConfig& user = InnertubeUserConfig())
-        : clickTracking(clickTracking), client(client), request(request), user(user) {}
+                              const InnertubeUserConfig& user = InnertubeUserConfig(),
+                              QObject* parent = nullptr)
+        : clickTracking(clickTracking), client(client), request(request), user(user), QObject(parent) {}
     QJsonObject toJson() const;
 };
 

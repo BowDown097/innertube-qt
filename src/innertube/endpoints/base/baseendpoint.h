@@ -36,7 +36,7 @@ namespace InnertubeEndpoints
     private:
         static QByteArray getData(const QString& path, const QVariantMap& headers, const QJsonObject& body)
         {
-            QScopedPointer<SslHttpRequest, QScopedPointerDeleteLater> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));
+            QScopedPointer<SslHttpRequest> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));
             req->setBody(body);
             req->setHeaders(headers);
             req->send();
