@@ -6,9 +6,8 @@
 
 namespace InnertubeObjects
 {
-    class SecondaryInfoOwner
+    struct SecondaryInfoOwner
     {
-    public:
         QList<MetadataBadge> badges;
         QJsonValue navigationEndpoint;
         InnertubeString subscriberCountText;

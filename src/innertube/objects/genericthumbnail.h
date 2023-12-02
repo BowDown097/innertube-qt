@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class GenericThumbnail
+    struct GenericThumbnail
     {
-    public:
         int height;
         QString url;
         int width;

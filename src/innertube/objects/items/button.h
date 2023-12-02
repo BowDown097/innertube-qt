@@ -5,13 +5,12 @@
 
 namespace InnertubeObjects
 {
-    class Button
+    struct Button
     {
-    public:
         QString accessibilityLabel;
         std::optional<QJsonValue> command; // available if serviceEndpoint is not
         QString iconType;
-        bool isDisabled = false;
+        bool isDisabled;
         std::optional<QJsonValue> serviceEndpoint; // available if command is not
         QString size;
         QString style;

@@ -5,9 +5,8 @@
 #include "innertuberequestconfig.h"
 #include "innertubeuserconfig.h"
 
-class InnertubeContext : public QObject
+struct InnertubeContext : public QObject
 {
-public:
     InnertubeClickTracking clickTracking;
     InnertubeClient client;
     InnertubeRequestConfig request;

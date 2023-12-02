@@ -6,9 +6,8 @@
 
 namespace InnertubeObjects
 {
-    class VideoActions
+    struct VideoActions
     {
-    public:
         QString accessibilityLabel;
         QList<MenuFlexibleItem> flexibleItems;
         QList<MenuServiceItem> items;

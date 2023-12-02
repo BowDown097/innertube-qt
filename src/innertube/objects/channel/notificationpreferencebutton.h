@@ -5,10 +5,9 @@
 
 namespace InnertubeObjects
 {
-    class NotificationPreferenceButton
+    struct NotificationPreferenceButton
     {
-    public:
-        int currentStateId = 0;
+        int currentStateId;
         QString secondaryIconType;
         QList<MenuServiceItem> services;
         QList<NotificationState> states;
@@ -16,6 +15,7 @@ namespace InnertubeObjects
 
         NotificationPreferenceButton() = default;
         explicit NotificationPreferenceButton(const QJsonValue& notificationToggleButtonRenderer);
+
         NotificationState getCurrentState() const;
         MenuServiceItem getService(const QString& iconType) const;
     };

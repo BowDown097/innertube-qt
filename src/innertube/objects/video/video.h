@@ -7,9 +7,8 @@
 
 namespace InnertubeObjects
 {
-    class Video
+    struct Video
     {
-    public:
         InnertubeString descriptionSnippet;
         bool isLive;
         InnertubeString lengthText;

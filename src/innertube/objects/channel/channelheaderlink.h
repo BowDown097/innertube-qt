@@ -4,12 +4,12 @@
 
 namespace InnertubeObjects
 {
-    class ChannelHeaderLink
+    struct ChannelHeaderLink
     {
-    public:
         QString icon;
         QJsonValue navigationEndpoint;
         QString title;
+
         explicit ChannelHeaderLink(const QJsonValue& linkRenderer)
             : icon(linkRenderer["icon"]["thumbnails"][0]["url"].toString()),
               navigationEndpoint(linkRenderer["navigationEndpoint"]),

@@ -4,18 +4,17 @@
 
 namespace InnertubeObjects
 {
-    class MicroformatData
+    struct MicroformatData
     {
-    public:
         QString androidPackage;
         QString appName;
         QStringList availableCountries;
         QString description;
-        bool familySafe = false;
+        bool familySafe;
         QString iosAppArguments;
         QString iosAppStoreId;
         QStringList linkAlternates;
-        bool noIndex = false;
+        bool noIndex;
         QString ogType;
         QString schemaDotOrgType;
         QString siteName;
@@ -24,7 +23,7 @@ namespace InnertubeObjects
         QString title;
         QString twitterCardType;
         QString twitterSiteHandle;
-        bool unlisted = false;
+        bool unlisted;
         QString urlAppLinksAndroid;
         QString urlAppLinksIos;
         QString urlAppLinksWeb;

@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class VideoThumbnail
+    struct VideoThumbnail
     {
-    public:
         QString hqdefault;
         QString maxresdefault;
         QString mqdefault;

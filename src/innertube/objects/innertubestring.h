@@ -1,7 +1,6 @@
 #ifndef INNERTUBESTRING_H
 #define INNERTUBESTRING_H
 #include <QJsonValue>
-#include <QString>
 
 namespace InnertubeObjects
 {
@@ -13,9 +12,8 @@ namespace InnertubeObjects
             : navigationEndpoint(navigationEndpoint), text(text) {}
     };
 
-    class InnertubeString
+    struct InnertubeString
     {
-    public:
         QString accessibilityLabel;
         QList<InnertubeRun> runs;
         QString text;

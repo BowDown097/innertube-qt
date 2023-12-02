@@ -6,9 +6,8 @@
 
 namespace InnertubeObjects
 {
-    class MenuFlexibleItem
+    struct MenuFlexibleItem
     {
-    public:
         MenuServiceItem menuItem;
         ButtonViewModel topLevelButton;
 

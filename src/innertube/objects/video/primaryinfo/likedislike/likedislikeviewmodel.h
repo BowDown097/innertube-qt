@@ -7,9 +7,8 @@
 
 namespace InnertubeObjects
 {
-    class LikeDislikeViewModel
+    struct LikeDislikeViewModel
     {
-    public:
         DislikeButtonViewModel dislikeButtonViewModel;
         DynamicLikeCountUpdateData dynamicLikeCountUpdateData;
         QString iconType;

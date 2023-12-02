@@ -2,9 +2,8 @@
 #define INNERTUBE_JSONUTIL_H
 #include <QJsonValue>
 
-class JsonUtil
+struct JsonUtil
 {
-public:
     static QJsonValue rfind(const QString& key, const QJsonValue& parent);
 };
 

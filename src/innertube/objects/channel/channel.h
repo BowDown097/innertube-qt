@@ -1,14 +1,12 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 #include "innertube/objects/genericthumbnail.h"
-#include "innertube/objects/innertubestring.h"
 #include "subscribebutton.h"
 
 namespace InnertubeObjects
 {
-    class Channel
+    struct Channel
     {
-    public:
         QString channelId;
         InnertubeString descriptionSnippet;
         SubscribeButton subscribeButton;

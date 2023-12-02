@@ -6,12 +6,11 @@
 
 namespace InnertubeObjects
 {
-    class VideoSecondaryInfo
+    struct VideoSecondaryInfo
     {
-    public:
-        bool defaultExpanded = false;
+        bool defaultExpanded;
         InnertubeString description;
-        int descriptionCollapsedLines = 0;
+        int descriptionCollapsedLines;
         MetadataRowContainer metadataRowContainer;
         SecondaryInfoOwner owner;
         QString showLessText;

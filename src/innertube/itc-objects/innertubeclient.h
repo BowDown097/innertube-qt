@@ -2,9 +2,8 @@
 #define INNERTUBECLIENT_H
 #include "innertubeconfiginfo.h"
 
-class InnertubeClient
+struct InnertubeClient
 {
-public:
     // courtesy of https://github.com/zerodytrash/YouTube-Internal-Clients
     enum class ClientType
     {

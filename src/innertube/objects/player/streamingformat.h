@@ -1,13 +1,11 @@
 #ifndef STREAMINGFORMAT_H
 #define STREAMINGFORMAT_H
 #include <QJsonValue>
-#include <QString>
 
 namespace InnertubeObjects
 {
-    class StreamingFormat
+    struct StreamingFormat
     {
-    public:
         QString approxDurationMs;
         long averageBitrate;
         long bitrate;

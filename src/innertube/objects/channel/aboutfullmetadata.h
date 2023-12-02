@@ -2,14 +2,12 @@
 #define ABOUTFULLMETADATA_H
 #include "channelheaderlink.h"
 #include "innertube/objects/genericthumbnail.h"
-#include "innertube/objects/innertubestring.h"
 #include "innertube/objects/items/button.h"
 
 namespace InnertubeObjects
 {
-    class AboutFullMetadata
+    struct AboutFullMetadata
     {
-    public:
         QList<Button> actionButtons;
         QList<GenericThumbnail> avatars;
         bool bypassBusinessEmailCaptcha;

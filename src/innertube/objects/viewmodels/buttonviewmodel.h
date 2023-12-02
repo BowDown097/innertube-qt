@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class ButtonViewModel
+    struct ButtonViewModel
     {
-    public:
         QString accessibilityId;
         QString accessibilityText;
         QString buttonSize;

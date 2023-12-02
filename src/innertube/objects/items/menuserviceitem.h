@@ -4,11 +4,10 @@
 
 namespace InnertubeObjects
 {
-    class MenuServiceItem
+    struct MenuServiceItem
     {
-    public:
         QString iconType;
-        bool isDisabled = false;
+        bool isDisabled;
         QJsonValue serviceEndpoint;
         InnertubeString text;
 

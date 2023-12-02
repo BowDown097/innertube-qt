@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class LiveChat
+    struct LiveChat
     {
-    public:
         QStringList continuations;
         QString initialDisplayState;
         bool isReplay;

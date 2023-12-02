@@ -5,9 +5,8 @@
 
 namespace InnertubeObjects
 {
-    class Notification
+    struct Notification
     {
-    public:
         GenericThumbnail channelIcon;
         std::optional<QString> linkedCommentId;
         long long notificationId;

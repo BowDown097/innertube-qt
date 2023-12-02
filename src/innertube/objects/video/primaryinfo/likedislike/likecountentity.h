@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class LikeCountEntity
+    struct LikeCountEntity
     {
-    public:
         QString expandedLikeCountIfDisliked;
         QString expandedLikeCountIfIndifferent;
         QString expandedLikeCountIfLiked;

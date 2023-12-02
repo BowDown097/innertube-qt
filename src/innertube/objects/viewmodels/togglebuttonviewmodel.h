@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class ToggleButtonViewModel
+    struct ToggleButtonViewModel
     {
-    public:
         ButtonViewModel defaultButtonViewModel;
         QString identifier;
         bool isTogglingDisabled;

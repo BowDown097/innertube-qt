@@ -3,13 +3,11 @@
 #include "channelheaderlink.h"
 #include "subscribebutton.h"
 #include "innertube/objects/genericthumbnail.h"
-#include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {
-    class ChannelHeader
+    struct ChannelHeader
     {
-    public:
         QList<GenericThumbnail> avatars;
         QList<GenericThumbnail> banners;
         InnertubeString channelHandleText;

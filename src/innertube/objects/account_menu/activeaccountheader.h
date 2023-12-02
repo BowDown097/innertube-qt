@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class ActiveAccountHeader
+    struct ActiveAccountHeader
     {
-    public:
         QString accountName;
         QList<GenericThumbnail> accountPhotos;
         QString channelHandle;

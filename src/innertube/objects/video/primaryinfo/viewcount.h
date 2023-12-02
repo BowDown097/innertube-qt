@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class ViewCount
+    struct ViewCount
     {
-    public:
         InnertubeString extraShortViewCount;
         bool isLive;
         QString originalViewCount;

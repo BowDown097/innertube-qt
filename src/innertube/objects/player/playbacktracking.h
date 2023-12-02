@@ -1,11 +1,11 @@
 #ifndef PLAYBACKTRACKING_H
 #define PLAYBACKTRACKING_H
+#include <QJsonValue>
 
 namespace InnertubeObjects
 {
-    class PlaybackTracking
+    struct PlaybackTracking
     {
-    public:
         QString atrUrl;
         QString ptrackingUrl;
         QString qoeUrl;

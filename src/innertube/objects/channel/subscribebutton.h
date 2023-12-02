@@ -1,23 +1,21 @@
 #ifndef SUBSCRIBEBUTTON_H
 #define SUBSCRIBEBUTTON_H
-#include "innertube/objects/innertubestring.h"
 #include "notificationpreferencebutton.h"
 #include <QJsonArray>
 
 namespace InnertubeObjects
 {
-    class SubscribeButton
+    struct SubscribeButton
     {
-    public:
         InnertubeString buttonText;
         QString channelId;
-        bool enabled = false;
+        bool enabled;
         NotificationPreferenceButton notificationPreferenceButton;
         QJsonArray onSubscribeEndpoints;
         QJsonArray onUnsubscribeEndpoints;
-        bool showPreferences = false;
+        bool showPreferences;
         QString subscribeAccessibility;
-        bool subscribed = false;
+        bool subscribed;
         InnertubeString subscribedButtonText;
         QString subscribedEntityKey;
         QString targetId;

@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class VideoOwner
+    struct VideoOwner
     {
-    public:
         QList<MetadataBadge> badges;
         QString icon;
         QString id;

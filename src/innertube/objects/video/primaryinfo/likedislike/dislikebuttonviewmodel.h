@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class DislikeButtonViewModel
+    struct DislikeButtonViewModel
     {
-    public:
         QString dislikeEntityKey;
         ToggleButtonViewModel toggleButtonViewModel;
 

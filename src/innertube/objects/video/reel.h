@@ -6,9 +6,8 @@
 
 namespace InnertubeObjects
 {
-    class Reel
+    struct Reel
     {
-    public:
         QString accessibilityLabel;
         QString headline;
         VideoOwner owner;

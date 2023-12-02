@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class MetadataBadge
+    struct MetadataBadge
     {
-    public:
         QString accessibilityLabel;
         QString iconType;
         QString style;

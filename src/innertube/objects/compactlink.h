@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class CompactLink
+    struct CompactLink
     {
-    public:
         QString iconType;
         QJsonValue navigationEndpoint;
         InnertubeString title;

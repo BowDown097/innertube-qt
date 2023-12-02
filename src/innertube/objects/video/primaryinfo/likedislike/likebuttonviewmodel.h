@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class LikeButtonViewModel
+    struct LikeButtonViewModel
     {
-    public:
         QString likeStatus;
         QString likeStatusEntityKey;
         ToggleButtonViewModel toggleButtonViewModel;

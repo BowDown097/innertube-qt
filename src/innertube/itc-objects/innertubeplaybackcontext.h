@@ -1,7 +1,6 @@
 #ifndef INNERTUBEPLAYBACKCONTEXT_H
 #define INNERTUBEPLAYBACKCONTEXT_H
 #include <QJsonObject>
-#include <QString>
 
 class InnertubePlaybackContext
 {

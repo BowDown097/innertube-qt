@@ -5,9 +5,8 @@
 
 namespace InnertubeObjects
 {
-    class VideoPrimaryInfo
+    struct VideoPrimaryInfo
     {
-    public:
         InnertubeString dateText;
         InnertubeString relativeDateText;
         InnertubeString title;

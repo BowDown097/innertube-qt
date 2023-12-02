@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class MetadataRow
+    struct MetadataRow
     {
-    public:
         QList<InnertubeString> contents;
         InnertubeString title;
 

@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class ChannelMetadata
+    struct ChannelMetadata
     {
-    public:
         QString androidAppIndexingLink;
         QString androidDeepLink;
         QStringList availableCountryCodes;
@@ -18,7 +17,7 @@ namespace InnertubeObjects
         QString externalId;
         QString facebookProfileId;
         QString iosAppIndexingLink;
-        bool isFamilySafe = false;
+        bool isFamilySafe;
         QString keywords;
         QStringList ownerUrls;
         QString rssUrl;

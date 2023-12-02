@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class DynamicLikeCountUpdateData
+    struct DynamicLikeCountUpdateData
     {
-    public:
         QString placeholderLikeCountValuesKey;
         QString updateDelayLoopId;
         int updateDelaySec;

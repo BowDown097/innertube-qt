@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class CaptionTrack
+    struct CaptionTrack
     {
-    public:
         QString baseUrl;
         bool isTranslatable;
         QString kind;

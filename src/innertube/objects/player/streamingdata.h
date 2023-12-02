@@ -4,9 +4,8 @@
 
 namespace InnertubeObjects
 {
-    class StreamingData
+    struct StreamingData
     {
-    public:
         QList<StreamingFormat> adaptiveFormats;
         QString dashManifestUrl;
         QString expiresInSeconds;
