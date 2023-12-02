@@ -2,29 +2,32 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-QJsonValue JsonUtil::rfind(const QString& key, const QJsonValue& parent)
+namespace JsonUtil
 {
-    if (parent.isObject())
+    QJsonValue rfind(const QString& key, const QJsonValue& parent)
     {
-        const QJsonObject obj = parent.toObject();
-        if (obj.contains(key))
-            return obj.value(key);
-
-        for (const QJsonValue& v : obj)
+        if (parent.isObject())
         {
-            QJsonValue recurse = rfind(key, v);
-            if (!recurse.isNull()) return recurse;
-        }
-    }
-    else if (parent.isArray())
-    {
-        const QJsonArray arr = parent.toArray();
-        for (const QJsonValue& v : arr)
-        {
-            QJsonValue recurse = rfind(key, v);
-            if (!recurse.isNull()) return recurse;
-        }
-    }
+            const QJsonObject obj = parent.toObject();
+            if (obj.contains(key))
+                return obj.value(key);
 
-    return QJsonValue();
+            for (const QJsonValue& v : obj)
+            {
+                QJsonValue recurse = rfind(key, v);
+                if (!recurse.isNull()) return recurse;
+            }
+        }
+        else if (parent.isArray())
+        {
+            const QJsonArray arr = parent.toArray();
+            for (const QJsonValue& v : arr)
+            {
+                QJsonValue recurse = rfind(key, v);
+                if (!recurse.isNull()) return recurse;
+            }
+        }
+
+        return QJsonValue();
+    }
 }

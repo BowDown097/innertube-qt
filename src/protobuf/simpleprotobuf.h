@@ -2,16 +2,10 @@
 #define SIMPLEPROTOBUF_H
 #include <QVariantMap>
 
-class SimpleProtobuf
+namespace SimpleProtobuf
 {
-public:
-    static QByteArray compile(const QVariantMap& obj, const QVariantMap& fields);
-    static QByteArray padded(const QString& str);
-    static QByteArray uleb128(uint64_t val);
-private:
-    static QByteArray compileKey(const QVariantList& keyField);
-    static QByteArray compileKeyValuePair(const QString& key, const QVariant& val, const QVariantMap& fields);
-    static QByteArray compileLd(const QByteArray& in);
+    QByteArray compile(const QVariantMap& obj, const QVariantMap& fields);
+    QByteArray padded(const QString& str);
 };
 
 #endif // SIMPLEPROTOBUF_H
