@@ -9,12 +9,12 @@ InnerTube* InnerTube::instance()
 void InnerTube::like(const QJsonValue& endpoint, bool liking)
 {
     QThreadPool::globalInstance()->start([this, endpoint, liking] {
-        if (liking)
+        if (endpoint["removeLikeParams"].isString())
+            InnertubeEndpoints::RemoveLike(m_context, m_authStore, endpoint["target"]["videoId"].toString(), endpoint["removeLikeParams"].toString());
+        else if (liking)
             InnertubeEndpoints::Like(m_context, m_authStore, endpoint["target"]["videoId"].toString(), endpoint["likeParams"].toString());
         else if (!liking)
             InnertubeEndpoints::Dislike(m_context, m_authStore, endpoint["target"]["videoId"].toString(), endpoint["likeParams"].toString());
-        else if (endpoint["removeLikeParams"].isObject())
-            InnertubeEndpoints::RemoveLike(m_context, m_authStore, endpoint["target"]["videoId"].toString(), endpoint["removeLikeParams"].toString());
     });
 }
 

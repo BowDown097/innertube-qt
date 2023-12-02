@@ -78,7 +78,6 @@ add_library(innertube-qt
     src/innertube/objects/items/button.h
     src/innertube/objects/items/menuflexibleitem.h
     src/innertube/objects/items/menuserviceitem.h
-    src/innertube/objects/items/togglebutton.h
     src/innertube/objects/live_chat/livechat.cpp src/innertube/objects/live_chat/livechat.h
     src/innertube/objects/notification/notification.cpp src/innertube/objects/notification/notification.h
     src/innertube/objects/player/captiontrack.h
@@ -86,6 +85,11 @@ add_library(innertube-qt
     src/innertube/objects/player/playervideodetails.cpp src/innertube/objects/player/playervideodetails.h
     src/innertube/objects/player/streamingdata.cpp src/innertube/objects/player/streamingdata.h
     src/innertube/objects/player/streamingformat.h
+    src/innertube/objects/video/primaryinfo/likedislike/dislikebuttonviewmodel.h
+    src/innertube/objects/video/primaryinfo/likedislike/dynamiclikecountupdatedata.h
+    src/innertube/objects/video/primaryinfo/likedislike/likebuttonviewmodel.h
+    src/innertube/objects/video/primaryinfo/likedislike/likecountentity.h
+    src/innertube/objects/video/primaryinfo/likedislike/likedislikeviewmodel.h
     src/innertube/objects/video/primaryinfo/videoactions.cpp src/innertube/objects/video/primaryinfo/videoactions.h
     src/innertube/objects/video/primaryinfo/videoprimaryinfo.h
     src/innertube/objects/video/primaryinfo/viewcount.h
@@ -97,6 +101,8 @@ add_library(innertube-qt
     src/innertube/objects/video/video.cpp src/innertube/objects/video/video.h
     src/innertube/objects/video/videoowner.cpp src/innertube/objects/video/videoowner.h
     src/innertube/objects/video/videothumbnail.h
+    src/innertube/objects/viewmodels/buttonviewmodel.h
+    src/innertube/objects/viewmodels/togglebuttonviewmodel.h
     src/innertube/responses/browse/channelresponse.h
     src/innertube/responses/browse/historyresponse.h
     src/innertube/responses/browse/homeresponse.h

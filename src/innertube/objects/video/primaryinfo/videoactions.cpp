@@ -1,13 +1,11 @@
 #include "videoactions.h"
-#include "jsonutil.h"
 #include <QJsonArray>
 
 namespace InnertubeObjects
 {
     VideoActions::VideoActions(const QJsonValue& menuRenderer)
         : accessibilityLabel(menuRenderer["accessibility"]["accessibilityData"]["label"].toString()),
-          dislikeButton(JsonUtil::rfind("dislikeButton", menuRenderer["topLevelButtons"])["toggleButtonRenderer"]),
-          likeButton(JsonUtil::rfind("likeButton", menuRenderer["topLevelButtons"])["toggleButtonRenderer"])
+          segmentedLikeDislikeButtonViewModel(menuRenderer["topLevelButtons"][0]["segmentedLikeDislikeButtonViewModel"])
     {
         const QJsonArray flexibleItemsJson = menuRenderer["flexibleItems"].toArray();
         for (const QJsonValue& v : flexibleItemsJson)
@@ -16,15 +14,5 @@ namespace InnertubeObjects
         const QJsonArray itemsJson = menuRenderer["items"].toArray();
         for (const QJsonValue& v : itemsJson)
             items.append(MenuServiceItem(v["menuServiceItemRenderer"]));
-
-        const QJsonArray topLevelButtonsJson = menuRenderer["topLevelButtons"].toArray();
-        auto shareTLB = std::ranges::find_if(topLevelButtonsJson, [](const QJsonValue& v) {
-            return v["buttonRenderer"]["icon"]["iconType"].toString() == "SHARE";
-        });
-        if (shareTLB != topLevelButtonsJson.end())
-        {
-            const QJsonValue& shareTLBVal = *shareTLB;
-            shareButton = Button(shareTLBVal["buttonRenderer"]);
-        }
     }
 }

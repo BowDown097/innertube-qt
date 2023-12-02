@@ -2,7 +2,7 @@
 #define VIDEOACTIONS_H
 #include "innertube/objects/items/menuflexibleitem.h"
 #include "innertube/objects/items/menuserviceitem.h"
-#include "innertube/objects/items/togglebutton.h"
+#include "likedislike/likedislikeviewmodel.h"
 
 namespace InnertubeObjects
 {
@@ -10,11 +10,9 @@ namespace InnertubeObjects
     {
     public:
         QString accessibilityLabel;
-        ToggleButton dislikeButton;
         QList<MenuFlexibleItem> flexibleItems;
         QList<MenuServiceItem> items;
-        ToggleButton likeButton;
-        Button shareButton;
+        LikeDislikeViewModel segmentedLikeDislikeButtonViewModel;
 
         VideoActions() = default;
         explicit VideoActions(const QJsonValue& menuRenderer);

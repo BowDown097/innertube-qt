@@ -1,7 +1,8 @@
 #ifndef MENUFLEXIBLEITEM_H
 #define MENUFLEXIBLEITEM_H
-#include "button.h"
+#include "innertube/objects/viewmodels/buttonviewmodel.h"
 #include "menuserviceitem.h"
+#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -9,12 +10,12 @@ namespace InnertubeObjects
     {
     public:
         MenuServiceItem menuItem;
-        Button topLevelButton;
+        ButtonViewModel topLevelButton;
 
         MenuFlexibleItem() = default;
         explicit MenuFlexibleItem(const QJsonValue& menuFlexibleItemRenderer)
-            : menuItem(menuFlexibleItemRenderer["menuItem"]["menuServiceItemRenderer"]),
-              topLevelButton(menuFlexibleItemRenderer["topLevelButton"]["buttonRenderer"]) {}
+            : menuItem(menuFlexibleItemRenderer["menuItem"].toObject().constBegin().value()),
+              topLevelButton(menuFlexibleItemRenderer["topLevelButton"].toObject().constBegin().value()) {}
     };
 }
 
