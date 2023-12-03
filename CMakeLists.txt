@@ -97,7 +97,7 @@ add_library(innertube-qt
     src/innertube/objects/video/secondaryinfo/metadatarow.cpp src/innertube/objects/video/secondaryinfo/metadatarow.h
     src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h
     src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp src/innertube/objects/video/secondaryinfo/secondaryinfoowner.h
-    src/innertube/objects/video/secondaryinfo/videosecondaryinfo.cpp src/innertube/objects/video/secondaryinfo/videosecondaryinfo.h
+    src/innertube/objects/video/secondaryinfo/videosecondaryinfo.h
     src/innertube/objects/video/video.cpp src/innertube/objects/video/video.h
     src/innertube/objects/video/videoowner.cpp src/innertube/objects/video/videoowner.h
     src/innertube/objects/video/videothumbnail.h

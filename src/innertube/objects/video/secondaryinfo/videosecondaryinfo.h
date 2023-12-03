@@ -8,8 +8,8 @@ namespace InnertubeObjects
 {
     struct VideoSecondaryInfo
     {
+        QJsonValue attributedDescription;
         bool defaultExpanded;
-        InnertubeString description;
         int descriptionCollapsedLines;
         MetadataRowContainer metadataRowContainer;
         SecondaryInfoOwner owner;
@@ -18,7 +18,15 @@ namespace InnertubeObjects
         SubscribeButton subscribeButton;
 
         VideoSecondaryInfo() = default;
-        explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer);
+        explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer)
+            : attributedDescription(secondaryInfoRenderer["attributedDescription"]),
+              defaultExpanded(secondaryInfoRenderer["defaultExpanded"].toBool()),
+              descriptionCollapsedLines(secondaryInfoRenderer["descriptionCollapsedLines"].toInt()),
+              metadataRowContainer(secondaryInfoRenderer["metadataRowContainer"]["metadataRowContainerRenderer"]),
+              owner(secondaryInfoRenderer["owner"]["videoOwnerRenderer"]),
+              showLessText(secondaryInfoRenderer["showLessText"]["simpleText"].toString()),
+              showMoreText(secondaryInfoRenderer["showMoreText"]["simpleText"].toString()),
+              subscribeButton(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]) {}
     };
 }
 
