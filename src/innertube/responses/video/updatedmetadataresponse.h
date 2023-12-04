@@ -1,5 +1,6 @@
 #ifndef UPDATEDMETADATARESPONSE_H
 #define UPDATEDMETADATARESPONSE_H
+#include "innertube/objects/video/primaryinfo/likedislike/likecountentity.h"
 #include "innertube/objects/video/primaryinfo/viewcount.h"
 
 namespace InnertubeEndpoints
@@ -8,9 +9,7 @@ namespace InnertubeEndpoints
     {
         QString dateText;
         InnertubeObjects::InnertubeString description;
-        QString likeDefaultText;
-        QString likeNumericalValue;
-        QString likeToggledText;
+        InnertubeObjects::LikeCountEntity likeCountEntity;
         InnertubeObjects::InnertubeString title;
         QString videoId;
         InnertubeObjects::ViewCount viewCount;

@@ -2,8 +2,9 @@
 #define INNERTUBECLIENT_H
 #include "innertubeconfiginfo.h"
 
-struct InnertubeClient
+class InnertubeClient
 {
+public:
     // courtesy of https://github.com/zerodytrash/YouTube-Internal-Clients
     enum class ClientType
     {
@@ -92,7 +93,7 @@ struct InnertubeClient
     QString visitorData;
 
     InnertubeClient() = default;
-    InnertubeClient(const ClientType& clientType, const QString& clientVersion, const QString& platform,
+    InnertubeClient(ClientType clientType, const QString& clientVersion = "", const QString& platform = "DESKTOP",
                     const QString& userAgent = "", const QString& browserName = "Firefox",
                     const QString& browserVersion = "103.0", const QString& userInterfaceTheme = "USER_INTERFACE_THEME_DARK",
                     const QString& clientFormFactor = "UNKNOWN_FORM_FACTOR", const InnertubeConfigInfo& configInfo = InnertubeConfigInfo(),
@@ -100,7 +101,19 @@ struct InnertubeClient
                     const QString& hl = "en", const QString& originalUrl = "", const QString& osName = "",
                     const QString& osVersion = "", const QString& remoteHost = "", int screenDensityFloat = 2,
                     int screenPixelDensity = 2, const QString& timeZone = "");
+
+    /**
+     * @brief Get the latest version for a client type.
+     * @details The TVHTML5, MWEB_TIER_2, IOS_EMBEDDED_PLAYER, WEB_EMBEDDED_PLAYER,
+     * TVHTML5_KIDS, WEB_CREATOR, WEB_KIDS, WEB_PARENT_TOOLS, and TVHTML5_FOR_KIDS clients are unsupported.
+     */
+    static std::optional<QString> getLatestVersion(ClientType clientType);
+
     QJsonObject toJson() const;
+private:
+    static std::optional<QString> getLatestAppStoreVersion(const QString& bundleId);
+    static std::optional<QString> getLatestGooglePlayVersion(const QString& name);
+    static std::optional<QString> getVersionFromSwJs(const QString& url);
 };
 
 #endif // INNERTUBECLIENT_H

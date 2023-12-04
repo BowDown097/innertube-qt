@@ -15,6 +15,7 @@ namespace InnertubeObjects
           isOwnerViewing(videoDetails["isOwnerViewing"].toBool()),
           isPrivate(videoDetails["isPrivate"].toBool()),
           isUnpluggedCorpus(videoDetails["isUnpluggedCorpus"].toBool()),
+          isUpcoming(videoDetails["isUpcoming"].toBool()),
           latencyClass(videoDetails["latencyClass"].toString()),
           lengthSeconds(videoDetails["lengthSeconds"].toString()),
           liveChunkReadahead(videoDetails["liveChunkReadahead"].toInt()),

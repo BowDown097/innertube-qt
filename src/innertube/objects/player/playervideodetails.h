@@ -10,7 +10,6 @@ namespace InnertubeObjects
         bool allowRatings;
         QString author;
         QString channelId;
-        QStringList keywords;
         bool isCrawlable;
         bool isLive;
         bool isLiveContent;
@@ -19,6 +18,8 @@ namespace InnertubeObjects
         bool isOwnerViewing;
         bool isPrivate;
         bool isUnpluggedCorpus;
+        bool isUpcoming;
+        QStringList keywords;
         QString latencyClass;
         QString lengthSeconds;
         int liveChunkReadahead;

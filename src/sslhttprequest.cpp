@@ -25,7 +25,7 @@ void SslHttpRequest::errorOccurred(QAbstractSocket::SocketError error)
 
 void SslHttpRequest::makeRequest()
 {
-    QString path = m_url.path();
+    QString path = m_url.hasQuery() ? m_url.path() + "?" + m_url.query(QUrl::FullyEncoded) : m_url.path();
     if (path.isEmpty())
         path = "/";
 
