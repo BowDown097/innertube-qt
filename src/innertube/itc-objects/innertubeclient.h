@@ -1,6 +1,7 @@
 #ifndef INNERTUBECLIENT_H
 #define INNERTUBECLIENT_H
 #include "innertubeconfiginfo.h"
+#include <optional>
 
 class InnertubeClient
 {
