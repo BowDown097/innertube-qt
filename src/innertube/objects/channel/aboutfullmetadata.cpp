@@ -4,7 +4,8 @@
 namespace InnertubeObjects
 {
     AboutFullMetadata::AboutFullMetadata(const QJsonValue& renderer)
-        : bypassBusinessEmailCaptcha(renderer["bypassBusinessEmailCaptcha"].toBool()),
+        : avatar(renderer["avatar"]["thumbnails"]),
+          bypassBusinessEmailCaptcha(renderer["bypassBusinessEmailCaptcha"].toBool()),
           canonicalChannelUrl(renderer["canonicalChannelUrl"].toString()),
           channelId(renderer["channelId"].toString()),
           country(renderer["country"]["simpleText"].toString()),
@@ -22,10 +23,6 @@ namespace InnertubeObjects
         const QJsonArray actionButtonsJson = renderer["actionButtons"].toArray();
         for (const QJsonValue& v : actionButtonsJson)
             actionButtons.append(Button(v["buttonRenderer"]));
-
-        const QJsonArray avatarsJson = renderer["avatar"]["thumbnails"].toArray();
-        for (const QJsonValue& v : avatarsJson)
-            avatars.append(GenericThumbnail(v));
 
         const QJsonArray primaryLinksJson = renderer["primaryLinks"].toArray();
         for (const QJsonValue& v : primaryLinksJson)

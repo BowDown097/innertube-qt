@@ -20,15 +20,13 @@ namespace InnertubeObjects
           lengthSeconds(videoDetails["lengthSeconds"].toString()),
           liveChunkReadahead(videoDetails["liveChunkReadahead"].toInt()),
           shortDescription(videoDetails["shortDescription"].toString()),
+          thumbnail(videoDetails["thumbnail"]["thumbnails"]),
           title(videoDetails["title"].toString()),
           viewCount(videoDetails["viewCount"].toString()),
           videoId(videoDetails["videoId"].toString())
     {
         const QJsonArray keywordsJson = videoDetails["keywords"].toArray();
-        const QJsonArray thumbnailsJson = videoDetails["thumbnail"]["thumbnails"].toArray();
         for (const QJsonValue& v : keywordsJson)
             keywords.append(v.toString());
-        for (const QJsonValue& v : thumbnailsJson)
-            thumbnails.append(GenericThumbnail(v["height"].toInt(), "https:" + v["url"].toString(), v["width"].toInt()));
     }
 }

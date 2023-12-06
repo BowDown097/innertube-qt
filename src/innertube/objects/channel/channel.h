@@ -1,6 +1,6 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
-#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/responsiveimage.h"
 #include "subscribebutton.h"
 
 namespace InnertubeObjects
@@ -12,11 +12,19 @@ namespace InnertubeObjects
         SubscribeButton subscribeButton;
         bool subscribed;
         InnertubeString subscriberCountText;
-        QList<GenericThumbnail> thumbnails;
+        ResponsiveImage thumbnail;
         InnertubeString title;
         InnertubeString videoCountText;
 
-        explicit Channel(const QJsonValue& channelRenderer);
+        explicit Channel(const QJsonValue& channelRenderer)
+            : channelId(channelRenderer["channelId"].toString()),
+              descriptionSnippet(InnertubeString(channelRenderer["descriptionSnippet"])),
+              subscribeButton(channelRenderer["subscribeButton"]["subscribeButtonRenderer"]),
+              subscribed(channelRenderer["subscriptionButton"]["subscribed"].toBool()),
+              subscriberCountText(InnertubeString(channelRenderer["subscriberCountText"])),
+              thumbnail(channelRenderer["thumbnail"]["thumbnails"]),
+              title(InnertubeString(channelRenderer["title"])),
+              videoCountText(InnertubeString(channelRenderer["videoCountText"])) {}
     };
 }
 

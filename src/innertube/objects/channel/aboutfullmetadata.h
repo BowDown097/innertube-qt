@@ -1,15 +1,15 @@
 #ifndef ABOUTFULLMETADATA_H
 #define ABOUTFULLMETADATA_H
 #include "channelheaderlink.h"
-#include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/items/button.h"
+#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
     struct AboutFullMetadata
     {
         QList<Button> actionButtons;
-        QList<GenericThumbnail> avatars;
+        ResponsiveImage avatar;
         bool bypassBusinessEmailCaptcha;
         QString canonicalChannelUrl;
         QString channelId;

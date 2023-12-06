@@ -1,7 +1,6 @@
 #ifndef PLAYERVIDEODETAILS_H
 #define PLAYERVIDEODETAILS_H
-#include "innertube/objects/genericthumbnail.h"
-#include <QList>
+#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
@@ -24,7 +23,7 @@ namespace InnertubeObjects
         QString lengthSeconds;
         int liveChunkReadahead;
         QString shortDescription;
-        QList<GenericThumbnail> thumbnails;
+        ResponsiveImage thumbnail;
         QString title;
         QString viewCount;
         QString videoId;

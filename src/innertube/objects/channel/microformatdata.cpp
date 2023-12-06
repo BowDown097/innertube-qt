@@ -14,6 +14,7 @@ namespace InnertubeObjects
           ogType(microformatDataRenderer["ogType"].toString()),
           schemaDotOrgType(microformatDataRenderer["schemaDotOrgType"].toString()),
           siteName(microformatDataRenderer["siteName"].toString()),
+          thumbnail(microformatDataRenderer["thumbnails"]),
           title(microformatDataRenderer["title"].toString()),
           twitterCardType(microformatDataRenderer["twitterCardType"].toString()),
           twitterSiteHandle(microformatDataRenderer["twitterSiteHandle"].toString()),
@@ -36,9 +37,5 @@ namespace InnertubeObjects
         const QJsonArray tagsJson = microformatDataRenderer["tags"].toArray();
         for (const QJsonValue& v : tagsJson)
             tags.append(v.toString());
-
-        const QJsonArray thumbnailsJson = microformatDataRenderer["thumbnails"].toArray();
-        for (const QJsonValue& v : thumbnailsJson)
-            thumbnails.append(GenericThumbnail(v));
     }
 }

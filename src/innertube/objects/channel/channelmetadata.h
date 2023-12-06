@@ -1,6 +1,6 @@
 #ifndef CHANNELMETADATA_H
 #define CHANNELMETADATA_H
-#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
@@ -9,7 +9,7 @@ namespace InnertubeObjects
         QString androidAppIndexingLink;
         QString androidDeepLink;
         QStringList availableCountryCodes;
-        QList<GenericThumbnail> avatar;
+        ResponsiveImage avatar;
         QString channelConversionUrl;
         QString channelUrl;
         QString description;

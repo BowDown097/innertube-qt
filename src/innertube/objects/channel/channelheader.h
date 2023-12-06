@@ -1,24 +1,24 @@
 #ifndef CHANNELHEADER_H
 #define CHANNELHEADER_H
 #include "channelheaderlink.h"
+#include "innertube/objects/responsiveimage.h"
 #include "subscribebutton.h"
-#include "innertube/objects/genericthumbnail.h"
 
 namespace InnertubeObjects
 {
     struct ChannelHeader
     {
-        QList<GenericThumbnail> avatars;
-        QList<GenericThumbnail> banners;
+        ResponsiveImage avatar;
+        ResponsiveImage banner;
         InnertubeString channelHandleText;
         QString channelId;
-        QList<GenericThumbnail> mobileBanners;
+        ResponsiveImage mobileBanner;
         QList<ChannelHeaderLink> primaryLinks;
         QList<ChannelHeaderLink> secondaryLinks;
         SubscribeButton subscribeButton;
         InnertubeString subscriberCountText;
         QString title;
-        QList<GenericThumbnail> tvBanners;
+        ResponsiveImage tvBanner;
         InnertubeString videosCountText;
 
         ChannelHeader() = default;

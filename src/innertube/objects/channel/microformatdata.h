@@ -1,6 +1,6 @@
 #ifndef MICROFORMATDATA_H
 #define MICROFORMATDATA_H
-#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
@@ -19,7 +19,7 @@ namespace InnertubeObjects
         QString schemaDotOrgType;
         QString siteName;
         QStringList tags;
-        QList<GenericThumbnail> thumbnails;
+        ResponsiveImage thumbnail;
         QString title;
         QString twitterCardType;
         QString twitterSiteHandle;

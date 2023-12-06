@@ -6,6 +6,7 @@ namespace InnertubeObjects
     ChannelMetadata::ChannelMetadata(const QJsonValue& channelMetadataRenderer)
         : androidAppIndexingLink(channelMetadataRenderer["androidAppindexingLink"].toString()),
           androidDeepLink(channelMetadataRenderer["androidDeepLink"].toString()),
+          avatar(channelMetadataRenderer["avatar"]),
           channelConversionUrl(channelMetadataRenderer["channelConversionUrl"].toString()),
           channelUrl(channelMetadataRenderer["channelUrl"].toString()),
           description(channelMetadataRenderer["description"].toString()),
@@ -22,10 +23,6 @@ namespace InnertubeObjects
         const QJsonArray availableCountriesJson = channelMetadataRenderer["availableCountryCodes"].toArray();
         for (const QJsonValue& v : availableCountriesJson)
             availableCountryCodes.append(v.toString());
-
-        const QJsonArray avatarJson = channelMetadataRenderer["avatar"].toArray();
-        for (const QJsonValue& v : avatarJson)
-            avatar.append(GenericThumbnail(v));
 
         const QJsonArray ownerUrlsJson = channelMetadataRenderer["ownerUrls"].toArray();
         for (const QJsonValue& v : ownerUrlsJson)

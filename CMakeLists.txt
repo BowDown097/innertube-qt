@@ -64,9 +64,10 @@ add_library(innertube-qt
     src/innertube/objects/compactlink.h
     src/innertube/objects/genericthumbnail.h
     src/innertube/objects/innertubestring.cpp src/innertube/objects/innertubestring.h
-    src/innertube/objects/account_menu/activeaccountheader.h src/innertube/objects/account_menu/activeaccountheader.cpp
+    src/innertube/objects/responsiveimage.h src/innertube/objects/responsiveimage.cpp
+    src/innertube/objects/account_menu/activeaccountheader.h
     src/innertube/objects/channel/aboutfullmetadata.cpp src/innertube/objects/channel/aboutfullmetadata.h
-    src/innertube/objects/channel/channel.cpp src/innertube/objects/channel/channel.h
+    src/innertube/objects/channel/channel.h
     src/innertube/objects/channel/channelheader.cpp src/innertube/objects/channel/channelheader.h
     src/innertube/objects/channel/channelheaderlink.h
     src/innertube/objects/channel/channelmetadata.cpp src/innertube/objects/channel/channelmetadata.h
@@ -78,6 +79,7 @@ add_library(innertube-qt
     src/innertube/objects/items/button.h
     src/innertube/objects/items/menuflexibleitem.h
     src/innertube/objects/items/menuserviceitem.h
+    src/innertube/objects/items/togglebutton.h
     src/innertube/objects/live_chat/livechat.cpp src/innertube/objects/live_chat/livechat.h
     src/innertube/objects/notification/notification.cpp src/innertube/objects/notification/notification.h
     src/innertube/objects/player/captiontrack.h
@@ -93,7 +95,7 @@ add_library(innertube-qt
     src/innertube/objects/video/primaryinfo/videoactions.cpp src/innertube/objects/video/primaryinfo/videoactions.h
     src/innertube/objects/video/primaryinfo/videoprimaryinfo.h
     src/innertube/objects/video/primaryinfo/viewcount.h
-    src/innertube/objects/video/reel.cpp src/innertube/objects/video/reel.h
+    src/innertube/objects/video/reel.h
     src/innertube/objects/video/secondaryinfo/metadatarow.cpp src/innertube/objects/video/secondaryinfo/metadatarow.h
     src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h
     src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp src/innertube/objects/video/secondaryinfo/secondaryinfoowner.h

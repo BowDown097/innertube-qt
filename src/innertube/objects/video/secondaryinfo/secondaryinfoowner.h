@@ -1,8 +1,8 @@
 #ifndef SECONDARYINFOOWNER_H
 #define SECONDARYINFOOWNER_H
 #include "innertube/objects/channel/metadatabadge.h"
-#include "innertube/objects/genericthumbnail.h"
 #include "innertube/objects/innertubestring.h"
+#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
@@ -12,7 +12,7 @@ namespace InnertubeObjects
         QJsonValue navigationEndpoint;
         InnertubeString subscriberCountText;
         QString subscriptionType;
-        QList<GenericThumbnail> thumbnails;
+        ResponsiveImage thumbnail;
         InnertubeString title;
 
         SecondaryInfoOwner() = default;
