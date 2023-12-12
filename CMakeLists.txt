@@ -66,6 +66,11 @@ add_library(innertube-qt
     src/innertube/objects/innertubestring.cpp src/innertube/objects/innertubestring.h
     src/innertube/objects/responsiveimage.h src/innertube/objects/responsiveimage.cpp
     src/innertube/objects/account_menu/activeaccountheader.h
+    src/innertube/objects/backstage/backstageimage.h
+    src/innertube/objects/backstage/backstagepost.cpp src/innertube/objects/backstage/backstagepost.h
+    src/innertube/objects/backstage/commentactionbuttons.h
+    src/innertube/objects/backstage/poll/poll.cpp src/innertube/objects/backstage/poll/poll.h
+    src/innertube/objects/backstage/poll/pollchoice.h
     src/innertube/objects/channel/aboutfullmetadata.cpp src/innertube/objects/channel/aboutfullmetadata.h
     src/innertube/objects/channel/channel.h
     src/innertube/objects/channel/channelheader.cpp src/innertube/objects/channel/channelheader.h
