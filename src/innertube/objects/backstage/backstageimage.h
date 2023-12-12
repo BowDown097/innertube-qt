@@ -6,7 +6,6 @@ namespace InnertubeObjects
 {
     struct BackstageImage
     {
-    public:
         QString accessibilityLabel;
         QJsonValue command;
         ResponsiveImage image;

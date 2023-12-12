@@ -7,6 +7,7 @@
 #include "browse/browsehome.h"
 #include "browse/browsesubscriptions.h"
 #include "browse/browsetrending.h"
+#include "comment/performcommentaction.h"
 #include "like/dislike.h"
 #include "like/like.h"
 #include "like/removelike.h"
@@ -38,6 +39,7 @@ W_REGISTER_ARGTYPE(InnertubeEndpoints::GetNotificationMenu)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Like)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::ModifyChannelPreference)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Next)
+W_REGISTER_ARGTYPE(InnertubeEndpoints::PerformCommentAction)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Player)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::RemoveLike)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Search)

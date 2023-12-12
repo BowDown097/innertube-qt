@@ -35,6 +35,7 @@ add_library(innertube-qt
     src/innertube/endpoints/browse/browsehome.cpp src/innertube/endpoints/browse/browsehome.h
     src/innertube/endpoints/browse/browsesubscriptions.cpp src/innertube/endpoints/browse/browsesubscriptions.h
     src/innertube/endpoints/browse/browsetrending.cpp src/innertube/endpoints/browse/browsetrending.h
+    src/innertube/endpoints/comment/performcommentaction.cpp src/innertube/endpoints/comment/performcommentaction.h
     src/innertube/endpoints/innertubeendpoints.h
     src/innertube/endpoints/like/baselikeendpoint.h
     src/innertube/endpoints/like/dislike.h
@@ -115,9 +116,10 @@ add_library(innertube-qt
     src/innertube/responses/browse/homeresponse.h
     src/innertube/responses/browse/subscriptionsresponse.h
     src/innertube/responses/browse/trendingresponse.h
+    src/innertube/responses/comment/commentactionresponse.h
     src/innertube/responses/misc/accountmenuresponse.h
-    src/innertube/responses/misc/notificationmenuresponse.h
     src/innertube/responses/misc/searchresponse.h
+    src/innertube/responses/notification/notificationmenuresponse.h
     src/innertube/responses/video/nextresponse.h
     src/innertube/responses/video/playerresponse.h
     src/innertube/responses/video/updatedmetadataresponse.h

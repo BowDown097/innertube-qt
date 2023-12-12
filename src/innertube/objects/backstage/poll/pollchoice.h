@@ -18,6 +18,7 @@ namespace InnertubeObjects
         double voteRatioIfNotSelected;
         double voteRatioIfSelected;
 
+        PollChoice() = default;
         explicit PollChoice(const QJsonValue& choice)
             : deselectServiceEndpoint(choice["deselectServiceEndpoint"]),
               numVotes(choice["numVotes"].toString()),

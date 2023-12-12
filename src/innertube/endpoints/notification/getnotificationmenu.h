@@ -1,7 +1,7 @@
 #ifndef GETNOTIFICATIONMENU_H
 #define GETNOTIFICATIONMENU_H
 #include "innertube/endpoints/base/baseendpoint.h"
-#include "innertube/responses/misc/notificationmenuresponse.h"
+#include "innertube/responses/notification/notificationmenuresponse.h"
 
 namespace InnertubeEndpoints
 {

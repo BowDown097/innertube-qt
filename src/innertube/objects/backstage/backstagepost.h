@@ -20,7 +20,7 @@ namespace InnertubeObjects
         Button collapseButton;
         InnertubeString contentText;
         Button expandButton;
-        std::optional<QString> pollStatus;
+        QString pollStatus;
         QString postId;
         InnertubeString publishedTimeText;
         QString surface;

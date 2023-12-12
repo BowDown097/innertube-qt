@@ -11,7 +11,7 @@ namespace InnertubeObjects
           collapseButton(backstagePostRenderer["collapseButton"]["buttonRenderer"]),
           contentText(backstagePostRenderer["contentText"]),
           expandButton(backstagePostRenderer["expandButton"]["buttonRenderer"]),
-          pollStatus(std::make_optional<QString>(backstagePostRenderer["pollStatus"].toString())),
+          pollStatus(backstagePostRenderer["pollStatus"].toString()),
           postId(backstagePostRenderer["postId"].toString()),
           publishedTimeText(backstagePostRenderer["publishedTimeText"]),
           surface(backstagePostRenderer["surface"].toString()),
