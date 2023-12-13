@@ -54,17 +54,17 @@ namespace ProtobufCompiler
             return QByteArray();
 
         QByteArray keyHeader = compileKey(field);
-        int typeId = val.typeId();
+        int metaType = val.userType();
         switch (wireType)
         {
         case 0:
             return keyHeader + uleb128(val.toInt()).toHex();
         case 1: // may not work
-            return keyHeader + (typeId == QMetaType::Double
+            return keyHeader + (metaType == QMetaType::Double
                                     ? QByteArray::fromHex(QByteArray::number(val.toDouble()))
                                     : QByteArray::fromHex(QByteArray::number(val.toLongLong())));
         case 2:
-            switch (typeId)
+            switch (metaType)
             {
             case QMetaType::QVariantMap:
                 return keyHeader + compileLd(compile(val.toMap(), field[2].toMap()));
@@ -74,7 +74,7 @@ namespace ProtobufCompiler
                 return keyHeader + compileLd(val.toString().toLatin1().toHex());
             }
         case 5: // may not work
-            return keyHeader + (typeId == QMetaType::Float
+            return keyHeader + (metaType == QMetaType::Float
                                     ? QByteArray::fromHex(QByteArray::number(val.toFloat()))
                                     : QByteArray::fromHex(QByteArray::number(val.toInt())));
         }
@@ -82,9 +82,9 @@ namespace ProtobufCompiler
         return QByteArray();
     }
 
-    int resolveWireType(int typeId, const QVariant& variant)
+    int resolveWireType(int metaType, const QVariant& variant)
     {
-        switch (typeId)
+        switch (metaType)
         {
         case QMetaType::QVariantMap:
         case QMetaType::QString:
@@ -126,30 +126,28 @@ namespace ProtobufCompiler
         {
             const QString& key = iter.key();
             const QVariant& value = iter.value();
-            int typeId = value.typeId();
+            int metaType = value.userType();
 
             QVariantMap innerFields;
             int wireType = 0;
 
-            if (typeId == QMetaType::QVariantList || typeId == QMetaType::QStringList)
+            if (metaType == QMetaType::QVariantList || metaType == QMetaType::QStringList)
             {
                 QVariantList list = value.toList();
-                for (int i = 0; i < list.size(); i++)
+                for (int j = 0; j < list.size(); j++)
                 {
-                    const QVariant& innerValue = list.at(i);
-                    int innerTypeId = innerValue.typeId();
+                    int innerMetaType = list[j].userType();
+                    if (innerMetaType == QMetaType::QVariantMap)
+                        innerFields = compileFields(list[j].toMap());
 
-                    if (innerTypeId == QMetaType::QVariantMap)
-                        innerFields = compileFields(innerValue.toMap());
-
-                    wireType = resolveWireType(innerTypeId, innerValue);
-                    out.insert(QStringLiteral("%1_%2").arg(key).arg(i), QVariantList { i, wireType, innerFields });
+                    wireType = resolveWireType(innerMetaType, list[j]);
+                    out.insert(QStringLiteral("%1_%2").arg(key).arg(j), QVariantList { j, wireType, innerFields });
                 }
             }
             else
             {
-                wireType = resolveWireType(typeId, value);
-                if (typeId == QMetaType::QVariantMap)
+                wireType = resolveWireType(metaType, value);
+                if (metaType == QMetaType::QVariantMap)
                     innerFields = compileFields(value.toMap());
             }
 
@@ -170,15 +168,13 @@ namespace ProtobufCompiler
         {
             const QString& key = iter.key();
             const QVariant& value = iter.value();
+            int metaType = value.userType();
 
-            if (value.typeId() == QMetaType::QVariantList || value.typeId() == QMetaType::QStringList)
+            if (metaType == QMetaType::QVariantList || metaType == QMetaType::QStringList)
             {
                 QVariantList list = value.toList();
                 for (int i = 0; i < list.size(); i++)
-                {
-                    const QVariant& innerValue = list.at(i);
-                    response += compileKeyValuePair(QStringLiteral("%1_%2").arg(key).arg(i), innerValue, fields);
-                }
+                    response += compileKeyValuePair(QStringLiteral("%1_%2").arg(key).arg(i), list[i], fields);
             }
             else
             {
