@@ -1,4 +1,5 @@
 #include "protobufcompiler.h"
+#include <cmath>
 
 namespace ProtobufCompiler
 {
@@ -94,7 +95,9 @@ namespace ProtobufCompiler
             return 0;
         case QMetaType::Int:
         case QMetaType::UInt:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         case QMetaType::Char32:
+#endif
         case QMetaType::Float:
             return 5;
         case QMetaType::Double:
