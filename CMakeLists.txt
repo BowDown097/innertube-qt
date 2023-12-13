@@ -123,7 +123,7 @@ add_library(innertube-qt
     src/innertube/responses/video/nextresponse.h
     src/innertube/responses/video/playerresponse.h
     src/innertube/responses/video/updatedmetadataresponse.h
-    src/protobuf/simpleprotobuf.cpp src/protobuf/simpleprotobuf.h
+    src/protobuf/protobufcompiler.cpp src/protobuf/protobufcompiler.h
 )
 
 target_include_directories(innertube-qt PUBLIC lib/verdigris/src)

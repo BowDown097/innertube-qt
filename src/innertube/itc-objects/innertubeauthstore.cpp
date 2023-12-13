@@ -1,5 +1,5 @@
 #include "innertubeauthstore.h"
-#include "protobuf/simpleprotobuf.h"
+#include "protobuf/protobufcompiler.h"
 #include <QCryptographicHash>
 
 #ifndef INNERTUBE_NO_WEBENGINE
@@ -26,7 +26,7 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
     connect(this, &InnertubeAuthStore::authenticateSuccess, this, [this, authWindow, context] {
         authWindow->deleteLater();
-        context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
+        context->client.visitorData = ProtobufCompiler::padded(visitorInfo);
     });
 }
 
@@ -63,7 +63,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeC
     sid = obj["sid"].toString();
     ssid = obj["ssid"].toString();
     visitorInfo = obj["visitorInfo"].toString();
-    context->client.visitorData = SimpleProtobuf::padded(visitorInfo);
+    context->client.visitorData = ProtobufCompiler::padded(visitorInfo);
 }
 
 QString InnertubeAuthStore::generateSAPISIDHash()
