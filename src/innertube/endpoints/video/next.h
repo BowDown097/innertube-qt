@@ -15,7 +15,7 @@ namespace InnertubeEndpoints
         NextResponse response;
     protected:
         /**
-         * @param tokenIn  UNIMPLEMENTED - Continuation token for comments.
+         * @param tokenIn  Continuation token for comments.
          */
         Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn = "");
     };

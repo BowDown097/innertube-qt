@@ -1,6 +1,6 @@
 #ifndef NOTIFICATIONPREFERENCEBUTTON_H
 #define NOTIFICATIONPREFERENCEBUTTON_H
-#include "innertube/objects/items/menuserviceitem.h"
+#include "innertube/objects/items/menu/menu.h"
 #include "notificationstate.h"
 
 namespace InnertubeObjects
@@ -8,8 +8,8 @@ namespace InnertubeObjects
     struct NotificationPreferenceButton
     {
         int currentStateId;
+        Menu popup;
         QString secondaryIconType;
-        QList<MenuServiceItem> services;
         QList<NotificationState> states;
         QString targetId;
 

@@ -5,14 +5,11 @@ namespace InnertubeObjects
 {
     NotificationPreferenceButton::NotificationPreferenceButton(const QJsonValue& notificationToggleButtonRenderer)
         : currentStateId(notificationToggleButtonRenderer["currentStateId"].toInt()),
+          popup(notificationToggleButtonRenderer["command"]["commandExecutorCommand"]["commands"][0]
+                                                ["openPopupAction"]["popup"]["menuPopupRenderer"]),
           secondaryIconType(notificationToggleButtonRenderer["secondaryIcon"]["iconType"].toString()),
           targetId(notificationToggleButtonRenderer["targetId"].toString())
     {
-        const QJsonArray servicesJson = notificationToggleButtonRenderer["command"]["commandExecutorCommand"]["commands"]
-                [0]["openPopupAction"]["popup"]["menuPopupRenderer"]["items"].toArray();
-        for (const QJsonValue& v : servicesJson)
-            services.append(MenuServiceItem(v["menuServiceItemRenderer"]));
-
         const QJsonArray statesJson = notificationToggleButtonRenderer["states"].toArray();
         for (const QJsonValue& v : statesJson)
             states.append(NotificationState(v));
@@ -26,7 +23,7 @@ namespace InnertubeObjects
 
     MenuServiceItem NotificationPreferenceButton::getService(const QString& iconType) const
     {
-        auto it = std::ranges::find_if(services, [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
-        return it != services.end() ? *it : MenuServiceItem();
+        auto it = std::ranges::find_if(popup.items, [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
+        return it != popup.items.end() ? *it : MenuServiceItem();
     }
 }

@@ -1,7 +1,7 @@
 #ifndef VIDEOACTIONS_H
 #define VIDEOACTIONS_H
-#include "innertube/objects/items/menuflexibleitem.h"
-#include "innertube/objects/items/menuserviceitem.h"
+#include "innertube/objects/items/menu/menuflexibleitem.h"
+#include "innertube/objects/items/menu/menuserviceitem.h"
 #include "likedislike/likedislikeviewmodel.h"
 
 namespace InnertubeObjects

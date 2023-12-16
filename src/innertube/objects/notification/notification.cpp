@@ -4,7 +4,7 @@ namespace InnertubeObjects
 {
     Notification::Notification(const QJsonValue& notificationRenderer)
         : channelIcon(notificationRenderer["thumbnail"]["thumbnails"][0]),
-          notificationId(notificationRenderer["notificationId"].toString().toLongLong()),
+          notificationId(notificationRenderer["notificationId"].toString()),
           read(notificationRenderer["read"].toBool()),
           shortMessage(notificationRenderer["shortMessage"]["simpleText"].toString()),
           sentTimeText(notificationRenderer["sentTimeText"]["simpleText"].toString()),

@@ -1,41 +1,51 @@
 #include "next.h"
 #include "innertube/innertubeexception.h"
 #include "innertube/itc-objects/innertubeplaybackcontext.h"
-#include "jsonutil.h"
-#include <QJsonArray>
 #include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
     Next::Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn)
     {
-        const QJsonObject body {
-            { "autonavState", "STATE_ON" },
-            { "captionsRequested", false },
-            { "contentCheckOk", false },
-            { "context", context->toJson() },
-            { "playbackContext", InnertubePlaybackContext().toJson() },
-            { "racyCheckOk", false },
-            { "videoId", videoId }
-        };
+        QJsonObject body;
+        if (tokenIn.isEmpty())
+        {
+            body = {
+                { "autonavState", "STATE_ON" },
+                { "captionsRequested", false },
+                { "contentCheckOk", false },
+                { "context", context->toJson() },
+                { "playbackContext", InnertubePlaybackContext().toJson() },
+                { "racyCheckOk", false },
+                { "videoId", videoId }
+            };
+        }
+        else
+        {
+            body = {
+                { "context", context->toJson() },
+                { "continuation", tokenIn }
+            };
+        }
 
         QByteArray data = get(context, authStore, body);
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         if (tokenIn.isEmpty())
         {
-            QJsonArray watchNextContents = dataObj["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"].toArray();
-            if (watchNextContents.isEmpty())
-                throw InnertubeException("[Next] watchNextResults not found or is empty");
+            QJsonValue watchNextResults = dataObj["contents"]["twoColumnWatchNextResults"];
+            if (!watchNextResults.isObject())
+                throw InnertubeException("[Next] twoColumnWatchNextResults is not an object");
 
-            QJsonValue liveChatRenderer = dataObj["contents"]["twoColumnWatchNextResults"]["conversationBar"]["liveChatRenderer"];
-            response.liveChat = liveChatRenderer.isObject()
-                ? std::make_optional<InnertubeObjects::LiveChat>(liveChatRenderer) : std::nullopt;
-
-            response.primaryInfo = InnertubeObjects::VideoPrimaryInfo(JsonUtil::rfind("videoPrimaryInfoRenderer", watchNextContents));
-            response.secondaryInfo = InnertubeObjects::VideoSecondaryInfo(JsonUtil::rfind("videoSecondaryInfoRenderer", watchNextContents));
+            response.results = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
             response.videoId = dataObj["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
         }
-        // TODO: comments (and thus continuations)
+        else
+        {
+            QJsonValue onResponseReceivedEndpoints = dataObj["onResponseReceivedEndpoints"];
+            if (!onResponseReceivedEndpoints.isArray())
+                throw InnertubeException("[Next] onResponseReceivedEndpoints is not an array");
+            response.continuationData.emplace(onResponseReceivedEndpoints);
+        }
     }
 }

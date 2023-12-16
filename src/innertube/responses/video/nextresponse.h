@@ -1,17 +1,14 @@
 #ifndef NEXTRESPONSE_H
 #define NEXTRESPONSE_H
-#include "innertube/objects/live_chat/livechat.h"
-#include "innertube/objects/video/primaryinfo/videoprimaryinfo.h"
-#include "innertube/objects/video/secondaryinfo/videosecondaryinfo.h"
-#include <optional>
+#include "innertube/objects/video/watchnext/twocolumnwatchnextresults.h"
+#include "nextcontinuationdata.h"
 
 namespace InnertubeEndpoints
 {
     struct NextResponse
     {
-        std::optional<InnertubeObjects::LiveChat> liveChat;
-        InnertubeObjects::VideoPrimaryInfo primaryInfo;
-        InnertubeObjects::VideoSecondaryInfo secondaryInfo;
+        std::optional<NextContinuationData> continuationData;
+        InnertubeObjects::TwoColumnWatchNextResults results;
         QString videoId;
     };
 }

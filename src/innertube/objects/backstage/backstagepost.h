@@ -1,10 +1,10 @@
 #ifndef BACKSTAGEPOST_H
 #define BACKSTAGEPOST_H
 #include "backstageimage.h"
-#include "commentactionbuttons.h"
-#include "innertube/objects/items/menuserviceitem.h"
+#include "innertube/objects/items/menu/menu.h"
 #include "innertube/objects/responsiveimage.h"
 #include "innertube/objects/video/video.h"
+#include "innertube/objects/video/watchnext/comments/commentactionbuttons.h"
 #include "poll/poll.h"
 
 namespace InnertubeObjects
@@ -12,7 +12,7 @@ namespace InnertubeObjects
     struct BackstagePost
     {
         CommentActionButtons actionButtons;
-        QList<MenuServiceItem> actionMenu;
+        Menu actionMenu;
         QJsonValue authorEndpoint;
         InnertubeString authorText;
         ResponsiveImage authorThumbnail;

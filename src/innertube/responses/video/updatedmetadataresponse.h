@@ -1,7 +1,7 @@
 #ifndef UPDATEDMETADATARESPONSE_H
 #define UPDATEDMETADATARESPONSE_H
-#include "innertube/objects/video/primaryinfo/likedislike/likecountentity.h"
-#include "innertube/objects/video/primaryinfo/viewcount.h"
+#include "innertube/objects/video/watchnext/primaryinfo/likedislike/likecountentity.h"
+#include "innertube/objects/video/watchnext/primaryinfo/viewcount.h"
 
 namespace InnertubeEndpoints
 {

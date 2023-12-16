@@ -5,6 +5,7 @@ namespace InnertubeObjects
 {
     BackstagePost::BackstagePost(const QJsonValue& backstagePostRenderer)
         : actionButtons(backstagePostRenderer["actionButtons"]["commentActionButtonsRenderer"]),
+          actionMenu(backstagePostRenderer["actionMenu"]["menuRenderer"]),
           authorEndpoint(backstagePostRenderer["authorEndpoint"]),
           authorText(backstagePostRenderer["authorText"]),
           authorThumbnail(backstagePostRenderer["authorThumbnail"]["thumbnails"]),
@@ -18,10 +19,6 @@ namespace InnertubeObjects
           voteCount(backstagePostRenderer["voteCount"]),
           voteStatus(backstagePostRenderer["voteStatus"].toString())
     {
-        const QJsonArray actionMenuItems = backstagePostRenderer["actionMenu"]["menuRenderer"]["items"].toArray();
-        for (const QJsonValue& menuItem : actionMenuItems)
-            actionMenu.append(MenuServiceItem(menuItem["menuServiceItemRenderer"]));
-
         const QJsonValue backstageAttachmentJson = backstagePostRenderer["backstageAttachment"];
         if (backstageAttachmentJson["pollRenderer"].isObject())
             backstageAttachment = Poll(backstageAttachmentJson["pollRenderer"]);

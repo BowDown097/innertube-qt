@@ -9,7 +9,7 @@ namespace InnertubeObjects
     {
         GenericThumbnail channelIcon;
         std::optional<QString> linkedCommentId;
-        long long notificationId;
+        QString notificationId;
         bool read;
         QString shortMessage;
         QString sentTimeText;

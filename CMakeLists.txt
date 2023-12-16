@@ -64,12 +64,12 @@ add_library(innertube-qt
     src/innertube/itc-objects/innertubeuserconfig.h
     src/innertube/objects/compactlink.h
     src/innertube/objects/genericthumbnail.h
+    src/innertube/objects/imagewithaccessibility.h
     src/innertube/objects/innertubestring.h src/innertube/objects/innertubestring.cpp
     src/innertube/objects/responsiveimage.h src/innertube/objects/responsiveimage.cpp
     src/innertube/objects/account_menu/activeaccountheader.h
     src/innertube/objects/backstage/backstageimage.h
     src/innertube/objects/backstage/backstagepost.h src/innertube/objects/backstage/backstagepost.cpp
-    src/innertube/objects/backstage/commentactionbuttons.h
     src/innertube/objects/backstage/poll/poll.h src/innertube/objects/backstage/poll/poll.cpp
     src/innertube/objects/backstage/poll/pollchoice.h
     src/innertube/objects/channel/aboutfullmetadata.h src/innertube/objects/channel/aboutfullmetadata.cpp
@@ -83,8 +83,16 @@ add_library(innertube-qt
     src/innertube/objects/channel/notificationstate.h
     src/innertube/objects/channel/subscribebutton.h
     src/innertube/objects/items/button.h
-    src/innertube/objects/items/menuflexibleitem.h
-    src/innertube/objects/items/menuserviceitem.h
+    src/innertube/objects/items/chipcloud/chipcloud.h src/innertube/objects/items/chipcloud/chipcloud.cpp
+    src/innertube/objects/items/chipcloud/chipcloudchip.h
+    src/innertube/objects/items/emoji/emoji.h src/innertube/objects/items/emoji/emoji.cpp
+    src/innertube/objects/items/emoji/picker/emojipicker.h src/innertube/objects/items/emoji/picker/emojipicker.cpp
+    src/innertube/objects/items/emoji/picker/emojipickercategory.h src/innertube/objects/items/emoji/picker/emojipickercategory.cpp
+    src/innertube/objects/items/emoji/picker/emojipickercategorybutton.h
+    src/innertube/objects/items/menu/menu.h src/innertube/objects/items/menu/menu.cpp
+    src/innertube/objects/items/menu/menuflexibleitem.h
+    src/innertube/objects/items/menu/menuserviceitem.h
+    src/innertube/objects/items/sortfiltersubmenu.h src/innertube/objects/items/sortfiltersubmenu.cpp
     src/innertube/objects/items/togglebutton.h
     src/innertube/objects/live_chat/livechat.h src/innertube/objects/live_chat/livechat.cpp
     src/innertube/objects/notification/notification.h src/innertube/objects/notification/notification.cpp
@@ -93,22 +101,36 @@ add_library(innertube-qt
     src/innertube/objects/player/playervideodetails.h src/innertube/objects/player/playervideodetails.cpp
     src/innertube/objects/player/streamingdata.h src/innertube/objects/player/streamingdata.cpp
     src/innertube/objects/player/streamingformat.h
-    src/innertube/objects/video/primaryinfo/likedislike/dislikebuttonviewmodel.h
-    src/innertube/objects/video/primaryinfo/likedislike/dynamiclikecountupdatedata.h
-    src/innertube/objects/video/primaryinfo/likedislike/likebuttonviewmodel.h
-    src/innertube/objects/video/primaryinfo/likedislike/likecountentity.h
-    src/innertube/objects/video/primaryinfo/likedislike/likedislikeviewmodel.h
-    src/innertube/objects/video/primaryinfo/videoactions.h src/innertube/objects/video/primaryinfo/videoactions.cpp
-    src/innertube/objects/video/primaryinfo/videoprimaryinfo.h
-    src/innertube/objects/video/primaryinfo/viewcount.h
     src/innertube/objects/video/reel.h
-    src/innertube/objects/video/secondaryinfo/metadatarow.h src/innertube/objects/video/secondaryinfo/metadatarow.cpp
-    src/innertube/objects/video/secondaryinfo/metadatarowcontainer.h src/innertube/objects/video/secondaryinfo/metadatarowcontainer.cpp
-    src/innertube/objects/video/secondaryinfo/secondaryinfoowner.h src/innertube/objects/video/secondaryinfo/secondaryinfoowner.cpp
-    src/innertube/objects/video/secondaryinfo/videosecondaryinfo.h
     src/innertube/objects/video/video.h src/innertube/objects/video/video.cpp
     src/innertube/objects/video/videoowner.h src/innertube/objects/video/videoowner.cpp
-    src/innertube/objects/video/videothumbnail.h
+    src/innertube/objects/video/watchnext/clarification.h
+    src/innertube/objects/video/watchnext/comments/authorcommentbadge.h
+    src/innertube/objects/video/watchnext/comments/comment.h
+    src/innertube/objects/video/watchnext/comments/commentactionbuttons.h
+    src/innertube/objects/video/watchnext/comments/commentreplies.h src/innertube/objects/video/watchnext/comments/commentreplies.cpp
+    src/innertube/objects/video/watchnext/comments/commentsheader.h src/innertube/objects/video/watchnext/comments/commentsheader.cpp
+    src/innertube/objects/video/watchnext/comments/commentsimplebox.h
+    src/innertube/objects/video/watchnext/comments/commentthread.h
+    src/innertube/objects/video/watchnext/comments/entrypoint/commentsentrypointheader.h
+    src/innertube/objects/video/watchnext/comments/entrypoint/commentsentrypointteaser.h
+    src/innertube/objects/video/watchnext/comments/pinnedcommentbadge.h
+    src/innertube/objects/video/watchnext/primaryinfo/likedislike/dislikebuttonviewmodel.h
+    src/innertube/objects/video/watchnext/primaryinfo/likedislike/dynamiclikecountupdatedata.h
+    src/innertube/objects/video/watchnext/primaryinfo/likedislike/likebuttonviewmodel.h
+    src/innertube/objects/video/watchnext/primaryinfo/likedislike/likecountentity.h
+    src/innertube/objects/video/watchnext/primaryinfo/likedislike/likedislikeviewmodel.h
+    src/innertube/objects/video/watchnext/primaryinfo/videoactions.h src/innertube/objects/video/watchnext/primaryinfo/videoactions.cpp
+    src/innertube/objects/video/watchnext/primaryinfo/videoprimaryinfo.h
+    src/innertube/objects/video/watchnext/primaryinfo/viewcount.h
+    src/innertube/objects/video/watchnext/relatedchipcloud.h
+    src/innertube/objects/video/watchnext/secondaryinfo/metadatarow.h src/innertube/objects/video/watchnext/secondaryinfo/metadatarow.cpp
+    src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.h src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.cpp
+    src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.h src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.cpp
+    src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.h
+    src/innertube/objects/video/watchnext/twocolumnwatchnextresults.h
+    src/innertube/objects/video/watchnext/watchnextprimaryresults.h src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
+    src/innertube/objects/video/watchnext/watchnextsecondaryresults.h src/innertube/objects/video/watchnext/watchnextsecondaryresults.cpp
     src/innertube/objects/viewmodels/buttonviewmodel.h
     src/innertube/objects/viewmodels/togglebuttonviewmodel.h
     src/innertube/responses/browse/channelresponse.h
@@ -120,6 +142,7 @@ add_library(innertube-qt
     src/innertube/responses/misc/accountmenuresponse.h
     src/innertube/responses/misc/searchresponse.h
     src/innertube/responses/notification/notificationmenuresponse.h
+    src/innertube/responses/video/nextcontinuationdata.h src/innertube/responses/video/nextcontinuationdata.cpp
     src/innertube/responses/video/nextresponse.h
     src/innertube/responses/video/playerresponse.h
     src/innertube/responses/video/updatedmetadataresponse.h
