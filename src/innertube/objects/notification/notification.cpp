@@ -10,10 +10,11 @@ namespace InnertubeObjects
           sentTimeText(notificationRenderer["sentTimeText"]["simpleText"].toString()),
           videoThumbnail(notificationRenderer["videoThumbnail"]["thumbnails"][0])
     {
-        QJsonValue command = !notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"].isUndefined()
+        QJsonValue command = notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"].isObject()
                                  ? notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"]
                                  : notificationRenderer["navigationEndpoint"]["watchEndpoint"];
-        linkedCommentId = std::make_optional<QString>(command["linkedCommentId"].toString());
+        linkedCommentId = command["linkedCommentId"].isString()
+                              ? std::make_optional<QString>(command["linkedCommentId"].toString()) : std::nullopt;
         videoId = command["videoId"].toString();
     }
 }

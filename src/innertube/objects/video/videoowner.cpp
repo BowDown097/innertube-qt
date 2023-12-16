@@ -4,19 +4,21 @@
 
 namespace InnertubeObjects
 {
-    VideoOwner::VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, const QJsonValue& badgesVal, bool isGridVideo)
+    VideoOwner::VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, const QJsonArray& badgesJson)
         : id(textVal["runs"][0]["navigationEndpoint"]["browseEndpoint"]["browseId"].toString()),
           name(textVal["runs"][0]["text"].toString())
     {
         if (thumbnailVal.isObject())
         {
-            const QJsonArray thumbnails = isGridVideo
-                    ? thumbnailVal.toObject().constBegin()->toArray()
-                    : thumbnailVal.toObject().constBegin()->toObject()["thumbnail"].toObject()["thumbnails"].toArray();
-            icon = thumbnails[thumbnails.count() - 1]["url"].toString();
+            const QJsonObject thumbnailObj = thumbnailVal.toObject();
+            auto thumbnailBegin = thumbnailObj.begin();
+            if (thumbnailBegin != thumbnailObj.end())
+            {
+                const QJsonValue& value = thumbnailBegin.value();
+                icon = ResponsiveImage(thumbnailBegin->isArray() ? value : value["thumbnail"]["thumbnails"]);
+            }
         }
 
-        const QJsonArray badgesJson = badgesVal.toArray();
         for (const QJsonValue& v : badgesJson)
             badges.append(MetadataBadge(v["metadataBadgeRenderer"]));
     }

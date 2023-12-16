@@ -81,7 +81,7 @@ namespace InnertubeEndpoints
             for (const QJsonValue& v3 : gridContents)
             {
                 if (v3["gridVideoRenderer"].isObject())
-                    response.videos.append(InnertubeObjects::Video(v3["gridVideoRenderer"], true));
+                    response.videos.append(InnertubeObjects::Video(v3["gridVideoRenderer"]));
             }
         }
     }
@@ -90,6 +90,6 @@ namespace InnertubeEndpoints
     {
         const QJsonValue richItemContents = v["richItemRenderer"]["content"];
         if (richItemContents["videoRenderer"].isObject())
-            response.videos.append(InnertubeObjects::Video(richItemContents["videoRenderer"], false));
+            response.videos.append(InnertubeObjects::Video(richItemContents["videoRenderer"]));
     }
 }

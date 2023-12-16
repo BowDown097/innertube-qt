@@ -55,7 +55,7 @@ namespace InnertubeEndpoints
             {
                 QJsonValue videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"];
                 if (!videoRenderer.isObject()) continue;
-                response.videos.append(InnertubeObjects::Video(videoRenderer, false));
+                response.videos.append(InnertubeObjects::Video(videoRenderer));
             }
             else if (v["shelfRenderer"].isObject())
             {
@@ -66,7 +66,7 @@ namespace InnertubeEndpoints
                 for (const QJsonValue& v2 : shelfContents)
                 {
                     if (!v2["gridVideoRenderer"].isObject()) continue;
-                    response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], true, shelfTitle));
+                    response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], shelfTitle));
                 }
             }
             else if (v["continuationItemRenderer"].isObject())

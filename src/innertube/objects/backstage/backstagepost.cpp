@@ -28,6 +28,6 @@ namespace InnertubeObjects
         else if (backstageAttachmentJson["backstageImageRenderer"].isObject())
             backstageAttachment = BackstageImage(backstageAttachmentJson["backstageImageRenderer"]);
         else if (backstageAttachmentJson["videoRenderer"].isObject())
-            backstageAttachment = Video(backstageAttachmentJson["videoRenderer"], false);
+            backstageAttachment = Video(backstageAttachmentJson["videoRenderer"]);
     }
 }

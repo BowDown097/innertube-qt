@@ -6,8 +6,8 @@ namespace InnertubeObjects
 {
     ResponsiveImage::ResponsiveImage(const QJsonValue& thumbnails)
     {
-        const QJsonArray arr = thumbnails.toArray();
-        for (const QJsonValue& v : arr)
+        const QJsonArray thumbnailsArr = thumbnails.toArray();
+        for (const QJsonValue& v : thumbnailsArr)
             append(GenericThumbnail(v));
     }
 

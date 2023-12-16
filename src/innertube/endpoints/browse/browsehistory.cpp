@@ -41,7 +41,7 @@ namespace InnertubeEndpoints
                 for (const QJsonValue& v2 : itemSectionContents)
                 {
                     if (!v2["videoRenderer"].isObject()) continue;
-                    response.videos.append(InnertubeObjects::Video(v2["videoRenderer"], false));
+                    response.videos.append(InnertubeObjects::Video(v2["videoRenderer"]));
                 }
             }
             else if (v["continuationItemRenderer"].isObject())

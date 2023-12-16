@@ -4,7 +4,7 @@
 
 namespace InnertubeObjects
 {
-    Video::Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf)
+    Video::Video(const QJsonValue& videoRenderer, const InnertubeString& shelf)
         : descriptionSnippet(videoRenderer["descriptionSnippet"]),
           longBylineText(videoRenderer["longBylineText"]),
           navigationEndpoint(videoRenderer["navigationEndpoint"]),
@@ -12,7 +12,7 @@ namespace InnertubeObjects
           shortBylineText(videoRenderer["shortBylineText"]),
           shortViewCountText(videoRenderer["shortViewCountText"]),
           showActionMenu(videoRenderer["showActionMenu"].toBool()),
-          thumbnail(videoRenderer["videoId"].toString()),
+          thumbnail(videoRenderer["thumbnail"]["thumbnails"]),
           title(videoRenderer["title"]),
           videoId(videoRenderer["videoId"].toString()),
           viewCountText(videoRenderer["viewCountText"])
@@ -20,7 +20,11 @@ namespace InnertubeObjects
         isLive = videoRenderer["badges"][0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW";
         if (!isLive) // lengthText and publishedTimeText do not exist for live videos
         {
-            if (isGridVideo)
+            if (videoRenderer["lengthText"].isObject())
+            {
+                lengthText = InnertubeString(videoRenderer["lengthText"]);
+            }
+            else
             {
                 const QJsonArray thumbnailOverlays = videoRenderer["thumbnailOverlays"].toArray();
                 auto timeOverlay = std::ranges::find_if(thumbnailOverlays, [](const QJsonValue& v) {
@@ -31,10 +35,6 @@ namespace InnertubeObjects
                     const QJsonValue& timeOverlayVal = *timeOverlay;
                     lengthText = InnertubeString(timeOverlayVal["thumbnailOverlayTimeStatusRenderer"]["text"]);
                 }
-            }
-            else
-            {
-                lengthText = InnertubeString(videoRenderer["lengthText"]);
             }
 
             if (videoRenderer["upcomingEventData"].isObject())
@@ -54,9 +54,11 @@ namespace InnertubeObjects
             }
         }
 
-        owner = isGridVideo
-                ? VideoOwner(videoRenderer["shortBylineText"], videoRenderer["channelThumbnail"], videoRenderer["ownerBadges"], true)
-                : VideoOwner(videoRenderer["ownerText"], videoRenderer["channelThumbnailSupportedRenderers"], videoRenderer["ownerBadges"], false);
+        owner = VideoOwner(
+            videoRenderer["ownerText"].isObject() ? videoRenderer["ownerText"] : videoRenderer["shortBylineText"],
+            videoRenderer["channelThumbnail"].isObject() ? videoRenderer["channelThumbnail"] : videoRenderer["channelThumbnailSupportedRenderers"],
+            videoRenderer["ownerBadges"].toArray()
+        );
     }
 
     // reels can still be of this type and not of the Reel type. blame innertube

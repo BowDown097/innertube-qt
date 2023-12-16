@@ -1,8 +1,8 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 #include "innertube/objects/innertubestring.h"
+#include "innertube/objects/responsiveimage.h"
 #include "videoowner.h"
-#include "videothumbnail.h"
 #include <QTime>
 
 namespace InnertubeObjects
@@ -20,12 +20,12 @@ namespace InnertubeObjects
         InnertubeString shortBylineText;
         InnertubeString shortViewCountText;
         bool showActionMenu;
-        VideoThumbnail thumbnail;
+        ResponsiveImage thumbnail;
         InnertubeString title;
         QString videoId;
         InnertubeString viewCountText;
 
-        Video(const QJsonValue& videoRenderer, bool isGridVideo, const InnertubeString& shelf = InnertubeString());
+        Video(const QJsonValue& videoRenderer, const InnertubeString& shelf = InnertubeString());
         bool isReel() const;
         QTime length() const;
     };
