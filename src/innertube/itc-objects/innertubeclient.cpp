@@ -1,8 +1,6 @@
 #include "innertubeclient.h"
-#include "sslhttprequest.h"
-#include <QEventLoop>
 #include <QJsonDocument>
-#include <QXmlStreamReader>
+#include <QtNetwork/QtNetwork>
 
 InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVersion, const QString& platform,
                                  const QString& userAgent, const QString& browserName, const QString& browserVersion,
@@ -32,13 +30,17 @@ InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVer
       userAgent(userAgent),
       userInterfaceTheme(userInterfaceTheme)
 {
-    QScopedPointer<SslHttpRequest> req(new SslHttpRequest("https://www.youtube.com/"));
-    req->send();
+    QNetworkAccessManager* man = new QNetworkAccessManager;
+    QNetworkReply* reply = man->get(QNetworkRequest(QUrl("https://www.youtube.com/")));
 
-    QObject::connect(req.data(), &SslHttpRequest::finished, [this](const QByteArray& response) {
+    QObject::connect(reply, &QNetworkReply::finished, [this, reply] {
+        QByteArray response = reply->readAll();
         QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
         visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
         visitorData = visitorBlock;
+
+        reply->deleteLater();
+        reply->manager()->deleteLater();
     });
 
     if (clientVersion.isEmpty())
@@ -142,14 +144,17 @@ std::optional<QString> InnertubeClient::getLatestVersion(ClientType clientType)
 
 std::optional<QString> InnertubeClient::getLatestAppStoreVersion(const QString& bundleId)
 {
-    QScopedPointer<SslHttpRequest> req(new SslHttpRequest("https://itunes.apple.com/lookup?id=" + bundleId));
-    req->send();
+    QNetworkAccessManager* man = new QNetworkAccessManager;
+    QNetworkReply* reply = man->get(QNetworkRequest(QUrl("https://itunes.apple.com/lookup?id=" + bundleId)));
 
     QEventLoop loop;
-    QObject::connect(req.data(), &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    QJsonValue appResult = QJsonDocument::fromJson(req->payload())["results"][0];
+    QJsonValue appResult = QJsonDocument::fromJson(reply->readAll())["results"][0];
+    reply->deleteLater();
+    man->deleteLater();
+
     if (!appResult.isObject())
         return std::nullopt;
 
@@ -158,16 +163,19 @@ std::optional<QString> InnertubeClient::getLatestAppStoreVersion(const QString& 
 
 std::optional<QString> InnertubeClient::getLatestGooglePlayVersion(const QString& name)
 {
-    QScopedPointer<SslHttpRequest> req(new SslHttpRequest(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name)));
-    req->send();
+    QNetworkAccessManager* man = new QNetworkAccessManager;
+    QNetworkReply* reply = man->get(QNetworkRequest(QUrl(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name))));
 
     QEventLoop loop;
-    QObject::connect(req.data(), &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
     static QRegularExpression softwareVersionRegex("softwareVersion\":\"([0-9\\.]+?)\"");
+    QRegularExpressionMatch versionMatch = softwareVersionRegex.match(reply->readAll());
 
-    QRegularExpressionMatch versionMatch = softwareVersionRegex.match(req->payload());
+    reply->deleteLater();
+    man->deleteLater();
+
     if (!versionMatch.hasMatch())
         return std::nullopt;
 
@@ -177,16 +185,19 @@ std::optional<QString> InnertubeClient::getLatestGooglePlayVersion(const QString
 // courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
 std::optional<QString> InnertubeClient::getVersionFromSwJs(const QString& url)
 {
-    QScopedPointer<SslHttpRequest> req(new SslHttpRequest(url));
-    req->send();
+    QNetworkAccessManager* man = new QNetworkAccessManager;
+    QNetworkReply* reply = man->get(QNetworkRequest(QUrl(url)));
 
     QEventLoop loop;
-    QObject::connect(req.data(), &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
     static QRegularExpression clientVersionRegex("INNERTUBE_CONTEXT_CLIENT_VERSION\":\"([0-9\\.]+?)\"");
+    QRegularExpressionMatch versionMatch = clientVersionRegex.match(reply->readAll());
 
-    QRegularExpressionMatch versionMatch = clientVersionRegex.match(req->payload());
+    reply->deleteLater();
+    man->deleteLater();
+
     if (!versionMatch.hasMatch())
         return std::nullopt;
 
