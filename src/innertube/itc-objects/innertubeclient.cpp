@@ -33,7 +33,7 @@ InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVer
     QNetworkAccessManager* man = new QNetworkAccessManager;
     QNetworkReply* reply = man->get(QNetworkRequest(QUrl("https://www.youtube.com/")));
 
-    QObject::connect(reply, &QNetworkReply::finished, [this, reply] {
+    QObject::connect(reply, &QNetworkReply::finished, reply, [this, reply] {
         QByteArray response = reply->readAll();
         QString visitorBlock = response.mid(response.indexOf("visitorData") + 14);
         visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
@@ -58,40 +58,61 @@ std::optional<QString> InnertubeClient::getLatestVersion(ClientType clientType)
     switch (clientType)
     {
     // dynamic
-    case ClientType::WEB:
-        return getVersionFromSwJs("https://www.youtube.com/sw.js");
-    case ClientType::MWEB:
-        return getVersionFromSwJs("https://m.youtube.com/sw.js");
+    case ClientType::WEB: {
+        std::optional<QString> ver = getVersionFromPageBody("https://www.youtube.com/sw.js");
+        if (!ver.has_value())
+        {
+            qDebug() << "Failed to get Innertube client version from service worker. Falling back to results page.";
+            ver = getVersionFromPageBody("https://www.youtube.com/results?search_query=");
+        }
+        return ver;
+    }
+    case ClientType::MWEB: {
+        std::optional<QString> ver = getVersionFromPageBody("https://m.youtube.com/sw.js");
+        if (!ver.has_value())
+        {
+            qDebug() << "Failed to get Innertube client version from service worker. Falling back to results page.";
+            ver = getVersionFromPageBody("https://m.youtube.com/results?search_query=");
+        }
+        return ver;
+    }
     case ClientType::ANDROID:
     case ClientType::ANDROID_EMBEDDED_PLAYER:
-        return getLatestGooglePlayVersion("youtube");
+        return getVersionFromGooglePlay("youtube");
     case ClientType::IOS:
     case ClientType::IOS_LIVE_CREATION_EXTENSION:
     case ClientType::IOS_MESSAGES_EXTENSION:
-        return getLatestAppStoreVersion("544007664");
+        return getVersionFromAppStore("544007664");
     case ClientType::ANDROID_CREATOR:
-        return getLatestGooglePlayVersion("youtube-creator-studio");
+        return getVersionFromGooglePlay("youtube-creator-studio");
     case ClientType::IOS_CREATOR:
-        return getLatestAppStoreVersion("888530356");
+        return getVersionFromAppStore("888530356");
     case ClientType::ANDROID_KIDS:
-        return getLatestGooglePlayVersion("youtube-kids");
+        return getVersionFromGooglePlay("youtube-kids");
     case ClientType::IOS_KIDS:
-        return getLatestAppStoreVersion("936971630");
+        return getVersionFromAppStore("936971630");
     case ClientType::ANDROID_MUSIC:
-        return getLatestGooglePlayVersion("youtube-music");
+        return getVersionFromGooglePlay("youtube-music");
     case ClientType::ANDROID_TV:
-        return getLatestGooglePlayVersion("youtube-for-android-tv");
+        return getVersionFromGooglePlay("youtube-for-android-tv");
     case ClientType::IOS_MUSIC:
-        return getLatestAppStoreVersion("1017492454");
+        return getVersionFromAppStore("1017492454");
     case ClientType::ANDROID_UNPLUGGED:
     case ClientType::TVHTML5_UNPLUGGED:
-        return getLatestGooglePlayVersion("youtube-tv");
+        return getVersionFromGooglePlay("youtube-tv");
     case ClientType::IOS_UNPLUGGED:
-        return getLatestAppStoreVersion("1193350206");
-    case ClientType::WEB_REMIX:
-        return getVersionFromSwJs("https://music.youtube.com/sw.js");
+        return getVersionFromAppStore("1193350206");
+    case ClientType::WEB_REMIX: {
+        std::optional<QString> ver = getVersionFromPageBody("https://music.youtube.com/sw.js");
+        if (!ver.has_value())
+        {
+            qDebug() << "Failed to get Innertube client version from service worker. Falling back to home page.";
+            ver = getVersionFromPageBody("https://music.youtube.com/");
+        }
+        return ver;
+    }
     case ClientType::ANDROID_TV_KIDS:
-        return getLatestGooglePlayVersion("youtube-kids-for-android-tv");
+        return getVersionFromGooglePlay("youtube-kids-for-android-tv");
     // hardcoded
     case ClientType::TVLITE:
         return "2";
@@ -142,7 +163,7 @@ std::optional<QString> InnertubeClient::getLatestVersion(ClientType clientType)
     }
 }
 
-std::optional<QString> InnertubeClient::getLatestAppStoreVersion(const QString& bundleId)
+std::optional<QString> InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 {
     QNetworkAccessManager* man = new QNetworkAccessManager;
     QNetworkReply* reply = man->get(QNetworkRequest(QUrl("https://itunes.apple.com/lookup?id=" + bundleId)));
@@ -151,17 +172,17 @@ std::optional<QString> InnertubeClient::getLatestAppStoreVersion(const QString& 
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    QJsonValue appResult = QJsonDocument::fromJson(reply->readAll())["results"][0];
     reply->deleteLater();
     man->deleteLater();
 
+    QJsonValue appResult = QJsonDocument::fromJson(reply->readAll())["results"][0];
     if (!appResult.isObject())
         return std::nullopt;
 
     return appResult["version"].toString();
 }
 
-std::optional<QString> InnertubeClient::getLatestGooglePlayVersion(const QString& name)
+std::optional<QString> InnertubeClient::getVersionFromGooglePlay(const QString& name)
 {
     QNetworkAccessManager* man = new QNetworkAccessManager;
     QNetworkReply* reply = man->get(QNetworkRequest(QUrl(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name))));
@@ -170,12 +191,11 @@ std::optional<QString> InnertubeClient::getLatestGooglePlayVersion(const QString
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    static QRegularExpression softwareVersionRegex("softwareVersion\":\"([0-9\\.]+?)\"");
-    QRegularExpressionMatch versionMatch = softwareVersionRegex.match(reply->readAll());
-
     reply->deleteLater();
     man->deleteLater();
 
+    static QRegularExpression softwareVersionRegex("softwareVersion\":\"([0-9\\.]+?)\"");
+    QRegularExpressionMatch versionMatch = softwareVersionRegex.match(reply->readAll());
     if (!versionMatch.hasMatch())
         return std::nullopt;
 
@@ -183,7 +203,7 @@ std::optional<QString> InnertubeClient::getLatestGooglePlayVersion(const QString
 }
 
 // courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
-std::optional<QString> InnertubeClient::getVersionFromSwJs(const QString& url)
+std::optional<QString> InnertubeClient::getVersionFromPageBody(const QString& url)
 {
     QNetworkAccessManager* man = new QNetworkAccessManager;
     QNetworkReply* reply = man->get(QNetworkRequest(QUrl(url)));
@@ -192,12 +212,11 @@ std::optional<QString> InnertubeClient::getVersionFromSwJs(const QString& url)
     QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    static QRegularExpression clientVersionRegex("INNERTUBE_CONTEXT_CLIENT_VERSION\":\"([0-9\\.]+?)\"");
-    QRegularExpressionMatch versionMatch = clientVersionRegex.match(reply->readAll());
-
     reply->deleteLater();
     man->deleteLater();
 
+    static QRegularExpression clientVersionRegex("INNERTUBE_CONTEXT_CLIENT_VERSION\":\"([0-9\\.]+?)\"");
+    QRegularExpressionMatch versionMatch = clientVersionRegex.match(reply->readAll());
     if (!versionMatch.hasMatch())
         return std::nullopt;
 

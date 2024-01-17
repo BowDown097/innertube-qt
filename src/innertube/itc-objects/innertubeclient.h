@@ -112,9 +112,9 @@ public:
 
     QJsonObject toJson() const;
 private:
-    static std::optional<QString> getLatestAppStoreVersion(const QString& bundleId);
-    static std::optional<QString> getLatestGooglePlayVersion(const QString& name);
-    static std::optional<QString> getVersionFromSwJs(const QString& url);
+    static std::optional<QString> getVersionFromAppStore(const QString& bundleId);
+    static std::optional<QString> getVersionFromGooglePlay(const QString& name);
+    static std::optional<QString> getVersionFromPageBody(const QString& url);
 };
 
 #endif // INNERTUBECLIENT_H
