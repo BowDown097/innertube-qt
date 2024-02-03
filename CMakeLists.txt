@@ -22,6 +22,8 @@ set(INNERTUBE_QT_VERSION_MAJOR ${QT_VERSION_MAJOR} CACHE STRING "Qt version to u
 find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
 
+add_subdirectory(lib/http)
+
 add_library(innertube-qt
     src/innertube.h src/innertube.cpp
     src/jsonutil.h src/jsonutil.cpp
@@ -149,8 +151,6 @@ add_library(innertube-qt
     src/protobuf/protobufcompiler.h src/protobuf/protobufcompiler.cpp
 )
 
-target_include_directories(innertube-qt PUBLIC lib/verdigris/src)
-
 # Define options in preprocessor
 if(INNERTUBE_GET_STS)
     target_compile_definitions(innertube-qt PUBLIC INNERTUBE_GET_STS)
@@ -161,8 +161,8 @@ if(INNERTUBE_NO_WEBENGINE)
 endif()
 
 # Include directories, libraries
-target_include_directories(innertube-qt PUBLIC src)
-target_link_libraries(innertube-qt PUBLIC Qt::Core Qt::Gui Qt::Network)
+target_include_directories(innertube-qt PUBLIC src lib/http/src lib/verdigris/src)
+target_link_libraries(innertube-qt PUBLIC http Qt::Core Qt::Gui Qt::Network)
 
 ## Optional
 if(NOT INNERTUBE_NO_WEBENGINE)

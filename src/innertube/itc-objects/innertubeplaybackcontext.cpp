@@ -1,6 +1,6 @@
 #include "innertubeplaybackcontext.h"
 #ifdef INNERTUBE_GET_STS
-#include <QtNetwork/QtNetwork>
+#include "http.h"
 #endif
 
 QJsonObject InnertubePlaybackContext::toJson() const
@@ -30,17 +30,14 @@ QJsonObject InnertubePlaybackContext::toJson() const
 #ifdef INNERTUBE_GET_STS
 int InnertubePlaybackContext::fetchSignatureTimestamp() const
 {
-    QNetworkAccessManager* man = new QNetworkAccessManager;
-
     // get the body of the embed for "Me at the zoo", which is almost guaranteed to never go down as long as YouTube exists
-    QNetworkReply* embedReply = man->get(QNetworkRequest(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw")));
+    HttpReply* embedReply = Http::instance().get(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw"));
 
     QEventLoop embedLoop;
-    QObject::connect(embedReply, &QNetworkReply::finished, &embedLoop, &QEventLoop::quit);
+    QObject::connect(embedReply, &HttpReply::finished, &embedLoop, &QEventLoop::quit);
     embedLoop.exec();
 
-    QByteArray embedBody = embedReply->readAll();
-    embedReply->deleteLater();
+    QByteArray embedBody = embedReply->body();
 
     // extract application URL
     static QRegularExpression playerJsRegex("/s/player/[a-zA-Z0-9/\\-_.]*base.js");
@@ -48,15 +45,13 @@ int InnertubePlaybackContext::fetchSignatureTimestamp() const
     QUrl playerJsUrl("https://www.youtube.com" + match.captured());
 
     // get the application body
-    QNetworkReply* appReply = man->get(QNetworkRequest(playerJsUrl));
+    HttpReply* appReply = Http::instance().get(playerJsUrl);
 
     QEventLoop appLoop;
-    QObject::connect(appReply, &QNetworkReply::finished, &appLoop, &QEventLoop::quit);
+    QObject::connect(appReply, &HttpReply::finished, &appLoop, &QEventLoop::quit);
     appLoop.exec();
 
-    QByteArray appBody = appReply->readAll();
-    appReply->deleteLater();
-    man->deleteLater();
+    QByteArray appBody = appReply->body();
 
     // extract and return the sts body
     static QRegularExpression stsRegex("signatureTimestamp:?\\s*([0-9]*)");
