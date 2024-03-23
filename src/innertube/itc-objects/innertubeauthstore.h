@@ -49,14 +49,12 @@ public:
     /**
      * @return If all credentials have been captured (all class members have a value).
      */
-    bool populated() const
-    { return !(apisid.isEmpty() || hsid.isEmpty() || sapisid.isEmpty() || sid.isEmpty() || ssid.isEmpty() || visitorInfo.isEmpty()); }
+    bool populated() const;
 
     /**
      * @return The authentication credentials as a string to be passed as the Cookie header in a web request.
      */
-    QString toCookieString() const
-    { return QStringLiteral("SID=%1; HSID=%2; SSID=%3; SAPISID=%4; APISID=%5").arg(sid, hsid, ssid, sapisid, apisid); }
+    QString toCookieString() const;
 
     /**
      * @return A hashed version of the @ref sapisid "SAPISID" to be passed as the Authentication header in a web request.

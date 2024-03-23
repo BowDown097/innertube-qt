@@ -73,6 +73,17 @@ QString InnertubeAuthStore::generateSAPISIDHash()
     return QStringLiteral("SAPISIDHASH %1_%2").arg(time(NULL)).arg(hash);
 }
 
+bool InnertubeAuthStore::populated() const
+{
+    return !(apisid.isEmpty() || hsid.isEmpty() || sapisid.isEmpty() || sid.isEmpty() || ssid.isEmpty() || visitorInfo.isEmpty());
+}
+
+QString InnertubeAuthStore::toCookieString() const
+{
+    return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5; VISITOR_INFO1_LIVE=%6")
+        .arg(sid, hsid, ssid, apisid, sapisid, visitorInfo);
+}
+
 QJsonObject InnertubeAuthStore::toJson() const
 {
     return {
