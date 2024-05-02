@@ -65,6 +65,8 @@ add_library(innertube-qt
     src/innertube/itc-objects/innertuberequestconfig.h
     src/innertube/itc-objects/innertubeuserconfig.h
     src/innertube/objects/compactlink.h
+    src/innertube/objects/dynamictext.h
+    src/innertube/objects/entitymutation.h
     src/innertube/objects/genericthumbnail.h
     src/innertube/objects/imagewithaccessibility.h
     src/innertube/objects/innertubestring.h src/innertube/objects/innertubestring.cpp
@@ -134,6 +136,10 @@ add_library(innertube-qt
     src/innertube/objects/video/watchnext/watchnextprimaryresults.h src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
     src/innertube/objects/video/watchnext/watchnextsecondaryresults.h src/innertube/objects/video/watchnext/watchnextsecondaryresults.cpp
     src/innertube/objects/viewmodels/buttonviewmodel.h
+    src/innertube/objects/viewmodels/contentmetadataviewmodel.h src/innertube/objects/viewmodels/contentmetadataviewmodel.cpp
+    src/innertube/objects/viewmodels/dynamictextviewmodel.h
+    src/innertube/objects/viewmodels/subscribebuttoncontent.h
+    src/innertube/objects/viewmodels/subscribebuttonviewmodel.h src/innertube/objects/viewmodels/subscribebuttonviewmodel.cpp
     src/innertube/objects/viewmodels/togglebuttonviewmodel.h
     src/innertube/responses/browse/channelresponse.h
     src/innertube/responses/browse/historyresponse.h

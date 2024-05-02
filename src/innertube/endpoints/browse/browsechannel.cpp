@@ -1,4 +1,5 @@
 #include "browsechannel.h"
+#include <QJsonArray>
 #include <QJsonDocument>
 
 namespace InnertubeEndpoints
@@ -21,8 +22,13 @@ namespace InnertubeEndpoints
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.contents = dataObj["contents"];
-        response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["c4TabbedHeaderRenderer"]);
+        response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["pageHeaderRenderer"]["content"]
+                                                                 ["pageHeaderViewModel"]);
         response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
         response.microformat = InnertubeObjects::MicroformatData(dataObj["microformat"]["microformatDataRenderer"]);
+
+        const QJsonArray mutations = dataObj["frameworkUpdates"]["entityBatchUpdate"]["mutations"].toArray();
+        for (const QJsonValue& mutation : mutations)
+            response.mutations.append(InnertubeObjects::EntityMutation(mutation));
     }
 }

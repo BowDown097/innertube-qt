@@ -3,24 +3,31 @@
 
 namespace InnertubeObjects
 {
-    ChannelHeader::ChannelHeader(const QJsonValue& headerRenderer)
-        : avatar(headerRenderer["avatar"]["thumbnails"]),
-          banner(headerRenderer["banner"]["thumbnails"]),
-          channelHandleText(headerRenderer["channelHandleText"]),
-          channelId(headerRenderer["channelId"].toString()),
-          mobileBanner(headerRenderer["mobileBanner"]["thumbnails"]),
-          subscribeButton(headerRenderer["subscribeButton"]["subscribeButtonRenderer"]),
-          subscriberCountText(headerRenderer["subscriberCountText"]),
-          title(headerRenderer["title"].toString()),
-          tvBanner(headerRenderer["tvBanner"]),
-          videosCountText(headerRenderer["videosCountText"])
+    ChannelHeader::ChannelHeader(const QJsonValue& pageHeaderViewModel)
+        : attribution(pageHeaderViewModel["attribution"]["attributionViewModel"]),
+          avatar(pageHeaderViewModel["image"]["decoratedAvatarViewModel"]["avatar"]["avatarViewModel"]["image"]["sources"]),
+          banner(pageHeaderViewModel["banner"]["imageBannerViewModel"]["image"]["sources"]),
+          description(pageHeaderViewModel["description"]["descriptionPreviewViewModel"], "description"),
+          metadata(pageHeaderViewModel["metadata"]["contentMetadataViewModel"]),
+          title(pageHeaderViewModel["title"]["dynamicTextViewModel"])
     {
-        const QJsonArray primaryLinksJson = headerRenderer["headerLinks"]["channelHeaderLinksRenderer"]["primaryLinks"].toArray();
-        for (const QJsonValue& v : primaryLinksJson)
-            primaryLinks.append(ChannelHeaderLink(v));
+        const QJsonValue actionRow = pageHeaderViewModel["actions"]["flexibleActionsViewModel"]["actionsRows"][0];
+        const QJsonValue subButtonValue = actionRow["actions"][0]["subscribeButtonViewModel"];
+        if (subButtonValue.isObject())
+            subscribeButton = SubscribeButtonViewModel(subButtonValue);
+        else
+            subscribeButton = std::nullopt;
 
-        const QJsonArray secondaryLinksJson = headerRenderer["headerLinks"]["channelHeaderLinksRenderer"]["secondaryLinks"].toArray();
-        for (const QJsonValue& v : secondaryLinksJson)
-            secondaryLinks.append(ChannelHeaderLink(v));
+        const QJsonArray actionsArr = actionRow["actions"].toArray();
+        if (!subscribeButton)
+        {
+            for (const QJsonValue& action : actionsArr)
+                actions.append(InnertubeObjects::ButtonViewModel(action["buttonViewModel"]));
+        }
+        else if (actionsArr.size() > 1)
+        {
+            for (int i = 1; i < actionsArr.size(); i++)
+                actions.append(InnertubeObjects::ButtonViewModel(actionsArr[i]["buttonViewModel"]));
+        }
     }
 }

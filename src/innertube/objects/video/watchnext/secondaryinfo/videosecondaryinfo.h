@@ -2,13 +2,14 @@
 #define VIDEOSECONDARYINFO_H
 #include "metadatarowcontainer.h"
 #include "secondaryinfoowner.h"
+#include "innertube/objects/dynamictext.h"
 #include "innertube/objects/channel/subscribebutton.h"
 
 namespace InnertubeObjects
 {
     struct VideoSecondaryInfo
     {
-        QJsonValue attributedDescription;
+        DynamicText attributedDescription;
         bool defaultExpanded;
         int descriptionCollapsedLines;
         MetadataRowContainer metadataRowContainer;

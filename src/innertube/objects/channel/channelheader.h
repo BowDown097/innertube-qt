@@ -1,28 +1,26 @@
 #ifndef CHANNELHEADER_H
 #define CHANNELHEADER_H
-#include "channelheaderlink.h"
 #include "innertube/objects/responsiveimage.h"
-#include "subscribebutton.h"
+#include "innertube/objects/viewmodels/buttonviewmodel.h"
+#include "innertube/objects/viewmodels/contentmetadataviewmodel.h"
+#include "innertube/objects/viewmodels/dynamictextviewmodel.h"
+#include "innertube/objects/viewmodels/subscribebuttonviewmodel.h"
 
 namespace InnertubeObjects
 {
     struct ChannelHeader
     {
+        QList<ButtonViewModel> actions; // subscribeButton is also an action, but is separate for simplicity
+        DynamicTextViewModel attribution;
         ResponsiveImage avatar;
         ResponsiveImage banner;
-        InnertubeString channelHandleText;
-        QString channelId;
-        ResponsiveImage mobileBanner;
-        QList<ChannelHeaderLink> primaryLinks;
-        QList<ChannelHeaderLink> secondaryLinks;
-        SubscribeButton subscribeButton;
-        InnertubeString subscriberCountText;
-        QString title;
-        ResponsiveImage tvBanner;
-        InnertubeString videosCountText;
+        DynamicTextViewModel description;
+        ContentMetadataViewModel metadata;
+        std::optional<SubscribeButtonViewModel> subscribeButton;
+        DynamicTextViewModel title;
 
         ChannelHeader() = default;
-        explicit ChannelHeader(const QJsonValue& headerRenderer);
+        explicit ChannelHeader(const QJsonValue& pageHeaderViewModel);
     };
 }
 
