@@ -1,5 +1,6 @@
 #pragma once
 #include "innertube/objects/dynamictext.h"
+#include <optional>
 
 namespace InnertubeObjects
 {

@@ -78,7 +78,8 @@ add_library(innertube-qt
     src/innertube/objects/backstage/poll/pollchoice.h
     src/innertube/objects/channel/aboutfullmetadata.h src/innertube/objects/channel/aboutfullmetadata.cpp
     src/innertube/objects/channel/channel.h
-    src/innertube/objects/channel/channelheader.h src/innertube/objects/channel/channelheader.cpp
+    src/innertube/objects/channel/channelc4header.h src/innertube/objects/channel/channelc4header.cpp
+    src/innertube/objects/channel/channelpageheader.h src/innertube/objects/channel/channelpageheader.cpp
     src/innertube/objects/channel/channelheaderlink.h
     src/innertube/objects/channel/channelmetadata.h src/innertube/objects/channel/channelmetadata.cpp
     src/innertube/objects/channel/metadatabadge.h

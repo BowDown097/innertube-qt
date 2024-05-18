@@ -22,10 +22,13 @@ namespace InnertubeEndpoints
         QJsonValue dataObj = QJsonDocument::fromJson(data).object();
 
         response.contents = dataObj["contents"];
-        response.header = InnertubeObjects::ChannelHeader(dataObj["header"]["pageHeaderRenderer"]["content"]
-                                                                 ["pageHeaderViewModel"]);
         response.metadata = InnertubeObjects::ChannelMetadata(dataObj["metadata"]["channelMetadataRenderer"]);
         response.microformat = InnertubeObjects::MicroformatData(dataObj["microformat"]["microformatDataRenderer"]);
+
+        if (QJsonValue c4Header = dataObj["header"]["c4TabbedHeaderRenderer"]; c4Header.isObject())
+            response.header = InnertubeObjects::ChannelC4Header(c4Header);
+        else if (QJsonValue pageHeader = dataObj["header"]["pageHeaderRenderer"]; pageHeader.isObject())
+            response.header = InnertubeObjects::ChannelPageHeader(pageHeader["content"]["pageHeaderViewModel"]);
 
         const QJsonArray mutations = dataObj["frameworkUpdates"]["entityBatchUpdate"]["mutations"].toArray();
         for (const QJsonValue& mutation : mutations)

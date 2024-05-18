@@ -1,9 +1,9 @@
-#include "channelheader.h"
+#include "channelpageheader.h"
 #include <QJsonArray>
 
 namespace InnertubeObjects
 {
-    ChannelHeader::ChannelHeader(const QJsonValue& pageHeaderViewModel)
+    ChannelPageHeader::ChannelPageHeader(const QJsonValue& pageHeaderViewModel)
         : attribution(pageHeaderViewModel["attribution"]["attributionViewModel"]),
           avatar(pageHeaderViewModel["image"]["decoratedAvatarViewModel"]["avatar"]["avatarViewModel"]["image"]["sources"]),
           banner(pageHeaderViewModel["banner"]["imageBannerViewModel"]["image"]["sources"]),
@@ -12,8 +12,7 @@ namespace InnertubeObjects
           title(pageHeaderViewModel["title"]["dynamicTextViewModel"])
     {
         const QJsonValue actionRow = pageHeaderViewModel["actions"]["flexibleActionsViewModel"]["actionsRows"][0];
-        const QJsonValue subButtonValue = actionRow["actions"][0]["subscribeButtonViewModel"];
-        if (subButtonValue.isObject())
+        if (QJsonValue subButtonValue = actionRow["actions"][0]["subscribeButtonViewModel"]; subButtonValue.isObject())
             subscribeButton = SubscribeButtonViewModel(subButtonValue);
         else
             subscribeButton = std::nullopt;

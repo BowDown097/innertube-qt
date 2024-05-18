@@ -63,7 +63,7 @@ public:
     InnertubeReply<E>* get(auto&&... args)
     {
         InnertubeReply<E>* reply = new InnertubeReply<E>;
-        QThreadPool::globalInstance()->start([this, reply, ...args = std::forward<decltype(args)>(args)] {
+        QThreadPool::globalInstance()->start([this, reply, ...args = std::forward<decltype(args)>(args)]() mutable {
             try
             {
                 E endpoint = getBlocking<E>(std::forward<decltype(args)>(args)...);
