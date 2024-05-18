@@ -1,5 +1,6 @@
 #include "innertubeclient.h"
 #include "http.h"
+#include <QEventLoop>
 #include <QJsonDocument>
 
 InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVersion, const QString& platform,

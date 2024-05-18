@@ -1,16 +1,11 @@
-#ifndef HTTPREQUEST_H
-#define HTTPREQUEST_H
+#pragma once
+#include <QNetworkAccessManager>
 
-#include <QtNetwork>
-
-class HttpRequest {
-public:
-    HttpRequest() : operation(QNetworkAccessManager::GetOperation), offset(0) {}
-    QUrl url;
-    QNetworkAccessManager::Operation operation;
+struct HttpRequest
+{
     QByteArray body;
-    uint offset;
     QMap<QByteArray, QByteArray> headers;
+    uint offset{};
+    QNetworkAccessManager::Operation operation = QNetworkAccessManager::GetOperation;
+    QUrl url;
 };
-
-#endif // HTTPREQUEST_H

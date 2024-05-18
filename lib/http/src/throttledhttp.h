@@ -1,44 +1,36 @@
-#ifndef THROTTLEDHTTP_H
-#define THROTTLEDHTTP_H
-
+#pragma once
 #include "http.h"
-#include <QtCore>
-#include <QtNetwork>
+#include <QElapsedTimer>
 
-class ThrottledHttp : public Http {
+class QTimer;
+
+class ThrottledHttp : public Http
+{
 public:
-    ThrottledHttp(Http &http = Http::instance());
+    ThrottledHttp(Http& http = Http::instance());
+    HttpReply* request(const HttpRequest& req) override;
     void setMilliseconds(int milliseconds) { this->milliseconds = milliseconds; }
-    HttpReply *request(const HttpRequest &req);
-
 private:
-    Http &http;
-    int milliseconds;
     QElapsedTimer elapsedTimer;
+    Http& http;
+    int milliseconds;
 };
 
-class ThrottledHttpReply : public HttpReply {
+class ThrottledHttpReply : public HttpReply
+{
     Q_OBJECT
-
 public:
-    ThrottledHttpReply(Http &http,
-                       const HttpRequest &req,
-                       int milliseconds,
-                       QElapsedTimer &elapsedTimer);
-    QUrl url() const { return req.url; }
-    int statusCode() const { return 200; }
-    QByteArray body() const { return QByteArray(); }
-
+    ThrottledHttpReply(Http& http, const HttpRequest& req, int milliseconds, QElapsedTimer& elapsedTimer);
+    QByteArray body() const override { return QByteArray(); }
+    int statusCode() const override { return 200; }
+    QUrl url() const override { return req.url; }
 private slots:
     void checkElapsed();
-
 private:
     void doRequest();
-    Http &http;
+    QElapsedTimer& elapsedTimer;
+    Http& http;
+    int milliseconds = 1000;
     HttpRequest req;
-    int milliseconds;
-    QElapsedTimer &elapsedTimer;
-    QTimer *timer;
+    QTimer* timer{};
 };
-
-#endif // THROTTLEDHTTP_H

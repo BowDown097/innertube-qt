@@ -1,42 +1,40 @@
-#ifndef NETWORKHTTPREPLY_H
-#define NETWORKHTTPREPLY_H
-
-#include <QtNetwork>
-
-#include "http.h"
+#pragma once
 #include "httpreply.h"
 #include "httprequest.h"
+#include <QNetworkReply>
 
-class NetworkHttpReply : public HttpReply {
+class Http;
+class QTimer;
+
+class NetworkHttpReply : public HttpReply
+{
     Q_OBJECT
-
 public:
-    NetworkHttpReply(const HttpRequest &req, Http &http);
-    QUrl url() const;
-    int statusCode() const;
-    QString reasonPhrase() const;
-    const QList<QNetworkReply::RawHeaderPair> headers() const;
-    QByteArray header(const QByteArray &headerName) const;
-    QByteArray body() const;
+    NetworkHttpReply(const HttpRequest& req, Http& http);
+    QByteArray body() const override { return bytes; }
+    QByteArray header(const QByteArray& headerName) const override { return networkReply->rawHeader(headerName); }
+    const QList<QNetworkReply::RawHeaderPair> headers() const override { return networkReply->rawHeaderPairs(); }
+    QUrl url() const override { return networkReply->url(); }
 
-private slots:
-    void replyFinished();
-    void replyError(QNetworkReply::NetworkError);
-    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-    void readTimeout();
-
+    QString reasonPhrase() const override
+    { return networkReply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString(); }
+    int statusCode() const override
+    { return networkReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt(); }
 private:
-    void setupReply();
-    QString errorMessage();
     void emitError();
     void emitFinished();
+    QString errorMessage();
+    void setupReply();
 
-    Http &http;
-    HttpRequest req;
-    QNetworkReply *networkReply;
-    QTimer *readTimeoutTimer;
-    int retryCount;
     QByteArray bytes;
+    Http& http;
+    QNetworkReply* networkReply;
+    QTimer* readTimeoutTimer;
+    HttpRequest req;
+    int retryCount{};
+private slots:
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void readTimeout();
+    void replyError(QNetworkReply::NetworkError);
+    void replyFinished();
 };
-
-#endif // NETWORKHTTPREPLY_H

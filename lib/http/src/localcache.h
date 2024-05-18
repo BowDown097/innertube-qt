@@ -1,48 +1,45 @@
-#ifndef LOCALCACHE_H
-#define LOCALCACHE_H
-
-#include <QtCore>
+#pragma once
+#include <QMutex>
 
 /**
  * @brief Not thread-safe
  */
-class LocalCache {
+class LocalCache
+{
 public:
-    static LocalCache *instance(const char *name);
+    static LocalCache* instance(const char* name);
     ~LocalCache();
-    static QByteArray hash(const QByteArray &s);
+    static QByteArray hash(const QByteArray& s);
 
-    const QByteArray &getName() const { return name; }
+    const QByteArray& getName() const { return name; }
 
     void setMaxSeconds(uint value) { maxSeconds = value; }
     void setMaxSize(uint value) { maxSize = value; }
 
-    QByteArray value(const QByteArray &key);
-    QByteArray possiblyStaleValue(const QByteArray &key);
-    void insert(const QByteArray &key, const QByteArray &value);
     void clear();
-
+    void insert(const QByteArray& key, const QByteArray& value);
+    QByteArray possiblyStaleValue(const QByteArray& key);
+    QByteArray value(const QByteArray& key);
 private:
-    LocalCache(const QByteArray &name);
-    QString cachePath(const QByteArray &key) const;
-    bool isCached(const QString &path);
+    LocalCache(const QByteArray& name);
+    QString cachePath(const QByteArray& key) const { return directory + QLatin1String(key); }
     void expire();
+    bool isCached(const QString& path);
+
 #ifdef HTTP_DEBUG
     void debugStats();
 #endif
 
-    QByteArray name;
     QString directory;
-    uint maxSeconds;
-    qint64 maxSize;
-    qint64 size;
+    uint insertCount{};
+    uint maxSeconds = 86400 * 30;
+    qint64 maxSize = 1024 * 1024 * 100;
     QMutex mutex;
-    uint insertCount;
+    QByteArray name;
+    qint64 size{};
 
 #ifdef HTTP_DEBUG
     uint hits;
     uint misses;
 #endif
 };
-
-#endif // LOCALCACHE_H

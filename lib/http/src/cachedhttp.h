@@ -1,70 +1,60 @@
-#ifndef CACHEDHTTP_H
-#define CACHEDHTTP_H
-
+#pragma once
 #include "http.h"
 
 class LocalCache;
 
-class CachedHttp : public Http {
+class CachedHttp : public Http
+{
 public:
-    CachedHttp(Http &http = Http::instance(), const char *name = "http");
-    void setMaxSeconds(uint seconds);
-    void setMaxSize(uint maxSize);
+    using ValidatorMap = QMap<QByteArray, std::function<bool(const HttpReply&)>>;
+    CachedHttp(Http& http = Http::instance(), const char* name = "http");
+    ValidatorMap getValidators() { return validators; }
+    HttpReply* request(const HttpRequest& req) override;
     void setCachePostRequests(bool value) { cachePostRequests = value; }
     void setIgnoreHostname(bool value) { ignoreHostname = value; }
-    auto &getValidators() { return validators; };
-    HttpReply *request(const HttpRequest &req);
-
+    void setMaxSeconds(uint seconds);
+    void setMaxSize(uint maxSize);
 private:
-    QByteArray requestHash(const HttpRequest &req);
+    QByteArray requestHash(const HttpRequest& req);
 
-    Http &http;
-    LocalCache *cache;
-    bool cachePostRequests;
-    bool ignoreHostname = false;
+    LocalCache* cache;
+    bool cachePostRequests{};
+    Http& http;
+    bool ignoreHostname{};
 
     /// Mapping is MIME -> validating function
     /// Use * as MIME to define a catch-all validator
-    QMap<QByteArray, std::function<bool(const HttpReply &)>> validators;
+    ValidatorMap validators;
 };
 
-class CachedHttpReply : public HttpReply {
+class CachedHttpReply : public HttpReply
+{
     Q_OBJECT
-
 public:
-    CachedHttpReply(const QByteArray &body, const QUrl &url, bool autoSignals = true);
-    QUrl url() const { return requestUrl; }
-    int statusCode() const { return 200; }
-    QByteArray body() const;
-
-private slots:
-    void emitSignals();
-
+    CachedHttpReply(const QByteArray& body, const QUrl& url, bool autoSignals = true);
+    QByteArray body() const override { return bytes; }
+    int statusCode() const override { return 200; }
+    QUrl url() const override { return requestUrl; }
 private:
     const QByteArray bytes;
     const QUrl requestUrl;
-};
-
-class WrappedHttpReply : public HttpReply {
-    Q_OBJECT
-
-public:
-    WrappedHttpReply(CachedHttp &cachedHttp,
-                     LocalCache *cache,
-                     const QByteArray &key,
-                     HttpReply *httpReply);
-    QUrl url() const { return httpReply->url(); }
-    int statusCode() const { return httpReply->statusCode(); }
-    QByteArray body() const { return httpReply->body(); }
-
 private slots:
-    void originFinished(const HttpReply &reply);
-
-private:
-    CachedHttp &cachedHttp;
-    LocalCache *cache;
-    QByteArray key;
-    HttpReply *httpReply;
+    void emitSignals();
 };
 
-#endif // CACHEDHTTP_H
+class WrappedHttpReply : public HttpReply
+{
+    Q_OBJECT
+public:
+    WrappedHttpReply(CachedHttp& cachedHttp, LocalCache* cache, const QByteArray& key, HttpReply* httpReply);
+    QByteArray body() const override { return httpReply->body(); }
+    int statusCode() const override { return httpReply->statusCode(); }
+    QUrl url() const override { return httpReply->url(); }
+private:
+    LocalCache* cache;
+    CachedHttp& cachedHttp;
+    HttpReply* httpReply;
+    QByteArray key;
+private slots:
+    void originFinished(const HttpReply& reply);
+};
