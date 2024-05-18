@@ -1,5 +1,4 @@
-#ifndef MENU_H
-#define MENU_H
+#pragma once
 #include "menuserviceitem.h"
 
 namespace InnertubeObjects
@@ -14,5 +13,3 @@ namespace InnertubeObjects
         explicit Menu(const QJsonValue& menuRenderer);
     };
 }
-
-#endif // MENU_H

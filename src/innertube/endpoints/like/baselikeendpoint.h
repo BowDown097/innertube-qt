@@ -1,5 +1,4 @@
-#ifndef BASELIKEENDPOINT_H
-#define BASELIKEENDPOINT_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -23,5 +22,3 @@ namespace InnertubeEndpoints
         }
     };
 }
-
-#endif // BASELIKEENDPOINT_H

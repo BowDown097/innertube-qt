@@ -1,5 +1,4 @@
-#ifndef MENUSERVICEITEM_H
-#define MENUSERVICEITEM_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -21,5 +20,3 @@ namespace InnertubeObjects
               text(menuServiceItemRenderer["text"]) {}
     };
 }
-
-#endif // MENUSERVICEITEM_H

@@ -1,5 +1,4 @@
-#ifndef BROWSEHISTORY_H
-#define BROWSEHISTORY_H
+#pragma once
 #include "innertube/endpoints/base/basebrowseendpoint.h"
 #include "innertube/responses/browse/historyresponse.h"
 
@@ -23,5 +22,3 @@ namespace InnertubeEndpoints
                       const QString& query, const QString& tokenIn = "");
     };
 }
-
-#endif // BROWSEHISTORY_H

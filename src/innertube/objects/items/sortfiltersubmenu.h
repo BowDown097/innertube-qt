@@ -1,5 +1,4 @@
-#ifndef SORTFILTERSUBMENU_H
-#define SORTFILTERSUBMENU_H
+#pragma once
 #include "menu/menuserviceitem.h"
 
 namespace InnertubeObjects
@@ -16,5 +15,3 @@ namespace InnertubeObjects
         explicit SortFilterSubMenu(const QJsonValue& sortFilterSubMenuRenderer);
     };
 }
-
-#endif // SORTFILTERSUBMENU_H

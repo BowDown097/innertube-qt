@@ -1,5 +1,4 @@
-#ifndef VIDEOPRIMARYINFO_H
-#define VIDEOPRIMARYINFO_H
+#pragma once
 #include "videoactions.h"
 #include "viewcount.h"
 
@@ -26,5 +25,3 @@ namespace InnertubeObjects
               viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]) {}
     };
 }
-
-#endif // VIDEOPRIMARYINFO_H

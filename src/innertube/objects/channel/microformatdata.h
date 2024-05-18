@@ -1,5 +1,4 @@
-#ifndef MICROFORMATDATA_H
-#define MICROFORMATDATA_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -35,4 +34,3 @@ namespace InnertubeObjects
         explicit MicroformatData(const QJsonValue& microformatDataRenderer);
     };
 }
-#endif // MICROFORMATDATA_H

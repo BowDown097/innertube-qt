@@ -1,5 +1,4 @@
-#ifndef NOTIFICATION_H
-#define NOTIFICATION_H
+#pragma once
 #include "innertube/objects/genericthumbnail.h"
 #include <optional>
 
@@ -19,5 +18,3 @@ namespace InnertubeObjects
         explicit Notification(const QJsonValue& notificationRenderer);
     };
 }
-
-#endif // NOTIFICATION_H

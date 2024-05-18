@@ -1,5 +1,4 @@
-#ifndef EMOJI_H
-#define EMOJI_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -17,5 +16,3 @@ namespace InnertubeObjects
         explicit Emoji(const QJsonValue& emojiObj);
     };
 }
-
-#endif // EMOJI_H

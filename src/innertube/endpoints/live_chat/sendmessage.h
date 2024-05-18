@@ -1,5 +1,4 @@
-#ifndef SENDMESSAGE_H
-#define SENDMESSAGE_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include <QJsonArray>
 
@@ -30,5 +29,3 @@ namespace InnertubeEndpoints
                     const QString& clientMessageId, const QString& params);
     };
 }
-
-#endif // SENDMESSAGE_H

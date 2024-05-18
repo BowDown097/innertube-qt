@@ -1,5 +1,4 @@
-#ifndef MODIFYCHANNELPREFERENCE_H
-#define MODIFYCHANNELPREFERENCE_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/objects/channel/notificationpreferencebutton.h"
 
@@ -21,5 +20,3 @@ namespace InnertubeEndpoints
         ModifyChannelPreference(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& params);
     };
 }
-
-#endif // MODIFYCHANNELPREFERENCE_H

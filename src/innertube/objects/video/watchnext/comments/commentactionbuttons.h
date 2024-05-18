@@ -1,5 +1,4 @@
-#ifndef COMMENTACTIONBUTTONS_H
-#define COMMENTACTIONBUTTONS_H
+#pragma once
 #include "innertube/objects/items/button.h"
 #include "innertube/objects/items/togglebutton.h"
 
@@ -24,5 +23,3 @@ namespace InnertubeObjects
               style(commentActionButtonsRenderer["style"].toString()) {}
     };
 }
-
-#endif // COMMENTACTIONBUTTONS_H

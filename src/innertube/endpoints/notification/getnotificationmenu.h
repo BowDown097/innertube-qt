@@ -1,5 +1,4 @@
-#ifndef GETNOTIFICATIONMENU_H
-#define GETNOTIFICATIONMENU_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/notification/notificationmenuresponse.h"
 
@@ -22,5 +21,3 @@ namespace InnertubeEndpoints
                             const QString& notificationsMenuRequestType, const QString& tokenIn = "");
     };
 }
-
-#endif // GETNOTIFICATIONMENU_H

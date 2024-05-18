@@ -1,5 +1,4 @@
-#ifndef SECONDARYINFOOWNER_H
-#define SECONDARYINFOOWNER_H
+#pragma once
 #include "innertube/objects/channel/metadatabadge.h"
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/responsiveimage.h"
@@ -19,5 +18,3 @@ namespace InnertubeObjects
         explicit SecondaryInfoOwner(const QJsonValue& videoOwnerRenderer);
     };
 }
-
-#endif // SECONDARYINFOOWNER_H

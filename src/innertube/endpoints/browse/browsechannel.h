@@ -1,5 +1,4 @@
-#ifndef BROWSECHANNEL_H
-#define BROWSECHANNEL_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/browse/channelresponse.h"
 
@@ -25,5 +24,3 @@ namespace InnertubeEndpoints
                       const QString& tokenIn = "", const QString& params = "");
     };
 }
-
-#endif // BROWSECHANNEL_H

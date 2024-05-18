@@ -1,5 +1,4 @@
-#ifndef COMPACTLINK_H
-#define COMPACTLINK_H
+#pragma once
 #include "innertubestring.h"
 
 namespace InnertubeObjects
@@ -16,5 +15,3 @@ namespace InnertubeObjects
               title(compactLinkRenderer["title"]) {}
     };
 }
-
-#endif // COMPACTLINK_H

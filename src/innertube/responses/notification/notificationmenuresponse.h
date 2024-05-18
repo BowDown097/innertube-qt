@@ -1,5 +1,4 @@
-#ifndef NOTIFICATIONMENURESPONSE_H
-#define NOTIFICATIONMENURESPONSE_H
+#pragma once
 #include "innertube/objects/notification/notification.h"
 
 namespace InnertubeEndpoints
@@ -11,5 +10,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::Notification> notifications;
     };
 }
-
-#endif // NOTIFICATIONMENURESPONSE_H

@@ -1,5 +1,4 @@
-#ifndef MENUFLEXIBLEITEM_H
-#define MENUFLEXIBLEITEM_H
+#pragma once
 #include "innertube/objects/viewmodels/buttonviewmodel.h"
 #include "menuserviceitem.h"
 #include <QJsonObject>
@@ -17,5 +16,3 @@ namespace InnertubeObjects
               topLevelButton(menuFlexibleItemRenderer["topLevelButton"].toObject().constBegin().value()) {}
     };
 }
-
-#endif // MENUFLEXIBLEITEM_H

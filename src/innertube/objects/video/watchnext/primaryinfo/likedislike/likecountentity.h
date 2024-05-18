@@ -1,5 +1,4 @@
-#ifndef LIKECOUNTENTITY_H
-#define LIKECOUNTENTITY_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -40,5 +39,3 @@ namespace InnertubeObjects
               sentimentFactoidA11yTextIfLiked(likeCountEntity["sentimentFactoidA11yTextIfLiked"]["content"].toString()) {}
     };
 }
-
-#endif // LIKECOUNTENTITY_H

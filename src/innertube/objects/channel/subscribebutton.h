@@ -1,5 +1,4 @@
-#ifndef SUBSCRIBEBUTTON_H
-#define SUBSCRIBEBUTTON_H
+#pragma once
 #include "notificationpreferencebutton.h"
 
 namespace InnertubeObjects
@@ -45,5 +44,3 @@ namespace InnertubeObjects
               unsubscribedButtonText(subscribeButtonRenderer["unsubscribedButtonText"]) {}
     };
 }
-
-#endif // SUBSCRIBEBUTTON_H

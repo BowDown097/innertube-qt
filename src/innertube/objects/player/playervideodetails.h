@@ -1,5 +1,4 @@
-#ifndef PLAYERVIDEODETAILS_H
-#define PLAYERVIDEODETAILS_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -32,5 +31,3 @@ namespace InnertubeObjects
         explicit PlayerVideoDetails(const QJsonValue& videoDetails);
     };
 }
-
-#endif // PLAYERVIDEODETAILS_H

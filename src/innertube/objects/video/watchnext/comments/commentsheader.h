@@ -1,5 +1,4 @@
-#ifndef COMMENTSHEADER_H
-#define COMMENTSHEADER_H
+#pragma once
 #include "commentsimplebox.h"
 #include "innertube/objects/items/emoji/emoji.h"
 #include "innertube/objects/items/sortfiltersubmenu.h"
@@ -21,5 +20,3 @@ namespace InnertubeObjects
         explicit CommentsHeader(const QJsonValue& commentsHeaderRenderer);
     };
 }
-
-#endif // COMMENTSHEADER_H

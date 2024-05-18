@@ -1,5 +1,4 @@
-#ifndef PINNEDCOMMENTBADGE_H
-#define PINNEDCOMMENTBADGE_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -17,5 +16,3 @@ namespace InnertubeObjects
               label(pinnedCommentBadgeRenderer["label"]) {}
     };
 }
-
-#endif // PINNEDCOMMENTBADGE_H

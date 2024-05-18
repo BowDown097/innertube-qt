@@ -1,5 +1,4 @@
-#ifndef LIVECHAT_H
-#define LIVECHAT_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -14,5 +13,3 @@ namespace InnertubeObjects
         explicit LiveChat(const QJsonValue& liveChatRenderer);
     };
 }
-
-#endif // LIVECHAT_H

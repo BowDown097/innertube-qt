@@ -1,5 +1,4 @@
-#ifndef WATCHNEXTPRIMARYRESULTS_H
-#define WATCHNEXTPRIMARYRESULTS_H
+#pragma once
 #include "clarification.h"
 #include "comments/entrypoint/commentsentrypointheader.h"
 #include "primaryinfo/videoprimaryinfo.h"
@@ -19,5 +18,3 @@ namespace InnertubeObjects
         explicit WatchNextPrimaryResults(const QJsonValue& contents);
     };
 }
-
-#endif // WATCHNEXTPRIMARYRESULTS_H

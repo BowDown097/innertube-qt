@@ -1,5 +1,4 @@
-#ifndef VIEWCOUNT_H
-#define VIEWCOUNT_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -21,5 +20,3 @@ namespace InnertubeObjects
               viewCount(videoViewCountRenderer["viewCount"]) {}
     };
 }
-
-#endif // VIEWCOUNT_H

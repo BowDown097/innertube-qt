@@ -1,5 +1,4 @@
-#ifndef ACCOUNTMENURESPONSE_H
-#define ACCOUNTMENURESPONSE_H
+#pragma once
 #include "innertube/objects/account_menu/activeaccountheader.h"
 #include "innertube/objects/compactlink.h"
 
@@ -12,5 +11,3 @@ namespace InnertubeEndpoints
         QString style;
     };
 }
-
-#endif // ACCOUNTMENURESPONSE_H

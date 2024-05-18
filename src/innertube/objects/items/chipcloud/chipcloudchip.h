@@ -1,5 +1,4 @@
-#ifndef CHIPCLOUDCHIP_H
-#define CHIPCLOUDCHIP_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -19,5 +18,3 @@ namespace InnertubeObjects
               text(chipCloudChipRenderer["text"]["simpleText"].toString()) {}
     };
 }
-
-#endif // CHIPCLOUDCHIP_H

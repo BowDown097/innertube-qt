@@ -1,5 +1,4 @@
-#ifndef BACKSTAGEIMAGE_H
-#define BACKSTAGEIMAGE_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -16,5 +15,3 @@ namespace InnertubeObjects
               image(backstageImageRenderer["image"]["thumbnails"]) {}
     };
 }
-
-#endif // BACKSTAGEIMAGE_H

@@ -1,5 +1,4 @@
-#ifndef CAPTIONTRACK_H
-#define CAPTIONTRACK_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -22,5 +21,3 @@ namespace InnertubeObjects
               vssId(captionTrack["vssId"].toString()) {}
     };
 }
-
-#endif // CAPTIONTRACK_H

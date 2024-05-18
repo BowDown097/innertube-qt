@@ -1,5 +1,4 @@
-#ifndef DISLIKEBUTTONVIEWMODEL_H
-#define DISLIKEBUTTONVIEWMODEL_H
+#pragma once
 #include "innertube/objects/viewmodels/togglebuttonviewmodel.h"
 
 namespace InnertubeObjects
@@ -15,5 +14,3 @@ namespace InnertubeObjects
               toggleButtonViewModel(dislikeButtonViewModel["toggleButtonViewModel"]["toggleButtonViewModel"]) {}
     };
 }
-
-#endif // DISLIKEBUTTONVIEWMODEL_H

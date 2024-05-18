@@ -1,5 +1,4 @@
-#ifndef CHANNELHEADERLINK_H
-#define CHANNELHEADERLINK_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -16,5 +15,3 @@ namespace InnertubeObjects
               title(linkRenderer["title"]["simpleText"].toString()) {}
     };
 }
-
-#endif // CHANNELHEADERLINK_H

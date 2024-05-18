@@ -1,5 +1,4 @@
-#ifndef CHIPCLOUD_H
-#define CHIPCLOUD_H
+#pragma once
 #include "chipcloudchip.h"
 #include "innertube/objects/items/button.h"
 
@@ -16,5 +15,3 @@ namespace InnertubeObjects
         explicit ChipCloud(const QJsonValue& chipCloudRenderer);
     };
 }
-
-#endif // CHIPCLOUD_H

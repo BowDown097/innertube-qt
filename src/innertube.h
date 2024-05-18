@@ -1,5 +1,4 @@
-#ifndef INNERTUBE_H
-#define INNERTUBE_H
+#pragma once
 #include "innertube/innertubeexception.h"
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
@@ -132,5 +131,3 @@ private:
     InnertubeAuthStore* m_authStore;
     InnertubeContext* m_context;
 };
-
-#endif // INNERTUBE_H

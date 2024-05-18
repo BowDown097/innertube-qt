@@ -1,5 +1,4 @@
-#ifndef UPDATEDMETADATARESPONSE_H
-#define UPDATEDMETADATARESPONSE_H
+#pragma once
 #include "innertube/objects/video/watchnext/primaryinfo/likedislike/likecountentity.h"
 #include "innertube/objects/video/watchnext/primaryinfo/viewcount.h"
 
@@ -15,5 +14,3 @@ namespace InnertubeEndpoints
         InnertubeObjects::ViewCount viewCount;
     };
 }
-
-#endif // UPDATEDMETADATARESPONSE_H

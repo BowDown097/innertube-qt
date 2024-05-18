@@ -1,5 +1,4 @@
-#ifndef CHANNELRESPONSE_H
-#define CHANNELRESPONSE_H
+#pragma once
 #include "innertube/objects/entitymutation.h"
 #include "innertube/objects/channel/channelc4header.h"
 #include "innertube/objects/channel/channelpageheader.h"
@@ -17,5 +16,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::EntityMutation> mutations;
     };
 }
-
-#endif // CHANNELRESPONSE_H

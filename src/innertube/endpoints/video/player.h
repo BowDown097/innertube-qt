@@ -1,5 +1,4 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/video/playerresponse.h"
 
@@ -17,6 +16,3 @@ namespace InnertubeEndpoints
         Player(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId);
     };
 }
-
-
-#endif // PLAYER_H

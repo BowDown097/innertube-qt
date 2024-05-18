@@ -1,5 +1,4 @@
-#ifndef PLAYBACKTRACKING_H
-#define PLAYBACKTRACKING_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -23,5 +22,3 @@ namespace InnertubeObjects
               videostatsWatchtimeUrl(playbackTracking["videostatsWatchtimeUrl"]["baseUrl"].toString()) {}
     };
 }
-
-#endif // PLAYBACKTRACKING_H

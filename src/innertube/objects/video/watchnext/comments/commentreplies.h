@@ -1,5 +1,4 @@
-#ifndef COMMENTREPLIES_H
-#define COMMENTREPLIES_H
+#pragma once
 #include "innertube/objects/items/button.h"
 
 namespace InnertubeObjects
@@ -15,5 +14,3 @@ namespace InnertubeObjects
         explicit CommentReplies(const QJsonValue& commentRepliesRenderer);
     };
 }
-
-#endif // COMMENTREPLIES_H

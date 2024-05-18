@@ -1,5 +1,4 @@
-#ifndef INNERTUBECLIENT_H
-#define INNERTUBECLIENT_H
+#pragma once
 #include "innertubeconfiginfo.h"
 #include <optional>
 
@@ -116,5 +115,3 @@ private:
     static std::optional<QString> getVersionFromGooglePlay(const QString& name);
     static std::optional<QString> getVersionFromPageBody(const QString& url);
 };
-
-#endif // INNERTUBECLIENT_H

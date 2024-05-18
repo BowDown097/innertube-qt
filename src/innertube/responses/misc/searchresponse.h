@@ -1,5 +1,4 @@
-#ifndef SEARCHRESPONSE_H
-#define SEARCHRESPONSE_H
+#pragma once
 #include "innertube/objects/channel/channel.h"
 #include "innertube/objects/video/video.h"
 
@@ -12,5 +11,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::Video> videos;
     };
 }
-
-#endif // SEARCHRESPONSE_H

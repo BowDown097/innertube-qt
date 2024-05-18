@@ -1,5 +1,4 @@
-#ifndef NEXTCONTINUATIONDATA_H
-#define NEXTCONTINUATIONDATA_H
+#pragma once
 #include "innertube/objects/video/video.h"
 #include "innertube/objects/video/watchnext/comments/commentsheader.h"
 #include "innertube/objects/video/watchnext/comments/commentthread.h"
@@ -17,5 +16,3 @@ namespace InnertubeEndpoints
         explicit NextContinuationData(const QJsonValue& onResponseReceivedEndpoints);
     };
 }
-
-#endif // NEXTCONTINUATIONDATA_H

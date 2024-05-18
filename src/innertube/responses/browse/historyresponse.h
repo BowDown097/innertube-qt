@@ -1,5 +1,4 @@
-#ifndef HISTORYRESPONSE_H
-#define HISTORYRESPONSE_H
+#pragma once
 #include "innertube/objects/video/video.h"
 
 namespace InnertubeEndpoints
@@ -9,5 +8,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::Video> videos;
     };
 }
-
-#endif // HISTORYRESPONSE_H

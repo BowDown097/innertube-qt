@@ -1,5 +1,4 @@
-#ifndef GENERICTHUMBNAIL_H
-#define GENERICTHUMBNAIL_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -21,5 +20,3 @@ namespace InnertubeObjects
               width(width) {}
     };
 }
-
-#endif // GENERICTHUMBNAIL_H

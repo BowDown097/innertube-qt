@@ -1,5 +1,4 @@
-#ifndef DYNAMICLIKECOUNTUPDATEDATA_H
-#define DYNAMICLIKECOUNTUPDATEDATA_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -19,5 +18,3 @@ namespace InnertubeObjects
               updateStatusKey(dynamicLikeCountUpdateData["updateStatusKey"].toString()) {}
     };
 }
-
-#endif // DYNAMICLIKECOUNTUPDATEDATA_H

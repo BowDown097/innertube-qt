@@ -1,5 +1,4 @@
-#ifndef SSLHTTPREQUEST_H
-#define SSLHTTPREQUEST_H
+#pragma once
 #include <QJsonObject>
 #include <QSslSocket>
 #include <QUrl>
@@ -61,5 +60,3 @@ W_REGISTER_ARGTYPE(QAbstractSocket::SocketError)
 W_REGISTER_ARGTYPE(QList<QSslError>)
 W_REGISTER_ARGTYPE(SslHttpRequestError)
 W_OBJECT_IMPL_INLINE(SslHttpRequest)
-
-#endif // SSLHTTPREQUEST_H

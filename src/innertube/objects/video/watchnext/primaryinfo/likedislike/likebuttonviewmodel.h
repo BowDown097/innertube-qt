@@ -1,5 +1,4 @@
-#ifndef LIKEBUTTONVIEWMODEL_H
-#define LIKEBUTTONVIEWMODEL_H
+#pragma once
 #include "innertube/objects/viewmodels/togglebuttonviewmodel.h"
 
 namespace InnertubeObjects
@@ -17,5 +16,3 @@ namespace InnertubeObjects
               toggleButtonViewModel(likeButtonViewModel["toggleButtonViewModel"]["toggleButtonViewModel"]) {}
     };
 }
-
-#endif // LIKEBUTTONVIEWMODEL_H

@@ -1,5 +1,4 @@
-#ifndef REEL_H
-#define REEL_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/responsiveimage.h"
 #include "videoowner.h"
@@ -27,5 +26,3 @@ namespace InnertubeObjects
               viewCountText(reelItemRenderer["viewCountText"]) {}
     };
 }
-
-#endif // REEL_H

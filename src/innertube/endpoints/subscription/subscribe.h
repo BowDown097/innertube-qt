@@ -1,5 +1,4 @@
-#ifndef SUBSCRIBE_H
-#define SUBSCRIBE_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -20,5 +19,3 @@ namespace InnertubeEndpoints
                   const QString& params);
     };
 }
-
-#endif // SUBSCRIBE_H

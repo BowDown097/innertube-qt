@@ -1,5 +1,4 @@
-#ifndef RESPONSIVEIMAGE_H
-#define RESPONSIVEIMAGE_H
+#pragma once
 #include "genericthumbnail.h"
 
 namespace InnertubeObjects
@@ -12,5 +11,3 @@ namespace InnertubeObjects
         const GenericThumbnail& recommendedQuality(const QSize& target) const;
     };
 }
-
-#endif // RESPONSIVEIMAGE_H

@@ -1,5 +1,4 @@
-#ifndef CHANNELMETADATA_H
-#define CHANNELMETADATA_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -28,5 +27,3 @@ namespace InnertubeObjects
         explicit ChannelMetadata(const QJsonValue& channelMetadataRenderer);
     };
 }
-
-#endif // CHANNELMETADATA_H

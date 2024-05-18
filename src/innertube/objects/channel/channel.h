@@ -1,5 +1,4 @@
-#ifndef CHANNEL_H
-#define CHANNEL_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 #include "subscribebutton.h"
 
@@ -27,5 +26,3 @@ namespace InnertubeObjects
               videoCountText(InnertubeString(channelRenderer["videoCountText"])) {}
     };
 }
-
-#endif // CHANNEL_H

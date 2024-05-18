@@ -1,5 +1,4 @@
-#ifndef NOTIFICATIONPREFERENCEBUTTON_H
-#define NOTIFICATIONPREFERENCEBUTTON_H
+#pragma once
 #include "innertube/objects/items/menu/menu.h"
 #include "notificationstate.h"
 
@@ -20,5 +19,3 @@ namespace InnertubeObjects
         MenuServiceItem getService(const QString& iconType) const;
     };
 }
-
-#endif // NOTIFICATIONPREFERENCEBUTTON_H

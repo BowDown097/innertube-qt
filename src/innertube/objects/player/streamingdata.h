@@ -1,5 +1,4 @@
-#ifndef STREAMINGDATA_H
-#define STREAMINGDATA_H
+#pragma once
 #include "streamingformat.h"
 
 namespace InnertubeObjects
@@ -16,5 +15,3 @@ namespace InnertubeObjects
         explicit StreamingData(const QJsonValue& streamingData);
     };
 }
-
-#endif // STREAMINGDATA_H

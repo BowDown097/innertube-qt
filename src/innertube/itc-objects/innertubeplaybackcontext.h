@@ -1,5 +1,4 @@
-#ifndef INNERTUBEPLAYBACKCONTEXT_H
-#define INNERTUBEPLAYBACKCONTEXT_H
+#pragma once
 #include <QJsonObject>
 
 class InnertubePlaybackContext
@@ -29,5 +28,3 @@ private:
     int fetchSignatureTimestamp() const;
 #endif
 };
-
-#endif // INNERTUBEPLAYBACKCONTEXT_H

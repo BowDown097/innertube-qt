@@ -1,5 +1,4 @@
-#ifndef INNERTUBECONTEXT_H
-#define INNERTUBECONTEXT_H
+#pragma once
 #include "innertubeclicktracking.h"
 #include "innertubeclient.h"
 #include "innertuberequestconfig.h"
@@ -20,5 +19,3 @@ struct InnertubeContext : public QObject
         : clickTracking(clickTracking), client(client), request(request), user(user), QObject(parent) {}
     QJsonObject toJson() const;
 };
-
-#endif // INNERTUBECONTEXT_H

@@ -1,5 +1,4 @@
-#ifndef INNERTUBEREPLY_H
-#define INNERTUBEREPLY_H
+#pragma once
 #include <wobjectimpl.h>
 #include "endpoints/innertubeendpoints.h"
 #include "innertubeexception.h"
@@ -37,5 +36,3 @@ public /* signals */:
 };
 
 W_OBJECT_IMPL_INLINE(InnertubeReply<E>, template<EndpointWithData E>)
-
-#endif // INNERTUBEREPLY_H

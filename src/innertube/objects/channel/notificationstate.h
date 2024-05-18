@@ -1,5 +1,4 @@
-#ifndef NOTIFICATIONSTATE_H
-#define NOTIFICATIONSTATE_H
+#pragma once
 #include "innertube/objects/items/button.h"
 
 namespace InnertubeObjects
@@ -17,5 +16,3 @@ namespace InnertubeObjects
               stateId(state["stateId"].toInt()) {}
     };
 }
-
-#endif // NOTIFICATIONSTATE_H

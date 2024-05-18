@@ -1,5 +1,4 @@
-#ifndef VIDEOSECONDARYINFO_H
-#define VIDEOSECONDARYINFO_H
+#pragma once
 #include "metadatarowcontainer.h"
 #include "secondaryinfoowner.h"
 #include "innertube/objects/dynamictext.h"
@@ -30,5 +29,3 @@ namespace InnertubeObjects
               subscribeButton(secondaryInfoRenderer["subscribeButton"]["subscribeButtonRenderer"]) {}
     };
 }
-
-#endif // VIDEOSECONDARYINFO_H

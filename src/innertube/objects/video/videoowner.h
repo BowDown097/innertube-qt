@@ -1,5 +1,4 @@
-#ifndef VIDEOOWNER_H
-#define VIDEOOWNER_H
+#pragma once
 #include "innertube/objects/channel/metadatabadge.h"
 #include "innertube/objects/responsiveimage.h"
 
@@ -18,5 +17,3 @@ namespace InnertubeObjects
         VideoOwner(const QJsonValue& textVal, const QJsonValue& thumbnailVal, const QJsonArray& badgesJson);
     };
 }
-
-#endif // VIDEOOWNER_H

@@ -1,5 +1,4 @@
-#ifndef TRENDINGRESPONSE_H
-#define TRENDINGRESPONSE_H
+#pragma once
 #include "innertube/objects/video/video.h"
 
 namespace InnertubeEndpoints
@@ -10,5 +9,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::Video> videos;
     };
 }
-
-#endif // TRENDINGRESPONSE_H

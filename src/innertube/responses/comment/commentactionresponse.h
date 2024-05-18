@@ -1,5 +1,4 @@
-#ifndef COMMENTACTIONRESPONSE_H
-#define COMMENTACTIONRESPONSE_H
+#pragma once
 #include <QJsonArray>
 
 namespace InnertubeEndpoints
@@ -10,5 +9,3 @@ namespace InnertubeEndpoints
         QJsonArray actions;
     };
 }
-
-#endif // COMMENTACTIONRESPONSE_H

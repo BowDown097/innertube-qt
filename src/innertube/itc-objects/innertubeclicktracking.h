@@ -1,5 +1,4 @@
-#ifndef INNERTUBECLICKTRACKING_H
-#define INNERTUBECLICKTRACKING_H
+#pragma once
 #include <QJsonObject>
 
 struct InnertubeClickTracking
@@ -8,5 +7,3 @@ struct InnertubeClickTracking
     explicit InnertubeClickTracking(const QString& clickTrackingParams = "") : clickTrackingParams(clickTrackingParams) {}
     QJsonObject toJson() const { return {{ "clickTrackingParams", clickTrackingParams }}; }
 };
-
-#endif // INNERTUBECLICKTRACKING_H

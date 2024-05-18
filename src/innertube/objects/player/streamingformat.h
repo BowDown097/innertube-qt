@@ -1,5 +1,4 @@
-#ifndef STREAMINGFORMAT_H
-#define STREAMINGFORMAT_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -46,5 +45,3 @@ namespace InnertubeObjects
               width(format["width"].toInt()) {}
     };
 }
-
-#endif // STREAMINGFORMAT_H

@@ -1,5 +1,4 @@
-#ifndef COMMENTSENTRYPOINTTEASER_H
-#define COMMENTSENTRYPOINTTEASER_H
+#pragma once
 #include "innertube/objects/imagewithaccessibility.h"
 #include "innertube/objects/innertubestring.h"
 
@@ -16,5 +15,3 @@ namespace InnertubeObjects
               teaserContent(commentsEntryPointTeaserRenderer["teaserContent"]) {}
     };
 }
-
-#endif // COMMENTSENTRYPOINTTEASER_H

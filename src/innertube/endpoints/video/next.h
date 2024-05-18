@@ -1,5 +1,4 @@
-#ifndef NEXT_H
-#define NEXT_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/video/nextresponse.h"
 
@@ -20,5 +19,3 @@ namespace InnertubeEndpoints
         Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn = "");
     };
 }
-
-#endif // NEXT_H

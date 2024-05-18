@@ -1,5 +1,4 @@
-#ifndef ABOUTFULLMETADATA_H
-#define ABOUTFULLMETADATA_H
+#pragma once
 #include "channelheaderlink.h"
 #include "innertube/objects/items/button.h"
 #include "innertube/objects/responsiveimage.h"
@@ -29,5 +28,3 @@ namespace InnertubeObjects
         explicit AboutFullMetadata(const QJsonValue& renderer);
     };
 }
-
-#endif // ABOUTFULLMETADATA_H

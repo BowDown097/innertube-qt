@@ -1,5 +1,4 @@
-#ifndef COMMENTTHREAD_H
-#define COMMENTTHREAD_H
+#pragma once
 #include "comment.h"
 #include "commentreplies.h"
 
@@ -20,5 +19,3 @@ namespace InnertubeObjects
               replies(commentThreadRenderer["replies"]["commentRepliesRenderer"]) {}
     };
 }
-
-#endif // COMMENTTHREAD_H

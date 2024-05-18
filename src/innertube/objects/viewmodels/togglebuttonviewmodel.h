@@ -1,5 +1,4 @@
-#ifndef TOGGLEBUTTONVIEWMODEL_H
-#define TOGGLEBUTTONVIEWMODEL_H
+#pragma once
 #include "buttonviewmodel.h"
 
 namespace InnertubeObjects
@@ -19,5 +18,3 @@ namespace InnertubeObjects
               toggledButtonViewModel(toggleButtonViewModel["toggledButtonViewModel"]["buttonViewModel"]) {}
     };
 }
-
-#endif // TOGGLEBUTTONVIEWMODEL_H

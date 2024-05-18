@@ -1,5 +1,4 @@
-#ifndef PLAYERRESPONSE_H
-#define PLAYERRESPONSE_H
+#pragma once
 #include "innertube/objects/player/captiontrack.h"
 #include "innertube/objects/player/playbacktracking.h"
 #include "innertube/objects/player/playervideodetails.h"
@@ -15,5 +14,3 @@ namespace InnertubeEndpoints
         InnertubeObjects::PlayerVideoDetails videoDetails;
     };
 }
-
-#endif // PLAYERRESPONSE_H

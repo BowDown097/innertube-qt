@@ -1,5 +1,4 @@
-#ifndef CHANNELPAGEHEADER_H
-#define CHANNELPAGEHEADER_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 #include "innertube/objects/viewmodels/buttonviewmodel.h"
 #include "innertube/objects/viewmodels/contentmetadataviewmodel.h"
@@ -23,5 +22,3 @@ namespace InnertubeObjects
         explicit ChannelPageHeader(const QJsonValue& pageHeaderViewModel);
     };
 }
-
-#endif // CHANNELPAGEHEADER_H

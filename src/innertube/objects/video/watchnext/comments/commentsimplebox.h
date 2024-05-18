@@ -1,5 +1,4 @@
-#ifndef COMMENTSIMPLEBOX_H
-#define COMMENTSIMPLEBOX_H
+#pragma once
 #include "innertube/objects/imagewithaccessibility.h"
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/items/button.h"
@@ -26,5 +25,3 @@ namespace InnertubeObjects
               prepareAccountEndpoint(commentSimpleboxRenderer["prepareAccountEndpoint"]) {}
     };
 }
-
-#endif // COMMENTSIMPLEBOX_H

@@ -1,5 +1,4 @@
-#ifndef CLARIFICATION_H
-#define CLARIFICATION_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/items/button.h"
 
@@ -35,5 +34,3 @@ namespace InnertubeObjects
               text(clarificationRenderer["text"]) {}
     };
 }
-
-#endif // CLARIFICATION_H

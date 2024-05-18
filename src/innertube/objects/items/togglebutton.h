@@ -1,5 +1,4 @@
-#ifndef TOGGLEBUTTON_H
-#define TOGGLEBUTTON_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -40,5 +39,3 @@ namespace InnertubeObjects
               toggledTooltip(toggleButtonRenderer["toggledTooltip"].toString()) {}
     };
 }
-
-#endif // TOGGLEBUTTON_H

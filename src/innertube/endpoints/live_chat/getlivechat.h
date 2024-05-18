@@ -1,5 +1,4 @@
-#ifndef GETLIVECHAT_H
-#define GETLIVECHAT_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -20,5 +19,3 @@ namespace InnertubeEndpoints
         GetLiveChat(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& continuation);
     };
 }
-
-#endif // GETLIVECHAT_H

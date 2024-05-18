@@ -1,5 +1,4 @@
-#ifndef POLL_H
-#define POLL_H
+#pragma once
 #include "pollchoice.h"
 
 namespace InnertubeObjects
@@ -14,5 +13,3 @@ namespace InnertubeObjects
         explicit Poll(const QJsonValue& pollRenderer);
     };
 }
-
-#endif // POLL_H

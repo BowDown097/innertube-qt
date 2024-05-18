@@ -1,5 +1,4 @@
-#ifndef BROWSEHOME_H
-#define BROWSEHOME_H
+#pragma once
 #include "innertube/endpoints/base/basebrowseendpoint.h"
 #include "innertube/responses/browse/homeresponse.h"
 
@@ -21,5 +20,3 @@ namespace InnertubeEndpoints
         BrowseHome(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn = "");
     };
 }
-
-#endif // BROWSEHOME_H

@@ -1,5 +1,4 @@
-#ifndef COMMENTSENTRYPOINTHEADER_H
-#define COMMENTSENTRYPOINTHEADER_H
+#pragma once
 #include "commentsentrypointteaser.h"
 #include "innertube/objects/innertubestring.h"
 
@@ -22,5 +21,3 @@ namespace InnertubeObjects
               teaser(commentsEntryPointHeaderRenderer["contentRenderer"]["commentsEntryPointTeaserRenderer"]) {}
     };
 }
-
-#endif // COMMENTSENTRYPOINTHEADER_H

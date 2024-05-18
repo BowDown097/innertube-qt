@@ -1,5 +1,4 @@
-#ifndef METADATAROW_H
-#define METADATAROW_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -13,5 +12,3 @@ namespace InnertubeObjects
         explicit MetadataRow(const QJsonValue& metadataRowRenderer);
     };
 }
-
-#endif // METADATAROW_H

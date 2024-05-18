@@ -1,5 +1,4 @@
-#ifndef BACKSTAGEPOST_H
-#define BACKSTAGEPOST_H
+#pragma once
 #include "backstageimage.h"
 #include "innertube/objects/items/menu/menu.h"
 #include "innertube/objects/responsiveimage.h"
@@ -30,5 +29,3 @@ namespace InnertubeObjects
         explicit BackstagePost(const QJsonValue& backstagePostRenderer);
     };
 }
-
-#endif // BACKSTAGEPOST_H

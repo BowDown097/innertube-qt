@@ -1,5 +1,4 @@
-#ifndef INNERTUBECONFIGINFO_H
-#define INNERTUBECONFIGINFO_H
+#pragma once
 #include <QJsonObject>
 
 struct InnertubeConfigInfo
@@ -8,5 +7,3 @@ struct InnertubeConfigInfo
     explicit InnertubeConfigInfo(const QString& appInstallData = "") : appInstallData(appInstallData) {}
     QJsonObject toJson() const { return {{ "appInstallData", appInstallData }}; }
 };
-
-#endif // INNERTUBECONFIGINFO_H

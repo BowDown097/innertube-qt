@@ -1,5 +1,4 @@
-#ifndef VIDEO_H
-#define VIDEO_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/responsiveimage.h"
 #include "videoowner.h"
@@ -30,5 +29,3 @@ namespace InnertubeObjects
         QTime length() const;
     };
 }
-
-#endif // VIDEO_H

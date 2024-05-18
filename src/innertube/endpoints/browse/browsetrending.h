@@ -1,5 +1,4 @@
-#ifndef BROWSETRENDING_H
-#define BROWSETRENDING_H
+#pragma once
 #include "innertube/endpoints/base/basebrowseendpoint.h"
 #include "innertube/responses/browse/trendingresponse.h"
 
@@ -17,5 +16,3 @@ namespace InnertubeEndpoints
         BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
-
-#endif // BROWSETRENDING_H

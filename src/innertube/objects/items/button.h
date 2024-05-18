@@ -1,5 +1,4 @@
-#ifndef BUTTON_H
-#define BUTTON_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 #include <optional>
 
@@ -34,5 +33,3 @@ namespace InnertubeObjects
               tooltip(buttonRenderer["tooltip"].toString()) {}
     };
 }
-
-#endif // BUTTON_H

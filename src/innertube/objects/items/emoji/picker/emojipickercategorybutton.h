@@ -1,5 +1,4 @@
-#ifndef EMOJIPICKERCATEGORYBUTTON_H
-#define EMOJIPICKERCATEGORYBUTTON_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -19,5 +18,3 @@ namespace InnertubeObjects
               tooltip(emojiPickerCategoryButtonRenderer["tooltip"].toString()) {}
     };
 }
-
-#endif // EMOJIPICKERCATEGORYBUTTON_H

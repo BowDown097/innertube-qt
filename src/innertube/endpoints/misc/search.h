@@ -1,5 +1,4 @@
-#ifndef SEARCH_H
-#define SEARCH_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/misc/searchresponse.h"
 
@@ -24,5 +23,3 @@ namespace InnertubeEndpoints
                const QString& tokenIn = "", const QString& params = "");
     };
 }
-
-#endif // SEARCH_H

@@ -1,5 +1,4 @@
-#ifndef EMOJIPICKERCATEGORY_H
-#define EMOJIPICKERCATEGORY_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -15,5 +14,3 @@ namespace InnertubeObjects
         explicit EmojiPickerCategory(const QJsonValue& emojiPickerCategoryRenderer);
     };
 }
-
-#endif // EMOJIPICKERCATEGORY_H

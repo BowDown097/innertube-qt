@@ -1,5 +1,4 @@
-#ifndef ACCOUNTMENU_H
-#define ACCOUNTMENU_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/misc/accountmenuresponse.h"
 
@@ -17,5 +16,3 @@ namespace InnertubeEndpoints
         AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
-
-#endif // ACCOUNTMENU_H

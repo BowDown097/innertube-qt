@@ -1,5 +1,4 @@
-#ifndef EMOJIPICKER_H
-#define EMOJIPICKER_H
+#pragma once
 #include "emojipickercategory.h"
 #include "emojipickercategorybutton.h"
 #include "innertube/objects/innertubestring.h"
@@ -26,5 +25,3 @@ namespace InnertubeObjects
         explicit EmojiPicker(const QJsonValue& emojiPickerRenderer);
     };
 }
-
-#endif // EMOJIPICKER_H

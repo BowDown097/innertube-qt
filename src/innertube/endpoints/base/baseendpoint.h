@@ -1,5 +1,4 @@
-#ifndef BASEENDPOINT_H
-#define BASEENDPOINT_H
+#pragma once
 #include "innertube/itc-objects/innertubeauthstore.h"
 #include "sslhttprequest.h"
 #include <QEventLoop>
@@ -72,5 +71,3 @@ namespace InnertubeEndpoints
         }
     };
 }
-
-#endif // BASEENDPOINT_H

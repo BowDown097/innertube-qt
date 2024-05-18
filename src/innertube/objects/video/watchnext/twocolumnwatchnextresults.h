@@ -1,5 +1,4 @@
-#ifndef TWOCOLUMNWATCHNEXTRESULTS_H
-#define TWOCOLUMNWATCHNEXTRESULTS_H
+#pragma once
 #include "innertube/objects/live_chat/livechat.h"
 #include "watchnextprimaryresults.h"
 #include "watchnextsecondaryresults.h"
@@ -21,5 +20,3 @@ namespace InnertubeObjects
               secondaryResults(twoColumnWatchNextResults["secondaryResults"]["secondaryResults"]["results"]) {}
     };
 }
-
-#endif // TWOCOLUMNWATCHNEXTRESULTS_H

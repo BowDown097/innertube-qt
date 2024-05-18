@@ -1,5 +1,4 @@
-#ifndef ACTIVEACCOUNTHEADER_H
-#define ACTIVEACCOUNTHEADER_H
+#pragma once
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -21,5 +20,3 @@ namespace InnertubeObjects
               settingsEndpoint(activeAccountHeaderRenderer["settingsEndpoint"]) {}
     };
 }
-
-#endif // ACTIVEACCOUNTHEADER_H

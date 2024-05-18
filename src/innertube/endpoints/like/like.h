@@ -1,5 +1,4 @@
-#ifndef LIKE_H
-#define LIKE_H
+#pragma once
 #include "baselikeendpoint.h"
 
 namespace InnertubeEndpoints
@@ -15,5 +14,3 @@ namespace InnertubeEndpoints
             : BaseLikeEndpoint<"like/like">(context, authStore, videoId, params) {}
     };
 }
-
-#endif // LIKE_H

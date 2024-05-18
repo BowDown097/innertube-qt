@@ -1,5 +1,4 @@
-#ifndef LIKEDISLIKEVIEWMODEL_H
-#define LIKEDISLIKEVIEWMODEL_H
+#pragma once
 #include "dislikebuttonviewmodel.h"
 #include "dynamiclikecountupdatedata.h"
 #include "likebuttonviewmodel.h"
@@ -24,5 +23,3 @@ namespace InnertubeObjects
               likeCountEntity(segmentedLikeDislikeButtonViewModel["likeCountEntity"]) {}
     };
 }
-
-#endif // LIKEDISLIKEVIEWMODEL_H

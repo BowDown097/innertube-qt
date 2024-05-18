@@ -1,5 +1,4 @@
-#ifndef NEXTRESPONSE_H
-#define NEXTRESPONSE_H
+#pragma once
 #include "innertube/objects/video/watchnext/twocolumnwatchnextresults.h"
 #include "nextcontinuationdata.h"
 
@@ -12,5 +11,3 @@ namespace InnertubeEndpoints
         QString videoId;
     };
 }
-
-#endif // NEXTRESPONSE_H

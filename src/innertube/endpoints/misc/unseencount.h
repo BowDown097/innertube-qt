@@ -1,5 +1,4 @@
-#ifndef UNSEENCOUNT_H
-#define UNSEENCOUNT_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -16,5 +15,3 @@ namespace InnertubeEndpoints
         UnseenCount(InnertubeContext* context, InnertubeAuthStore* authStore);
     };
 }
-
-#endif // UNSEENCOUNT_H

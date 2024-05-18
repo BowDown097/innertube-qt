@@ -1,5 +1,4 @@
-#ifndef REMOVELIKE_H
-#define REMOVELIKE_H
+#pragma once
 #include "baselikeendpoint.h"
 
 namespace InnertubeEndpoints
@@ -15,5 +14,3 @@ namespace InnertubeEndpoints
             : BaseLikeEndpoint<"like/removelike">(context, authStore, videoId, params) {}
     };
 }
-
-#endif // REMOVELIKE_H

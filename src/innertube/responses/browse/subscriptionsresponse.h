@@ -1,5 +1,4 @@
-#ifndef SUBSCRIPTIONSRESPONSE_H
-#define SUBSCRIPTIONSRESPONSE_H
+#pragma once
 #include "innertube/objects/video/video.h"
 
 namespace InnertubeEndpoints
@@ -9,5 +8,3 @@ namespace InnertubeEndpoints
         QList<InnertubeObjects::Video> videos;
     };
 }
-
-#endif // SUBSCRIPTIONSRESPONSE_H

@@ -1,5 +1,4 @@
-#ifndef AUTHORCOMMENTBADGE_H
-#define AUTHORCOMMENTBADGE_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -23,5 +22,3 @@ namespace InnertubeObjects
               iconType(authorCommentBadgeRenderer["icon"]["iconType"].toString()) {}
     };
 }
-
-#endif // AUTHORCOMMENTBADGE_H

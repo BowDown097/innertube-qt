@@ -1,8 +1,6 @@
-#ifndef INNERTUBEAUTHSTORE_H
-#define INNERTUBEAUTHSTORE_H
+#pragma once
 #include "innertubecontext.h"
 #include <QObject>
-#include <QSettings>
 #include <wobjectimpl.h>
 
 #ifndef INNERTUBE_NO_WEBENGINE
@@ -74,5 +72,3 @@ private:
 };
 
 W_OBJECT_IMPL_INLINE(InnertubeAuthStore)
-
-#endif // INNERTUBEAUTHSTORE_H

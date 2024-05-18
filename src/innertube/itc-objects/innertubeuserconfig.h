@@ -1,5 +1,4 @@
-#ifndef INNERTUBEUSERCONFIG_H
-#define INNERTUBEUSERCONFIG_H
+#pragma once
 #include <QJsonObject>
 
 struct InnertubeUserConfig
@@ -8,5 +7,3 @@ struct InnertubeUserConfig
     explicit InnertubeUserConfig(bool lockedSafetyMode = false) : lockedSafetyMode(lockedSafetyMode) {}
     QJsonObject toJson() const { return {{ "lockedSafetyMode", lockedSafetyMode }}; }
 };
-
-#endif // INNERTUBEUSERCONFIG_H

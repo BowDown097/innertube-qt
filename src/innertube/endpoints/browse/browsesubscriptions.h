@@ -1,5 +1,4 @@
-#ifndef BROWSESUBSCRIPTIONS_H
-#define BROWSESUBSCRIPTIONS_H
+#pragma once
 #include "innertube/endpoints/base/basebrowseendpoint.h"
 #include "innertube/responses/browse/subscriptionsresponse.h"
 
@@ -25,5 +24,3 @@ namespace InnertubeEndpoints
         void handleRichItem(const QJsonValue& v);
     };
 }
-
-#endif // BROWSESUBSCRIPTIONS_H

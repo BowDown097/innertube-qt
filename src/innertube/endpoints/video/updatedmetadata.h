@@ -1,5 +1,4 @@
-#ifndef UPDATEDMETADATA_H
-#define UPDATEDMETADATA_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/video/updatedmetadataresponse.h"
 #include <QJsonArray>
@@ -21,5 +20,3 @@ namespace InnertubeEndpoints
         QJsonValue findAction(const QJsonArray& actions, const QString& name);
     };
 }
-
-#endif // UPDATEDMETADATA_H

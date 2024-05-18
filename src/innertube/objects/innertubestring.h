@@ -1,5 +1,4 @@
-#ifndef INNERTUBESTRING_H
-#define INNERTUBESTRING_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -27,5 +26,3 @@ namespace InnertubeObjects
         friend bool operator!=(const InnertubeString& lhs, const InnertubeString& rhs) { return !(lhs == rhs); }
     };
 }
-
-#endif // INNERTUBESTRING_H

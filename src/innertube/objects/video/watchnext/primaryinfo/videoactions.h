@@ -1,5 +1,4 @@
-#ifndef VIDEOACTIONS_H
-#define VIDEOACTIONS_H
+#pragma once
 #include "innertube/objects/items/menu/menuflexibleitem.h"
 #include "innertube/objects/items/menu/menuserviceitem.h"
 #include "likedislike/likedislikeviewmodel.h"
@@ -17,5 +16,3 @@ namespace InnertubeObjects
         explicit VideoActions(const QJsonValue& menuRenderer);
     };
 }
-
-#endif // VIDEOACTIONS_H

@@ -1,5 +1,4 @@
-#ifndef GETLIVECHATREPLAY_H
-#define GETLIVECHATREPLAY_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -22,5 +21,3 @@ namespace InnertubeEndpoints
                           const QString& continuation, const QString& playerOffsetMs);
     };
 }
-
-#endif // GETLIVECHATREPLAY_H

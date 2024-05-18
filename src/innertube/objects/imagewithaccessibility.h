@@ -1,5 +1,4 @@
-#ifndef IMAGEWITHACCESSIBILITY_H
-#define IMAGEWITHACCESSIBILITY_H
+#pragma once
 #include "responsiveimage.h"
 
 namespace InnertubeObjects
@@ -15,5 +14,3 @@ namespace InnertubeObjects
               image(data["thumbnails"]) {}
     };
 }
-
-#endif // IMAGEWITHACCESSIBILITY_H

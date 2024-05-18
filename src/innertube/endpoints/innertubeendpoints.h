@@ -1,5 +1,4 @@
-#ifndef INNERTUBEENDPOINTS_H
-#define INNERTUBEENDPOINTS_H
+#pragma once
 
 // This header just serves to include every supported endpoint. Nothing more!
 #include "browse/browsechannel.h"
@@ -48,5 +47,3 @@ W_REGISTER_ARGTYPE(InnertubeEndpoints::Subscribe)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::UnseenCount)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Unsubscribe)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::UpdatedMetadata)
-
-#endif // INNERTUBEENDPOINTS_H

@@ -1,5 +1,4 @@
-#ifndef POLLCHOICE_H
-#define POLLCHOICE_H
+#pragma once
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
@@ -33,5 +32,3 @@ namespace InnertubeObjects
               voteRatioIfSelected(choice["voteRatioIfSelected"].toDouble()) {}
     };
 }
-
-#endif // POLLCHOICE_H

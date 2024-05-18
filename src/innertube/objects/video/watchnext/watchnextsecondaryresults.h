@@ -1,5 +1,4 @@
-#ifndef WATCHNEXTSECONDARYRESULTS_H
-#define WATCHNEXTSECONDARYRESULTS_H
+#pragma once
 #include "innertube/objects/video/video.h"
 #include "relatedchipcloud.h"
 
@@ -15,5 +14,3 @@ namespace InnertubeObjects
         WatchNextSecondaryResults(const QJsonValue& results);
     };
 }
-
-#endif // WATCHNEXTSECONDARYRESULTS_H

@@ -1,5 +1,4 @@
-#ifndef BUTTONVIEWMODEL_H
-#define BUTTONVIEWMODEL_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -37,5 +36,3 @@ namespace InnertubeObjects
               type(buttonViewModel["type"].toString()) {}
     };
 }
-
-#endif // BUTTONVIEWMODEL_H

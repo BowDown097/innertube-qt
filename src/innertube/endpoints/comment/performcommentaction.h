@@ -1,5 +1,4 @@
-#ifndef PERFORMCOMMENTACTION_H
-#define PERFORMCOMMENTACTION_H
+#pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/comment/commentactionresponse.h"
 
@@ -19,5 +18,3 @@ namespace InnertubeEndpoints
             : PerformCommentAction(context, authStore, QStringList { action }) {}
     };
 }
-
-#endif // PERFORMCOMMENTACTION_H

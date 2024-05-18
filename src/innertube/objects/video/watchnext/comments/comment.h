@@ -1,5 +1,4 @@
-#ifndef COMMENT_H
-#define COMMENT_H
+#pragma once
 #include "authorcommentbadge.h"
 #include "commentactionbuttons.h"
 #include "innertube/objects/imagewithaccessibility.h"
@@ -55,5 +54,3 @@ namespace InnertubeObjects
               voteStatus(commentRenderer["voteStatus"].toString()) {}
     };
 }
-
-#endif // COMMENT_H

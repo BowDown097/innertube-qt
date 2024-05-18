@@ -1,5 +1,4 @@
-#ifndef INNERTUBEREQUESTCONFIG_H
-#define INNERTUBEREQUESTCONFIG_H
+#pragma once
 #include <QJsonObject>
 
 struct InnertubeRequestConfig
@@ -8,5 +7,3 @@ struct InnertubeRequestConfig
     explicit InnertubeRequestConfig(bool useSsl = true) : useSsl(useSsl) {}
     QJsonObject toJson() const { return {{ "useSsl", useSsl }}; }
 };
-
-#endif // INNERTUBEREQUESTCONFIG_H

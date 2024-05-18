@@ -1,5 +1,4 @@
-#ifndef BASEBROWSEENDPOINT_H
-#define BASEBROWSEENDPOINT_H
+#pragma once
 #include "baseendpoint.h"
 
 namespace InnertubeEndpoints
@@ -17,5 +16,3 @@ namespace InnertubeEndpoints
         QJsonValue getTabRenderer(const QString& name) const;
     };
 }
-
-#endif // BASEBROWSEENDPOINT_H

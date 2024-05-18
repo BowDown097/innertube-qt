@@ -1,5 +1,4 @@
-#ifndef METADATABADGE_H
-#define METADATABADGE_H
+#pragma once
 #include <QJsonValue>
 
 namespace InnertubeObjects
@@ -19,5 +18,3 @@ namespace InnertubeObjects
               tooltip(metadataBadgeRenderer["tooltip"].toString()) {}
     };
 }
-
-#endif // METADATABADGE_H

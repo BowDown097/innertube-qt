@@ -1,5 +1,4 @@
-#ifndef DISLIKE_H
-#define DISLIKE_H
+#pragma once
 #include "baselikeendpoint.h"
 
 namespace InnertubeEndpoints
@@ -15,5 +14,3 @@ namespace InnertubeEndpoints
             : BaseLikeEndpoint<"like/dislike">(context, authStore, videoId, params) {}
     };
 }
-
-#endif // DISLIKE_H

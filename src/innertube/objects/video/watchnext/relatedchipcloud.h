@@ -1,5 +1,4 @@
-#ifndef RELATEDCHIPCLOUD_H
-#define RELATEDCHIPCLOUD_H
+#pragma once
 #include "innertube/objects/items/chipcloud/chipcloud.h"
 
 namespace InnertubeObjects
@@ -14,5 +13,3 @@ namespace InnertubeObjects
               showProminentChips(relatedChipCloudRenderer["showProminentChips"].toBool()) {}
     };
 }
-
-#endif // RELATEDCHIPCLOUD_H

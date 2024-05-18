@@ -1,5 +1,4 @@
-#ifndef INNERTUBEEXCEPTION_H
-#define INNERTUBEEXCEPTION_H
+#pragma once
 #include <QException>
 #include <wobjectdefs.h>
 
@@ -17,5 +16,3 @@ private:
 };
 
 W_REGISTER_ARGTYPE(InnertubeException)
-
-#endif // INNERTUBEEXCEPTION_H
