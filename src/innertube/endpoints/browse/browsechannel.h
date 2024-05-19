@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/endpoints/base/baseendpoint.h"
+#include "innertube/endpoints/base/basebrowseendpoint.h"
 #include "innertube/responses/browse/channelresponse.h"
 
 namespace InnertubeEndpoints
@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
      * @brief Channel info.
      * @details Used on the channel page - youtube.com/c/XXX, youtube.com/channel/XXX, etc.
      */
-    class BrowseChannel : public BaseEndpoint<"browse">
+    class BrowseChannel : public BaseBrowseEndpoint
     {
         friend class ::InnerTube;
     public:

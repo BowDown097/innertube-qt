@@ -1,24 +1,23 @@
 #include "getnotificationmenu.h"
 #include <QJsonArray>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
     GetNotificationMenu::GetNotificationMenu(InnertubeContext* context, InnertubeAuthStore* authStore,
                                              const QString& notificationsMenuRequestType, const QString& tokenIn)
     {
-        QJsonObject body = { { "context", context->toJson() } };
+        QJsonObject body = { EndpointMethods::contextPair(context) };
         if (tokenIn.isEmpty())
             body.insert("notificationsMenuRequestType", notificationsMenuRequestType);
         else
             body.insert("ctoken", tokenIn);
 
-        QByteArray data = get(context, authStore, body);
-        QJsonValue action = QJsonDocument::fromJson(data)["actions"][0];
+        const QJsonValue data = get(context, authStore, body);
+        const QJsonValue action = data["actions"][0];
 
         if (action["openPopupAction"].isObject())
         {
-            QJsonValue menuRenderer = action["openPopupAction"]["popup"]["multiPageMenuRenderer"];
+            const QJsonValue menuRenderer = action["openPopupAction"]["popup"]["multiPageMenuRenderer"];
             response.headerTitle = menuRenderer["header"]["simpleMenuHeaderRenderer"]["title"]["simpleText"].toString();
             response.multiPageMenuStyle = menuRenderer["style"].toString();
 

@@ -17,5 +17,5 @@ struct InnertubeContext : public QObject
                               const InnertubeUserConfig& user = InnertubeUserConfig(),
                               QObject* parent = nullptr)
         : clickTracking(clickTracking), client(client), request(request), user(user), QObject(parent) {}
-    QJsonObject toJson() const;
+    QJsonValue toJson() const;
 };

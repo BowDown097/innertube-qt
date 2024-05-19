@@ -1,16 +1,13 @@
 #include "basebrowseendpoint.h"
 #include "innertube/innertubeexception.h"
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QFile>
 
 namespace InnertubeEndpoints
 {
-    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
-                                           const QString& continuationToken, const QString& query)
+    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context,
+                                           InnertubeAuthStore* authStore, const QString& continuationToken,
+                                           const QString& query, const QString& params)
     {
-        QJsonObject body = {{ "context", context->toJson() }};
-
+        QJsonObject body = { EndpointMethods::contextPair(context) };
         if (continuationToken.isEmpty())
             body.insert("browseId", browseId);
         else
@@ -18,25 +15,26 @@ namespace InnertubeEndpoints
 
         if (!query.isEmpty())
             body.insert("query", query);
+        if (!params.isEmpty())
+            body.insert("params", params);
 
         data = get(context, authStore, body);
     }
 
     QJsonValue BaseBrowseEndpoint::getTabRenderer(const QString& name) const
     {
-        QJsonValue contents = QJsonDocument::fromJson(data)["contents"];
-        if (!contents.isObject())
+        if (!data["contents"].isObject())
             throw InnertubeException(QStringLiteral("[%1] contents not found").arg(name));
 
-        QJsonValue resultsRenderer = contents["twoColumnBrowseResultsRenderer"];
+        const QJsonValue resultsRenderer = data["contents"]["twoColumnBrowseResultsRenderer"];
         if (!resultsRenderer.isObject())
             throw InnertubeException(QStringLiteral("[%1] twoColumnBrowseResultsRenderer not found").arg(name));
 
-        const QJsonArray tabs = resultsRenderer["tabs"].toArray();
-        if (tabs.isEmpty())
-            throw InnertubeException(QStringLiteral("[%1] tabs not found or is empty").arg(name));
+        const QJsonValue tabs = resultsRenderer["tabs"];
+        if (!tabs.isArray())
+            throw InnertubeException(QStringLiteral("[%1] tabs not found").arg(name));
 
-        QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
+        const QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
         if (!tabRenderer.isObject())
             throw InnertubeException(QStringLiteral("[%1] tabRenderer not found").arg(name));
 

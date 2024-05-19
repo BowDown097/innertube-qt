@@ -1,20 +1,23 @@
 #include "innertubeplaybackcontext.h"
+#include <QJsonObject>
+
 #ifdef INNERTUBE_GET_STS
 #include "http.h"
+#include <QEventLoop>
 #endif
 
-QJsonObject InnertubePlaybackContext::toJson() const
+QJsonValue InnertubePlaybackContext::toJson() const
 {
     if (!isContent)
     {
-        return {
+        return QJsonObject {
             { "lactMilliseconds", lactMilliseconds },
             { "vis", vis }
         };
     }
     else
     {
-        return {
+        return QJsonObject {
             { "contentPlaybackContext", QJsonObject {
                 { "currentUrl", currentUrl },
                 { "html5Preference", html5Preference },

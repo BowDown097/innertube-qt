@@ -1,30 +1,28 @@
 #pragma once
-#include <QJsonObject>
-#include <QSslSocket>
+#include <QAbstractSocket>
+#include <QSslError>
 #include <QUrl>
 #include <wobjectimpl.h>
 
-struct SslHttpRequestError
-{
-    enum class ErrorType { Success, SocketError, SslError };
-    ErrorType errorType;
-
-    union
-    {
-        QAbstractSocket::SocketError socketError;
-        QSslError::SslError sslError;
-    };
-
-    explicit SslHttpRequestError(QAbstractSocket::SocketError error) : errorType(ErrorType::SocketError), socketError(error) {}
-    explicit SslHttpRequestError(QSslError::SslError error) : errorType(ErrorType::SslError), sslError(error) {}
-    SslHttpRequestError() = default;
-};
+class QJsonObject;
+class QSslSocket;
 
 class SslHttpRequest : public QObject
 {
     W_OBJECT(SslHttpRequest)
 public:
+    struct Error : std::variant<std::monostate, QAbstractSocket::SocketError, QSslError::SslError>
+    {
+        bool isSuccess() const
+        { return std::holds_alternative<std::monostate>(*this); }
+        const QAbstractSocket::SocketError* socketError() const
+        { return std::get_if<QAbstractSocket::SocketError>(this); }
+        const QSslError::SslError* sslError() const
+        { return std::get_if<QSslError::SslError>(this); }
+    };
+
     enum class RequestMethod { Get, Post };
+
     explicit SslHttpRequest(const QString& url, RequestMethod method = RequestMethod::Get, QObject* parent = nullptr);
     void send(bool emitPayload = true);
 
@@ -37,7 +35,7 @@ public:
     void setBody(const QJsonObject& json);
     void setHeaders(const QVariantMap& headers) { m_headers = headers; }
 
-    void finished(const QByteArray& response, const SslHttpRequestError& error = SslHttpRequestError())
+    void finished(const QByteArray& response, const Error& error = Error())
     W_SIGNAL(finished, response, error)
 private:
     QString m_contentType;
@@ -58,5 +56,5 @@ private:
 
 W_REGISTER_ARGTYPE(QAbstractSocket::SocketError)
 W_REGISTER_ARGTYPE(QList<QSslError>)
-W_REGISTER_ARGTYPE(SslHttpRequestError)
+W_REGISTER_ARGTYPE(SslHttpRequest::Error)
 W_OBJECT_IMPL_INLINE(SslHttpRequest)

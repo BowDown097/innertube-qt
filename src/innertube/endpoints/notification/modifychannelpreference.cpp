@@ -1,21 +1,17 @@
 #include "modifychannelpreference.h"
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
     ModifyChannelPreference::ModifyChannelPreference(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& params)
     {
-        const QJsonObject body {
-            { "context", context->toJson() },
+        const QJsonValue data = get(context, authStore, QJsonObject {
+            EndpointMethods::contextPair(context),
             { "params", params }
-        };
+        });
 
-        QByteArray data = get(context, authStore, body);
-        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-
-        channelId = dataObj["channelId"].toString();
+        channelId = data["channelId"].toString();
         newNotificationButton = InnertubeObjects::NotificationPreferenceButton(
-            dataObj["newNotificationButton"]["subscriptionNotificationToggleButtonRenderer"]
+            data["newNotificationButton"]["subscriptionNotificationToggleButtonRenderer"]
         );
     }
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
-#include <QJsonArray>
 
 namespace InnertubeEndpoints
 {

@@ -1,6 +1,7 @@
 #include "innertubeauthstore.h"
 #include "protobuf/protobufcompiler.h"
 #include <QCryptographicHash>
+#include <QJsonObject>
 
 #ifndef INNERTUBE_NO_WEBENGINE
 #include <QEventLoop>
@@ -55,7 +56,7 @@ void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
 }
 #endif
 
-void InnertubeAuthStore::authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context)
+void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeContext*& context)
 {
     apisid = obj["apisid"].toString();
     hsid = obj["hsid"].toString();
@@ -84,9 +85,9 @@ QString InnertubeAuthStore::toCookieString() const
         .arg(sid, hsid, ssid, apisid, sapisid, visitorInfo);
 }
 
-QJsonObject InnertubeAuthStore::toJson() const
+QJsonValue InnertubeAuthStore::toJson() const
 {
-    return {
+    return QJsonObject {
         { "apisid", apisid },
         { "hsid", hsid },
         { "sapisid", sapisid },

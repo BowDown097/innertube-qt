@@ -109,7 +109,7 @@ public:
      */
     static std::optional<QString> getLatestVersion(ClientType clientType);
 
-    QJsonObject toJson() const;
+    QJsonValue toJson() const;
 private:
     static std::optional<QString> getVersionFromAppStore(const QString& bundleId);
     static std::optional<QString> getVersionFromGooglePlay(const QString& name);

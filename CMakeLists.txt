@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 project(innertube-qt VERSION 1.0 LANGUAGES C CXX)
 add_library(innertube-qt)
 
@@ -25,6 +25,7 @@ target_sources(innertube-qt
         src/jsonutil.cpp
         src/sslhttprequest.cpp
         src/innertube/endpoints/base/basebrowseendpoint.cpp
+        src/innertube/endpoints/base/baseendpoint.cpp
         src/innertube/endpoints/browse/browsechannel.cpp
         src/innertube/endpoints/browse/browsehistory.cpp
         src/innertube/endpoints/browse/browsehome.cpp
@@ -45,9 +46,13 @@ target_sources(innertube-qt
         src/innertube/endpoints/video/player.cpp
         src/innertube/endpoints/video/updatedmetadata.cpp
         src/innertube/itc-objects/innertubeauthstore.cpp
+        src/innertube/itc-objects/innertubeclicktracking.cpp
         src/innertube/itc-objects/innertubeclient.cpp
+        src/innertube/itc-objects/innertubeconfiginfo.cpp
         src/innertube/itc-objects/innertubecontext.cpp
         src/innertube/itc-objects/innertubeplaybackcontext.cpp
+        src/innertube/itc-objects/innertuberequestconfig.cpp
+        src/innertube/itc-objects/innertubeuserconfig.cpp
         src/innertube/objects/innertubestring.cpp
         src/innertube/objects/responsiveimage.cpp
         src/innertube/objects/backstage/backstagepost.cpp

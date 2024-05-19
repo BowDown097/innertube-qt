@@ -1,8 +1,9 @@
 #include "innertubecontext.h"
+#include <QJsonObject>
 
-QJsonObject InnertubeContext::toJson() const
+QJsonValue InnertubeContext::toJson() const
 {
-    return {
+    return QJsonObject {
         { "clickTracking", clickTracking.toJson() },
         { "client", client.toJson() },
         { "request", request.toJson() },

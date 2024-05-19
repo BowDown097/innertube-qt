@@ -1,6 +1,5 @@
 #pragma once
 #include "innertubecontext.h"
-#include <QObject>
 #include <wobjectimpl.h>
 
 #ifndef INNERTUBE_NO_WEBENGINE
@@ -36,7 +35,7 @@ public:
      * @brief Store authentication credentials from JSON data returned by @ref toJson.
      * @param context  @ref InnertubeContext to write visitor data to (encoded version of @ref visitorInfo).
      */
-    void authenticateFromJson(const QJsonObject& obj, InnertubeContext*& context);
+    void authenticateFromJson(const QJsonValue& obj, InnertubeContext*& context);
 
     /**
      * @brief Clear all authentication credentials.
@@ -62,7 +61,7 @@ public:
     /**
      * @return The authentication credentials as a JSON object to be used with @ref authenticateFromJson.
      */
-    QJsonObject toJson() const;
+    QJsonValue toJson() const;
 
     void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE

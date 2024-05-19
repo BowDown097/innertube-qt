@@ -6,11 +6,10 @@ namespace InnertubeEndpoints
     Unsubscribe::Unsubscribe(InnertubeContext* context, InnertubeAuthStore* authStore, const QStringList& channelIds,
                              const QString& params)
     {
-        const QJsonObject body {
+        get(context, authStore, QJsonObject {
             { "channelIds", QJsonArray::fromStringList(channelIds) },
-            { "context", context->toJson() },
+            EndpointMethods::contextPair(context),
             { "params", params }
-        };
-        get(context, authStore, body);
+        });
     }
 }

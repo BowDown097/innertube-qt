@@ -10,9 +10,9 @@ namespace InnertubeEndpoints
     class BaseBrowseEndpoint : public BaseEndpoint<"browse">
     {
     protected:
-        QByteArray data;
+        QJsonValue data;
         BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
-                           const QString& continuationToken = "", const QString& query = "");
+                           const QString& continuationToken = "", const QString& query = "", const QString& params = "");
         QJsonValue getTabRenderer(const QString& name) const;
     };
 }

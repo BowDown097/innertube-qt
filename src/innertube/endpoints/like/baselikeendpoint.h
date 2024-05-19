@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
         BaseLikeEndpoint(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& params)
         {
             const QJsonObject body {
-                { "context", context->toJson() },
+                EndpointMethods::contextPair(context),
                 { "params", params },
                 { "target", QJsonObject { { "videoId", videoId } } }
             };

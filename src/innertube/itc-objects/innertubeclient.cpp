@@ -2,6 +2,7 @@
 #include "http.h"
 #include <QEventLoop>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVersion, const QString& platform,
                                  const QString& userAgent, const QString& browserName, const QString& browserVersion,
@@ -207,9 +208,9 @@ std::optional<QString> InnertubeClient::getVersionFromPageBody(const QString& ur
     return versionMatch.captured(1);
 }
 
-QJsonObject InnertubeClient::toJson() const
+QJsonValue InnertubeClient::toJson() const
 {
-    QJsonObject object {
+    QJsonObject object = {
         { "browserName", browserName },
         { "browserVersion", browserVersion },
         { "clientFormFactor", clientFormFactor },

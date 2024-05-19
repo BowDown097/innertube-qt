@@ -1,22 +1,19 @@
 #include "accountmenu.h"
 #include "innertube/innertubeexception.h"
+#include "innertube/itc-objects/innertubecontext.h"
 #include <QJsonArray>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
     AccountMenu::AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore)
     {
-        const QJsonObject body {
+        const QJsonValue data = get(context, authStore, QJsonObject {
             { "context", context->toJson() },
             { "deviceTheme", "DEVICE_THEME_SUPPORTED" },
             { "userInterfaceTheme", context->client.userInterfaceTheme }
-        };
+        });
 
-        QByteArray data = get(context, authStore, body);
-        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-
-        QJsonValue multiPageMenuRenderer = dataObj["actions"][0]["openPopupAction"]["popup"]["multiPageMenuRenderer"];
+        const QJsonValue multiPageMenuRenderer = data["actions"][0]["openPopupAction"]["popup"]["multiPageMenuRenderer"];
         if (!multiPageMenuRenderer.isObject())
             throw InnertubeException("[AccountMenu] multiPageMenuRenderer not found");
 

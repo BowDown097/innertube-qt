@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
     BrowseTrending::BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore)
         : BaseBrowseEndpoint("FEtrending", context, authStore)
     {
-        QJsonValue tabRenderer = getTabRenderer("BrowseTrending");
+        const QJsonValue tabRenderer = getTabRenderer("BrowseTrending");
         const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
         if (sectionListRenderer.isEmpty())
             throw InnertubeException("[BrowseTrending] sectionListRenderer has no contents");
@@ -18,13 +18,14 @@ namespace InnertubeEndpoints
             if (itemSectionContents.isEmpty())
                 throw InnertubeException("[BrowseTrending] itemSectionRenderer not found or has no content");
 
-            QJsonValue shelfRenderer = itemSectionContents[0]["shelfRenderer"];
+            const QJsonValue shelfRenderer = itemSectionContents[0]["shelfRenderer"];
             const QJsonObject shelfContent = shelfRenderer["content"].toObject();
-            if (shelfContent.isEmpty()) continue;
+            if (shelfContent.isEmpty())
+                continue;
 
-            InnertubeObjects::InnertubeString shelfTitle = shelfRenderer["title"].isObject()
-                    ? InnertubeObjects::InnertubeString(shelfRenderer["title"])
-                    : InnertubeObjects::InnertubeString(QString("Now"));
+            const InnertubeObjects::InnertubeString shelfTitle = shelfRenderer["title"].isObject()
+                ? InnertubeObjects::InnertubeString(shelfRenderer["title"])
+                : InnertubeObjects::InnertubeString(QStringLiteral("Now"));
             if (!response.shelves.contains(shelfTitle))
                 response.shelves.append(shelfTitle);
 
@@ -34,8 +35,8 @@ namespace InnertubeEndpoints
             for (const QJsonValue& v2 : shelfContents)
             {
                 const QString rendererType = appropriateList == "expandedShelfContentsRenderer" ? "videoRenderer" : "gridVideoRenderer";
-                if (!v2[rendererType].isObject()) continue;
-                response.videos.append(InnertubeObjects::Video(v2[rendererType], shelfTitle));
+                if (v2[rendererType].isObject())
+                    response.videos.append(InnertubeObjects::Video(v2[rendererType], shelfTitle));
             }
         }
     }

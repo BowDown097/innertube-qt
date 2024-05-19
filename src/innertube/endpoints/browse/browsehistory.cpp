@@ -1,7 +1,6 @@
 #include "browsehistory.h"
 #include "innertube/innertubeexception.h"
 #include <QJsonArray>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -12,18 +11,18 @@ namespace InnertubeEndpoints
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
         {
-            QJsonValue tabRenderer = getTabRenderer("BrowseHistory");
+            const QJsonValue tabRenderer = getTabRenderer("BrowseHistory");
             sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
         }
         else
         {
-            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = data["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHistory] Continuation has no actions", InnertubeException::Severity::Minor); // this can just happen sometimes
 
-            QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
             if (!appendItemsAction.isObject())
                 throw InnertubeException("[BrowseHistory] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
@@ -39,10 +38,8 @@ namespace InnertubeEndpoints
                     throw InnertubeException("[BrowseHistory] itemSectionRenderer not found or has no content");
 
                 for (const QJsonValue& v2 : itemSectionContents)
-                {
-                    if (!v2["videoRenderer"].isObject()) continue;
-                    response.videos.append(InnertubeObjects::Video(v2["videoRenderer"]));
-                }
+                    if (v2["videoRenderer"].isObject())
+                        response.videos.append(InnertubeObjects::Video(v2["videoRenderer"]));
             }
             else if (v["continuationItemRenderer"].isObject())
             {

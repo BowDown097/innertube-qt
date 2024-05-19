@@ -1,7 +1,6 @@
 #include "browsehome.h"
 #include "innertube/innertubeexception.h"
 #include <QJsonArray>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -11,15 +10,12 @@ namespace InnertubeEndpoints
         QJsonArray contents;
         if (tokenIn.isEmpty())
         {
-            QJsonValue baseContents = QJsonDocument::fromJson(data)["contents"];
-            if (!baseContents.isObject())
+            if (!data["contents"].isObject())
                 throw InnertubeException("[BrowseHome] contents not found");
 
-            const QString baseRenderer = !baseContents["twoColumnBrowseResultsRenderer"].isUndefined()
-                    ? "twoColumnBrowseResultsRenderer"
-                    : "singleColumnBrowseResultsRenderer";
-
-            QJsonValue resultsRenderer = baseContents[baseRenderer];
+            const QLatin1String baseRenderer(!data["contents"]["twoColumnBrowseResultsRenderer"].isUndefined()
+                ? "twoColumnBrowseResultsRenderer" : "singleColumnBrowseResultsRenderer");
+            const QJsonValue resultsRenderer = data["contents"][baseRenderer];
             if (!resultsRenderer.isObject())
                 throw InnertubeException(QStringLiteral("[BrowseHome] %1 not found").arg(baseRenderer));
 
@@ -27,7 +23,7 @@ namespace InnertubeEndpoints
             if (tabs.isEmpty())
                 throw InnertubeException("[BrowseHome] tabs not found or is empty");
 
-            QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
+            const QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
             if (!tabRenderer.isObject())
                 throw InnertubeException("[BrowseHome] tabRenderer not found");
 
@@ -38,11 +34,11 @@ namespace InnertubeEndpoints
         }
         else
         {
-            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = data["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseHome] Continuation has no actions", InnertubeException::Severity::Minor); // this can just happen sometimes
 
-            QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
             if (!appendItemsAction.isObject())
                 throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
 
@@ -53,21 +49,19 @@ namespace InnertubeEndpoints
         {
             if (v["richItemRenderer"].isObject())
             {
-                QJsonValue videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"];
-                if (!videoRenderer.isObject()) continue;
-                response.videos.append(InnertubeObjects::Video(videoRenderer));
+                const QJsonValue videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"];
+                if (videoRenderer.isObject())
+                    response.videos.append(InnertubeObjects::Video(videoRenderer));
             }
             else if (v["shelfRenderer"].isObject())
             {
-                InnertubeObjects::InnertubeString shelfTitle(v["shelfRenderer"]["title"]);
+                const InnertubeObjects::InnertubeString shelfTitle(v["shelfRenderer"]["title"]);
                 response.shelves.append(shelfTitle);
 
                 const QJsonArray shelfContents = v["shelfRenderer"]["content"]["horizontalListRenderer"]["items"].toArray();
                 for (const QJsonValue& v2 : shelfContents)
-                {
-                    if (!v2["gridVideoRenderer"].isObject()) continue;
-                    response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], shelfTitle));
-                }
+                    if (v2["gridVideoRenderer"].isObject())
+                        response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], shelfTitle));
             }
             else if (v["continuationItemRenderer"].isObject())
             {

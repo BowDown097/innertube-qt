@@ -8,7 +8,7 @@ namespace InnertubeObjects
         InnertubeString extraShortViewCount;
         bool isLive;
         QString originalViewCount;
-        InnertubeString unlabeledViewCountValue;
+        QString unlabeledViewCountValue;
         InnertubeString viewCount;
 
         ViewCount() = default;

@@ -1,23 +1,22 @@
 #include "sendmessage.h"
+#include <QJsonArray>
 
 namespace InnertubeEndpoints
 {
     SendMessage::SendMessage(const QJsonArray& textSegments, InnertubeContext* context, InnertubeAuthStore* authStore,
                              const QString& clientMessageId, const QString& params)
     {
-        const QJsonObject body {
+        get(context, authStore, QJsonObject {
             { "clientMessageId", clientMessageId },
-            { "context", context->toJson() },
+            EndpointMethods::contextPair(context),
             { "params", params },
             { "richMessage", QJsonObject {
                 { "textSegments", textSegments }
             }}
-        };
-        get(context, authStore, body);
+        });
     }
 
     SendMessage::SendMessage(const QString& message, InnertubeContext* context, InnertubeAuthStore* authStore,
                              const QString& clientMessageId, const QString& params)
-        : SendMessage(QJsonArray { QJsonObject { { "text", message } } }, context, authStore, clientMessageId, params)
-    {}
+        : SendMessage(QJsonArray { QJsonObject { { "text", message } } }, context, authStore, clientMessageId, params) {}
 }

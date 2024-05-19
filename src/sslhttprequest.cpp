@@ -1,5 +1,6 @@
 #include "sslhttprequest.h"
 #include <QJsonDocument>
+#include <QSslSocket>
 
 SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject* parent)
     : QObject(parent), m_requestMethod(method), m_sslSocket(new QSslSocket(this)), m_url(QUrl(url))
@@ -20,7 +21,7 @@ void SslHttpRequest::errorOccurred(QAbstractSocket::SocketError error)
 {
     // Connection: close header throws a RemoteHostClosedError; this mitigates it.
     if (error != QAbstractSocket::RemoteHostClosedError && m_sslSocket->sslHandshakeErrors().isEmpty())
-        emit finished(m_sslSocket->errorString().toUtf8(), SslHttpRequestError(error));
+        emit finished(m_sslSocket->errorString().toUtf8(), Error(error));
 }
 
 void SslHttpRequest::makeRequest()
@@ -64,7 +65,7 @@ void SslHttpRequest::send(bool emitPayload)
 {
     if (!m_url.isValid())
     {
-        emit finished("Invalid URL", SslHttpRequestError(QAbstractSocket::HostNotFoundError));
+        emit finished("Invalid URL", Error(QAbstractSocket::HostNotFoundError));
         return;
     }
 
@@ -80,5 +81,5 @@ void SslHttpRequest::setBody(const QJsonObject& json)
 
 void SslHttpRequest::sslErrors(const QList<QSslError>& errors)
 {
-    emit finished(errors[0].errorString().toUtf8(), SslHttpRequestError(errors[0].error()));
+    emit finished(errors[0].errorString().toUtf8(), Error(errors[0].error()));
 }

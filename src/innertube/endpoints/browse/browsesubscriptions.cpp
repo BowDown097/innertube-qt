@@ -1,7 +1,6 @@
 #include "browsesubscriptions.h"
 #include "innertube/innertubeexception.h"
 #include <QJsonArray>
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -46,7 +45,7 @@ namespace InnertubeEndpoints
         }
         else
         {
-            const QJsonArray onResponseReceivedActions = QJsonDocument::fromJson(data)["onResponseReceivedActions"].toArray();
+            const QJsonArray onResponseReceivedActions = data["onResponseReceivedActions"].toArray();
             if (onResponseReceivedActions.isEmpty())
                 throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Severity::Minor); // this can just happen sometimes
 
@@ -75,21 +74,19 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v2 : itemSectionContents)
         {
-            if (!v2["shelfRenderer"].isObject()) continue;
+            if (!v2["shelfRenderer"].isObject())
+                continue;
 
             const QJsonArray gridContents = v2["shelfRenderer"]["content"]["gridRenderer"]["items"].toArray();
             for (const QJsonValue& v3 : gridContents)
-            {
                 if (v3["gridVideoRenderer"].isObject())
                     response.videos.append(InnertubeObjects::Video(v3["gridVideoRenderer"]));
-            }
         }
     }
 
     void BrowseSubscriptions::handleRichItem(const QJsonValue& v)
     {
-        const QJsonValue richItemContents = v["richItemRenderer"]["content"];
-        if (richItemContents["videoRenderer"].isObject())
+        if (const QJsonValue richItemContents = v["richItemRenderer"]["content"]; richItemContents["videoRenderer"].isObject())
             response.videos.append(InnertubeObjects::Video(richItemContents["videoRenderer"]));
     }
 }

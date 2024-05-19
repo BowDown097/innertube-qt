@@ -1,7 +1,6 @@
 #pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
 #include "innertube/responses/video/updatedmetadataresponse.h"
-#include <QJsonArray>
 
 namespace InnertubeEndpoints
 {
@@ -17,6 +16,6 @@ namespace InnertubeEndpoints
     protected:
         UpdatedMetadata(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId);
     private:
-        QJsonValue findAction(const QJsonArray& actions, const QString& name);
+        QJsonValue findAction(const QJsonArray& actions, const QString& name) const;
     };
 }

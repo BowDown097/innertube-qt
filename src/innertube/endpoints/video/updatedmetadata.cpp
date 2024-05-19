@@ -1,32 +1,29 @@
 #include "updatedmetadata.h"
 #include "innertube/innertubeexception.h"
-#include <QJsonDocument>
+#include <QJsonArray>
 
 namespace InnertubeEndpoints
 {
     UpdatedMetadata::UpdatedMetadata(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId)
     {
-        const QJsonObject body {
-            { "context", context->toJson() },
+        const QJsonValue data = get(context, authStore, QJsonObject {
+            EndpointMethods::contextPair(context),
             { "videoId", videoId }
-        };
+        });
 
-        QByteArray data = get(context, authStore, body);
-        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-
-        QJsonArray actions = dataObj["actions"].toArray();
+        const QJsonArray actions = data["actions"].toArray();
         if (actions.isEmpty())
             throw InnertubeException("[UpdatedMetadata] Actions not found or is empty");
 
-        QJsonValue likeCountEntity = dataObj["frameworkUpdates"]["entityBatchUpdate"]["mutations"][0]
-                                            ["payload"]["likeCountEntity"];
+        const QJsonValue likeCountEntity = data["frameworkUpdates"]["entityBatchUpdate"]["mutations"]
+                                               [0]["payload"]["likeCountEntity"];
         if (!likeCountEntity.isObject())
             throw InnertubeException("[UpdatedMetadata] likeCountEntity not found");
 
-        QJsonValue updateDateTextAction = findAction(actions, "updateDateTextAction");
-        QJsonValue updateDescriptionAction = findAction(actions, "updateDescriptionAction");
-        QJsonValue updateTitleAction = findAction(actions, "updateTitleAction");
-        QJsonValue updateViewershipAction = findAction(actions, "updateViewershipAction");
+        const QJsonValue updateDateTextAction = findAction(actions, "updateDateTextAction");
+        const QJsonValue updateDescriptionAction = findAction(actions, "updateDescriptionAction");
+        const QJsonValue updateTitleAction = findAction(actions, "updateTitleAction");
+        const QJsonValue updateViewershipAction = findAction(actions, "updateViewershipAction");
 
         response.dateText = updateDateTextAction["dateText"]["simpleText"].toString();
         response.description = InnertubeObjects::InnertubeString(updateDescriptionAction["description"]);
@@ -36,7 +33,7 @@ namespace InnertubeEndpoints
         response.viewCount = InnertubeObjects::ViewCount(updateViewershipAction["viewCount"]["videoViewCountRenderer"]);
     }
 
-    QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name)
+    QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name) const
     {
         auto actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v[name].isObject(); });
         if (actionIt == actions.end())

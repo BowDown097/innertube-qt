@@ -3,7 +3,6 @@
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
 #include <mutex>
-#include <QJsonDocument>
 #include <QThreadPool>
 
 /**
@@ -113,8 +112,7 @@ public:
     QJsonValue getRawBlocking(QJsonObject body)
     {
         body.insert("context", m_context->toJson());
-        QByteArray data = E::get(m_context, m_authStore, body);
-        return QJsonDocument::fromJson(data).object();
+        return E::get(m_context, m_authStore, body);
     }
 
     void like(const QJsonValue& endpoint, bool liking);

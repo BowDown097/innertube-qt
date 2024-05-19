@@ -1,9 +1,9 @@
 #pragma once
-#include <QJsonObject>
+#include <QJsonValue>
 
 struct InnertubeConfigInfo
 {
     QString appInstallData;
     explicit InnertubeConfigInfo(const QString& appInstallData = "") : appInstallData(appInstallData) {}
-    QJsonObject toJson() const { return {{ "appInstallData", appInstallData }}; }
+    QJsonValue toJson() const;
 };

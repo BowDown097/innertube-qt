@@ -1,9 +1,9 @@
 #pragma once
-#include <QJsonObject>
+#include <QJsonValue>
 
 struct InnertubeUserConfig
 {
     bool lockedSafetyMode;
     explicit InnertubeUserConfig(bool lockedSafetyMode = false) : lockedSafetyMode(lockedSafetyMode) {}
-    QJsonObject toJson() const { return {{ "lockedSafetyMode", lockedSafetyMode }}; }
+    QJsonValue toJson() const;
 };

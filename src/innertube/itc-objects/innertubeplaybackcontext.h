@@ -1,5 +1,5 @@
 #pragma once
-#include <QJsonObject>
+#include <QJsonValue>
 
 class InnertubePlaybackContext
 {
@@ -22,7 +22,7 @@ public:
           referer(referer),
           signatureTimestamp(signatureTimestamp),
           vis(vis) {}
-    QJsonObject toJson() const;
+    QJsonValue toJson() const;
 #ifdef INNERTUBE_GET_STS
 private:
     int fetchSignatureTimestamp() const;

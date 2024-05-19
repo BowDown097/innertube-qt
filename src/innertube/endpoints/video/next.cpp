@@ -1,7 +1,6 @@
 #include "next.h"
 #include "innertube/innertubeexception.h"
 #include "innertube/itc-objects/innertubeplaybackcontext.h"
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -14,7 +13,7 @@ namespace InnertubeEndpoints
                 { "autonavState", "STATE_ON" },
                 { "captionsRequested", false },
                 { "contentCheckOk", false },
-                { "context", context->toJson() },
+                EndpointMethods::contextPair(context),
                 { "playbackContext", InnertubePlaybackContext().toJson() },
                 { "racyCheckOk", false },
                 { "videoId", videoId }
@@ -23,26 +22,24 @@ namespace InnertubeEndpoints
         else
         {
             body = {
-                { "context", context->toJson() },
+                EndpointMethods::contextPair(context),
                 { "continuation", tokenIn }
             };
         }
 
-        QByteArray data = get(context, authStore, body);
-        QJsonValue dataObj = QJsonDocument::fromJson(data).object();
-
+        const QJsonValue data = get(context, authStore, body);
         if (tokenIn.isEmpty())
         {
-            QJsonValue watchNextResults = dataObj["contents"]["twoColumnWatchNextResults"];
+            const QJsonValue watchNextResults = data["contents"]["twoColumnWatchNextResults"];
             if (!watchNextResults.isObject())
                 throw InnertubeException("[Next] twoColumnWatchNextResults is not an object");
 
             response.results = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
-            response.videoId = dataObj["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
+            response.videoId = data["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
         }
         else
         {
-            QJsonValue onResponseReceivedEndpoints = dataObj["onResponseReceivedEndpoints"];
+            const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
             if (!onResponseReceivedEndpoints.isArray())
                 throw InnertubeException("[Next] onResponseReceivedEndpoints is not an array");
             response.continuationData.emplace(onResponseReceivedEndpoints);
