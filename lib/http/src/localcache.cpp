@@ -1,9 +1,12 @@
 #include "localcache.h"
 #include <QCryptographicHash>
+#include <QDateTime>
+#include <QDebug>
 #include <QDir>
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
+#include <QMap>
 #include <QStandardPaths>
 
 LocalCache* LocalCache::instance(const char* name)
@@ -93,7 +96,14 @@ QByteArray LocalCache::hash(const QByteArray& s)
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(s);
     const QByteArray h = QByteArray::number(*(qlonglong *)hash.result().constData(), 36);
-    return h.at(0) + '/' + h.at(1) + '/' + h.mid(2);
+    QByteArray p;
+    p.reserve(h.length() + 2);
+    p.append(h.at(0));
+    p.append('/');
+    p.append(h.at(1));
+    p.append('/');
+    p.append(h.mid(2));
+    return p;
 }
 
 void LocalCache::insert(const QByteArray& key, const QByteArray& value)

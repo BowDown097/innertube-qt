@@ -14,7 +14,7 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        std::pair<QString, QJsonValue> contextPair(InnertubeContext* context);
+        QPair<QString, QJsonValue> contextPair(InnertubeContext* context);
         QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body);
         QVariantMap getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore);
     }

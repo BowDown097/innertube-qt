@@ -8,9 +8,9 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        std::pair<QString, QJsonValue> contextPair(InnertubeContext* context)
+        QPair<QString, QJsonValue> contextPair(InnertubeContext* context)
         {
-            return std::make_pair("context", context->toJson());
+            return qMakePair(QStringLiteral("context"), context->toJson());
         }
 
         QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body)
