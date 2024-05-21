@@ -3,7 +3,7 @@
 
 namespace InnertubeObjects
 {
-    struct RelatedChipCloud : public ChipCloud
+    struct RelatedChipCloud : ChipCloud
     {
         bool showProminentChips;
 

@@ -4,7 +4,7 @@
 
 class InnerTube;
 class InnertubeAuthStore;
-class InnertubeContext;
+struct InnertubeContext;
 
 // the key thankfully works on any client, though in theory it shouldn't - hopefully this never changes
 #define YTI_REQUEST_TEMPLATE \
