@@ -119,7 +119,8 @@ HttpReply* Http::post(const QUrl& url, const QByteArray& body, const QByteArray&
         .url = url
     };
 
-    req.headers.insert("Content-Type", contentType.isEmpty() ? "application/x-www-form-urlencoded" : contentType);
+    req.headers.insert("Content-Type", contentType.isEmpty()
+        ? QByteArray("application/x-www-form-urlencoded") : contentType);
     return request(req);
 }
 
@@ -132,7 +133,8 @@ HttpReply* Http::put(const QUrl& url, const QByteArray& body, const QByteArray& 
         .url = url
     };
 
-    req.headers.insert("Content-Type", contentType.isEmpty() ? "application/x-www-form-urlencoded" : contentType);
+    req.headers.insert("Content-Type", contentType.isEmpty()
+        ? QByteArray("application/x-www-form-urlencoded") : contentType);
     return request(req);
 }
 
