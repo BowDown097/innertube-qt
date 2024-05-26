@@ -1,5 +1,6 @@
 #pragma once
 #include "innertube/objects/responsiveimage.h"
+#include "metadatabadge.h"
 #include "subscribebutton.h"
 
 namespace InnertubeObjects
@@ -8,6 +9,10 @@ namespace InnertubeObjects
     {
         QString channelId;
         InnertubeString descriptionSnippet;
+        InnertubeString longBylineText;
+        QJsonValue navigationEndpoint;
+        QList<MetadataBadge> ownerBadges;
+        InnertubeString shortBylineText;
         SubscribeButton subscribeButton;
         bool subscribed;
         InnertubeString subscriberCountText;
@@ -15,14 +20,7 @@ namespace InnertubeObjects
         InnertubeString title;
         InnertubeString videoCountText;
 
-        explicit Channel(const QJsonValue& channelRenderer)
-            : channelId(channelRenderer["channelId"].toString()),
-              descriptionSnippet(InnertubeString(channelRenderer["descriptionSnippet"])),
-              subscribeButton(channelRenderer["subscribeButton"]["subscribeButtonRenderer"]),
-              subscribed(channelRenderer["subscriptionButton"]["subscribed"].toBool()),
-              subscriberCountText(InnertubeString(channelRenderer["subscriberCountText"])),
-              thumbnail(channelRenderer["thumbnail"]["thumbnails"]),
-              title(InnertubeString(channelRenderer["title"])),
-              videoCountText(InnertubeString(channelRenderer["videoCountText"])) {}
+        Channel() = default;
+        explicit Channel(const QJsonValue& channelRenderer);
     };
 }

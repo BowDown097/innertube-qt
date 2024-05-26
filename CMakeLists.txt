@@ -58,6 +58,7 @@ target_sources(innertube-qt
         src/innertube/objects/backstage/backstagepost.cpp
         src/innertube/objects/backstage/poll/poll.cpp
         src/innertube/objects/channel/aboutfullmetadata.cpp
+        src/innertube/objects/channel/channel.cpp
         src/innertube/objects/channel/channelc4header.cpp
         src/innertube/objects/channel/channelmetadata.cpp
         src/innertube/objects/channel/channelpageheader.cpp
