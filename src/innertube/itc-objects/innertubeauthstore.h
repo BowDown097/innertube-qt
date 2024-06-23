@@ -38,7 +38,11 @@ public:
     QString visitorInfo;
 
     explicit InnertubeAuthStore(QObject* parent = nullptr)
-        : QObject(parent), m_interceptor(new AuthStoreRequestInterceptor(this)) {}
+        : QObject(parent)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+        , m_interceptor(new AuthStoreRequestInterceptor(this))
+#endif
+        {}
 
 #ifndef INNERTUBE_NO_WEBENGINE
     /**
