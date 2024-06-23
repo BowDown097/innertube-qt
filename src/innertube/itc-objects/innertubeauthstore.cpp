@@ -10,7 +10,8 @@
 #include <QWebEngineView>
 
 // for some users, the VISITOR_INFO1_LIVE cookie doesn't get captured for some reason.
-// this should work as a backup in case that happens.
+// this should work as a backup in case that happens. sadly only works on Qt 6.5+ :(
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
 void AuthStoreRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo& info)
 {
     if (!visitorIdFound && info.httpHeaders().contains("X-Goog-Visitor-Id"))
@@ -19,6 +20,7 @@ void AuthStoreRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo& inf
         visitorIdFound = true;
     }
 }
+# endif
 
 void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 {
@@ -31,14 +33,18 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     view->setFixedSize(authWindow->size());
 
     QWebEnginePage* page = new QWebEnginePage(view);
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     page->profile()->setUrlRequestInterceptor(m_interceptor);
+# endif
 
     view->setPage(page);
     view->load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
     view->show();
 
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     connect(m_interceptor, &AuthStoreRequestInterceptor::foundVisitorId, this, &InnertubeAuthStore::interceptorFoundVisitorId);
+# endif
     connect(this, &InnertubeAuthStore::authenticateSuccess, this, [this, authWindow, context] {
         authWindow->deleteLater();
         context->client.visitorData = visitorInfo;
@@ -69,6 +75,7 @@ void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
         emit authenticateSuccess();
 }
 
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
 void InnertubeAuthStore::interceptorFoundVisitorId(const QString& visitorId)
 {
     qDebug().noquote().nospace() << "Found visitor ID through interceptor: " << visitorId;
@@ -76,6 +83,7 @@ void InnertubeAuthStore::interceptorFoundVisitorId(const QString& visitorId)
     if (populated())
         emit authenticateSuccess();
 }
+# endif
 #endif
 
 void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeContext*& context)

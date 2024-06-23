@@ -4,9 +4,10 @@
 
 #ifndef INNERTUBE_NO_WEBENGINE
 #include <QNetworkCookie>
-#include <QWebEngineUrlRequestInterceptor>
 W_REGISTER_ARGTYPE(QNetworkCookie)
 
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+# include <QWebEngineUrlRequestInterceptor>
 class AuthStoreRequestInterceptor : public QWebEngineUrlRequestInterceptor
 {
     W_OBJECT(AuthStoreRequestInterceptor)
@@ -19,6 +20,7 @@ private:
 };
 
 W_OBJECT_IMPL_INLINE(AuthStoreRequestInterceptor)
+# endif
 #endif
 
 /**
@@ -80,9 +82,13 @@ public:
 
     void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     void interceptorFoundVisitorId(const QString& visitorId); W_SLOT(interceptorFoundVisitorId)
 private:
     AuthStoreRequestInterceptor* m_interceptor;
+# else
+private:
+# endif
     void cookieAdded(const QNetworkCookie& cookie); W_SLOT(cookieAdded)
 #endif
 };
