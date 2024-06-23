@@ -4,7 +4,21 @@
 
 #ifndef INNERTUBE_NO_WEBENGINE
 #include <QNetworkCookie>
+#include <QWebEngineUrlRequestInterceptor>
 W_REGISTER_ARGTYPE(QNetworkCookie)
+
+class AuthStoreRequestInterceptor : public QWebEngineUrlRequestInterceptor
+{
+    W_OBJECT(AuthStoreRequestInterceptor)
+public:
+    explicit AuthStoreRequestInterceptor(QObject* parent = nullptr) : QWebEngineUrlRequestInterceptor(parent) {}
+    void interceptRequest(QWebEngineUrlRequestInfo& info) override;
+    void foundVisitorId(const QString& visitorId) W_SIGNAL(foundVisitorId, visitorId)
+private:
+    bool visitorIdFound{};
+};
+
+W_OBJECT_IMPL_INLINE(AuthStoreRequestInterceptor)
 #endif
 
 /**
@@ -21,7 +35,8 @@ public:
     QString ssid;
     QString visitorInfo;
 
-    explicit InnertubeAuthStore(QObject* parent = nullptr) : QObject(parent) {}
+    explicit InnertubeAuthStore(QObject* parent = nullptr)
+        : QObject(parent), m_interceptor(new AuthStoreRequestInterceptor(this)) {}
 
 #ifndef INNERTUBE_NO_WEBENGINE
     /**
@@ -65,7 +80,9 @@ public:
 
     void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE
+    void interceptorFoundVisitorId(const QString& visitorId); W_SLOT(interceptorFoundVisitorId)
 private:
+    AuthStoreRequestInterceptor* m_interceptor;
     void cookieAdded(const QNetworkCookie& cookie); W_SLOT(cookieAdded)
 #endif
 };

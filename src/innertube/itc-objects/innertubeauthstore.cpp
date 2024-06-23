@@ -9,6 +9,17 @@
 #include <QWebEngineProfile>
 #include <QWebEngineView>
 
+// for some users, the VISITOR_INFO1_LIVE cookie doesn't get captured for some reason.
+// this should work as a backup in case that happens.
+void AuthStoreRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo& info)
+{
+    if (!visitorIdFound && info.httpHeaders().contains("X-Goog-Visitor-Id"))
+    {
+        emit foundVisitorId(info.httpHeaders()["X-Goog-Visitor-Id"]);
+        visitorIdFound = true;
+    }
+}
+
 void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 {
     QWidget* authWindow = new QWidget;
@@ -20,14 +31,17 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     view->setFixedSize(authWindow->size());
 
     QWebEnginePage* page = new QWebEnginePage(view);
+    page->profile()->setUrlRequestInterceptor(m_interceptor);
+
     view->setPage(page);
     view->load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
     view->show();
 
     connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
+    connect(m_interceptor, &AuthStoreRequestInterceptor::foundVisitorId, this, &InnertubeAuthStore::interceptorFoundVisitorId);
     connect(this, &InnertubeAuthStore::authenticateSuccess, this, [this, authWindow, context] {
         authWindow->deleteLater();
-        context->client.visitorData = ProtobufCompiler::padded(visitorInfo);
+        context->client.visitorData = visitorInfo;
     });
 }
 
@@ -49,8 +63,16 @@ void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
     else if (cookie.name() == "SSID")
         ssid = cookie.value();
     else if (cookie.name() == "VISITOR_INFO1_LIVE")
-        visitorInfo = cookie.value();
+        visitorInfo = ProtobufCompiler::padded(cookie.value());
 
+    if (populated())
+        emit authenticateSuccess();
+}
+
+void InnertubeAuthStore::interceptorFoundVisitorId(const QString& visitorId)
+{
+    qDebug().noquote().nospace() << "Found visitor ID through interceptor: " << visitorId;
+    visitorInfo = visitorId;
     if (populated())
         emit authenticateSuccess();
 }
@@ -63,8 +85,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeCo
     sapisid = obj["sapisid"].toString();
     sid = obj["sid"].toString();
     ssid = obj["ssid"].toString();
-    visitorInfo = obj["visitorInfo"].toString();
-    context->client.visitorData = ProtobufCompiler::padded(visitorInfo);
+    context->client.visitorData = visitorInfo = obj["visitorInfo"].toString();
 }
 
 QString InnertubeAuthStore::generateSAPISIDHash()
@@ -81,8 +102,7 @@ bool InnertubeAuthStore::populated() const
 
 QString InnertubeAuthStore::toCookieString() const
 {
-    return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5; VISITOR_INFO1_LIVE=%6")
-        .arg(sid, hsid, ssid, apisid, sapisid, visitorInfo);
+    return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5").arg(sid, hsid, ssid, apisid, sapisid);
 }
 
 QJsonValue InnertubeAuthStore::toJson() const
