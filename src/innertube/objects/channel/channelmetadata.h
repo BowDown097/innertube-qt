@@ -16,7 +16,7 @@ namespace InnertubeObjects
         QString externalId;
         QString facebookProfileId;
         QString iosAppIndexingLink;
-        bool isFamilySafe;
+        bool isFamilySafe{};
         QString keywords;
         QStringList ownerUrls;
         QString rssUrl;

@@ -6,7 +6,7 @@ namespace InnertubeObjects
 {
     struct NotificationPreferenceButton
     {
-        int currentStateId;
+        int currentStateId{};
         Menu popup;
         QString secondaryIconType;
         QList<NotificationState> states;

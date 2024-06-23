@@ -3,7 +3,7 @@
 
 namespace InnertubeEndpoints
 {
-    SendMessage::SendMessage(const QJsonArray& textSegments, InnertubeContext* context, InnertubeAuthStore* authStore,
+    SendMessage::SendMessage(const QJsonArray& textSegments, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                              const QString& clientMessageId, const QString& params)
     {
         get(context, authStore, QJsonObject {
@@ -16,7 +16,7 @@ namespace InnertubeEndpoints
         });
     }
 
-    SendMessage::SendMessage(const QString& message, InnertubeContext* context, InnertubeAuthStore* authStore,
+    SendMessage::SendMessage(const QString& message, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                              const QString& clientMessageId, const QString& params)
         : SendMessage(QJsonArray { QJsonObject { { "text", message } } }, context, authStore, clientMessageId, params) {}
 }

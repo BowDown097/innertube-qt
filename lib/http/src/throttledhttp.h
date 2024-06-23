@@ -7,13 +7,13 @@ class QTimer;
 class ThrottledHttp : public Http
 {
 public:
-    ThrottledHttp(Http& http = Http::instance());
+    explicit ThrottledHttp(Http& http = Http::instance());
     HttpReply* request(const HttpRequest& req) override;
     void setMilliseconds(int milliseconds) { this->milliseconds = milliseconds; }
 private:
     QElapsedTimer elapsedTimer;
     Http& http;
-    int milliseconds;
+    int milliseconds{};
 };
 
 class ThrottledHttpReply : public HttpReply

@@ -6,8 +6,8 @@ namespace InnertubeObjects
     struct MenuServiceItem
     {
         QString iconType;
-        bool isDisabled;
-        bool selected;
+        bool isDisabled{};
+        bool selected{};
         QJsonValue serviceEndpoint;
         InnertubeString text;
 

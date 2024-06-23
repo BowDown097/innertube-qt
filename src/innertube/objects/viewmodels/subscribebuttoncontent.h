@@ -9,7 +9,7 @@ namespace InnertubeObjects
         QString buttonText;
         QString imageName;
         QJsonValue onTapCommand;
-        bool subscribeState;
+        bool subscribeState{};
         QString subscribeStateKey;
 
         SubscribeButtonContent() = default;

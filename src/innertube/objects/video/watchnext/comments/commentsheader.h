@@ -11,7 +11,7 @@ namespace InnertubeObjects
         InnertubeString commentsCount;
         InnertubeString countText;
         QList<Emoji> customEmojis;
-        bool showSeparator;
+        bool showSeparator{};
         SortFilterSubMenu sortMenu;
         InnertubeString titleText;
         QString unicodeEmojisUrl;

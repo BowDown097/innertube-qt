@@ -9,11 +9,11 @@ namespace InnertubeObjects
         QString appName;
         QStringList availableCountries;
         QString description;
-        bool familySafe;
+        bool familySafe{};
         QString iosAppArguments;
         QString iosAppStoreId;
         QStringList linkAlternates;
-        bool noIndex;
+        bool noIndex{};
         QString ogType;
         QString schemaDotOrgType;
         QString siteName;
@@ -22,7 +22,7 @@ namespace InnertubeObjects
         QString title;
         QString twitterCardType;
         QString twitterSiteHandle;
-        bool unlisted;
+        bool unlisted{};
         QString urlAppLinksAndroid;
         QString urlAppLinksIos;
         QString urlAppLinksWeb;

@@ -5,7 +5,7 @@ namespace InnertubeObjects
 {
     struct ChipCloudChip
     {
-        bool isSelected;
+        bool isSelected{};
         QJsonValue navigationEndpoint;
         QString styleType;
         QString text;

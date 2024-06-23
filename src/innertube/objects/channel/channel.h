@@ -14,7 +14,7 @@ namespace InnertubeObjects
         QList<MetadataBadge> ownerBadges;
         InnertubeString shortBylineText;
         SubscribeButton subscribeButton;
-        bool subscribed;
+        bool subscribed{};
         InnertubeString subscriberCountText;
         ResponsiveImage thumbnail;
         InnertubeString title;

@@ -54,17 +54,17 @@ HttpReply* Http::head(const QUrl& url)
 
 QNetworkReply* Http::networkReply(const HttpRequest& req)
 {
-    QNetworkRequest request(req.url);
+    QNetworkRequest qnr(req.url);
 
     QMap<QByteArray, QByteArray>& headers = requestHeaders;
     if (!req.headers.isEmpty())
         headers = req.headers;
 
     for (auto it = headers.constBegin(); it != headers.constEnd(); ++it)
-        request.setRawHeader(it.key(), it.value());
+        qnr.setRawHeader(it.key(), it.value());
 
     if (req.offset > 0)
-        request.setRawHeader("Range", QStringLiteral("bytes=%1-").arg(req.offset).toUtf8());
+        qnr.setRawHeader("Range", QStringLiteral("bytes=%1-").arg(req.offset).toUtf8());
 
     QNetworkAccessManager* manager = networkAccessManager();
     QNetworkReply* networkReply{};
@@ -72,19 +72,19 @@ QNetworkReply* Http::networkReply(const HttpRequest& req)
     switch (req.operation)
     {
     case QNetworkAccessManager::GetOperation:
-        networkReply = manager->get(request);
+        networkReply = manager->get(qnr);
         break;
     case QNetworkAccessManager::HeadOperation:
-        networkReply = manager->head(request);
+        networkReply = manager->head(qnr);
         break;
     case QNetworkAccessManager::PostOperation:
-        networkReply = manager->post(request, req.body);
+        networkReply = manager->post(qnr, req.body);
         break;
     case QNetworkAccessManager::PutOperation:
-        networkReply = manager->put(request, req.body);
+        networkReply = manager->put(qnr, req.body);
         break;
     case QNetworkAccessManager::DeleteOperation:
-        networkReply = manager->deleteResource(request);
+        networkReply = manager->deleteResource(qnr);
         break;
     default:
         qWarning() << "Unknown operation:" << req.operation;

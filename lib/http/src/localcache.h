@@ -22,7 +22,7 @@ public:
     QByteArray possiblyStaleValue(const QByteArray& key);
     QByteArray value(const QByteArray& key);
 private:
-    LocalCache(const QByteArray& name);
+    explicit LocalCache(const QByteArray& name);
     QString cachePath(const QByteArray& key) const { return directory + QLatin1String(key); }
     void expire();
     bool isCached(const QString& path);

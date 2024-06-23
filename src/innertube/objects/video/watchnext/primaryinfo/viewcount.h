@@ -6,7 +6,7 @@ namespace InnertubeObjects
     struct ViewCount
     {
         InnertubeString extraShortViewCount;
-        bool isLive;
+        bool isLive{};
         QString originalViewCount;
         QString unlabeledViewCountValue;
         InnertubeString viewCount;

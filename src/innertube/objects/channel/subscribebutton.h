@@ -7,13 +7,13 @@ namespace InnertubeObjects
     {
         InnertubeString buttonText;
         QString channelId;
-        bool enabled;
+        bool enabled{};
         NotificationPreferenceButton notificationPreferenceButton;
         QJsonValue onSubscribeEndpoints;
         QJsonValue onUnsubscribeEndpoints;
-        bool showPreferences;
+        bool showPreferences{};
         QString subscribeAccessibility;
-        bool subscribed;
+        bool subscribed{};
         InnertubeString subscribedButtonText;
         QString subscribedEntityKey;
         QString targetId;

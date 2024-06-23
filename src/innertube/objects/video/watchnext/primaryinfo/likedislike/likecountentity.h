@@ -19,7 +19,7 @@ namespace InnertubeObjects
         QString likeCountLabel;
         QString sentimentFactoidA11yTextIfDisliked;
         QString sentimentFactoidA11yTextIfLiked;
-        bool shouldExpandLikeCount;
+        bool shouldExpandLikeCount{};
 
         LikeCountEntity() = default;
         explicit LikeCountEntity(const QJsonValue& likeCountEntity)
@@ -36,6 +36,7 @@ namespace InnertubeObjects
               likeCountIfLikedNumber(likeCountEntity["likeCountIfLikedNumber"].toString()),
               likeCountLabel(likeCountEntity["likeCountLabel"]["content"].toString()),
               sentimentFactoidA11yTextIfDisliked(likeCountEntity["sentimentFactoidA11yTextIfDisliked"]["content"].toString()),
-              sentimentFactoidA11yTextIfLiked(likeCountEntity["sentimentFactoidA11yTextIfLiked"]["content"].toString()) {}
+              sentimentFactoidA11yTextIfLiked(likeCountEntity["sentimentFactoidA11yTextIfLiked"]["content"].toString()),
+              shouldExpandLikeCount(likeCountEntity["shouldExpandLikeCount"].toBool()) {}
     };
 }

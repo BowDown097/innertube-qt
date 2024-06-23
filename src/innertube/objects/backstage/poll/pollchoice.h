@@ -8,14 +8,14 @@ namespace InnertubeObjects
         QJsonValue deselectServiceEndpoint;
         QString numVotes;
         QJsonValue selectServiceEndpoint;
-        bool selected;
+        bool selected{};
         InnertubeString text;
         QString votePercentage;
         QString votePercentageIfNotSelected;
         QString votePercentageIfSelected;
-        double voteRatio;
-        double voteRatioIfNotSelected;
-        double voteRatioIfSelected;
+        double voteRatio{};
+        double voteRatioIfNotSelected{};
+        double voteRatioIfSelected{};
 
         PollChoice() = default;
         explicit PollChoice(const QJsonValue& choice)

@@ -12,9 +12,9 @@ public:
     int signatureTimestamp;
     int vis;
 
-    InnertubePlaybackContext(bool isContent = true, const QString& currentUrl = "", int signatureTimestamp = 0,
-                             const QString& html5Preference = "HTML5_PREF_WANTS", const QString& lactMilliseconds = "-1",
-                             const QString& referer = "https://www.youtube.com/", int vis = 0)
+    explicit InnertubePlaybackContext(bool isContent = true, const QString& currentUrl = "", int signatureTimestamp = 0,
+                                      const QString& html5Preference = "HTML5_PREF_WANTS", const QString& lactMilliseconds = "-1",
+                                      const QString& referer = "https://www.youtube.com/", int vis = 0)
         : currentUrl(currentUrl),
           html5Preference(html5Preference),
           isContent(isContent),

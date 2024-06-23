@@ -18,13 +18,13 @@ namespace InnertubeEndpoints
          * followed by the number of messages sent by the user in the current live chat session.
          * @param params  Supplied by sendEndpoint["params"].
          */
-        SendMessage(const QJsonArray& textSegments, InnertubeContext* context, InnertubeAuthStore* authStore,
+        SendMessage(const QJsonArray& textSegments, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                     const QString& clientMessageId, const QString& params);
         /**
          * @brief Overload of main constructor just for text.
          * @details See previous constructor for parameter details.
          */
-        SendMessage(const QString& message, InnertubeContext* context, InnertubeAuthStore* authStore,
+        SendMessage(const QString& message, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                     const QString& clientMessageId, const QString& params);
     };
 }

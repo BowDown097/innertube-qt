@@ -9,8 +9,8 @@ namespace InnertubeObjects
     struct VideoSecondaryInfo
     {
         DynamicText attributedDescription;
-        bool defaultExpanded;
-        int descriptionCollapsedLines;
+        bool defaultExpanded{};
+        int descriptionCollapsedLines{};
         MetadataRowContainer metadataRowContainer;
         SecondaryInfoOwner owner;
         QString showLessText;

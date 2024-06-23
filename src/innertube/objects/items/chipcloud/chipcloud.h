@@ -7,7 +7,7 @@ namespace InnertubeObjects
     struct ChipCloud
     {
         QList<ChipCloudChip> chips;
-        bool horizontalScrollable;
+        bool horizontalScrollable{};
         Button nextButton;
         Button previousButton;
 

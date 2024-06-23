@@ -14,9 +14,9 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QPair<QString, QJsonValue> contextPair(InnertubeContext* context);
+        QPair<QString, QJsonValue> contextPair(const InnertubeContext* context);
         QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body);
-        QVariantMap getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore);
+        QVariantMap getNeededHeaders(const InnertubeContext* context, const InnertubeAuthStore* authStore);
     }
 
     template<size_t N>
@@ -39,7 +39,7 @@ namespace InnertubeEndpoints
          * @param body  The JSON body of the request.
          * @return The request's response body.
          */
-        static QJsonValue get(InnertubeContext* context, InnertubeAuthStore* authStore, const QJsonObject& body)
+        static QJsonValue get(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
         {
             return EndpointMethods::getData(
                 YTI_REQUEST_TEMPLATE.arg(endpoint.data),

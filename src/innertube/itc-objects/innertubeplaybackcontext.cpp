@@ -34,7 +34,7 @@ QJsonValue InnertubePlaybackContext::toJson() const
 int InnertubePlaybackContext::fetchSignatureTimestamp() const
 {
     // get the body of the embed for "Me at the zoo", which is almost guaranteed to never go down as long as YouTube exists
-    HttpReply* embedReply = Http::instance().get(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw"));
+    const HttpReply* embedReply = Http::instance().get(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw"));
 
     QEventLoop embedLoop;
     QObject::connect(embedReply, &HttpReply::finished, &embedLoop, &QEventLoop::quit);
@@ -48,7 +48,7 @@ int InnertubePlaybackContext::fetchSignatureTimestamp() const
     QUrl playerJsUrl("https://www.youtube.com" + match.captured());
 
     // get the application body
-    HttpReply* appReply = Http::instance().get(playerJsUrl);
+    const HttpReply* appReply = Http::instance().get(playerJsUrl);
 
     QEventLoop appLoop;
     QObject::connect(appReply, &HttpReply::finished, &appLoop, &QEventLoop::quit);

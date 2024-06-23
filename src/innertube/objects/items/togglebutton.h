@@ -11,8 +11,8 @@ namespace InnertubeObjects
         QJsonValue defaultServiceEndpoint;
         QString defaultTooltip;
         InnertubeString defaultText;
-        bool isDisabled;
-        bool isToggled;
+        bool isDisabled{};
+        bool isToggled{};
         QString style;
         QString targetId;
         QString toggleButtonId;

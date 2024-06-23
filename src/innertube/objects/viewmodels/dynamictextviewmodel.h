@@ -6,8 +6,8 @@ namespace InnertubeObjects
 {
     struct DynamicTextViewModel
     {
-        bool alwaysShowTruncationText;
-        int maxLines;
+        bool alwaysShowTruncationText{};
+        int maxLines{};
         QJsonValue rendererContext;
         std::optional<DynamicText> suffix;
         DynamicText text;

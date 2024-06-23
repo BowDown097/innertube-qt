@@ -7,8 +7,8 @@ class CachedHttp : public Http
 {
 public:
     using ValidatorMap = QMap<QByteArray, std::function<bool(const HttpReply&)>>;
-    CachedHttp(Http& http = Http::instance(), const char* name = "http");
-    ValidatorMap getValidators() { return validators; }
+    explicit CachedHttp(Http& http = Http::instance(), const char* name = "http");
+    const ValidatorMap& getValidators() const { return validators; }
     HttpReply* request(const HttpRequest& req) override;
     void setCachePostRequests(bool value) { cachePostRequests = value; }
     void setIgnoreHostname(bool value) { ignoreHostname = value; }

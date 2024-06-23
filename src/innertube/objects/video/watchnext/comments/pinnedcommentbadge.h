@@ -5,7 +5,7 @@ namespace InnertubeObjects
 {
     struct PinnedCommentBadge
     {
-        uint foregroundTitleColor;
+        uint foregroundTitleColor{};
         QString iconType;
         InnertubeString label;
 

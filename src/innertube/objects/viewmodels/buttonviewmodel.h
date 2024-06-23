@@ -9,7 +9,7 @@ namespace InnertubeObjects
         QString accessibilityText;
         QString buttonSize;
         QString iconName;
-        bool isFullWidth;
+        bool isFullWidth{};
         QJsonValue onTap;
         QJsonValue onVisible;
         QString state;

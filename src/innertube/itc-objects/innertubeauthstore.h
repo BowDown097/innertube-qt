@@ -73,7 +73,7 @@ public:
     /**
      * @return A hashed version of the @ref sapisid "SAPISID" to be passed as the Authentication header in a web request.
      */
-    QString generateSAPISIDHash();
+    QString generateSAPISIDHash() const;
 
     /**
      * @return The authentication credentials as a JSON object to be used with @ref authenticateFromJson.

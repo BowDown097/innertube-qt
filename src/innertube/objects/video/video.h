@@ -24,7 +24,7 @@ namespace InnertubeObjects
         QString videoId;
         InnertubeString viewCountText;
 
-        Video(const QJsonValue& videoRenderer, const InnertubeString& shelf = InnertubeString());
+        explicit Video(const QJsonValue& videoRenderer, const InnertubeString& shelf = InnertubeString());
         bool isReel() const;
         QTime length() const;
     };

@@ -96,7 +96,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeCo
     context->client.visitorData = visitorInfo = obj["visitorInfo"].toString();
 }
 
-QString InnertubeAuthStore::generateSAPISIDHash()
+QString InnertubeAuthStore::generateSAPISIDHash() const
 {
     QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
     QString hash(QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex());

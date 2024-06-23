@@ -7,8 +7,8 @@ namespace InnertubeObjects
     {
         QJsonValue authorEndpoint;
         InnertubeString authorText;
-        uint backgroundColor;
-        uint foregroundTitleColor;
+        uint backgroundColor{};
+        uint foregroundTitleColor{};
         QString iconTooltip;
         QString iconType;
 

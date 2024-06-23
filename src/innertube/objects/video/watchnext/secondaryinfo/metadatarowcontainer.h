@@ -5,7 +5,7 @@ namespace InnertubeObjects
 {
     struct MetadataRowContainer
     {
-        int collapsedItemCount;
+        int collapsedItemCount{};
         QList<MetadataRow> rows;
 
         MetadataRowContainer() = default;

@@ -11,6 +11,6 @@ namespace InnertubeObjects
         std::optional<RelatedChipCloud> relatedChipCloud;
 
         WatchNextSecondaryResults() = default;
-        WatchNextSecondaryResults(const QJsonValue& results);
+        explicit WatchNextSecondaryResults(const QJsonValue& results);
     };
 }

@@ -13,8 +13,8 @@ namespace InnertubeObjects
         QString bellOffAccessibility;
         QString buttonSize;
         QString channelId;
-        bool disableNotificationBell;
-        bool disableSubscribeButton;
+        bool disableNotificationBell{};
+        bool disableSubscribeButton{};
         QJsonValue onShowSubscriptionOptions;
         QString stateEntityStoreKey;
         QString subsNotificationStateKey;

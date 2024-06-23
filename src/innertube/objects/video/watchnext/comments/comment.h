@@ -13,7 +13,7 @@ namespace InnertubeObjects
         Menu actionMenu;
         std::optional<AuthorCommentBadge> authorCommentBadge;
         QJsonValue authorEndpoint;
-        bool authorIsChannelOwner;
+        bool authorIsChannelOwner{};
         QString authorText;
         ImageWithAccessibility authorThumbnail;
         Button collapseButton;
@@ -21,10 +21,10 @@ namespace InnertubeObjects
         InnertubeString contentText;
         ResponsiveImage currentUserReplyThumbnail;
         Button expandButton;
-        bool isLiked;
+        bool isLiked{};
         std::optional<PinnedCommentBadge> pinnedCommentBadge;
         InnertubeString publishedTimeText;
-        int replyCount;
+        int replyCount{};
         InnertubeString voteCount;
         QString voteStatus;
 

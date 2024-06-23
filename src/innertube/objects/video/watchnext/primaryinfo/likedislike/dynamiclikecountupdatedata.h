@@ -7,7 +7,7 @@ namespace InnertubeObjects
     {
         QString placeholderLikeCountValuesKey;
         QString updateDelayLoopId;
-        int updateDelaySec;
+        int updateDelaySec{};
         QString updateStatusKey;
 
         DynamicLikeCountUpdateData() = default;

@@ -20,9 +20,10 @@ LocalCache* LocalCache::instance(const char* name)
     return instance;
 }
 
-LocalCache::LocalCache(const QByteArray& name) : name(name)
+LocalCache::LocalCache(const QByteArray& name)
+    : directory(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + '/' + QLatin1String(name) + '/'),
+      name(name)
 {
-    directory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + '/' + QLatin1String(name) + '/';
 #ifdef HTTP_DEBUG
     hits = 0;
     misses = 0;
@@ -73,9 +74,9 @@ void LocalCache::expire()
         if (totalSize < goal)
             break;
         QFile file(it.value());
-        qint64 size = file.size();
+        qint64 fileSize = file.size();
         file.remove();
-        totalSize -= size;
+        totalSize -= fileSize;
     }
 
 #ifdef HTTP_DEBUG
@@ -95,7 +96,7 @@ QByteArray LocalCache::hash(const QByteArray& s)
 {
     QCryptographicHash hash(QCryptographicHash::Sha1);
     hash.addData(s);
-    const QByteArray h = QByteArray::number(*(qlonglong *)hash.result().constData(), 36);
+    const QByteArray h = QByteArray::number(*reinterpret_cast<const qlonglong *>(hash.result().constData()), 36);
     QByteArray p;
     p.reserve(h.length() + 2);
     p.append(h.at(0));

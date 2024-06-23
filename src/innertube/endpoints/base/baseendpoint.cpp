@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QPair<QString, QJsonValue> contextPair(InnertubeContext* context)
+        QPair<QString, QJsonValue> contextPair(const InnertubeContext* context)
         {
             return qMakePair(QStringLiteral("context"), context->toJson());
         }
@@ -27,7 +27,7 @@ namespace InnertubeEndpoints
             return QJsonDocument::fromJson(req->payload()).object();
         }
 
-        QVariantMap getNeededHeaders(InnertubeContext* context, InnertubeAuthStore* authStore)
+        QVariantMap getNeededHeaders(const InnertubeContext* context, const InnertubeAuthStore* authStore)
         {
             QVariantMap headers;
 

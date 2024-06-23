@@ -7,7 +7,7 @@ namespace InnertubeObjects
     struct CommentThread
     {
         Comment comment;
-        bool isModeratedElqComment;
+        bool isModeratedElqComment{};
         QString renderingPriority;
         CommentReplies replies;
 

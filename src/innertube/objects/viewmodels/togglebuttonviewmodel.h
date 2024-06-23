@@ -7,7 +7,7 @@ namespace InnertubeObjects
     {
         ButtonViewModel defaultButtonViewModel;
         QString identifier;
-        bool isTogglingDisabled;
+        bool isTogglingDisabled{};
         ButtonViewModel toggledButtonViewModel;
 
         ToggleButtonViewModel() = default;

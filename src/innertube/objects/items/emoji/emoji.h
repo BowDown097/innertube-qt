@@ -7,10 +7,10 @@ namespace InnertubeObjects
     {
         QString emojiId;
         ResponsiveImage image;
-        bool isCustomEmoji;
+        bool isCustomEmoji{};
         QStringList searchTerms;
         QStringList shortcuts;
-        bool supportsSkinTone;
+        bool supportsSkinTone{};
 
         Emoji() = default;
         explicit Emoji(const QJsonValue& emojiObj);

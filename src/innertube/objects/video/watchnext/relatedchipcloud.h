@@ -5,7 +5,7 @@ namespace InnertubeObjects
 {
     struct RelatedChipCloud : ChipCloud
     {
-        bool showProminentChips;
+        bool showProminentChips{};
 
         RelatedChipCloud() = default;
         explicit RelatedChipCloud(const QJsonValue& relatedChipCloudRenderer)
