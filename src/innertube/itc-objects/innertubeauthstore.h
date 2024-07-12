@@ -39,8 +39,10 @@ public:
 
     explicit InnertubeAuthStore(QObject* parent = nullptr)
         : QObject(parent)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+#ifndef INNERTUBE_NO_WEBENGINE
+# if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
         , m_interceptor(new AuthStoreRequestInterceptor(this))
+# endif
 #endif
         {}
 

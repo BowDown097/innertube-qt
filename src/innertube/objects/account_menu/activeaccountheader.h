@@ -1,4 +1,5 @@
 #pragma once
+#include "innertube/objects/innertubestring.h"
 #include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
@@ -8,7 +9,7 @@ namespace InnertubeObjects
         QString accountName;
         ResponsiveImage accountPhoto;
         QString channelHandle;
-        QJsonValue manageAccountEndpoint;
+        InnertubeString manageAccountTitle;
         QJsonValue settingsEndpoint;
 
         ActiveAccountHeader() = default;
@@ -16,7 +17,7 @@ namespace InnertubeObjects
             : accountName(activeAccountHeaderRenderer["accountName"]["simpleText"].toString()),
               accountPhoto(activeAccountHeaderRenderer["accountPhoto"]["thumbnails"]),
               channelHandle(activeAccountHeaderRenderer["channelHandle"]["simpleText"].toString()),
-              manageAccountEndpoint(activeAccountHeaderRenderer["manageAccountTitle"]["runs"][0]["navigationEndpoint"]),
+              manageAccountTitle(activeAccountHeaderRenderer["manageAccountTitle"]),
               settingsEndpoint(activeAccountHeaderRenderer["settingsEndpoint"]) {}
     };
 }

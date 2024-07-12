@@ -16,6 +16,7 @@
 #include "misc/accountmenu.h"
 #include "misc/search.h"
 #include "misc/unseencount.h"
+#include "navigation/resolveurl.h"
 #include "notification/getnotificationmenu.h"
 #include "notification/modifychannelpreference.h"
 #include "subscription/subscribe.h"
@@ -41,6 +42,7 @@ W_REGISTER_ARGTYPE(InnertubeEndpoints::Next)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::PerformCommentAction)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Player)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::RemoveLike)
+W_REGISTER_ARGTYPE(InnertubeEndpoints::ResolveUrl)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Search)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::SendMessage)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::Subscribe)

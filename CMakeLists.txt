@@ -38,6 +38,7 @@ target_sources(innertube-qt
         src/innertube/endpoints/misc/accountmenu.cpp
         src/innertube/endpoints/misc/search.cpp
         src/innertube/endpoints/misc/unseencount.cpp
+        src/innertube/endpoints/navigation/resolveurl.cpp
         src/innertube/endpoints/notification/getnotificationmenu.cpp
         src/innertube/endpoints/notification/modifychannelpreference.cpp
         src/innertube/endpoints/subscription/subscribe.cpp
@@ -114,6 +115,7 @@ target_sources(innertube-qt
             src/innertube/endpoints/misc/accountmenu.h
             src/innertube/endpoints/misc/search.h
             src/innertube/endpoints/misc/unseencount.h
+            src/innertube/endpoints/navigation/resolveurl.h
             src/innertube/endpoints/notification/getnotificationmenu.h
             src/innertube/endpoints/notification/modifychannelpreference.h
             src/innertube/endpoints/subscription/subscribe.h
