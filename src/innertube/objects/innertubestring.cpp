@@ -12,20 +12,19 @@ namespace InnertubeObjects
     InnertubeString::InnertubeString(const QJsonValue& textVal)
         : accessibilityLabel(textVal["accessibility"]["accessibilityData"]["label"].toString())
     {
-        if (textVal["simpleText"].isString())
+        bool hasSimpleText{};
+        if (QString simpleText = textVal["simpleText"].toString(); !simpleText.isEmpty())
         {
-            const QString simpleText = textVal["simpleText"].toString();
-            runs.append(InnertubeRun(simpleText));
             text = simpleText;
+            hasSimpleText = true;
         }
-        else
+
+        const QJsonArray runsJson = textVal["runs"].toArray();
+        for (const QJsonValue& v : runsJson)
         {
-            const QJsonArray runsJson = textVal["runs"].toArray();
-            for (const QJsonValue& v : runsJson)
-            {
-                runs.append(InnertubeRun(v["text"].toString(), v["navigationEndpoint"]));
+            runs.append(InnertubeRun(v["text"].toString(), v["navigationEndpoint"]));
+            if (!hasSimpleText)
                 text += v["text"].toString();
-            }
         }
     }
 }
