@@ -27,24 +27,25 @@ public:
     void send(bool emitPayload = true);
 
     QByteArray body() const { return m_requestBody; }
+    QByteArray contentType() const;
     QVariantMap headers() const { return m_headers; }
+    QByteArray methodName() const;
     QByteArray payload() const;
     QByteArray response() const { return m_response; }
 
-    void setBody(const QByteArray& requestBody, const QString& contentType) { m_contentType = contentType; m_requestBody = requestBody; }
+    void setBody(const QByteArray& requestBody, const QByteArray& contentType);
     void setBody(const QJsonObject& json);
     void setHeaders(const QVariantMap& headers) { m_headers = headers; }
 
-    void finished(const QByteArray& response, const Error& error = Error())
-    W_SIGNAL(finished, response, error)
+    void finished(const QByteArray& response, const Error& error = Error()) W_SIGNAL(finished, response, error)
 private:
-    QString m_contentType;
+    QByteArray m_contentType;
     bool m_emitPayload;
     QVariantMap m_headers;
     QByteArray m_requestBody;
     RequestMethod m_requestMethod;
     QByteArray m_response;
-    QSslSocket* m_sslSocket;
+    QSslSocket* m_socket;
     QUrl m_url;
 
     void disconnected(); W_SLOT(disconnected)

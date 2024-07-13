@@ -3,13 +3,22 @@
 #include <QSslSocket>
 
 SslHttpRequest::SslHttpRequest(const QString& url, RequestMethod method, QObject* parent)
-    : QObject(parent), m_requestMethod(method), m_sslSocket(new QSslSocket(this)), m_url(QUrl(url))
+    : QObject(parent), m_requestMethod(method), m_socket(new QSslSocket(this)), m_url(QUrl(url))
 {
-    connect(m_sslSocket, &QSslSocket::disconnected, this, &SslHttpRequest::disconnected);
-    connect(m_sslSocket, &QSslSocket::encrypted, this, &SslHttpRequest::makeRequest);
-    connect(m_sslSocket, &QSslSocket::errorOccurred, this, &SslHttpRequest::errorOccurred);
-    connect(m_sslSocket, &QSslSocket::readyRead, this, &SslHttpRequest::readyRead);
-    connect(m_sslSocket, qOverload<const QList<QSslError>&>(&QSslSocket::sslErrors), this, &SslHttpRequest::sslErrors);
+    connect(m_socket, &QSslSocket::disconnected, this, &SslHttpRequest::disconnected);
+    connect(m_socket, &QSslSocket::encrypted, this, &SslHttpRequest::makeRequest);
+    connect(m_socket, &QSslSocket::errorOccurred, this, &SslHttpRequest::errorOccurred);
+    connect(m_socket, &QSslSocket::readyRead, this, &SslHttpRequest::readyRead);
+    connect(m_socket, qOverload<const QList<QSslError>&>(&QSslSocket::sslErrors), this, &SslHttpRequest::sslErrors);
+}
+
+QByteArray SslHttpRequest::contentType() const
+{
+    if (m_requestMethod != RequestMethod::Post)
+        return QByteArray();
+    if (!m_contentType.isEmpty())
+        return m_contentType;
+    return "application/x-www-form-urlencoded";
 }
 
 void SslHttpRequest::disconnected()
@@ -20,8 +29,8 @@ void SslHttpRequest::disconnected()
 void SslHttpRequest::errorOccurred(QAbstractSocket::SocketError error)
 {
     // Connection: close header throws a RemoteHostClosedError; this mitigates it.
-    if (error != QAbstractSocket::RemoteHostClosedError && m_sslSocket->sslHandshakeErrors().isEmpty())
-        emit finished(m_sslSocket->errorString().toUtf8(), Error(error));
+    if (error != QAbstractSocket::RemoteHostClosedError && m_socket->sslHandshakeErrors().isEmpty())
+        emit finished(m_socket->errorString().toUtf8(), Error(error));
 }
 
 void SslHttpRequest::makeRequest()
@@ -30,16 +39,31 @@ void SslHttpRequest::makeRequest()
     if (path.isEmpty())
         path = "/";
 
-    QString request;
-    request += QStringLiteral("%1 %2 HTTP/1.0\r\n").arg(m_requestMethod == RequestMethod::Get ? "GET" : "POST", path);
-    request += "Host: " + m_url.host() + "\r\n";
+    QByteArray request;
+    request += methodName();
+    request += ' ';
+    request += path.toUtf8();
+    request += " HTTP/1.0\r\n";
+    request += "Host: ";
+    request += m_url.host().toUtf8();
+    request += "\r\n";
+
     for (auto it = m_headers.cbegin(); it != m_headers.cend(); ++it)
-        request += it.key() + ": " + it.value().toString() + "\r\n";
+    {
+        request += it.key().toUtf8();
+        request += ": ";
+        request += it.value().toByteArray();
+        request += "\r\n";
+    }
 
     if (m_requestMethod == RequestMethod::Post)
     {
-        request += "Content-Type: " + m_contentType + "\r\n";
-        request += "Content-Length: " + QByteArray::number(m_requestBody.size()) + "\r\n";
+        request += "Content-Type: ";
+        request += contentType();
+        request += "\r\n";
+        request += "Content-Length: ";
+        request += QByteArray::number(m_requestBody.size());
+        request += "\r\n";
         request += "Connection: close\r\n\r\n";
         request += m_requestBody;
     }
@@ -48,7 +72,20 @@ void SslHttpRequest::makeRequest()
         request += "Connection: close\r\n\r\n";
     }
 
-    m_sslSocket->write(request.toUtf8());
+    m_socket->write(request);
+}
+
+QByteArray SslHttpRequest::methodName() const
+{
+    switch (m_requestMethod)
+    {
+    case RequestMethod::Get:
+        return "GET";
+    case RequestMethod::Post:
+        return "POST";
+    default:
+        return QByteArray();
+    }
 }
 
 QByteArray SslHttpRequest::payload() const
@@ -58,7 +95,7 @@ QByteArray SslHttpRequest::payload() const
 
 void SslHttpRequest::readyRead()
 {
-    m_response.append(m_sslSocket->readAll());
+    m_response.append(m_socket->readAll());
 }
 
 void SslHttpRequest::send(bool emitPayload)
@@ -70,7 +107,13 @@ void SslHttpRequest::send(bool emitPayload)
     }
 
     m_emitPayload = emitPayload;
-    m_sslSocket->connectToHostEncrypted(m_url.host(), m_url.scheme() == "http" ? m_url.port(80) : m_url.port(443));
+    m_socket->connectToHostEncrypted(m_url.host(), m_url.scheme() == "http" ? m_url.port(80) : m_url.port(443));
+}
+
+void SslHttpRequest::setBody(const QByteArray& requestBody, const QByteArray& contentType)
+{
+    m_contentType = contentType;
+    m_requestBody = requestBody;
 }
 
 void SslHttpRequest::setBody(const QJsonObject& json)

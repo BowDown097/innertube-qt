@@ -60,11 +60,15 @@ public:
     template<EndpointWithData E>
     InnertubeReply<E>* get(auto&&... args)
     {
+        auto argsTuple = std::make_tuple(std::forward<decltype(args)>(args)...);
         InnertubeReply<E>* reply = new InnertubeReply<E>;
-        QThreadPool::globalInstance()->start([this, reply, ...args = std::forward<decltype(args)>(args)]() mutable {
+
+        QThreadPool::globalInstance()->start([this, argsTuple, reply] {
             try
             {
-                E endpoint = getBlocking<E>(std::forward<decltype(args)>(args)...);
+                auto endpoint = std::apply([this](auto&&... unpacked) {
+                    return getBlocking<E>(std::forward<decltype(unpacked)>(unpacked)...);
+                }, argsTuple);
                 emit reply->finished(endpoint);
             }
             catch (const InnertubeException& ie)
