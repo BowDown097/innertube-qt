@@ -18,7 +18,7 @@ class InnerTube : public QObject
 public:
     static InnerTube* instance();
     InnerTube(QObject* parent = nullptr)
-        : m_authStore(new InnertubeAuthStore(this)), m_context(new InnertubeContext(this)), QObject(parent) {}
+        : m_authStore(new InnertubeAuthStore(this)), QObject(parent) {}
 
     InnertubeAuthStore* authStore() const { return m_authStore; }
     InnertubeContext* context() const { return m_context; }
@@ -45,10 +45,27 @@ public:
      */
     void unauthenticate() { m_authStore->unauthenticate(m_context); }
 
+    /**
+     * @brief Creates a context for this instance. Required for anything to work.
+     * @param client  Required.
+     * @param clickTracking  Don't touch unless if you really know what you're doing.
+     * @param requestConfig  See above parameter.
+     * @param userConfig  See above parameter.
+     */
     void createContext(const InnertubeClient& client, const InnertubeClickTracking& clickTracking = InnertubeClickTracking(),
                        const InnertubeRequestConfig& requestConfig = InnertubeRequestConfig(),
                        const InnertubeUserConfig& userConfig = InnertubeUserConfig())
     { m_context = new InnertubeContext(client, clickTracking, requestConfig, userConfig, this); }
+
+    /**
+     * @brief createClient  Creates a client for this instance. Useful if you don't care about the
+     * other parameters in @ref createContext.
+     * @param args  Arguments to be passed to the constructor of InnertubeClient.
+     */
+    void createClient(auto&&... args)
+    {
+        createContext(InnertubeClient(std::forward<decltype(args)>(args)...));
+    }
 
     /**
      * @brief Get the result of an Innertube request asynchronously.
@@ -78,6 +95,7 @@ public:
 
             reply->deleteLater();
         });
+
         return reply;
     }
 
@@ -131,5 +149,5 @@ private:
     static inline std::once_flag m_onceFlag;
 
     InnertubeAuthStore* m_authStore;
-    InnertubeContext* m_context;
+    InnertubeContext* m_context{};
 };

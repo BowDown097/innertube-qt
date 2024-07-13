@@ -1,6 +1,5 @@
 #pragma once
 #include "innertubeconfiginfo.h"
-#include <optional>
 
 class InnertubeClient
 {
@@ -93,7 +92,8 @@ public:
     QString visitorData;
 
     InnertubeClient() = default;
-    explicit InnertubeClient(ClientType clientType, const QString& clientVersion = "", const QString& platform = "DESKTOP",
+    explicit InnertubeClient(ClientType clientType, const QString& clientVersion = "",
+                             bool useClientVersionAsFallback = false, const QString& platform = "DESKTOP",
                              const QString& userAgent = "", const QString& browserName = "Firefox",
                              const QString& browserVersion = "103.0", const QString& userInterfaceTheme = "USER_INTERFACE_THEME_DARK",
                              const QString& clientFormFactor = "UNKNOWN_FORM_FACTOR", const InnertubeConfigInfo& configInfo = InnertubeConfigInfo(),
@@ -107,11 +107,16 @@ public:
      * @details The TVHTML5, MWEB_TIER_2, IOS_EMBEDDED_PLAYER, WEB_EMBEDDED_PLAYER,
      * TVHTML5_KIDS, WEB_CREATOR, WEB_KIDS, WEB_PARENT_TOOLS, and TVHTML5_FOR_KIDS clients are unsupported.
      */
-    static std::optional<QString> getLatestVersion(ClientType clientType);
+    static QString getLatestVersion(ClientType clientType);
+
+    /**
+     * @brief Get the name for a client type.
+     */
+    static QString resolveClientName(ClientType clientType);
 
     QJsonValue toJson() const;
 private:
-    static std::optional<QString> getVersionFromAppStore(const QString& bundleId);
-    static std::optional<QString> getVersionFromGooglePlay(const QString& name);
-    static std::optional<QString> getVersionFromPageBody(const QString& url);
+    static QString getVersionFromAppStore(const QString& bundleId);
+    static QString getVersionFromGooglePlay(const QString& name);
+    static QString getVersionFromPageBody(const QString& url);
 };
