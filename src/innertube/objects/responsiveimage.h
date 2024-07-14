@@ -7,7 +7,7 @@ namespace InnertubeObjects
     {
         ResponsiveImage() = default;
         explicit ResponsiveImage(const QJsonValue& thumbnails);
-        const GenericThumbnail& bestQuality() const;
-        const GenericThumbnail& recommendedQuality(const QSize& target) const;
+        std::optional<std::reference_wrapper<const GenericThumbnail>> bestQuality() const;
+        std::optional<std::reference_wrapper<const GenericThumbnail>> recommendedQuality(const QSize& target) const;
     };
 }

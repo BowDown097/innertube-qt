@@ -11,17 +11,24 @@ namespace InnertubeObjects
             append(GenericThumbnail(v));
     }
 
-    const GenericThumbnail& ResponsiveImage::bestQuality() const
+    std::optional<std::reference_wrapper<const GenericThumbnail>> ResponsiveImage::bestQuality() const
     {
-        return *std::ranges::max_element(*this, [](const GenericThumbnail& a, const GenericThumbnail& b) {
-            return a.height < b.height;
-        });
+        auto it = std::ranges::max_element(*this, [](const auto& a, const auto& b) { return a.height < b.height; });
+        if (it == end())
+            return std::nullopt;
+        else
+            return *it;
     }
 
-    const GenericThumbnail& ResponsiveImage::recommendedQuality(const QSize& target) const
+    std::optional<std::reference_wrapper<const GenericThumbnail>>
+    ResponsiveImage::recommendedQuality(const QSize& target) const
     {
-        return *std::ranges::min_element(*this, [&target](const GenericThumbnail& a, const GenericThumbnail& b) {
+        auto it = std::ranges::max_element(*this, [target](const GenericThumbnail& a, const GenericThumbnail& b) {
             return std::abs(a.width - target.width()) < std::abs(b.width - target.width());
         });
+        if (it == end())
+            return std::nullopt;
+        else
+            return *it;
     }
 }
