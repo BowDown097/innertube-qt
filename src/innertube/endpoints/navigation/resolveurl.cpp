@@ -1,6 +1,5 @@
 #include "resolveurl.h"
 #include "innertube/innertubeexception.h"
-#include <QJsonDocument>
 
 namespace InnertubeEndpoints
 {
@@ -11,6 +10,10 @@ namespace InnertubeEndpoints
         {
             if (urlObj.isRelative())
             {
+                // for some reason, Qt needs / at the beginning of the path otherwise this fails
+                if (QString path = urlObj.path(); !path.startsWith('/'))
+                    urlObj.setPath(path.prepend('/'));
+
                 urlObj.setHost("www.youtube.com");
                 urlObj.setScheme("https");
 
@@ -22,9 +25,14 @@ namespace InnertubeEndpoints
 
             const QJsonValue data = get(context, authStore, body);
             if (data["error"].isObject())
-                throw InnertubeException(QStringLiteral("[ResolveUrl] %1: %2").arg(data["code"].toInt()).arg(data["message"].toString()));
+            {
+                throw InnertubeException(QStringLiteral("[ResolveUrl] Error %1: %2")
+                    .arg(data["error"]["code"].toInt()).arg(data["error"]["message"].toString()));
+            }
             if (!data["endpoint"].isObject())
-                throw InnertubeException("[ResolveUrl] Endpoint object is missing. Pretty sure this is bad.");
+            {
+                throw InnertubeException("[ResolveUrl] Endpoint object is missing with no error. Pretty sure this is bad.");
+            }
 
             endpoint = data["endpoint"];
         }
