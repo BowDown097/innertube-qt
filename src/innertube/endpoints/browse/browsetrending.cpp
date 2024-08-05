@@ -36,7 +36,7 @@ namespace InnertubeEndpoints
             {
                 const QString rendererType = appropriateList == "expandedShelfContentsRenderer" ? "videoRenderer" : "gridVideoRenderer";
                 if (v2[rendererType].isObject())
-                    response.videos.append(InnertubeObjects::Video(v2[rendererType], shelfTitle));
+                    response.videos.append(InnertubeObjects::Video(v2[rendererType]));
             }
         }
     }

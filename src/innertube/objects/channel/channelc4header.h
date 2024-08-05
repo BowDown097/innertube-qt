@@ -1,6 +1,6 @@
 #pragma once
 #include "channelheaderlink.h"
-#include "innertube/objects/responsiveimage.h"
+#include "innertube/objects/images/responsiveimage.h"
 #include "subscribebutton.h"
 
 namespace InnertubeObjects

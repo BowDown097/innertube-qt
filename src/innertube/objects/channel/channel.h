@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/responsiveimage.h"
+#include "innertube/objects/images/responsiveimage.h"
 #include "metadatabadge.h"
 #include "subscribebutton.h"
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/imagewithaccessibility.h"
+#include "innertube/objects/images/imagewithaccessibility.h"
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects

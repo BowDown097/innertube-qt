@@ -3,14 +3,13 @@
 
 namespace InnertubeObjects
 {
-    struct ImageWithAccessibility
+    struct ImageWithAccessibility : ResponsiveImage
     {
         QString accessibilityLabel;
-        ResponsiveImage image;
 
         ImageWithAccessibility() = default;
         explicit ImageWithAccessibility(const QJsonValue& data)
-            : accessibilityLabel(data["accessibility"]["accessibilityData"]["label"].toString()),
-              image(data["thumbnails"]) {}
+            : ResponsiveImage(data["thumbnails"]),
+              accessibilityLabel(data["accessibility"]["accessibilityData"]["label"].toString()) {}
     };
 }

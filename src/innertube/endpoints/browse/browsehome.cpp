@@ -47,25 +47,22 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : std::as_const(contents))
         {
-            if (v["richItemRenderer"].isObject())
+            if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
             {
-                const QJsonValue videoRenderer = v["richItemRenderer"]["content"]["videoRenderer"];
-                if (videoRenderer.isObject())
-                    response.videos.append(InnertubeObjects::Video(videoRenderer));
+                if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
+                    response.videos.append(InnertubeObjects::Video(video));
             }
-            else if (v["shelfRenderer"].isObject())
+            else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())
             {
-                const InnertubeObjects::InnertubeString shelfTitle(v["shelfRenderer"]["title"]);
-                response.shelves.append(shelfTitle);
-
-                const QJsonArray shelfContents = v["shelfRenderer"]["content"]["horizontalListRenderer"]["items"].toArray();
+                response.shelves.append(InnertubeObjects::InnertubeString(shelf["title"]));
+                const QJsonArray shelfContents = shelf["content"]["horizontalListRenderer"]["items"].toArray();
                 for (const QJsonValue& v2 : shelfContents)
-                    if (v2["gridVideoRenderer"].isObject())
-                        response.videos.append(InnertubeObjects::Video(v2["gridVideoRenderer"], shelfTitle));
+                    if (const QJsonValue gridVideo = v2["gridVideoRenderer"]; gridVideo.isObject())
+                        response.videos.append(InnertubeObjects::Video(gridVideo));
             }
-            else if (v["continuationItemRenderer"].isObject())
+            else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
             {
-                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }

@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/responsiveimage.h"
+#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/viewmodels/buttonviewmodel.h"
 #include "innertube/objects/viewmodels/contentmetadataviewmodel.h"
 #include "innertube/objects/viewmodels/dynamictextviewmodel.h"

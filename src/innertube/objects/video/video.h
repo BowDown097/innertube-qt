@@ -1,6 +1,6 @@
 #pragma once
-#include "innertube/objects/innertubestring.h"
-#include "innertube/objects/responsiveimage.h"
+#include "innertube/objects/images/imagewithcolorpalette.h"
+#include "innertube/objects/items/menu/menu.h"
 #include "videoowner.h"
 #include <QTime>
 
@@ -8,23 +8,26 @@ namespace InnertubeObjects
 {
     struct Video
     {
+        QList<MetadataBadge> badges;
         InnertubeString descriptionSnippet;
-        bool isLive;
+        QJsonValue inlinePlaybackEndpoint;
         InnertubeString lengthText;
         InnertubeString longBylineText;
+        Menu menu;
         QJsonValue navigationEndpoint;
         VideoOwner owner;
         InnertubeString publishedTimeText;
-        InnertubeString shelf;
+        QString searchVideoResultEntityKey;
         InnertubeString shortBylineText;
         InnertubeString shortViewCountText;
         bool showActionMenu;
-        ResponsiveImage thumbnail;
+        ImageWithColorPalette thumbnail;
         InnertubeString title;
         QString videoId;
         InnertubeString viewCountText;
 
-        explicit Video(const QJsonValue& videoRenderer, const InnertubeString& shelf = InnertubeString());
+        explicit Video(const QJsonValue& videoRenderer);
+        bool isLive() const;
         bool isReel() const;
         QTime length() const;
     };

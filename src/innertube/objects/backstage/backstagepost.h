@@ -1,7 +1,7 @@
 #pragma once
 #include "backstageimage.h"
+#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/items/menu/menu.h"
-#include "innertube/objects/responsiveimage.h"
 #include "innertube/objects/video/video.h"
 #include "innertube/objects/video/watchnext/comments/commentactionbuttons.h"
 #include "poll/poll.h"

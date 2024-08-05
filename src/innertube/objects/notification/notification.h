@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/genericthumbnail.h"
+#include "innertube/objects/images/genericthumbnail.h"
 #include <optional>
 
 namespace InnertubeObjects

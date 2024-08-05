@@ -4,21 +4,26 @@
 
 namespace InnertubeObjects
 {
-    Video::Video(const QJsonValue& videoRenderer, const InnertubeString& shelf)
+    Video::Video(const QJsonValue& videoRenderer)
         : descriptionSnippet(videoRenderer["descriptionSnippet"]),
+          inlinePlaybackEndpoint(videoRenderer["inlinePlaybackEndpoint"]),
           longBylineText(videoRenderer["longBylineText"]),
+          menu(videoRenderer["menu"]["menuRenderer"]),
           navigationEndpoint(videoRenderer["navigationEndpoint"]),
-          shelf(shelf),
+          searchVideoResultEntityKey(videoRenderer["searchVideoResultEntityKey"].toString()),
           shortBylineText(videoRenderer["shortBylineText"]),
           shortViewCountText(videoRenderer["shortViewCountText"]),
           showActionMenu(videoRenderer["showActionMenu"].toBool()),
-          thumbnail(videoRenderer["thumbnail"]["thumbnails"]),
+          thumbnail(videoRenderer["thumbnail"]),
           title(videoRenderer["title"]),
           videoId(videoRenderer["videoId"].toString()),
           viewCountText(videoRenderer["viewCountText"])
     {
-        isLive = videoRenderer["badges"][0]["metadataBadgeRenderer"]["style"].toString() == "BADGE_STYLE_TYPE_LIVE_NOW";
-        if (!isLive) // lengthText and publishedTimeText do not exist for live videos
+        const QJsonArray badgesArr = videoRenderer["badges"].toArray();
+        for (const QJsonValue& badge : badgesArr)
+            badges.append(MetadataBadge(badge["metadataBadgeRenderer"]));
+
+        if (!isLive()) // lengthText and publishedTimeText do not exist for live videos
         {
             if (videoRenderer["lengthText"].isObject())
             {
@@ -59,6 +64,11 @@ namespace InnertubeObjects
             videoRenderer["channelThumbnail"].isObject() ? videoRenderer["channelThumbnail"] : videoRenderer["channelThumbnailSupportedRenderers"],
             videoRenderer["ownerBadges"].toArray()
         );
+    }
+
+    bool Video::isLive() const
+    {
+        return std::ranges::any_of(badges, [](const MetadataBadge& b) { return b.style == "BADGE_STYLE_TYPE_LIVE_NOW"; });
     }
 
     // reels can still be of this type and not of the Reel type. blame innertube

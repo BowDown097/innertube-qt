@@ -55,7 +55,6 @@ target_sources(innertube-qt
         src/innertube/itc-objects/innertuberequestconfig.cpp
         src/innertube/itc-objects/innertubeuserconfig.cpp
         src/innertube/objects/innertubestring.cpp
-        src/innertube/objects/responsiveimage.cpp
         src/innertube/objects/backstage/backstagepost.cpp
         src/innertube/objects/backstage/poll/poll.cpp
         src/innertube/objects/channel/aboutfullmetadata.cpp
@@ -65,6 +64,7 @@ target_sources(innertube-qt
         src/innertube/objects/channel/channelpageheader.cpp
         src/innertube/objects/channel/microformatdata.cpp
         src/innertube/objects/channel/notificationpreferencebutton.cpp
+        src/innertube/objects/images/responsiveimage.cpp
         src/innertube/objects/items/sortfiltersubmenu.cpp
         src/innertube/objects/items/chipcloud/chipcloud.cpp
         src/innertube/objects/items/emoji/emoji.cpp
@@ -132,13 +132,11 @@ target_sources(innertube-qt
             src/innertube/itc-objects/innertubeplaybackcontext.h
             src/innertube/itc-objects/innertuberequestconfig.h
             src/innertube/itc-objects/innertubeuserconfig.h
+            src/innertube/objects/colorpalette.h
             src/innertube/objects/compactlink.h
             src/innertube/objects/dynamictext.h
             src/innertube/objects/entitymutation.h
-            src/innertube/objects/genericthumbnail.h
-            src/innertube/objects/imagewithaccessibility.h
             src/innertube/objects/innertubestring.h
-            src/innertube/objects/responsiveimage.h
             src/innertube/objects/account_menu/activeaccountheader.h
             src/innertube/objects/backstage/backstageimage.h
             src/innertube/objects/backstage/backstagepost.h
@@ -155,6 +153,10 @@ target_sources(innertube-qt
             src/innertube/objects/channel/notificationpreferencebutton.h
             src/innertube/objects/channel/notificationstate.h
             src/innertube/objects/channel/subscribebutton.h
+            src/innertube/objects/images/genericthumbnail.h
+            src/innertube/objects/images/imagewithaccessibility.h
+            src/innertube/objects/images/imagewithcolorpalette.h
+            src/innertube/objects/images/responsiveimage.h
             src/innertube/objects/items/button.h
             src/innertube/objects/items/sortfiltersubmenu.h
             src/innertube/objects/items/togglebutton.h

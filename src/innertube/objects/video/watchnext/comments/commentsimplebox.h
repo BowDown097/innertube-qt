@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/imagewithaccessibility.h"
+#include "innertube/objects/images/imagewithaccessibility.h"
 #include "innertube/objects/innertubestring.h"
 #include "innertube/objects/items/button.h"
 #include "innertube/objects/items/emoji/picker/emojipicker.h"

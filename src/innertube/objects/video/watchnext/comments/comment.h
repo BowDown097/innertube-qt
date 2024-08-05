@@ -1,7 +1,7 @@
 #pragma once
 #include "authorcommentbadge.h"
 #include "commentactionbuttons.h"
-#include "innertube/objects/imagewithaccessibility.h"
+#include "innertube/objects/images/imagewithaccessibility.h"
 #include "innertube/objects/items/menu/menu.h"
 #include "pinnedcommentbadge.h"
 

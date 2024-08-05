@@ -7,6 +7,7 @@ namespace InnertubeObjects
     {
         QString accessibilityLabel;
         QString iconType;
+        QString label;
         QString style;
         QString tooltip;
 
@@ -14,6 +15,7 @@ namespace InnertubeObjects
         explicit MetadataBadge(const QJsonValue& metadataBadgeRenderer)
             : accessibilityLabel(metadataBadgeRenderer["accessibilityData"]["label"].toString()),
               iconType(metadataBadgeRenderer["icon"]["iconType"].toString()),
+              label(metadataBadgeRenderer["label"].toString()),
               style(metadataBadgeRenderer["style"].toString()),
               tooltip(metadataBadgeRenderer["tooltip"].toString()) {}
     };

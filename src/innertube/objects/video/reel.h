@@ -1,6 +1,6 @@
 #pragma once
+#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/innertubestring.h"
-#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {

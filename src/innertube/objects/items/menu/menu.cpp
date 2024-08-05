@@ -9,6 +9,7 @@ namespace InnertubeObjects
     {
         const QJsonArray itemsJson = menuRenderer["items"].toArray();
         for (const QJsonValue& item : itemsJson)
-            items.append(MenuServiceItem(item["menuServiceItemRenderer"]));
+            if (QJsonValue menuServiceItem = item["menuServiceItemRenderer"]; menuServiceItem.isObject())
+                items.append(MenuServiceItem(menuServiceItem));
     }
 }

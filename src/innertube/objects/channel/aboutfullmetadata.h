@@ -1,7 +1,7 @@
 #pragma once
 #include "channelheaderlink.h"
+#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/items/button.h"
-#include "innertube/objects/responsiveimage.h"
 
 namespace InnertubeObjects
 {
