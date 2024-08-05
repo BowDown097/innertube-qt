@@ -1,19 +1,19 @@
 #pragma once
-#include "innertube/objects/images/genericthumbnail.h"
-#include <optional>
+#include "innertube/objects/images/responsiveimage.h"
 
 namespace InnertubeObjects
 {
     struct Notification
     {
-        GenericThumbnail channelIcon;
-        std::optional<QString> linkedCommentId;
+        ResponsiveImage channelIcon;
+        QString linkedCommentId;
+        QJsonValue navigationEndpoint;
         QString notificationId;
         bool read;
         QString shortMessage;
         QString sentTimeText;
         QString videoId;
-        GenericThumbnail videoThumbnail;
+        ResponsiveImage videoThumbnail;
 
         explicit Notification(const QJsonValue& notificationRenderer);
     };

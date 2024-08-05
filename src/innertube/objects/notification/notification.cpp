@@ -3,18 +3,17 @@
 namespace InnertubeObjects
 {
     Notification::Notification(const QJsonValue& notificationRenderer)
-        : channelIcon(notificationRenderer["thumbnail"]["thumbnails"][0]),
+        : channelIcon(notificationRenderer["thumbnail"]["thumbnails"]),
+          navigationEndpoint(notificationRenderer["navigationEndpoint"]),
           notificationId(notificationRenderer["notificationId"].toString()),
           read(notificationRenderer["read"].toBool()),
           shortMessage(notificationRenderer["shortMessage"]["simpleText"].toString()),
           sentTimeText(notificationRenderer["sentTimeText"]["simpleText"].toString()),
-          videoThumbnail(notificationRenderer["videoThumbnail"]["thumbnails"][0])
+          videoThumbnail(notificationRenderer["videoThumbnail"]["thumbnails"])
     {
-        QJsonValue command = notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"].isObject()
-                                 ? notificationRenderer["navigationEndpoint"]["getCommentsFromInboxCommand"]
-                                 : notificationRenderer["navigationEndpoint"]["watchEndpoint"];
-        linkedCommentId = command["linkedCommentId"].isString()
-                              ? std::make_optional<QString>(command["linkedCommentId"].toString()) : std::nullopt;
+        const QJsonValue command = navigationEndpoint["getCommentsFromInboxCommand"].isObject()
+            ? navigationEndpoint["getCommentsFromInboxCommand"] : navigationEndpoint["watchEndpoint"];
+        linkedCommentId = command["linkedCommentId"].toString();
         videoId = command["videoId"].toString();
     }
 }
