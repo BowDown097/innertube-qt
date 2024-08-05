@@ -75,6 +75,7 @@ target_sources(innertube-qt
         src/innertube/objects/notification/notification.cpp
         src/innertube/objects/player/playervideodetails.cpp
         src/innertube/objects/player/streamingdata.cpp
+        src/innertube/objects/shelves/reelshelf.cpp
         src/innertube/objects/video/video.cpp
         src/innertube/objects/video/videoowner.cpp
         src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
@@ -157,6 +158,7 @@ target_sources(innertube-qt
             src/innertube/objects/items/button.h
             src/innertube/objects/items/sortfiltersubmenu.h
             src/innertube/objects/items/togglebutton.h
+            src/innertube/objects/items/verticallist.h
             src/innertube/objects/items/chipcloud/chipcloud.h
             src/innertube/objects/items/chipcloud/chipcloudchip.h
             src/innertube/objects/items/emoji/emoji.h
@@ -173,6 +175,8 @@ target_sources(innertube-qt
             src/innertube/objects/player/playervideodetails.h
             src/innertube/objects/player/streamingdata.h
             src/innertube/objects/player/streamingformat.h
+            src/innertube/objects/shelves/reelshelf.h
+            src/innertube/objects/shelves/shelf.h
             src/innertube/objects/video/reel.h
             src/innertube/objects/video/video.h
             src/innertube/objects/video/videoowner.h

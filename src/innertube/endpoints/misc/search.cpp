@@ -20,7 +20,7 @@ namespace InnertubeEndpoints
         }
 
         const QJsonValue data = get(context, authStore, body);
-        response.estimatedResults = data["estimatedResults"].toString().toLong();
+        response.estimatedResults = data["estimatedResults"].toString().toLongLong();
 
         QJsonArray sectionListRenderer;
         if (tokenIn.isEmpty())
@@ -51,20 +51,34 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : std::as_const(sectionListRenderer))
         {
-            if (v["itemSectionRenderer"].isObject())
+            if (const QJsonValue itemSection = v["itemSectionRenderer"]; itemSection.isObject())
             {
-                const QJsonArray itemSectionRenderer = v["itemSectionRenderer"]["contents"].toArray();
+                const QJsonArray itemSectionRenderer = itemSection["contents"].toArray();
                 for (const QJsonValue& v2 : itemSectionRenderer)
                 {
-                    if (v2["videoRenderer"].isObject())
-                        response.videos.append(InnertubeObjects::Video(v2["videoRenderer"]));
-                    else if (v2["channelRenderer"].isObject())
-                        response.channels.append(InnertubeObjects::Channel(v2["channelRenderer"]));
+                    if (const QJsonValue channel = v2["channelRenderer"]; channel.isObject())
+                    {
+                        response.contents.append(InnertubeObjects::Channel(channel));
+                    }
+                    else if (const QJsonValue reelShelf = v2["reelShelfRenderer"]; reelShelf.isObject())
+                    {
+                        response.contents.append(InnertubeObjects::ReelShelf(reelShelf));
+                    }
+                    else if (const QJsonValue shelf = v2["shelfRenderer"]; shelf.isObject())
+                    {
+                        response.contents.append(InnertubeObjects::VerticalVideoShelf(shelf,
+                            InnertubeObjects::VerticalList<InnertubeObjects::Video>(
+                                shelf["content"]["verticalListRenderer"], "videoRenderer")));
+                    }
+                    else if (const QJsonValue video = v2["videoRenderer"]; video.isObject())
+                    {
+                        response.contents.append(InnertubeObjects::Video(video));
+                    }
                 }
             }
-            else if (v["continuationItemRenderer"].isObject())
+            else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
             {
-                continuationToken = v["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
     }
