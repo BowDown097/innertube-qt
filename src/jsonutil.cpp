@@ -4,6 +4,21 @@
 
 namespace JsonUtil
 {
+    QString getFirstKey(const QJsonValue& value)
+    {
+        if (value.isArray())
+        {
+            return getFirstKey(value.toArray().first());
+        }
+        else if (value.isObject())
+        {
+            const QJsonObject obj = value.toObject();
+            return obj.begin() != obj.end() ? obj.begin().key() : QString();
+        }
+
+        return QString();
+    }
+
     QJsonValue rfind(const QString& key, const QJsonValue& parent)
     {
         if (parent.isObject())

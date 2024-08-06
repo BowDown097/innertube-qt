@@ -66,9 +66,11 @@ namespace InnertubeEndpoints
                     }
                     else if (const QJsonValue shelf = v2["shelfRenderer"]; shelf.isObject())
                     {
-                        response.contents.append(InnertubeObjects::VerticalVideoShelf(shelf,
-                            InnertubeObjects::VerticalList<InnertubeObjects::Video>(
-                                shelf["content"]["verticalListRenderer"], "videoRenderer")));
+                        if (const QJsonValue verticalList = shelf["content"]["verticalListRenderer"]; verticalList.isObject())
+                        {
+                            response.contents.append(InnertubeObjects::VerticalVideoShelf(shelf,
+                                InnertubeObjects::VerticalList<InnertubeObjects::Video>(verticalList, "videoRenderer")));
+                        }
                     }
                     else if (const QJsonValue video = v2["videoRenderer"]; video.isObject())
                     {

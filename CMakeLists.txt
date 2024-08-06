@@ -158,6 +158,8 @@ target_sources(innertube-qt
             src/innertube/objects/images/imagewithcolorpalette.h
             src/innertube/objects/images/responsiveimage.h
             src/innertube/objects/items/button.h
+            src/innertube/objects/items/horizontallist.h
+            src/innertube/objects/items/listbase.h
             src/innertube/objects/items/sortfiltersubmenu.h
             src/innertube/objects/items/togglebutton.h
             src/innertube/objects/items/verticallist.h
