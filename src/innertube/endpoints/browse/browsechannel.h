@@ -12,7 +12,6 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     public:
-        QString continuationToken;
         ChannelResponse response;
     protected:
         /**

@@ -9,8 +9,8 @@ namespace InnertubeEndpoints
 {
     struct ChannelResponse
     {
-        QJsonValue contents;
-        std::variant<InnertubeObjects::ChannelC4Header, InnertubeObjects::ChannelPageHeader> header;
+        QJsonValue contents; // this will be the only member to have a value if the origin of the request is a continuation
+        std::variant<InnertubeObjects::ChannelC4Header, InnertubeObjects::ChannelPageHeader, std::monostate> header;
         InnertubeObjects::ChannelMetadata metadata;
         InnertubeObjects::MicroformatData microformat;
         QList<InnertubeObjects::EntityMutation> mutations;
