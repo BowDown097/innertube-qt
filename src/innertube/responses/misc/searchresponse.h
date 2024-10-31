@@ -12,15 +12,15 @@ namespace InnertubeObjects
 
 namespace InnertubeEndpoints
 {
-    using SearchResponseContents = QList<std::variant<
+    using SearchResponseItem = std::variant<
         InnertubeObjects::Channel,
         InnertubeObjects::ReelShelf,
         InnertubeObjects::VerticalVideoShelf,
-        InnertubeObjects::Video>>;
+        InnertubeObjects::Video>;
 
     struct SearchResponse
     {
-        SearchResponseContents contents;
+        QList<SearchResponseItem> contents;
         qint64 estimatedResults;
     };
 }

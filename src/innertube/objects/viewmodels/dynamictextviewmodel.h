@@ -21,6 +21,6 @@ namespace InnertubeObjects
               suffix(viewModel["suffix"].isObject() ? std::make_optional(viewModel["suffix"]) : std::nullopt),
               text(viewModel[textKey]),
               truncationText(viewModel["truncationText"].isObject()
-                             ? std::make_optional(viewModel["truncationText"]) : std::nullopt) {}
+                  ? std::make_optional(viewModel["truncationText"]) : std::nullopt) {}
     };
 }

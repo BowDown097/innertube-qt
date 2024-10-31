@@ -2,6 +2,20 @@
 #include <QJsonArray>
 #include <span>
 
+#define INNERTUBE_CREATE_LIST_CLASS(TypeName) \
+template<typename... ItemTypes> \
+struct TypeName : TypeName##Base, ListBase<ItemTypes...> \
+{ \
+    TypeName(const QJsonValue& listRenderer, const std::array<QString, sizeof...(ItemTypes)>& itemKeys) \
+        : TypeName##Base(listRenderer), ListBase<ItemTypes...>(listRenderer, itemKeys) {} \
+}; \
+template<typename T> \
+struct TypeName<T> : TypeName##Base, ListBase<T> \
+{ \
+    TypeName(const QJsonValue& listRenderer, const QString& itemKey) \
+        : TypeName##Base(listRenderer), ListBase<T>(listRenderer, itemKey) {} \
+};
+
 namespace InnertubeObjects
 {
     template<typename... ItemTypes>

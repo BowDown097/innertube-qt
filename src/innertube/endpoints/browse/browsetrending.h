@@ -13,6 +13,6 @@ namespace InnertubeEndpoints
     public:
         TrendingResponse response;
     protected:
-        BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore);
+        BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore);
     };
 }

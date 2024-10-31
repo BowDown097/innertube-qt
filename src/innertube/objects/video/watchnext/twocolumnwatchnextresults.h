@@ -14,8 +14,8 @@ namespace InnertubeObjects
         TwoColumnWatchNextResults() = default;
         explicit TwoColumnWatchNextResults(const QJsonValue& twoColumnWatchNextResults)
             : liveChat(twoColumnWatchNextResults["conversationBar"]["liveChatRenderer"].isObject()
-                           ? std::make_optional<LiveChat>(twoColumnWatchNextResults["conversationBar"]["liveChatRenderer"])
-                           : std::nullopt),
+                  ? std::make_optional<LiveChat>(twoColumnWatchNextResults["conversationBar"]["liveChatRenderer"])
+                  : std::nullopt),
               results(twoColumnWatchNextResults["results"]["results"]["contents"]),
               secondaryResults(twoColumnWatchNextResults["secondaryResults"]["secondaryResults"]["results"]) {}
     };

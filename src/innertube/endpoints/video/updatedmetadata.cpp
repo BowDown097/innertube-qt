@@ -4,7 +4,7 @@
 
 namespace InnertubeEndpoints
 {
-    UpdatedMetadata::UpdatedMetadata(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId)
+    UpdatedMetadata::UpdatedMetadata(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {
             EndpointMethods::contextPair(context),

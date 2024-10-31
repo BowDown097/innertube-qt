@@ -12,13 +12,13 @@ namespace InnertubeObjects
 
 namespace InnertubeEndpoints
 {
-    using TrendingResponseContents = QList<std::variant<
+    using TrendingResponseItem = std::variant<
         InnertubeObjects::HorizontalVideoShelf,
         InnertubeObjects::ReelShelf,
-        InnertubeObjects::StandardVideoShelf>>;
+        InnertubeObjects::StandardVideoShelf>;
 
     struct TrendingResponse
     {
-        TrendingResponseContents contents;
+        QList<TrendingResponseItem> contents;
     };
 }

@@ -13,8 +13,8 @@ namespace InnertubeEndpoints
     public:
         CommentActionResponse response;
     protected:
-        PerformCommentAction(InnertubeContext* context, InnertubeAuthStore* authStore, const QStringList& actions);
-        PerformCommentAction(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& action)
+        PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QStringList& actions);
+        PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& action)
             : PerformCommentAction(context, authStore, QStringList { action }) {}
     };
 }

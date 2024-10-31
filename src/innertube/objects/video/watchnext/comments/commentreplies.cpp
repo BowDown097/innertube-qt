@@ -10,12 +10,7 @@ namespace InnertubeObjects
     {
         const QJsonArray contents = commentRepliesRenderer["contents"].toArray();
         for (const QJsonValue& item : contents)
-        {
-            if (item["continuationItemRenderer"].isObject())
-            {
-                continuationToken = item["continuationItemRenderer"]["continuationEndpoint"]
-                                        ["continuationCommand"]["token"].toString();
-            }
-        }
+            if (const QJsonValue continuationItem = item["continuationItemRenderer"]; continuationItem.isObject())
+                continuationToken = continuationItem["continuationEndpoint"]["continuationCommand"]["token"].toString();
     }
 }

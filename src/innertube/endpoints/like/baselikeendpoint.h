@@ -10,7 +10,8 @@ namespace InnertubeEndpoints
         /**
          * @param params  Supplied by many sources - see QtTube code for usage.
          */
-        BaseLikeEndpoint(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& params)
+        BaseLikeEndpoint(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                         const QString& videoId, const QString& params)
         {
             const QJsonObject body {
                 EndpointMethods::contextPair(context),

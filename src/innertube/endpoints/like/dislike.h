@@ -10,7 +10,8 @@ namespace InnertubeEndpoints
     {
         friend class ::InnerTube;
     protected:
-        Dislike(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& params)
+        Dislike(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                const QString& videoId, const QString& params)
             : BaseLikeEndpoint<"like/dislike">(context, authStore, videoId, params) {}
     };
 }

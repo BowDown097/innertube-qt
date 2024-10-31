@@ -13,6 +13,6 @@ namespace InnertubeEndpoints
     public:
         AccountMenuResponse response;
     protected:
-        AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore);
+        AccountMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore);
     };
 }

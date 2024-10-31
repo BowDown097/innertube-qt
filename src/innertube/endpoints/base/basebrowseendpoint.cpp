@@ -3,8 +3,8 @@
 
 namespace InnertubeEndpoints
 {
-    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context,
-                                           InnertubeAuthStore* authStore, const QString& continuationToken,
+    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, const InnertubeContext* context,
+                                           const InnertubeAuthStore* authStore, const QString& continuationToken,
                                            const QString& query, const QString& params)
     {
         QJsonObject body = { EndpointMethods::contextPair(context) };

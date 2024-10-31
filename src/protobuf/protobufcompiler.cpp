@@ -188,6 +188,11 @@ namespace ProtobufCompiler
         return response.toLower().replace(" ", "");
     }
 
+    QByteArray compileEncoded(const QVariantMap& obj, QVariantMap fields)
+    {
+        return QByteArray::fromHex(compile(obj, fields)).toBase64().toPercentEncoding();
+    }
+
     QByteArray padded(const QString& str)
     {
         return QByteArray("\x0a" + uleb128(str.length()) + str.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();

@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
     {
     protected:
         QJsonValue data;
-        BaseBrowseEndpoint(const QString& browseId, InnertubeContext* context, InnertubeAuthStore* authStore,
+        BaseBrowseEndpoint(const QString& browseId, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                            const QString& continuationToken = "", const QString& query = "", const QString& params = "");
         QJsonValue getTabRenderer(const QString& name) const;
     };

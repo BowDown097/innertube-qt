@@ -4,7 +4,8 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseSubscriptions::BrowseSubscriptions(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
+    BrowseSubscriptions::BrowseSubscriptions(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                                             const QString& tokenIn)
         : BaseBrowseEndpoint("FEsubscriptions", context, authStore, tokenIn)
     {
         if (tokenIn.isEmpty())

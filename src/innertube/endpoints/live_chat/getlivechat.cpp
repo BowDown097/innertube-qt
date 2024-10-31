@@ -2,7 +2,7 @@
 
 namespace InnertubeEndpoints
 {
-    GetLiveChat::GetLiveChat(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& continuation)
+    GetLiveChat::GetLiveChat(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& continuation)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {
             EndpointMethods::contextPair(context),

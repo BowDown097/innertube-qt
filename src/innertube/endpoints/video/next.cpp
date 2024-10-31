@@ -4,7 +4,8 @@
 
 namespace InnertubeEndpoints
 {
-    Next::Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn)
+    Next::Next(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+               const QString& videoId, const QString& tokenIn)
     {
         QJsonObject body;
         if (tokenIn.isEmpty())

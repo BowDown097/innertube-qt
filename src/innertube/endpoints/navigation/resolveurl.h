@@ -16,6 +16,6 @@ namespace InnertubeEndpoints
         /**
          * @param url  URL to resolve.
          */
-        ResolveUrl(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& url);
+        ResolveUrl(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& url);
     };
 }

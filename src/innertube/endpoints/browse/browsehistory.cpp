@@ -4,7 +4,7 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHistory::BrowseHistory(InnertubeContext* context, InnertubeAuthStore* authStore,
+    BrowseHistory::BrowseHistory(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                  const QString& query, const QString& tokenIn)
         : BaseBrowseEndpoint("FEhistory", context, authStore, tokenIn, query)
     {

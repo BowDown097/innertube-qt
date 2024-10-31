@@ -6,7 +6,7 @@
 
 namespace InnertubeEndpoints
 {
-    Player::Player(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId)
+    Player::Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
     {
         QJsonObject body {
             { "contentCheckOk", true },

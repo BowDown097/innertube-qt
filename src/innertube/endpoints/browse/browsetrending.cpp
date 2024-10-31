@@ -5,7 +5,7 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseTrending::BrowseTrending(InnertubeContext* context, InnertubeAuthStore* authStore)
+    BrowseTrending::BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore)
         : BaseBrowseEndpoint("FEtrending", context, authStore)
     {
         const QJsonValue tabRenderer = getTabRenderer("BrowseTrending");

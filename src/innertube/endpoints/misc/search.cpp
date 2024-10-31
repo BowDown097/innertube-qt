@@ -4,7 +4,7 @@
 
 namespace InnertubeEndpoints
 {
-    Search::Search(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& query,
+    Search::Search(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& query,
                    const QString& tokenIn, const QString& params)
     {
         QJsonObject body = { EndpointMethods::contextPair(context) };

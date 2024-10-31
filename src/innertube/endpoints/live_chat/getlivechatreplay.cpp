@@ -2,7 +2,7 @@
 
 namespace InnertubeEndpoints
 {
-    GetLiveChatReplay::GetLiveChatReplay(InnertubeContext* context, InnertubeAuthStore* authStore,
+    GetLiveChatReplay::GetLiveChatReplay(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                          const QString& continuation, const QString& playerOffsetMs)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {

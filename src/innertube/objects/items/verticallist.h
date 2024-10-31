@@ -14,17 +14,5 @@ namespace InnertubeObjects
               collapsedStateButtonText(verticalListRenderer["collapsedStateButtonText"]) {}
     };
 
-    template<typename... ItemTypes>
-    struct VerticalList : VerticalListBase, ListBase<ItemTypes...>
-    {
-        VerticalList(const QJsonValue& verticalListRenderer, const std::array<QString, sizeof...(ItemTypes)>& itemKeys)
-            : VerticalListBase(verticalListRenderer), ListBase<ItemTypes...>(verticalListRenderer, itemKeys) {}
-    };
-
-    template<typename T>
-    struct VerticalList<T> : VerticalListBase, ListBase<T>
-    {
-        VerticalList(const QJsonValue& verticalListRenderer, const QString& itemKey)
-            : VerticalListBase(verticalListRenderer), ListBase<T>(verticalListRenderer, itemKey) {}
-    };
+    INNERTUBE_CREATE_LIST_CLASS(VerticalList)
 }

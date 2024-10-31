@@ -17,6 +17,6 @@ namespace InnertubeEndpoints
          * @param continuation  Continuation token - supplied by @ref InnertubeObjects::LiveChat::continuations
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
          */
-        GetLiveChat(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& continuation);
+        GetLiveChat(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& continuation);
     };
 }

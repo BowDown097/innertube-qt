@@ -16,6 +16,7 @@ namespace InnertubeEndpoints
         /**
          * @param tokenIn  Continuation token for comments.
          */
-        Next(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId, const QString& tokenIn = "");
+        Next(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+             const QString& videoId, const QString& tokenIn = "");
     };
 }

@@ -26,12 +26,12 @@ public:
     explicit SslHttpRequest(const QString& url, RequestMethod method = RequestMethod::Get, QObject* parent = nullptr);
     void send(bool emitPayload = true);
 
-    QByteArray body() const { return m_requestBody; }
+    const QByteArray& body() const { return m_requestBody; }
     QByteArray contentType() const;
     QVariantMap headers() const { return m_headers; }
     QByteArray methodName() const;
     QByteArray payload() const;
-    QByteArray response() const { return m_response; }
+    const QByteArray& response() const { return m_response; }
 
     void setBody(const QByteArray& requestBody, const QByteArray& contentType);
     void setBody(const QJsonObject& json);

@@ -4,7 +4,7 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHome::BrowseHome(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& tokenIn)
+    BrowseHome::BrowseHome(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn)
         : BaseBrowseEndpoint("FEwhat_to_watch", context, authStore, tokenIn)
     {
         QJsonArray contents;

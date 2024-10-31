@@ -17,7 +17,7 @@ namespace InnertubeEndpoints
         /**
          * @param tokenIn  Continuation token.
          */
-        GetNotificationMenu(InnertubeContext* context, InnertubeAuthStore* authStore,
+        GetNotificationMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                             const QString& notificationsMenuRequestType, const QString& tokenIn = "");
     };
 }

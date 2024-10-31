@@ -5,7 +5,7 @@
 
 namespace InnertubeEndpoints
 {
-    AccountMenu::AccountMenu(InnertubeContext* context, InnertubeAuthStore* authStore)
+    AccountMenu::AccountMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {
             { "context", context->toJson() },

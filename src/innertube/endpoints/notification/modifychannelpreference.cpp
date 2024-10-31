@@ -2,7 +2,8 @@
 
 namespace InnertubeEndpoints
 {
-    ModifyChannelPreference::ModifyChannelPreference(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& params)
+    ModifyChannelPreference::ModifyChannelPreference(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                                                     const QString& params)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {
             EndpointMethods::contextPair(context),

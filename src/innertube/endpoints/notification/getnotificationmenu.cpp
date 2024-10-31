@@ -3,7 +3,7 @@
 
 namespace InnertubeEndpoints
 {
-    GetNotificationMenu::GetNotificationMenu(InnertubeContext* context, InnertubeAuthStore* authStore,
+    GetNotificationMenu::GetNotificationMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                              const QString& notificationsMenuRequestType, const QString& tokenIn)
     {
         QJsonObject body = { EndpointMethods::contextPair(context) };

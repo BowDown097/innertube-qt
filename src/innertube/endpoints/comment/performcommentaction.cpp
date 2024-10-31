@@ -2,7 +2,7 @@
 
 namespace InnertubeEndpoints
 {
-    PerformCommentAction::PerformCommentAction(InnertubeContext* context, InnertubeAuthStore* authStore,
+    PerformCommentAction::PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                                const QStringList& actions)
     {
         const QJsonValue data = get(context, authStore, QJsonObject {

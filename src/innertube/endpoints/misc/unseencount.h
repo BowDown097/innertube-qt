@@ -12,6 +12,6 @@ namespace InnertubeEndpoints
     public:
         int unseenCount;
     protected:
-        UnseenCount(InnertubeContext* context, InnertubeAuthStore* authStore);
+        UnseenCount(const InnertubeContext* context, const InnertubeAuthStore* authStore);
     };
 }

@@ -19,7 +19,7 @@ namespace InnertubeEndpoints
          * @param tokenIn  Continuation token.
          * @param params  Protobuf string for search filters - see [QtTube code](https://github.com/search?q=repo%3ABowDown097%2FQtTube+BrowseHelper%3A%3Asearch&type=code) for more details.
          */
-        Search(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& query,
+        Search(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& query,
                const QString& tokenIn = "", const QString& params = "");
     };
 }

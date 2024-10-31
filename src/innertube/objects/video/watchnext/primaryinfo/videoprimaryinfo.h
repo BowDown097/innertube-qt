@@ -18,8 +18,8 @@ namespace InnertubeObjects
             : dateText(primaryInfoRenderer["dateText"]),
               relativeDateText(primaryInfoRenderer["relativeDateText"]),
               superTitleLink(primaryInfoRenderer["superTitleLink"].isObject()
-                             ? std::make_optional<InnertubeString>(primaryInfoRenderer["superTitleLink"])
-                             : std::nullopt),
+                  ? std::make_optional<InnertubeString>(primaryInfoRenderer["superTitleLink"])
+                  : std::nullopt),
               title(primaryInfoRenderer["title"]),
               videoActions(primaryInfoRenderer["videoActions"]["menuRenderer"]),
               viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]) {}

@@ -15,15 +15,15 @@ namespace InnertubeObjects
             states.append(NotificationState(v));
     }
 
-    NotificationState NotificationPreferenceButton::getCurrentState() const
+    const NotificationState* NotificationPreferenceButton::getCurrentState() const
     {
         auto it = std::ranges::find_if(states, [this](const NotificationState& ns) { return ns.stateId == currentStateId; });
-        return it != states.end() ? *it : NotificationState();
+        return it != states.end() ? &(*it) : nullptr;
     }
 
-    MenuServiceItem NotificationPreferenceButton::getService(const QString& iconType) const
+    const MenuServiceItem* NotificationPreferenceButton::getService(const QString& iconType) const
     {
         auto it = std::ranges::find_if(popup.items, [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
-        return it != popup.items.end() ? *it : MenuServiceItem();
+        return it != popup.items.end() ? &(*it) : nullptr;
     }
 }

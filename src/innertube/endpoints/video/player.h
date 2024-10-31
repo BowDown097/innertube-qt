@@ -13,6 +13,6 @@ namespace InnertubeEndpoints
     public:
         PlayerResponse response;
     protected:
-        Player(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& videoId);
+        Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId);
     };
 }

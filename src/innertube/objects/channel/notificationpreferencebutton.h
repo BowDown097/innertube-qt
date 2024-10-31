@@ -15,7 +15,7 @@ namespace InnertubeObjects
         NotificationPreferenceButton() = default;
         explicit NotificationPreferenceButton(const QJsonValue& notificationToggleButtonRenderer);
 
-        NotificationState getCurrentState() const;
-        MenuServiceItem getService(const QString& iconType) const;
+        const NotificationState* getCurrentState() const;
+        const MenuServiceItem* getService(const QString& iconType) const;
     };
 }

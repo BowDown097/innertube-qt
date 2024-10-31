@@ -19,7 +19,7 @@ namespace InnertubeEndpoints
          * @param params  Supplied by response.contents["twoColumnBrowseResultsRenderer"]["tabs"][INDEX]["tabRenderer"]["endpoint"]["browseEndpoint"]["params"]
          * where INDEX is the current tab index.
          */
-        BrowseChannel(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& channelId,
+        BrowseChannel(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& channelId,
                       const QString& tokenIn = "", const QString& params = "");
     };
 }

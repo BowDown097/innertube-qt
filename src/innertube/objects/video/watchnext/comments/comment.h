@@ -33,8 +33,8 @@ namespace InnertubeObjects
             : actionButtons(commentRenderer["actionButtons"]["commentActionButtonsRenderer"]),
               actionMenu(commentRenderer["actionMenu"]["menuRenderer"]),
               authorCommentBadge(commentRenderer["authorCommentBadge"].isObject()
-                                 ? std::make_optional<AuthorCommentBadge>(commentRenderer["authorCommentBadge"]["authorCommentBadgeRenderer"])
-                                 : std::nullopt),
+                  ? std::make_optional<AuthorCommentBadge>(commentRenderer["authorCommentBadge"]["authorCommentBadgeRenderer"])
+                  : std::nullopt),
               authorEndpoint(commentRenderer["authorEndpoint"]),
               authorIsChannelOwner(commentRenderer["authorIsChannelOwner"].toBool()),
               authorText(commentRenderer["authorText"]["simpleText"].toString()),
@@ -46,8 +46,8 @@ namespace InnertubeObjects
               expandButton(commentRenderer["expandButton"]["buttonRenderer"]),
               isLiked(commentRenderer["isLiked"].toBool()),
               pinnedCommentBadge(commentRenderer["pinnedCommentBadge"].isObject()
-                                 ? std::make_optional<PinnedCommentBadge>(commentRenderer["pinnedCommentBadge"]["pinnedCommentBadgeRenderer"])
-                                 : std::nullopt),
+                  ? std::make_optional<PinnedCommentBadge>(commentRenderer["pinnedCommentBadge"]["pinnedCommentBadgeRenderer"])
+                  : std::nullopt),
               publishedTimeText(commentRenderer["publishedTimeText"]),
               replyCount(commentRenderer["replyCount"].toInt()),
               voteCount(commentRenderer["voteCount"]),

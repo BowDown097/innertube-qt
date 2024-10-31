@@ -3,7 +3,7 @@
 
 namespace InnertubeEndpoints
 {
-    ResolveUrl::ResolveUrl(InnertubeContext* context, InnertubeAuthStore* authStore, const QString& url)
+    ResolveUrl::ResolveUrl(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& url)
     {
         QJsonObject body = { EndpointMethods::contextPair(context) };
         if (QUrl urlObj(url); urlObj.isValid())

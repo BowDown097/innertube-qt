@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
          * @param playerOffsetMs  Position in the video in milliseconds
          */
-        GetLiveChatReplay(InnertubeContext* context, InnertubeAuthStore* authStore,
+        GetLiveChatReplay(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                           const QString& continuation, const QString& playerOffsetMs);
     };
 }

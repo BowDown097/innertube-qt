@@ -21,11 +21,11 @@ namespace InnertubeObjects
         explicit Button(const QJsonValue& buttonRenderer)
             : accessibilityLabel(buttonRenderer["accessibilityData"]["accessibilityData"]["label"].toString()),
               command(buttonRenderer["command"].isObject()
-                          ? std::make_optional<QJsonValue>(buttonRenderer["command"]) : std::nullopt),
+                  ? std::make_optional<QJsonValue>(buttonRenderer["command"]) : std::nullopt),
               iconType(buttonRenderer["icon"]["iconType"].toString()),
               isDisabled(buttonRenderer["isDisabled"].toBool()),
               serviceEndpoint(buttonRenderer["serviceEndpoint"].isObject()
-                                  ? std::make_optional<QJsonValue>(buttonRenderer["serviceEndpoint"]) : std::nullopt),
+                  ? std::make_optional<QJsonValue>(buttonRenderer["serviceEndpoint"]) : std::nullopt),
               size(buttonRenderer["size"].toString()),
               style(buttonRenderer["style"].toString()),
               targetId(buttonRenderer["targetId"].toString()),
