@@ -47,18 +47,22 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : std::as_const(contents))
         {
-            if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
+            if (const QJsonValue lockupViewModel = v["lockupViewModel"]; lockupViewModel.isObject())
+            {
+                response.contents.append(InnertubeObjects::LockupViewModel(lockupViewModel));
+            }
+            else if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
             {
                 if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
-                    response.videos.append(InnertubeObjects::Video(video));
+                    response.contents.append(InnertubeObjects::Video(video));
             }
             else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())
             {
-                response.shelves.append(InnertubeObjects::InnertubeString(shelf["title"]));
+                response.contents.append(InnertubeObjects::InnertubeString(shelf["title"]));
                 const QJsonArray shelfContents = shelf["content"]["horizontalListRenderer"]["items"].toArray();
                 for (const QJsonValue& v2 : shelfContents)
                     if (const QJsonValue gridVideo = v2["gridVideoRenderer"]; gridVideo.isObject())
-                        response.videos.append(InnertubeObjects::Video(gridVideo));
+                        response.contents.append(InnertubeObjects::Video(gridVideo));
             }
             else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
             {

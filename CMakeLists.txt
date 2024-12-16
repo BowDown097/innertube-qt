@@ -218,8 +218,11 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/dynamictextviewmodel.h
             src/innertube/objects/viewmodels/flexibleactionsviewmodel.h
             src/innertube/objects/viewmodels/imagebannerviewmodel.h
+            src/innertube/objects/viewmodels/lockupmetadataviewmodel.h
+            src/innertube/objects/viewmodels/lockupviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h
             src/innertube/responses/browse/channelresponse.h
             src/innertube/responses/browse/historyresponse.h
