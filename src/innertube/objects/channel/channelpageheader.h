@@ -1,24 +1,37 @@
 #pragma once
-#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/viewmodels/buttonviewmodel.h"
 #include "innertube/objects/viewmodels/contentmetadataviewmodel.h"
+#include "innertube/objects/viewmodels/decoratedavatarviewmodel.h"
 #include "innertube/objects/viewmodels/dynamictextviewmodel.h"
+#include "innertube/objects/viewmodels/flexibleactionsviewmodel.h"
+#include "innertube/objects/viewmodels/imagebannerviewmodel.h"
 #include "innertube/objects/viewmodels/subscribebuttonviewmodel.h"
 
 namespace InnertubeObjects
 {
     struct ChannelPageHeader
     {
-        QList<ButtonViewModel> actions; // subscribeButton is also an action, but is separate for simplicity
+        FlexibleActionsViewModel<ButtonViewModel, SubscribeButtonViewModel> actions;
         DynamicTextViewModel attribution;
-        ResponsiveImage avatar;
-        ResponsiveImage banner;
+        ImageBannerViewModel banner;
         DynamicTextViewModel description;
+        DecoratedAvatarViewModel image;
         ContentMetadataViewModel metadata;
-        std::optional<SubscribeButtonViewModel> subscribeButton;
+        QJsonValue rendererContext;
         DynamicTextViewModel title;
 
         ChannelPageHeader() = default;
-        explicit ChannelPageHeader(const QJsonValue& pageHeaderViewModel);
+        explicit ChannelPageHeader(const QJsonValue& pageHeaderViewModel)
+            : actions(pageHeaderViewModel["actions"]["flexibleActionsViewModel"],
+                      { "buttonViewModel", "subscribeButtonViewModel" }),
+              attribution(pageHeaderViewModel["attribution"]["attributionViewModel"]),
+              banner(pageHeaderViewModel["banner"]["imageBannerViewModel"]["image"]["sources"]),
+              description(pageHeaderViewModel["description"]["descriptionPreviewViewModel"], "description"),
+              image(pageHeaderViewModel["image"]["decoratedAvatarViewModel"]),
+              metadata(pageHeaderViewModel["metadata"]["contentMetadataViewModel"]),
+              rendererContext(pageHeaderViewModel["rendererContext"]),
+              title(pageHeaderViewModel["title"]["dynamicTextViewModel"]) {}
+
+        const SubscribeButtonViewModel* findSubscribeButton() const;
     };
 }

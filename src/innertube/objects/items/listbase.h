@@ -23,10 +23,12 @@ namespace InnertubeObjects
     {
     public:
         QList<std::variant<ItemTypes...>> items;
-        ListBase(const QJsonValue& listRenderer, const std::array<QString, sizeof...(ItemTypes)>& itemKeys)
+        ListBase(const QJsonValue& listRenderer,
+                 const std::array<QString, sizeof...(ItemTypes)>& itemKeys,
+                 const QString& itemsKey = "items")
         {
             std::span keysSpan(itemKeys);
-            const QJsonArray itemsArr = listRenderer["items"].toArray();
+            const QJsonArray itemsArr = listRenderer[itemsKey].toArray();
             items.reserve(itemsArr.size());
 
             for (auto it = itemsArr.begin(); it != itemsArr.end(); ++it)

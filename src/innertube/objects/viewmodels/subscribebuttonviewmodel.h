@@ -15,6 +15,7 @@ namespace InnertubeObjects
         QString channelId;
         bool disableNotificationBell{};
         bool disableSubscribeButton{};
+        bool enableSubscribeButtonPostClickAnimation{};
         QJsonValue onShowSubscriptionOptions;
         QString stateEntityStoreKey;
         QString subsNotificationStateKey;
@@ -34,10 +35,12 @@ namespace InnertubeObjects
               channelId(subscribeButtonViewModel["channelId"].toString()),
               disableNotificationBell(subscribeButtonViewModel["disableNotificationBell"].toBool()),
               disableSubscribeButton(subscribeButtonViewModel["disableSubscribeButton"].toBool()),
+              enableSubscribeButtonPostClickAnimation(
+                  subscribeButtonViewModel["enableSubscribeButtonPostClickAnimation"].toBool()),
               onShowSubscriptionOptions(subscribeButtonViewModel["onShowSubscriptionOptions"]),
               stateEntityStoreKey(subscribeButtonViewModel["stateEntityStoreKey"].toString()),
-              subsNotificationStateKey(subscribeButtonViewModel["notificationStateEntityStoreKeys"]
-                                                               ["subsNotificationStateKey"].toString()),
+              subsNotificationStateKey(
+                  subscribeButtonViewModel["notificationStateEntityStoreKeys"]["subsNotificationStateKey"].toString()),
               subscribeButtonContent(subscribeButtonViewModel["subscribeButtonContent"]),
               subscribedStateStyle(subscribeButtonViewModel["buttonStyle"]["subscribedStateStyle"].toString()),
               unsubscribeButtonContent(subscribeButtonViewModel["unsubscribeButtonContent"]),

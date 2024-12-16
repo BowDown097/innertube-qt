@@ -211,9 +211,13 @@ target_sources(innertube-qt
             src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.h
             src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.h
             src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.h
+            src/innertube/objects/viewmodels/avatarviewmodel.h
             src/innertube/objects/viewmodels/buttonviewmodel.h
             src/innertube/objects/viewmodels/contentmetadataviewmodel.h
+            src/innertube/objects/viewmodels/decoratedavatarviewmodel.h
             src/innertube/objects/viewmodels/dynamictextviewmodel.h
+            src/innertube/objects/viewmodels/flexibleactionsviewmodel.h
+            src/innertube/objects/viewmodels/imagebannerviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h

@@ -6,14 +6,14 @@ namespace InnertubeObjects
     ContentMetadataViewModel::ContentMetadataViewModel(const QJsonValue& contentMetadataViewModel)
         : delimiter(contentMetadataViewModel["delimiter"].toString())
     {
-        const QJsonArray metaRows = contentMetadataViewModel["metadataRows"].toArray();
-        for (const QJsonValue& row : metaRows)
+        const QJsonArray metadataRowsJson = contentMetadataViewModel["metadataRows"].toArray();
+        for (const QJsonValue& row : metadataRowsJson)
         {
-            const QJsonArray metaParts = row["metadataParts"].toArray();
-            QStringList textParts;
-            textParts.reserve(metaParts.size());
-            for (const QJsonValue& part : metaParts)
-                textParts.append(part["text"]["content"].toString());
+            const QJsonArray metadataParts = row["metadataParts"].toArray();
+            QList<DynamicText> textParts;
+            textParts.reserve(metadataParts.size());
+            for (const QJsonValue& part : metadataParts)
+                textParts.append(DynamicText(part["text"]));
             metadataRows.append(textParts);
         }
     }

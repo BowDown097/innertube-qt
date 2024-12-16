@@ -1,12 +1,12 @@
 #pragma once
-#include <QJsonValue>
+#include "innertube/objects/dynamictext.h"
 
 namespace InnertubeObjects
 {
     struct ContentMetadataViewModel
     {
         QString delimiter;
-        QList<QStringList> metadataRows;
+        QList<QList<DynamicText>> metadataRows;
 
         ContentMetadataViewModel() = default;
         explicit ContentMetadataViewModel(const QJsonValue& contentMetadataViewModel);
