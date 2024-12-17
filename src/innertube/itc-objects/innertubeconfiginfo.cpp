@@ -1,9 +1,9 @@
 #include "innertubeconfiginfo.h"
 #include <QJsonObject>
 
-QJsonValue InnertubeConfigInfo::toJson() const
+QJsonObject InnertubeConfigInfo::toJson() const
 {
-    return QJsonObject {
+    return {
         { "appInstallData", appInstallData }
     };
 }

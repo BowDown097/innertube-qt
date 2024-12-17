@@ -114,7 +114,7 @@ public:
      */
     static QString resolveClientName(ClientType clientType);
 
-    QJsonValue toJson() const;
+    QJsonObject toJson() const;
 private:
     static QString getVersionFromAppStore(const QString& bundleId);
     static QString getVersionFromGooglePlay(const QString& name);

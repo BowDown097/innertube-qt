@@ -6,18 +6,18 @@
 #include <QEventLoop>
 #endif
 
-QJsonValue InnertubePlaybackContext::toJson() const
+QJsonObject InnertubePlaybackContext::toJson() const
 {
     if (!isContent)
     {
-        return QJsonObject {
+        return {
             { "lactMilliseconds", lactMilliseconds },
             { "vis", vis }
         };
     }
     else
     {
-        return QJsonObject {
+        return {
             { "contentPlaybackContext", QJsonObject {
                 { "currentUrl", currentUrl },
                 { "html5Preference", html5Preference },

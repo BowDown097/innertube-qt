@@ -113,9 +113,9 @@ QString InnertubeAuthStore::toCookieString() const
     return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5").arg(sid, hsid, ssid, apisid, sapisid);
 }
 
-QJsonValue InnertubeAuthStore::toJson() const
+QJsonObject InnertubeAuthStore::toJson() const
 {
-    return QJsonObject {
+    return {
         { "apisid", apisid },
         { "hsid", hsid },
         { "sapisid", sapisid },

@@ -1,9 +1,9 @@
 #include "innertubeclicktracking.h"
 #include <QJsonObject>
 
-QJsonValue InnertubeClickTracking::toJson() const
+QJsonObject InnertubeClickTracking::toJson() const
 {
-    return QJsonObject {
+    return {
         { "clickTrackingParams", clickTrackingParams }
     };
 }

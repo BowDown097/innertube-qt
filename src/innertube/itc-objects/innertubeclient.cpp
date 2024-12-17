@@ -272,7 +272,7 @@ QString InnertubeClient::resolveClientName(ClientType clientType)
     }
 }
 
-QJsonValue InnertubeClient::toJson() const
+QJsonObject InnertubeClient::toJson() const
 {
     QJsonObject object = {
         { "browserName", browserName },

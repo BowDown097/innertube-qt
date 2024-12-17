@@ -84,7 +84,7 @@ public:
     /**
      * @return The authentication credentials as a JSON object to be used with @ref authenticateFromJson.
      */
-    QJsonValue toJson() const;
+    QJsonObject toJson() const;
 
     void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE

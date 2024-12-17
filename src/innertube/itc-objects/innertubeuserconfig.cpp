@@ -1,9 +1,9 @@
 #include "innertubeuserconfig.h"
 #include <QJsonObject>
 
-QJsonValue InnertubeUserConfig::toJson() const
+QJsonObject InnertubeUserConfig::toJson() const
 {
-    return QJsonObject {
+    return {
         { "lockedSafetyMode", lockedSafetyMode }
     };
 }

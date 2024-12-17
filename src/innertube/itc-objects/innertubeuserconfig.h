@@ -5,5 +5,5 @@ struct InnertubeUserConfig
 {
     bool lockedSafetyMode;
     explicit InnertubeUserConfig(bool lockedSafetyMode = false) : lockedSafetyMode(lockedSafetyMode) {}
-    QJsonValue toJson() const;
+    QJsonObject toJson() const;
 };

@@ -80,7 +80,7 @@ public:
         auto argsTuple = std::make_tuple(std::forward<decltype(args)>(args)...);
         InnertubeReply<E>* reply = new InnertubeReply<E>;
 
-        QThreadPool::globalInstance()->start([this, argsTuple, reply] {
+        QThreadPool::globalInstance()->start([this, argsTuple = std::move(argsTuple), reply] {
             try
             {
                 auto endpoint = std::apply([this](auto&&... unpacked) {
@@ -115,11 +115,11 @@ public:
      * Don't worry, it's freed when the request finishes - you don't have to manually delete it.
      */
     template<EndpointWithData E>
-    InnertubeReply<E>* getRaw(const QJsonObject& body)
+    InnertubeReply<E>* getRaw(QJsonObject body)
     {
         InnertubeReply<E>* reply = new InnertubeReply<E>;
-        QThreadPool::globalInstance()->start([this, reply, body] {
-            QJsonValue v = getRawBlocking<E>(body);
+        QThreadPool::globalInstance()->start([this, reply, body = std::move(body)] {
+            QJsonValue v = getRawBlocking<E>(std::move(body));
             emit reply->finishedRaw(v);
             reply->deleteLater();
         });
@@ -133,8 +133,24 @@ public:
     template<EndpointWithData E>
     QJsonValue getRawBlocking(QJsonObject body)
     {
-        body.insert("context", m_context->toJson());
-        return E::get(m_context, m_authStore, body);
+        // merge unique properties from context, so that properties can be overriden by the user
+        if (body["context"].isObject())
+        {
+            QJsonObject bodyContext = body["context"].toObject();
+            QJsonObject contextObj = m_context->toJson();
+
+            for (auto it = contextObj.begin(); it != contextObj.end(); ++it)
+                if (QJsonValueRef bodyProperty = bodyContext[it.key()]; !bodyProperty.isNull())
+                    it.value() = bodyProperty;
+
+            body["context"] = contextObj;
+        }
+        else
+        {
+            body.insert("context", m_context->toJson());
+        }
+
+        return E::get(m_context, m_authStore, std::move(body));
     }
 
     void like(const QJsonValue& endpoint, bool liking);

@@ -5,5 +5,5 @@ struct InnertubeClickTracking
 {
     QString clickTrackingParams;
     explicit InnertubeClickTracking(const QString& clickTrackingParams = "") : clickTrackingParams(clickTrackingParams) {}
-    QJsonValue toJson() const;
+    QJsonObject toJson() const;
 };

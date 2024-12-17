@@ -1,9 +1,9 @@
 #include "innertuberequestconfig.h"
 #include <QJsonObject>
 
-QJsonValue InnertubeRequestConfig::toJson() const
+QJsonObject InnertubeRequestConfig::toJson() const
 {
-    return QJsonObject {
+    return {
         { "useSsl", useSsl }
     };
 }

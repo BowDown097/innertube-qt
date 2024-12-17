@@ -22,7 +22,7 @@ public:
           referer(referer),
           signatureTimestamp(signatureTimestamp),
           vis(vis) {}
-    QJsonValue toJson() const;
+    QJsonObject toJson() const;
 #ifdef INNERTUBE_GET_STS
 private:
     int fetchSignatureTimestamp() const;
