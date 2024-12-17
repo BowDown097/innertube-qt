@@ -87,7 +87,11 @@ target_sources(innertube-qt
         src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.cpp
         src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.cpp
         src/innertube/objects/viewmodels/contentmetadataviewmodel.cpp
+        src/innertube/objects/viewmodels/lockupviewmodel.cpp
         src/innertube/objects/viewmodels/subscribebuttonviewmodel.cpp
+        src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.cpp
+        src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.cpp
+        src/innertube/objects/viewmodels/thumbnailviewmodel.cpp
         src/innertube/responses/video/nextcontinuationdata.cpp
         src/protobuf/protobufcompiler.cpp
     PUBLIC
@@ -137,6 +141,7 @@ target_sources(innertube-qt
             src/innertube/objects/dynamictext.h
             src/innertube/objects/entitymutation.h
             src/innertube/objects/innertubestring.h
+            src/innertube/objects/lottiedata.h
             src/innertube/objects/account_menu/activeaccountheader.h
             src/innertube/objects/backstage/backstageimage.h
             src/innertube/objects/backstage/backstagepost.h
@@ -222,6 +227,9 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/lockupviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailbadgeviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.h
             src/innertube/objects/viewmodels/thumbnailviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h
             src/innertube/responses/browse/channelresponse.h

@@ -1,6 +1,8 @@
 #pragma once
+#include "innertube/objects/video/videoowner.h"
 #include "lockupmetadataviewmodel.h"
 #include "thumbnailviewmodel.h"
+#include <optional>
 
 namespace InnertubeObjects
 {
@@ -20,5 +22,10 @@ namespace InnertubeObjects
               contentType(lockupViewModel["contentType"].toString()),
               itemPlayback(lockupViewModel["itemPlayback"]),
               rendererContext(lockupViewModel["rendererContext"]) {}
+
+        bool isLive() const;
+        QTime length() const;
+        QString lengthText() const;
+        std::optional<VideoOwner> owner() const;
     };
 }

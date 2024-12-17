@@ -7,6 +7,7 @@ namespace InnertubeObjects
     {
         ButtonViewModel defaultButtonViewModel;
         QString identifier;
+        bool isToggled{};
         bool isTogglingDisabled{};
         ButtonViewModel toggledButtonViewModel;
 
@@ -14,6 +15,7 @@ namespace InnertubeObjects
         explicit ToggleButtonViewModel(const QJsonValue& toggleButtonViewModel)
             : defaultButtonViewModel(toggleButtonViewModel["defaultButtonViewModel"]["buttonViewModel"]),
               identifier(toggleButtonViewModel["identifier"].toString()),
+              isToggled(toggleButtonViewModel["isToggled"].toBool()),
               isTogglingDisabled(toggleButtonViewModel["isTogglingDisabled"].toBool()),
               toggledButtonViewModel(toggleButtonViewModel["toggledButtonViewModel"]["buttonViewModel"]) {}
     };
