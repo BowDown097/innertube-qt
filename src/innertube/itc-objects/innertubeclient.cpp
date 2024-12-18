@@ -90,6 +90,7 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
     case ClientType::IOS_MESSAGES_EXTENSION:
         return getVersionFromAppStore("544007664");
     case ClientType::TVHTML5:
+    {
         QString ver = getVersionFromPageBody("https://www.youtube.com/tv/sw.js");
         if (ver.isEmpty())
         {
@@ -97,6 +98,7 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
             ver = getVersionFromPageBody("https://www.youtube.com/tv_config?action_get_config=true");
         }
         return ver;
+    }
     case ClientType::ANDROID_CREATOR:
         return getVersionFromGooglePlay("youtube-creator-studio");
     case ClientType::IOS_CREATOR:
@@ -212,7 +214,7 @@ QString InnertubeClient::getVersionFromPageBody(const QString& url)
 
     static QRegularExpression clientVersionRegex(
         "(INNERTUBE_CONTEXT_CLIENT_VERSION|innertubeContextClientVersion)\":\"([0-9\\.]+?)\"");
-    return clientVersionRegex.match(reply->body()).captured(1);
+    return clientVersionRegex.match(reply->body()).captured(2);
 }
 
 QString InnertubeClient::resolveClientName(ClientType clientType)
