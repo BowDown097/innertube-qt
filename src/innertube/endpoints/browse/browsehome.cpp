@@ -10,7 +10,28 @@ namespace InnertubeEndpoints
     BrowseHome::BrowseHome(const QJsonValue& data)
     {
         QJsonArray contents;
-        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
+        if (const QJsonValue baseContents = data["contents"]; baseContents.isObject())
+        {
+            const QLatin1String baseRenderer(!baseContents["twoColumnBrowseResultsRenderer"].isUndefined()
+                                             ? "twoColumnBrowseResultsRenderer" : "singleColumnBrowseResultsRenderer");
+            const QJsonValue resultsRenderer = baseContents[baseRenderer];
+            if (!resultsRenderer.isObject())
+                throw InnertubeException(QStringLiteral("[BrowseHome] %1 not found").arg(baseRenderer));
+
+            const QJsonArray tabs = resultsRenderer["tabs"].toArray();
+            if (tabs.isEmpty())
+                throw InnertubeException("[BrowseHome] tabs not found or is empty");
+
+            const QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
+            if (!tabRenderer.isObject())
+                throw InnertubeException("[BrowseHome] tabRenderer not found");
+
+            // if two column, assume grid; if not, assume shelves
+            contents = baseRenderer == "twoColumnBrowseResultsRenderer"
+                           ? tabRenderer["richGridRenderer"]["contents"].toArray()
+                           : tabRenderer["sectionListRenderer"]["contents"].toArray();
+        }
+        else if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
         {
             const QJsonArray onResponseReceivedActions = onResponseReceivedValue.toArray();
             // this can just happen sometimes, so will only be minor
@@ -26,27 +47,7 @@ namespace InnertubeEndpoints
         }
         else
         {
-            if (!data["contents"].isObject())
-                throw InnertubeException("[BrowseHome] contents not found");
-
-            const QLatin1String baseRenderer(!data["contents"]["twoColumnBrowseResultsRenderer"].isUndefined()
-                ? "twoColumnBrowseResultsRenderer" : "singleColumnBrowseResultsRenderer");
-            const QJsonValue resultsRenderer = data["contents"][baseRenderer];
-            if (!resultsRenderer.isObject())
-                throw InnertubeException(QStringLiteral("[BrowseHome] %1 not found").arg(baseRenderer));
-
-            const QJsonArray tabs = resultsRenderer["tabs"].toArray();
-            if (tabs.isEmpty())
-                throw InnertubeException("[BrowseHome] tabs not found or is empty");
-
-            const QJsonValue tabRenderer = tabs[0]["tabRenderer"]["content"];
-            if (!tabRenderer.isObject())
-                throw InnertubeException("[BrowseHome] tabRenderer not found");
-
-            // if two column, assume grid; if not, assume shelves
-            contents = baseRenderer == "twoColumnBrowseResultsRenderer"
-                    ? tabRenderer["richGridRenderer"]["contents"].toArray()
-                    : tabRenderer["sectionListRenderer"]["contents"].toArray();
+            throw InnertubeException("[BrowseHome] Failed to find any content");
         }
 
         for (const QJsonValue& v : std::as_const(contents))
