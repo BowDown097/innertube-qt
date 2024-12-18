@@ -116,7 +116,7 @@ public:
      * Don't worry, it's freed when the request finishes - you don't have to manually delete it.
      */
     template<EndpointWithData E>
-    InnertubeReply<E>* getRaw(QJsonObject body)
+    InnertubeReply<E>* getRaw(QJsonObject body = {})
     {
         InnertubeReply<E>* reply = new InnertubeReply<E>;
         QThreadPool::globalInstance()->start([this, reply, body = std::move(body)] {
@@ -132,24 +132,30 @@ public:
      * @details See @ref getRaw for more details.
      */
     template<EndpointWithData E>
-    QJsonValue getRawBlocking(QJsonObject body)
+    QJsonValue getRawBlocking(QJsonObject body = {})
     {
         // merge unique properties from context, so that properties can be overriden by the user
         if (body["context"].isObject())
         {
-            QJsonObject bodyContext = body["context"].toObject();
             QJsonObject contextObj = m_context->toJson();
-
-            for (auto it = contextObj.begin(); it != contextObj.end(); ++it)
-                if (QJsonValueRef bodyProperty = bodyContext[it.key()]; !bodyProperty.isNull())
-                    it.value() = bodyProperty;
-
+            const QJsonObject bodyContext = body["context"].toObject();
+            deepMerge(contextObj, bodyContext);
             body["context"] = contextObj;
         }
         else
         {
             body.insert("context", m_context->toJson());
         }
+
+        // we can automatically resolve the browseId for the browse endpoints (excl. channels)
+        if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHistory>)
+            body.insert("browseId", "FEhistory");
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHome>)
+            body.insert("browseId", "FEwhat_to_watch");
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseSubscriptions>)
+            body.insert("browseId", "FEsubscriptions");
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseTrending>)
+            body.insert("browseId", "FEtrending");
 
         return E::get(m_context, m_authStore, std::move(body));
     }
@@ -187,4 +193,33 @@ private:
 
     InnertubeAuthStore* m_authStore;
     InnertubeContext* m_context{};
+
+    void deepMerge(QJsonObject& target, const QJsonObject& source)
+    {
+        for (auto it = source.begin(); it != source.end(); ++it)
+        {
+            const QString key = it.key();
+            QJsonValueConstRef value = it.value();
+
+            if (target[key].isObject() && value.isObject())
+            {
+                QJsonObject targetObj = target[key].toObject();
+                const QJsonObject sourceObj = value.toObject();
+                deepMerge(targetObj, sourceObj);
+                target[key] = targetObj;
+            }
+            else if (target[key].isArray() && value.isArray())
+            {
+                QJsonArray targetArr = target[key].toArray();
+                const QJsonArray sourceArr = value.toArray();
+                for (const QJsonValue& val : sourceArr)
+                    targetArr.append(val);
+                target[key] = targetArr;
+            }
+            else
+            {
+                target[key] = value;
+            }
+        }
+    }
 };
