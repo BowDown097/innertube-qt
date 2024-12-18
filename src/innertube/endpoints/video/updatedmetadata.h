@@ -15,7 +15,9 @@ namespace InnertubeEndpoints
         UpdatedMetadataResponse response;
     protected:
         UpdatedMetadata(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId);
+        explicit UpdatedMetadata(const QJsonValue& data);
     private:
-        QJsonValue findAction(const QJsonArray& actions, const QString& name) const;
+        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId);
+        static QJsonValue findAction(const QJsonArray& actions, const QString& name);
     };
 }

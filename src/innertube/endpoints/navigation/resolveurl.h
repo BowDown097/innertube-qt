@@ -17,5 +17,9 @@ namespace InnertubeEndpoints
          * @param url  URL to resolve.
          */
         ResolveUrl(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& url);
+
+        explicit ResolveUrl(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& url);
     };
 }

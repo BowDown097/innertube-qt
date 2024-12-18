@@ -16,5 +16,9 @@ namespace InnertubeEndpoints
         PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QStringList& actions);
         PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& action)
             : PerformCommentAction(context, authStore, QStringList { action }) {}
+
+        explicit PerformCommentAction(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QStringList& actions);
     };
 }

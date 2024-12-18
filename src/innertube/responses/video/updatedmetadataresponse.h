@@ -10,7 +10,6 @@ namespace InnertubeEndpoints
         InnertubeObjects::InnertubeString description;
         InnertubeObjects::LikeCountEntity likeCountEntity;
         InnertubeObjects::InnertubeString title;
-        QString videoId;
         InnertubeObjects::ViewCount viewCount;
     };
 }

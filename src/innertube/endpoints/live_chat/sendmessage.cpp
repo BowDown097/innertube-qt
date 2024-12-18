@@ -3,21 +3,26 @@
 
 namespace InnertubeEndpoints
 {
-    SendMessage::SendMessage(const QJsonArray& textSegments, const InnertubeContext* context,
-                             const InnertubeAuthStore* authStore,
-                             const QString& clientMessageId, const QString& params)
+    SendMessage::SendMessage(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                             const QJsonArray& textSegments, const QString& clientMessageId, const QString& params)
     {
-        get(context, authStore, QJsonObject {
+        get(context, authStore, createBody(context, textSegments, clientMessageId, params));
+    }
+
+    SendMessage::SendMessage(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                             const QString& message, const QString& clientMessageId, const QString& params)
+        : SendMessage(context, authStore, QJsonArray { QJsonObject { { "text", message } } }, clientMessageId, params) {}
+
+    QJsonObject SendMessage::createBody(const InnertubeContext* context, const QJsonArray& textSegments,
+                                        const QString& clientMessageId, const QString& params)
+    {
+        return {
             { "clientMessageId", clientMessageId },
             EndpointMethods::contextPair(context),
             { "params", params },
             { "richMessage", QJsonObject {
                 { "textSegments", textSegments }
             }}
-        });
+        };
     }
-
-    SendMessage::SendMessage(const QString& message, const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                             const QString& clientMessageId, const QString& params)
-        : SendMessage(QJsonArray { QJsonObject { { "text", message } } }, context, authStore, clientMessageId, params) {}
 }

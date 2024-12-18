@@ -14,5 +14,6 @@ namespace InnertubeEndpoints
         TrendingResponse response;
     protected:
         BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        explicit BrowseTrending(const QJsonValue& data);
     };
 }

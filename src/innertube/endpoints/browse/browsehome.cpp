@@ -5,10 +5,26 @@
 namespace InnertubeEndpoints
 {
     BrowseHome::BrowseHome(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn)
-        : BaseBrowseEndpoint("FEwhat_to_watch", context, authStore, tokenIn)
+        : BrowseHome(fetch("FEwhat_to_watch", context, authStore, tokenIn)) {}
+
+    BrowseHome::BrowseHome(const QJsonValue& data)
     {
         QJsonArray contents;
-        if (tokenIn.isEmpty())
+        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
+        {
+            const QJsonArray onResponseReceivedActions = onResponseReceivedValue.toArray();
+            // this can just happen sometimes, so will only be minor
+            if (onResponseReceivedActions.isEmpty())
+                throw InnertubeException("[BrowseHome] Continuation has no actions", InnertubeException::Severity::Minor);
+
+            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            // now this shouldn't just happen, so will not be minor
+            if (!appendItemsAction.isObject())
+                throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction");
+
+            contents = appendItemsAction["continuationItems"].toArray();
+        }
+        else
         {
             if (!data["contents"].isObject())
                 throw InnertubeException("[BrowseHome] contents not found");
@@ -31,18 +47,6 @@ namespace InnertubeEndpoints
             contents = baseRenderer == "twoColumnBrowseResultsRenderer"
                     ? tabRenderer["richGridRenderer"]["contents"].toArray()
                     : tabRenderer["sectionListRenderer"]["contents"].toArray();
-        }
-        else
-        {
-            const QJsonArray onResponseReceivedActions = data["onResponseReceivedActions"].toArray();
-            if (onResponseReceivedActions.isEmpty())
-                throw InnertubeException("[BrowseHome] Continuation has no actions", InnertubeException::Severity::Minor); // this can just happen sometimes
-
-            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
-            if (!appendItemsAction.isObject())
-                throw InnertubeException("[BrowseHome] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
-
-            contents = appendItemsAction["continuationItems"].toArray();
         }
 
         for (const QJsonValue& v : std::as_const(contents))

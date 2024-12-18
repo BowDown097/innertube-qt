@@ -7,8 +7,34 @@
 namespace InnertubeEndpoints
 {
     Player::Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
+        : Player(get(context, authStore, createBody(context, videoId))) {}
+
+    Player::Player(const QJsonValue& data)
     {
-        QJsonObject body {
+        const QString status = data["playabilityStatus"]["status"].toString();
+        static QStringList noErrorStatuses = { "OK", "LIVE_STREAM_OFFLINE", "CONTENT_CHECK_REQUIRED" };
+
+        if (!noErrorStatuses.contains(status))
+        {
+            const QString errorReason = data["playabilityStatus"]["reason"].toString();
+            if (!errorReason.isEmpty())
+                throw InnertubeException(QStringLiteral("[Player] Error: %1 - Playability status: %2").arg(errorReason, status));
+            else
+                throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(status));
+        }
+
+        response.playbackTracking = InnertubeObjects::PlaybackTracking(data["playbackTracking"]);
+        response.streamingData = InnertubeObjects::StreamingData(data["streamingData"]);
+        response.videoDetails = InnertubeObjects::PlayerVideoDetails(data["videoDetails"]);
+
+        const QJsonArray captionTracks = data["captions"]["playerCaptionsTracklistRenderer"]["captionTracks"].toArray();
+        for (const QJsonValue& v : captionTracks)
+            response.captions.append(InnertubeObjects::CaptionTrack(v));
+    }
+
+    QJsonObject Player::createBody(const InnertubeContext* context, const QString& videoId)
+    {
+        QJsonObject body = {
             { "contentCheckOk", true },
             { "context", context->toJson() },
             { "playbackContext", InnertubePlaybackContext(true, QStringLiteral("/watch?v=%1").arg(videoId)).toJson() },
@@ -22,24 +48,6 @@ namespace InnertubeEndpoints
         if (context->client.clientType == InnertubeClient::ClientType::ANDROID)
             body.insert("params", "CgIQBg");
 
-        const QJsonValue data = get(context, authStore, body);
-        const QString playabilityStatus = data["playabilityStatus"]["status"].toString();
-
-        if (playabilityStatus != "OK" && playabilityStatus != "LIVE_STREAM_OFFLINE" && playabilityStatus != "CONTENT_CHECK_REQUIRED")
-        {
-            const QString errorReason = data["playabilityStatus"]["reason"].toString();
-            if (!errorReason.isEmpty())
-                throw InnertubeException(QStringLiteral("[Player] Error: %1 - Playability status: %2").arg(errorReason, playabilityStatus));
-            else
-                throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(playabilityStatus));
-        }
-
-        response.playbackTracking = InnertubeObjects::PlaybackTracking(data["playbackTracking"]);
-        response.streamingData = InnertubeObjects::StreamingData(data["streamingData"]);
-        response.videoDetails = InnertubeObjects::PlayerVideoDetails(data["videoDetails"]);
-
-        const QJsonArray captionTracks = data["captions"]["playerCaptionsTracklistRenderer"]["captionTracks"].toArray();
-        for (const QJsonValue& v : captionTracks)
-            response.captions.append(InnertubeObjects::CaptionTrack(v));
+        return body;
     }
 }

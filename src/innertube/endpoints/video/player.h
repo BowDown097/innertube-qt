@@ -14,5 +14,8 @@ namespace InnertubeEndpoints
         PlayerResponse response;
     protected:
         Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId);
+        explicit Player(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId);
     };
 }

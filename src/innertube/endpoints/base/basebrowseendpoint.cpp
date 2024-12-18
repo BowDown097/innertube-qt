@@ -3,9 +3,9 @@
 
 namespace InnertubeEndpoints
 {
-    BaseBrowseEndpoint::BaseBrowseEndpoint(const QString& browseId, const InnertubeContext* context,
-                                           const InnertubeAuthStore* authStore, const QString& continuationToken,
-                                           const QString& query, const QString& params)
+    QJsonValue BaseBrowseEndpoint::fetch(const QString& browseId, const InnertubeContext* context,
+                                         const InnertubeAuthStore* authStore, const QString& continuationToken,
+                                         const QString& query, const QString& params)
     {
         QJsonObject body = { EndpointMethods::contextPair(context) };
         if (continuationToken.isEmpty())
@@ -18,10 +18,10 @@ namespace InnertubeEndpoints
         if (!params.isEmpty())
             body.insert("params", params);
 
-        data = get(context, authStore, body);
+        return get(context, authStore, body);
     }
 
-    QJsonValue BaseBrowseEndpoint::getTabRenderer(const QString& name) const
+    QJsonValue BaseBrowseEndpoint::getTabRenderer(const QJsonValue& data, const QString& name)
     {
         if (!data["contents"].isObject())
             throw InnertubeException(QStringLiteral("[%1] contents not found").arg(name));

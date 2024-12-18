@@ -3,6 +3,7 @@
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
 #include <mutex>
+#include <nonstd/expected.hpp>
 #include <QThreadPool>
 
 /**
@@ -151,6 +152,24 @@ public:
         }
 
         return E::get(m_context, m_authStore, std::move(body));
+    }
+
+    /**
+     * @brief Try to create an instance of an endpoint class.
+     * @param data  JSON data to be processed
+     * @return Expected value - the endpoint instance, or the exception that its constructor threw.
+     */
+    template<EndpointWithData E>
+    nonstd::expected<E, InnertubeException> tryCreate(const QJsonValue& data)
+    {
+        try
+        {
+            return E(data);
+        }
+        catch (const InnertubeException& e)
+        {
+            return nonstd::unexpected<InnertubeException>(e);
+        }
     }
 
     void like(const QJsonValue& endpoint, bool liking);

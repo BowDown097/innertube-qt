@@ -18,5 +18,9 @@ namespace InnertubeEndpoints
          * @param params  Supplied by @ref InnertubeObjects::MenuServiceItem::serviceEndpoint["modifyChannelNotificationPreferenceEndpoint"]["params"].
          */
         ModifyChannelPreference(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& params);
+
+        explicit ModifyChannelPreference(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& params);
     };
 }

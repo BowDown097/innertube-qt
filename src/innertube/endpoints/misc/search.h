@@ -21,5 +21,10 @@ namespace InnertubeEndpoints
          */
         Search(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& query,
                const QString& tokenIn = "", const QString& params = "");
+
+        explicit Search(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& query,
+                                      const QString& tokenIn, const QString& params);
     };
 }

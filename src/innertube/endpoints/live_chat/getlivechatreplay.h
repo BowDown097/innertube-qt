@@ -20,5 +20,10 @@ namespace InnertubeEndpoints
          */
         GetLiveChatReplay(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                           const QString& continuation, const QString& playerOffsetMs);
+
+        explicit GetLiveChatReplay(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& continuation,
+                                      const QString& playerOffsetMs);
     };
 }

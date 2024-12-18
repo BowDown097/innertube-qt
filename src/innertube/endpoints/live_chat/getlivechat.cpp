@@ -3,15 +3,19 @@
 namespace InnertubeEndpoints
 {
     GetLiveChat::GetLiveChat(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& continuation)
+        : GetLiveChat(get(context, authStore, createBody(context, continuation))) {}
+
+    GetLiveChat::GetLiveChat(const QJsonValue& data)
+        : liveChatContinuation(data["continuationContents"]["liveChatContinuation"]) {}
+
+    QJsonObject GetLiveChat::createBody(const InnertubeContext* context, const QString& continuation)
     {
-        const QJsonValue data = get(context, authStore, QJsonObject {
+        return {
             EndpointMethods::contextPair(context),
             { "continuation", continuation },
             { "webClientInfo", QJsonObject {
                 { "isDocumentHidden", false }
             }}
-        });
-
-        liveChatContinuation = data["continuationContents"]["liveChatContinuation"];
+        };
     }
 }

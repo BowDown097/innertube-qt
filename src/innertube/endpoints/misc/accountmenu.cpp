@@ -6,13 +6,10 @@
 namespace InnertubeEndpoints
 {
     AccountMenu::AccountMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore)
-    {
-        const QJsonValue data = get(context, authStore, QJsonObject {
-            { "context", context->toJson() },
-            { "deviceTheme", "DEVICE_THEME_SUPPORTED" },
-            { "userInterfaceTheme", context->client.userInterfaceTheme }
-        });
+        : AccountMenu(get(context, authStore, createBody(context))) {}
 
+    AccountMenu::AccountMenu(const QJsonValue& data)
+    {
         const QJsonValue multiPageMenuRenderer = data["actions"][0]["openPopupAction"]["popup"]["multiPageMenuRenderer"];
         if (!multiPageMenuRenderer.isObject())
             throw InnertubeException("[AccountMenu] multiPageMenuRenderer not found");
@@ -31,5 +28,14 @@ namespace InnertubeEndpoints
 
             response.sections.append(items);
         }
+    }
+
+    QJsonObject AccountMenu::createBody(const InnertubeContext* context)
+    {
+        return {
+            { "context", context->toJson() },
+            { "deviceTheme", "DEVICE_THEME_SUPPORTED" },
+            { "userInterfaceTheme", context->client.userInterfaceTheme }
+        };
     }
 }

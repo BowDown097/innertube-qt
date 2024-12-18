@@ -6,30 +6,16 @@ namespace InnertubeEndpoints
 {
     Next::Next(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                const QString& videoId, const QString& tokenIn)
+        : Next(get(context, authStore, createBody(context, videoId, tokenIn))) {}
+
+    Next::Next(const QJsonValue& data)
     {
-        QJsonObject body;
-        if (tokenIn.isEmpty())
+        if (const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
+            onResponseReceivedEndpoints.isArray())
         {
-            body = {
-                { "autonavState", "STATE_ON" },
-                { "captionsRequested", false },
-                { "contentCheckOk", false },
-                EndpointMethods::contextPair(context),
-                { "playbackContext", InnertubePlaybackContext().toJson() },
-                { "racyCheckOk", false },
-                { "videoId", videoId }
-            };
+            response.continuationData.emplace(onResponseReceivedEndpoints);
         }
         else
-        {
-            body = {
-                EndpointMethods::contextPair(context),
-                { "continuation", tokenIn }
-            };
-        }
-
-        const QJsonValue data = get(context, authStore, body);
-        if (tokenIn.isEmpty())
         {
             const QJsonValue watchNextResults = data["contents"]["twoColumnWatchNextResults"];
             if (!watchNextResults.isObject())
@@ -38,12 +24,26 @@ namespace InnertubeEndpoints
             response.results = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
             response.videoId = data["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
         }
-        else
+    }
+
+    QJsonObject Next::createBody(const InnertubeContext* context, const QString& videoId, const QString& tokenIn)
+    {
+        if (!tokenIn.isEmpty())
         {
-            const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
-            if (!onResponseReceivedEndpoints.isArray())
-                throw InnertubeException("[Next] onResponseReceivedEndpoints is not an array");
-            response.continuationData.emplace(onResponseReceivedEndpoints);
+            return {
+                EndpointMethods::contextPair(context),
+                { "continuation", tokenIn }
+            };
         }
+
+        return {
+            { "autonavState", "STATE_ON" },
+            { "captionsRequested", false },
+            { "contentCheckOk", false },
+            EndpointMethods::contextPair(context),
+            { "playbackContext", InnertubePlaybackContext().toJson() },
+            { "racyCheckOk", false },
+            { "videoId", videoId }
+        };
     }
 }

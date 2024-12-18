@@ -18,5 +18,9 @@ namespace InnertubeEndpoints
          * or liveChatContinuation["continuations"][0]["invalidationContinuationData"]["continuation"].
          */
         GetLiveChat(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& continuation);
+
+        explicit GetLiveChat(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& continuation);
     };
 }

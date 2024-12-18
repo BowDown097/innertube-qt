@@ -6,9 +6,11 @@
 namespace InnertubeEndpoints
 {
     BrowseTrending::BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore)
-        : BaseBrowseEndpoint("FEtrending", context, authStore)
+        : BrowseTrending(fetch("FEtrending", context, authStore)) {}
+
+    BrowseTrending::BrowseTrending(const QJsonValue& data)
     {
-        const QJsonValue tabRenderer = getTabRenderer("BrowseTrending");
+        const QJsonValue tabRenderer = getTabRenderer(data, "BrowseTrending");
         const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
         if (sectionListRenderer.isEmpty())
             throw InnertubeException("[BrowseTrending] sectionListRenderer has no contents");
@@ -48,7 +50,8 @@ namespace InnertubeEndpoints
                     }
                     else if (const QJsonValue list = shelf["content"]["horizontalListRenderer"]; list.isObject())
                     {
-                        // it shouldn't be possible for there to be multiple types in the same horizontalList here, so this will suffice.
+                        // it shouldn't be possible for there to be multiple types in the same horizontalList here,
+                        // so this will suffice.
                         QString itemKey = JsonUtil::getFirstKey(list["items"]);
                         if (itemKey == "gridVideoRenderer" || itemKey == "videoRenderer")
                         {

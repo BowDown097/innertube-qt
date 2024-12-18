@@ -19,8 +19,10 @@ namespace InnertubeEndpoints
          * @param tokenIn  Continuation token.
          */
         BrowseSubscriptions(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn = "");
+
+        explicit BrowseSubscriptions(const QJsonValue& data);
     private:
-        void handleItemSection(const QJsonValue& v);
-        void handleRichItem(const QJsonValue& v);
+        void handleItemSection(const QJsonValue& itemSection);
+        void handleRichItem(const QJsonValue& richItem);
     };
 }

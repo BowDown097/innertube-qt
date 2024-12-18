@@ -18,5 +18,9 @@ namespace InnertubeEndpoints
          */
         Next(const InnertubeContext* context, const InnertubeAuthStore* authStore,
              const QString& videoId, const QString& tokenIn = "");
+
+        explicit Next(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId, const QString& tokenIn);
     };
 }

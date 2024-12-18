@@ -256,10 +256,21 @@ if(INNERTUBE_NO_WEBENGINE)
     target_compile_definitions(innertube-qt PUBLIC INNERTUBE_NO_WEBENGINE)
 endif()
 
+# expected-lite
+find_package(expected-lite QUIET)
+if(NOT expected-lite_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        expected-lite
+        GIT_REPOSITORY https://github.com/martinmoene/expected-lite.git
+        GIT_TAG v0.8.0)
+    FetchContent_MakeAvailable(expected-lite)
+endif()
+
 # Include directories, libraries
 add_subdirectory(lib/http)
 target_include_directories(innertube-qt PUBLIC src lib/http/src lib/verdigris/src)
-target_link_libraries(innertube-qt PUBLIC http Qt::Core Qt::Gui Qt::Network)
+target_link_libraries(innertube-qt PUBLIC http nonstd::expected-lite Qt::Core Qt::Gui Qt::Network)
 
 ## Optional
 if(NOT INNERTUBE_NO_WEBENGINE)

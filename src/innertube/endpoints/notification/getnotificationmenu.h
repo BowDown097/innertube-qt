@@ -19,5 +19,10 @@ namespace InnertubeEndpoints
          */
         GetNotificationMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                             const QString& notificationsMenuRequestType, const QString& tokenIn = "");
+
+        explicit GetNotificationMenu(const QJsonValue& data);
+    private:
+        static QJsonObject createBody(const InnertubeContext* context,
+            const QString& notificationsMenuRequestType, const QString& tokenIn);
     };
 }

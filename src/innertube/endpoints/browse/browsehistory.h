@@ -20,5 +20,7 @@ namespace InnertubeEndpoints
          */
         BrowseHistory(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                       const QString& query, const QString& tokenIn = "");
+
+        explicit BrowseHistory(const QJsonValue& data);
     };
 }

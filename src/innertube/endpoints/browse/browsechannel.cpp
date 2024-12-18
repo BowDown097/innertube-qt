@@ -3,9 +3,11 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseChannel::BrowseChannel(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& channelId,
-                                 const QString& tokenIn, const QString& params)
-        : BaseBrowseEndpoint(channelId, context, authStore, tokenIn, "", params)
+    BrowseChannel::BrowseChannel(const InnertubeContext* context, const InnertubeAuthStore* authStore,
+                                 const QString& channelId, const QString& tokenIn, const QString& params)
+        : BrowseChannel(fetch(channelId, context, authStore, tokenIn, "", params)) {}
+
+    BrowseChannel::BrowseChannel(const QJsonValue& data)
     {
         if (const QJsonValue contents = data["contents"]; contents.isObject())
         {

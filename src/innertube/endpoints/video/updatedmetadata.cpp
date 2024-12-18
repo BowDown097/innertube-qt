@@ -5,12 +5,10 @@
 namespace InnertubeEndpoints
 {
     UpdatedMetadata::UpdatedMetadata(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
-    {
-        const QJsonValue data = get(context, authStore, QJsonObject {
-            EndpointMethods::contextPair(context),
-            { "videoId", videoId }
-        });
+        : UpdatedMetadata(get(context, authStore, createBody(context, videoId))) {}
 
+    UpdatedMetadata::UpdatedMetadata(const QJsonValue& data)
+    {
         const QJsonArray actions = data["actions"].toArray();
         if (actions.isEmpty())
             throw InnertubeException("[UpdatedMetadata] Actions not found or is empty");
@@ -29,11 +27,18 @@ namespace InnertubeEndpoints
         response.description = InnertubeObjects::InnertubeString(updateDescriptionAction["description"]);
         response.likeCountEntity = InnertubeObjects::LikeCountEntity(likeCountEntity);
         response.title = InnertubeObjects::InnertubeString(updateTitleAction["title"]);
-        response.videoId = videoId;
         response.viewCount = InnertubeObjects::ViewCount(updateViewershipAction["viewCount"]["videoViewCountRenderer"]);
     }
 
-    QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name) const
+    QJsonObject UpdatedMetadata::createBody(const InnertubeContext* context, const QString& videoId)
+    {
+        return {
+            EndpointMethods::contextPair(context),
+            { "videoId", videoId }
+        };
+    }
+
+    QJsonValue UpdatedMetadata::findAction(const QJsonArray& actions, const QString& name)
     {
         auto actionIt = std::ranges::find_if(actions, [name](const QJsonValue& v) { return v[name].isObject(); });
         if (actionIt == actions.end())

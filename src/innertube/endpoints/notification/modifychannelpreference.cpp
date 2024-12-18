@@ -4,15 +4,17 @@ namespace InnertubeEndpoints
 {
     ModifyChannelPreference::ModifyChannelPreference(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                                      const QString& params)
+        : ModifyChannelPreference(get(context, authStore, createBody(context, params))) {}
+
+    ModifyChannelPreference::ModifyChannelPreference(const QJsonValue& data)
+        : channelId(data["channelId"].toString()),
+          newNotificationButton(data["newNotificationButton"]["subscriptionNotificationToggleButtonRenderer"]) {}
+
+    QJsonObject ModifyChannelPreference::createBody(const InnertubeContext* context, const QString& params)
     {
-        const QJsonValue data = get(context, authStore, QJsonObject {
+        return {
             EndpointMethods::contextPair(context),
             { "params", params }
-        });
-
-        channelId = data["channelId"].toString();
-        newNotificationButton = InnertubeObjects::NotificationPreferenceButton(
-            data["newNotificationButton"]["subscriptionNotificationToggleButtonRenderer"]
-        );
+        };
     }
 }

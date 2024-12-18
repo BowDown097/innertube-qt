@@ -6,24 +6,28 @@ namespace InnertubeEndpoints
 {
     Search::Search(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& query,
                    const QString& tokenIn, const QString& params)
-    {
-        QJsonObject body = { EndpointMethods::contextPair(context) };
-        if (tokenIn.isEmpty())
-        {
-            body.insert("query", query);
-            if (!params.isEmpty())
-                body.insert("params", params);
-        }
-        else
-        {
-            body.insert("continuation", tokenIn);
-        }
+        : Search(get(context, authStore, createBody(context, query, tokenIn, params))) {}
 
-        const QJsonValue data = get(context, authStore, body);
+    Search::Search(const QJsonValue& data)
+    {
         response.estimatedResults = data["estimatedResults"].toString().toLongLong();
 
         QJsonArray sectionListRenderer;
-        if (tokenIn.isEmpty())
+        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedCommands"]; onResponseReceivedValue.isArray())
+        {
+            const QJsonArray onResponseReceivedCommands = onResponseReceivedValue.toArray();
+            // this can just happen sometimes, so will only be minor
+            if (onResponseReceivedCommands.isEmpty())
+                throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Severity::Minor);
+
+            const QJsonValue appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"];
+            // now this shouldn't just happen, so will not be minor
+            if (!appendItemsAction.isObject())
+                throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction");
+
+            sectionListRenderer = appendItemsAction["continuationItems"].toArray();
+        }
+        else
         {
             if (!data["contents"].isObject())
                 throw InnertubeException("[Search] contents not found");
@@ -35,18 +39,6 @@ namespace InnertubeEndpoints
             sectionListRenderer = resultsRenderer["primaryContents"]["sectionListRenderer"]["contents"].toArray();
             if (sectionListRenderer.isEmpty())
                 throw InnertubeException("[Search] sectionListRenderer not found or is empty");
-        }
-        else
-        {
-            const QJsonArray onResponseReceivedCommands = data["onResponseReceivedCommands"].toArray();
-            if (onResponseReceivedCommands.isEmpty())
-                throw InnertubeException("[Search] Continuation has no commands", InnertubeException::Severity::Minor); // this can just happen sometimes
-
-            const QJsonValue appendItemsAction = onResponseReceivedCommands[0]["appendContinuationItemsAction"];
-            if (!appendItemsAction.isObject())
-                throw InnertubeException("[Search] Continuation has no appendContinuationItemsAction"); // now this shouldn't just happen
-
-            sectionListRenderer = appendItemsAction["continuationItems"].toArray();
         }
 
         for (const QJsonValue& v : std::as_const(sectionListRenderer))
@@ -83,5 +75,23 @@ namespace InnertubeEndpoints
                 continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
+    }
+
+    QJsonObject Search::createBody(const InnertubeContext* context, const QString& query,
+                                   const QString& tokenIn, const QString& params)
+    {
+        QJsonObject body = { EndpointMethods::contextPair(context) };
+        if (tokenIn.isEmpty())
+        {
+            body.insert("query", query);
+            if (!params.isEmpty())
+                body.insert("params", params);
+        }
+        else
+        {
+            body.insert("continuation", tokenIn);
+        }
+
+        return body;
     }
 }

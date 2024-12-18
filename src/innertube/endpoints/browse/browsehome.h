@@ -18,5 +18,7 @@ namespace InnertubeEndpoints
          * @param tokenIn  Continuation token.
          */
         BrowseHome(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn = "");
+
+        explicit BrowseHome(const QJsonValue& data);
     };
 }

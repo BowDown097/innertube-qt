@@ -21,14 +21,14 @@ void InnerTube::like(const QJsonValue& endpoint, bool liking)
 void InnerTube::sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params)
 {
     QThreadPool::globalInstance()->start([this, textSegments, clientMessageId, params] {
-        InnertubeEndpoints::SendMessage(textSegments, m_context, m_authStore, clientMessageId, params);
+        InnertubeEndpoints::SendMessage(m_context, m_authStore, textSegments, clientMessageId, params);
     });
 }
 
 void InnerTube::sendMessage(const QString& message, const QString& clientMessageId, const QString& params)
 {
     QThreadPool::globalInstance()->start([this, message, clientMessageId, params] {
-        InnertubeEndpoints::SendMessage(message, m_context, m_authStore, clientMessageId, params);
+        InnertubeEndpoints::SendMessage(m_context, m_authStore, message, clientMessageId, params);
     });
 }
 
