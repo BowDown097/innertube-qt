@@ -10,19 +10,23 @@ namespace InnertubeEndpoints
 
     Next::Next(const QJsonValue& data)
     {
-        if (const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
-            onResponseReceivedEndpoints.isArray())
+        if (const QJsonValue contents = data["contents"]; contents.isObject())
         {
-            response.continuationData.emplace(onResponseReceivedEndpoints);
-        }
-        else
-        {
-            const QJsonValue watchNextResults = data["contents"]["twoColumnWatchNextResults"];
+            const QJsonValue watchNextResults = contents["twoColumnWatchNextResults"];
             if (!watchNextResults.isObject())
                 throw InnertubeException("[Next] twoColumnWatchNextResults is not an object");
 
             response.results = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
             response.videoId = data["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
+        }
+        else if (const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
+                 onResponseReceivedEndpoints.isArray())
+        {
+            response.continuationData.emplace(onResponseReceivedEndpoints);
+        }
+        else
+        {
+            throw InnertubeException("[BrowseHome] Failed to find any content");
         }
     }
 
