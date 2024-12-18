@@ -104,8 +104,8 @@ public:
 
     /**
      * @brief Get the latest version for a client type.
-     * @details The TVHTML5, MWEB_TIER_2, IOS_EMBEDDED_PLAYER, WEB_EMBEDDED_PLAYER,
-     * TVHTML5_KIDS, WEB_CREATOR, WEB_KIDS, WEB_PARENT_TOOLS, and TVHTML5_FOR_KIDS clients are unsupported.
+     * @details The MWEB_TIER_2, IOS_EMBEDDED_PLAYER, TVHTML5_KIDS, WEB_CREATOR,
+     * WEB_KIDS, WEB_PARENT_TOOLS, and TVHTML5_FOR_KIDS clients are unsupported.
      */
     static QString getLatestVersion(ClientType clientType);
 

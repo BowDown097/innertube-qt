@@ -89,6 +89,14 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
     case ClientType::IOS_LIVE_CREATION_EXTENSION:
     case ClientType::IOS_MESSAGES_EXTENSION:
         return getVersionFromAppStore("544007664");
+    case ClientType::TVHTML5:
+        QString ver = getVersionFromPageBody("https://www.youtube.com/tv/sw.js");
+        if (ver.isEmpty())
+        {
+            qDebug() << "Failed to get Innertube client version from service worker. Falling back to tv_config.";
+            ver = getVersionFromPageBody("https://www.youtube.com/tv_config?action_get_config=true");
+        }
+        return ver;
     case ClientType::ANDROID_CREATOR:
         return getVersionFromGooglePlay("youtube-creator-studio");
     case ClientType::IOS_CREATOR:
@@ -108,6 +116,8 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
         return getVersionFromGooglePlay("youtube-tv");
     case ClientType::IOS_UNPLUGGED:
         return getVersionFromAppStore("1193350206");
+    case ClientType::WEB_EMBEDDED_PLAYER:
+        return getVersionFromPageBody("https://www.youtube.com/embed/abcdefg"); // just use a bogus embed page
     case ClientType::WEB_REMIX: {
         QString ver = getVersionFromPageBody("https://music.youtube.com/sw.js");
         if (ver.isEmpty())
@@ -191,7 +201,7 @@ QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
     return softwareVersionRegex.match(reply->body()).captured(1);
 }
 
-// courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
+// mostly courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
 QString InnertubeClient::getVersionFromPageBody(const QString& url)
 {
     const HttpReply* reply = Http::instance().get(QUrl(url));
@@ -200,7 +210,8 @@ QString InnertubeClient::getVersionFromPageBody(const QString& url)
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    static QRegularExpression clientVersionRegex("INNERTUBE_CONTEXT_CLIENT_VERSION\":\"([0-9\\.]+?)\"");
+    static QRegularExpression clientVersionRegex(
+        "(INNERTUBE_CONTEXT_CLIENT_VERSION|innertubeContextClientVersion)\":\"([0-9\\.]+?)\"");
     return clientVersionRegex.match(reply->body()).captured(1);
 }
 
