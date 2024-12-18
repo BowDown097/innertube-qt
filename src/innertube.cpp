@@ -25,6 +25,13 @@ void InnerTube::sendMessage(const QJsonArray& textSegments, const QString& clien
     });
 }
 
+void InnerTube::sendMessage(const QString& message, const QString& clientMessageId, const QString& params)
+{
+    QThreadPool::globalInstance()->start([this, message, clientMessageId, params] {
+        InnertubeEndpoints::SendMessage(message, m_context, m_authStore, clientMessageId, params);
+    });
+}
+
 void InnerTube::subscribe(const QJsonValue& endpoint, bool subscribing)
 {
     QThreadPool::globalInstance()->start([this, endpoint, subscribing] { subscribeBlocking(endpoint, subscribing); });

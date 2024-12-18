@@ -154,7 +154,9 @@ public:
     }
 
     void like(const QJsonValue& endpoint, bool liking);
+
     void sendMessage(const QJsonArray& textSegments, const QString& clientMessageId, const QString& params);
+    void sendMessage(const QString& message, const QString& clientMessageId, const QString& params);
 
     void subscribe(const QJsonValue& endpoint, bool subscribing);
     void subscribe(const QStringList& channelIds, bool subscribing);
