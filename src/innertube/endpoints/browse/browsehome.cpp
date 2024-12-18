@@ -10,7 +10,15 @@ namespace InnertubeEndpoints
     BrowseHome::BrowseHome(const QJsonValue& data)
     {
         QJsonArray contents;
-        if (const QJsonValue baseContents = data["contents"]; baseContents.isObject())
+        if (const QJsonValue continuationContents = data["continuationContents"]; continuationContents.isObject())
+        {
+            const QJsonValue richGridContinuation = continuationContents["richGridContinuation"];
+            if (!richGridContinuation.isObject())
+                throw InnertubeException("[BrowseHome] richGridContinuation not found");
+
+            contents = richGridContinuation["contents"].toArray();
+        }
+        else if (const QJsonValue baseContents = data["contents"]; baseContents.isObject())
         {
             const QLatin1String baseRenderer(!baseContents["twoColumnBrowseResultsRenderer"].isUndefined()
                                              ? "twoColumnBrowseResultsRenderer" : "singleColumnBrowseResultsRenderer");
@@ -26,10 +34,20 @@ namespace InnertubeEndpoints
             if (!tabRenderer.isObject())
                 throw InnertubeException("[BrowseHome] tabRenderer not found");
 
-            // if two column, assume grid; if not, assume shelves
-            contents = baseRenderer == "twoColumnBrowseResultsRenderer"
-                           ? tabRenderer["richGridRenderer"]["contents"].toArray()
-                           : tabRenderer["sectionListRenderer"]["contents"].toArray();
+            if (const QJsonValue richGrid = tabRenderer["richGridRenderer"]; richGrid.isObject())
+            {
+                contents = richGrid["contents"].toArray();
+            }
+            else if (const QJsonValue sectionList = tabRenderer["sectionListRenderer"]; sectionList.isObject())
+            {
+                contents = sectionList["contents"].toArray();
+                if (const QJsonValue continuations = sectionList["continuations"]; continuations.isArray())
+                    continuationToken = continuations[0]["nextContinuationData"]["continuation"].toString();
+            }
+            else
+            {
+                throw InnertubeException("[BrowseHome] Could not find richGridRenderer or sectionListRenderer in tabRenderer");
+            }
         }
         else if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
         {
@@ -61,13 +79,22 @@ namespace InnertubeEndpoints
                 if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
                     response.contents.append(InnertubeObjects::Video(video));
             }
+            else if (const QJsonValue richSection = v["richSectionRenderer"]; richSection.isObject())
+            {
+                if (const QJsonValue richShelf = richSection["content"]["richShelfRenderer"]; richShelf.isObject())
+                {
+                    response.contents.append(InnertubeObjects::RichVideoShelf(richShelf, [](const QJsonValue& v) {
+                        return InnertubeObjects::Video(v["videoRenderer"]);
+                    }));
+                }
+            }
             else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())
             {
-                response.contents.append(InnertubeObjects::InnertubeString(shelf["title"]));
-                const QJsonArray shelfContents = shelf["content"]["horizontalListRenderer"]["items"].toArray();
-                for (const QJsonValue& v2 : shelfContents)
-                    if (const QJsonValue gridVideo = v2["gridVideoRenderer"]; gridVideo.isObject())
-                        response.contents.append(InnertubeObjects::Video(gridVideo));
+                if (const QJsonValue horizontalList = shelf["content"]["horizontalListRenderer"]; horizontalList.isObject())
+                {
+                    response.contents.append(InnertubeObjects::HorizontalVideoShelf(shelf,
+                        InnertubeObjects::HorizontalList<InnertubeObjects::Video>(horizontalList, "gridVideoRenderer")));
+                }
             }
             else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
             {

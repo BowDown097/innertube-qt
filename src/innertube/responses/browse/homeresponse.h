@@ -1,12 +1,13 @@
 #pragma once
+#include "innertube/objects/shelves/videoshelves.h"
 #include "innertube/objects/viewmodels/lockupviewmodel.h"
-#include "innertube/objects/video/video.h"
 
 namespace InnertubeEndpoints
 {
     using HomeResponseItem = std::variant<
-        InnertubeObjects::InnertubeString, // shelf
+        InnertubeObjects::HorizontalVideoShelf,
         InnertubeObjects::LockupViewModel,
+        InnertubeObjects::RichVideoShelf,
         InnertubeObjects::Video>;
 
     struct HomeResponse

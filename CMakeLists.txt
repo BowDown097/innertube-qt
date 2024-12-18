@@ -185,7 +185,9 @@ target_sources(innertube-qt
             src/innertube/objects/player/streamingdata.h
             src/innertube/objects/player/streamingformat.h
             src/innertube/objects/shelves/reelshelf.h
+            src/innertube/objects/shelves/richshelf.h
             src/innertube/objects/shelves/shelf.h
+            src/innertube/objects/shelves/videoshelves.h
             src/innertube/objects/video/reel.h
             src/innertube/objects/video/video.h
             src/innertube/objects/video/videoowner.h

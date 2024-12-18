@@ -1,14 +1,6 @@
 #pragma once
-#include "innertube/objects/items/horizontallist.h"
 #include "innertube/objects/shelves/reelshelf.h"
-#include "innertube/objects/shelves/shelf.h"
-#include "innertube/objects/video/video.h"
-
-namespace InnertubeObjects
-{
-    using HorizontalVideoShelf = InnertubeObjects::Shelf<InnertubeObjects::HorizontalList<InnertubeObjects::Video>>;
-    using StandardVideoShelf = InnertubeObjects::Shelf<QList<InnertubeObjects::Video>>;
-}
+#include "innertube/objects/shelves/videoshelves.h"
 
 namespace InnertubeEndpoints
 {
