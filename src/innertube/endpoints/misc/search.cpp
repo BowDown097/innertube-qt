@@ -13,7 +13,17 @@ namespace InnertubeEndpoints
         response.estimatedResults = data["estimatedResults"].toString().toLongLong();
 
         QJsonArray sectionListRenderer;
-        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedCommands"]; onResponseReceivedValue.isArray())
+        if (const QJsonValue contents = data["contents"]; contents.isObject())
+        {
+            const QJsonValue resultsRenderer = contents["twoColumnSearchResultsRenderer"];
+            if (!resultsRenderer.isObject())
+                throw InnertubeException("[Search] twoColumnSearchResultsRenderer not found");
+
+            sectionListRenderer = resultsRenderer["primaryContents"]["sectionListRenderer"]["contents"].toArray();
+            if (sectionListRenderer.isEmpty())
+                throw InnertubeException("[Search] sectionListRenderer not found or is empty");
+        }
+        else if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedCommands"]; onResponseReceivedValue.isArray())
         {
             const QJsonArray onResponseReceivedCommands = onResponseReceivedValue.toArray();
             // this can just happen sometimes, so will only be minor
@@ -29,16 +39,7 @@ namespace InnertubeEndpoints
         }
         else
         {
-            if (!data["contents"].isObject())
-                throw InnertubeException("[Search] contents not found");
-
-            const QJsonValue resultsRenderer = data["contents"]["twoColumnSearchResultsRenderer"];
-            if (!resultsRenderer.isObject())
-                throw InnertubeException("[Search] twoColumnSearchResultsRenderer not found");
-
-            sectionListRenderer = resultsRenderer["primaryContents"]["sectionListRenderer"]["contents"].toArray();
-            if (sectionListRenderer.isEmpty())
-                throw InnertubeException("[Search] sectionListRenderer not found or is empty");
+            throw InnertubeException("[Search] Failed to find any content");
         }
 
         for (const QJsonValue& v : std::as_const(sectionListRenderer))
