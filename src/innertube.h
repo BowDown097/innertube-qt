@@ -2,6 +2,7 @@
 #include "innertube/innertubeexception.h"
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
+#include "jsonutil.h"
 #include <mutex>
 #include <nonstd/expected.hpp>
 #include <QThreadPool>
@@ -139,7 +140,7 @@ public:
         {
             QJsonObject contextObj = m_context->toJson();
             const QJsonObject bodyContext = body["context"].toObject();
-            deepMerge(contextObj, bodyContext);
+            JsonUtil::deepMerge(contextObj, bodyContext);
             body["context"] = contextObj;
         }
         else
@@ -166,7 +167,7 @@ public:
      * @return Expected value - the endpoint instance, or the exception that its constructor threw.
      */
     template<EndpointWithData E>
-    nonstd::expected<E, InnertubeException> tryCreate(const QJsonValue& data)
+    static nonstd::expected<E, InnertubeException> tryCreate(const QJsonValue& data)
     {
         try
         {
@@ -193,33 +194,4 @@ private:
 
     InnertubeAuthStore* m_authStore;
     InnertubeContext* m_context{};
-
-    void deepMerge(QJsonObject& target, const QJsonObject& source)
-    {
-        for (auto it = source.begin(); it != source.end(); ++it)
-        {
-            const QString key = it.key();
-            QJsonValueConstRef value = it.value();
-
-            if (target[key].isObject() && value.isObject())
-            {
-                QJsonObject targetObj = target[key].toObject();
-                const QJsonObject sourceObj = value.toObject();
-                deepMerge(targetObj, sourceObj);
-                target[key] = targetObj;
-            }
-            else if (target[key].isArray() && value.isArray())
-            {
-                QJsonArray targetArr = target[key].toArray();
-                const QJsonArray sourceArr = value.toArray();
-                for (const QJsonValue& val : sourceArr)
-                    targetArr.append(val);
-                target[key] = targetArr;
-            }
-            else
-            {
-                target[key] = value;
-            }
-        }
-    }
 };
