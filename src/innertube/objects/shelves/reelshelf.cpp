@@ -10,6 +10,6 @@ namespace InnertubeObjects
     {
         const QJsonArray itemsArr = reelShelfRenderer["items"].toArray();
         for (const QJsonValue& item : itemsArr)
-            items.append(Reel(item["reelItemRenderer"]));
+            items.append(ShortsLockupViewModel(item["shortsLockupViewModel"]));
     }
 }

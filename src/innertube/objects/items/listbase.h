@@ -52,9 +52,9 @@ namespace InnertubeObjects
     struct ListBase<T>
     {
         QList<T> items;
-        ListBase(const QJsonValue& listRenderer, const QString& itemKey)
+        ListBase(const QJsonValue& listRenderer, const QString& itemKey, const QString& itemsKey = "items")
         {
-            const QJsonArray itemsArr = listRenderer["items"].toArray();
+            const QJsonArray itemsArr = listRenderer[itemsKey].toArray();
             items.reserve(itemsArr.size());
 
             for (const QJsonValue& item : itemsArr)

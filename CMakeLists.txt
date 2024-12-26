@@ -227,6 +227,7 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/imagebannerviewmodel.h
             src/innertube/objects/viewmodels/lockupmetadataviewmodel.h
             src/innertube/objects/viewmodels/lockupviewmodel.h
+            src/innertube/objects/viewmodels/shortslockupviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
             src/innertube/objects/viewmodels/thumbnailbadgeviewmodel.h

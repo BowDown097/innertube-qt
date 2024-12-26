@@ -1,6 +1,6 @@
 #pragma once
 #include "innertube/objects/items/menu/menu.h"
-#include "innertube/objects/video/reel.h"
+#include "innertube/objects/viewmodels/shortslockupviewmodel.h"
 
 namespace InnertubeObjects
 {
@@ -8,7 +8,7 @@ namespace InnertubeObjects
     {
         Menu button;
         QString icon;
-        QList<Reel> items;
+        QList<ShortsLockupViewModel> items;
         InnertubeString title;
 
         explicit ReelShelf(const QJsonValue& reelShelfRenderer);

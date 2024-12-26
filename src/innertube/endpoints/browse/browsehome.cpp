@@ -83,9 +83,8 @@ namespace InnertubeEndpoints
             {
                 if (const QJsonValue richShelf = richSection["content"]["richShelfRenderer"]; richShelf.isObject())
                 {
-                    response.contents.append(InnertubeObjects::RichVideoShelf(richShelf, [](const QJsonValue& v) {
-                        return InnertubeObjects::Video(v["videoRenderer"]);
-                    }));
+                    response.contents.append(InnertubeObjects::RichVideoShelf(
+                        richShelf, { "shortsLockupViewModel", "videoRenderer" }));
                 }
             }
             else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())
