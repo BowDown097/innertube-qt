@@ -25,7 +25,7 @@ namespace InnertubeObjects
             : actions(pageHeaderViewModel["actions"]["flexibleActionsViewModel"],
                       { "buttonViewModel", "subscribeButtonViewModel" }),
               attribution(pageHeaderViewModel["attribution"]["attributionViewModel"]),
-              banner(pageHeaderViewModel["banner"]["imageBannerViewModel"]["image"]["sources"]),
+              banner(pageHeaderViewModel["banner"]["imageBannerViewModel"]),
               description(pageHeaderViewModel["description"]["descriptionPreviewViewModel"], "description"),
               image(pageHeaderViewModel["image"]["decoratedAvatarViewModel"]),
               metadata(pageHeaderViewModel["metadata"]["contentMetadataViewModel"]),
