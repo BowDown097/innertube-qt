@@ -31,7 +31,5 @@ namespace InnertubeObjects
               metadata(pageHeaderViewModel["metadata"]["contentMetadataViewModel"]),
               rendererContext(pageHeaderViewModel["rendererContext"]),
               title(pageHeaderViewModel["title"]["dynamicTextViewModel"]) {}
-
-        const SubscribeButtonViewModel* findSubscribeButton() const;
     };
 }

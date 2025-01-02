@@ -13,7 +13,7 @@ namespace InnertubeObjects
         QJsonValue navigationEndpoint;
         QList<MetadataBadge> ownerBadges;
         InnertubeString shortBylineText;
-        SubscribeButton subscribeButton;
+        std::variant<SubscribeButton, Button> subscribeButton; // will be plain Button if logged out
         bool subscribed{};
         InnertubeString subscriberCountText;
         ResponsiveImage thumbnail;

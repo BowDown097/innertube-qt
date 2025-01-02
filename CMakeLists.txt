@@ -61,7 +61,6 @@ target_sources(innertube-qt
         src/innertube/objects/channel/channel.cpp
         src/innertube/objects/channel/channelc4header.cpp
         src/innertube/objects/channel/channelmetadata.cpp
-        src/innertube/objects/channel/channelpageheader.cpp
         src/innertube/objects/channel/microformatdata.cpp
         src/innertube/objects/channel/notificationpreferencebutton.cpp
         src/innertube/objects/images/responsiveimage.cpp
