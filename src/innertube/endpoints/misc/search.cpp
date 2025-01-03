@@ -81,7 +81,7 @@ namespace InnertubeEndpoints
     QJsonObject Search::createBody(const InnertubeContext* context, const QString& query,
                                    const QString& tokenIn, const QString& params)
     {
-        QJsonObject body = { EndpointMethods::contextPair(context) };
+        QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
         {
             body.insert("query", query);

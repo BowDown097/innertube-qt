@@ -8,7 +8,7 @@ namespace InnertubeEndpoints
     {
         get(context, authStore, QJsonObject {
             { "channelIds", QJsonArray::fromStringList(channelIds) },
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "params", params }
         });
     }

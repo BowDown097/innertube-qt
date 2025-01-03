@@ -8,11 +8,6 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QPair<QString, QJsonValue> contextPair(const InnertubeContext* context)
-        {
-            return qMakePair(QStringLiteral("context"), context->toJson());
-        }
-
         QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body)
         {
             QScopedPointer<SslHttpRequest> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));

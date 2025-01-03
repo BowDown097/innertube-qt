@@ -22,7 +22,7 @@ namespace InnertubeEndpoints
 
     QJsonObject ResolveUrl::createBody(const InnertubeContext* context, const QString& url)
     {
-        QJsonObject body = { EndpointMethods::contextPair(context) };
+        QJsonObject body = { { "context", context->toJson() } };
         QUrl urlObj(url);
         if (!urlObj.isValid())
             throw InnertubeException(QStringLiteral("[ResolveUrl] Invalid URL: %1").arg(url));

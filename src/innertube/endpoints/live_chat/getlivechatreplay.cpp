@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
                                               const QString& playerOffsetMs)
     {
         return {
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "continuation", continuation },
             { "currentPlayerState", QJsonObject {
                 { "playerOffsetMs", playerOffsetMs }

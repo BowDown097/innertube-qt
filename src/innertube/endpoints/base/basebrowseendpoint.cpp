@@ -7,7 +7,7 @@ namespace InnertubeEndpoints
                                          const InnertubeAuthStore* authStore, const QString& continuationToken,
                                          const QString& query, const QString& params)
     {
-        QJsonObject body = { EndpointMethods::contextPair(context) };
+        QJsonObject body = { { "context", context->toJson() } };
         if (continuationToken.isEmpty())
             body.insert("browseId", browseId);
         else

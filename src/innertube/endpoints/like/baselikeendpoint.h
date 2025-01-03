@@ -14,7 +14,7 @@ namespace InnertubeEndpoints
                          const QString& videoId, const QString& params)
         {
             const QJsonObject body {
-                EndpointMethods::contextPair(context),
+                { "context", context->toJson() },
                 { "params", params },
                 { "target", QJsonObject { { "videoId", videoId } } }
             };

@@ -13,7 +13,7 @@ namespace InnertubeEndpoints
     QJsonObject ModifyChannelPreference::createBody(const InnertubeContext* context, const QString& params)
     {
         return {
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "params", params }
         };
     }

@@ -11,7 +11,7 @@ namespace InnertubeEndpoints
     QJsonObject GetLiveChat::createBody(const InnertubeContext* context, const QString& continuation)
     {
         return {
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "continuation", continuation },
             { "webClientInfo", QJsonObject {
                 { "isDocumentHidden", false }

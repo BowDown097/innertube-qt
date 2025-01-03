@@ -35,7 +35,7 @@ namespace InnertubeEndpoints
         if (!tokenIn.isEmpty())
         {
             return {
-                EndpointMethods::contextPair(context),
+                { "context", context->toJson() },
                 { "continuation", tokenIn }
             };
         }
@@ -44,7 +44,7 @@ namespace InnertubeEndpoints
             { "autonavState", "STATE_ON" },
             { "captionsRequested", false },
             { "contentCheckOk", false },
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "playbackContext", InnertubePlaybackContext().toJson() },
             { "racyCheckOk", false },
             { "videoId", videoId }

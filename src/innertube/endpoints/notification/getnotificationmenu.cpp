@@ -38,7 +38,7 @@ namespace InnertubeEndpoints
     QJsonObject GetNotificationMenu::createBody(const InnertubeContext* context,
         const QString& notificationsMenuRequestType, const QString& tokenIn)
     {
-        QJsonObject body = { EndpointMethods::contextPair(context) };
+        QJsonObject body = { { "context", context->toJson() } };
         if (tokenIn.isEmpty())
             body.insert("notificationsMenuRequestType", notificationsMenuRequestType);
         else

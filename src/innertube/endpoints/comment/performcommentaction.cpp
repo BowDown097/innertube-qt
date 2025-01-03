@@ -16,7 +16,7 @@ namespace InnertubeEndpoints
     {
         return {
             { "actions", QJsonArray::fromStringList(actions) },
-            EndpointMethods::contextPair(context)
+            { "context", context->toJson() }
         };
     }
 }

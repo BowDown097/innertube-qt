@@ -1,10 +1,10 @@
 #pragma once
+#include "innertube/itc-objects/innertubecontext.h"
 #include <QJsonObject>
 #include <QVariantMap>
 
 class InnerTube;
 class InnertubeAuthStore;
-struct InnertubeContext;
 
 // the key thankfully works on any client, though in theory it shouldn't - hopefully this never changes
 #define YTI_REQUEST_TEMPLATE \
@@ -14,7 +14,6 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QPair<QString, QJsonValue> contextPair(const InnertubeContext* context);
         QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body);
         QVariantMap getNeededHeaders(const InnertubeContext* context, const InnertubeAuthStore* authStore);
     }

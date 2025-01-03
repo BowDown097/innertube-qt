@@ -33,7 +33,7 @@ namespace InnertubeEndpoints
     QJsonObject UpdatedMetadata::createBody(const InnertubeContext* context, const QString& videoId)
     {
         return {
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "videoId", videoId }
         };
     }

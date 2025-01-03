@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
     {
         return {
             { "clientMessageId", clientMessageId },
-            EndpointMethods::contextPair(context),
+            { "context", context->toJson() },
             { "params", params },
             { "richMessage", QJsonObject {
                 { "textSegments", textSegments }
