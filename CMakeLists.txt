@@ -75,8 +75,8 @@ target_sources(innertube-qt
         src/innertube/objects/player/playervideodetails.cpp
         src/innertube/objects/player/streamingdata.cpp
         src/innertube/objects/shelves/reelshelf.cpp
+        src/innertube/objects/video/upcomingeventdata.cpp
         src/innertube/objects/video/video.cpp
-        src/innertube/objects/video/videoowner.cpp
         src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
         src/innertube/objects/video/watchnext/watchnextsecondaryresults.cpp
         src/innertube/objects/video/watchnext/comments/commentreplies.cpp
@@ -160,6 +160,7 @@ target_sources(innertube-qt
             src/innertube/objects/images/genericthumbnail.h
             src/innertube/objects/images/imagewithaccessibility.h
             src/innertube/objects/images/imagewithcolorpalette.h
+            src/innertube/objects/images/movingthumbnail.h
             src/innertube/objects/images/responsiveimage.h
             src/innertube/objects/items/button.h
             src/innertube/objects/items/horizontallist.h
@@ -187,9 +188,18 @@ target_sources(innertube-qt
             src/innertube/objects/shelves/richshelf.h
             src/innertube/objects/shelves/shelf.h
             src/innertube/objects/shelves/videoshelves.h
+            src/innertube/objects/video/channelthumbnailwithlink.h
+            src/innertube/objects/video/metadatasnippet.h
             src/innertube/objects/video/reel.h
+            src/innertube/objects/video/upcomingeventdata.h
             src/innertube/objects/video/video.h
-            src/innertube/objects/video/videoowner.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayendorsement.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayinlineunplayable.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayloadingpreview.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlaynowplaying.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayresumeplayback.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlaytimestatus.h
+            src/innertube/objects/video/thumbnail_overlays/thumbnailoverlaytogglebutton.h
             src/innertube/objects/video/watchnext/clarification.h
             src/innertube/objects/video/watchnext/relatedchipcloud.h
             src/innertube/objects/video/watchnext/twocolumnwatchnextresults.h
