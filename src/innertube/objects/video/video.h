@@ -7,6 +7,7 @@
 #include "innertube/objects/viewmodels/decoratedavatarviewmodel.h"
 #include "metadatasnippet.h"
 #include "upcomingeventdata.h"
+#include <optional>
 #include <QTime>
 
 namespace InnertubeObjects
