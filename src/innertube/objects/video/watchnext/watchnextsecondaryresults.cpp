@@ -11,7 +11,7 @@ namespace InnertubeObjects
         {
             if (result["compactVideoRenderer"].isObject())
             {
-                feed.append(InnertubeObjects::Video(result["compactVideoRenderer"]));
+                feed.append(CompactVideo(result["compactVideoRenderer"]));
             }
             else if (result["continuationItemRenderer"].isObject())
             {
@@ -26,7 +26,7 @@ namespace InnertubeObjects
                     for (const QJsonValue& feedEntry : feedContents)
                     {
                         if (feedEntry["compactVideoRenderer"].isObject())
-                            feed.append(InnertubeObjects::Video(feedEntry["compactVideoRenderer"]));
+                            feed.append(CompactVideo(feedEntry["compactVideoRenderer"]));
                         else if (feedEntry["continuationItemRenderer"].isObject())
                             feedContinuation = feedEntry["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
                     }

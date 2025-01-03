@@ -75,6 +75,8 @@ target_sources(innertube-qt
         src/innertube/objects/player/playervideodetails.cpp
         src/innertube/objects/player/streamingdata.cpp
         src/innertube/objects/shelves/reelshelf.cpp
+        src/innertube/objects/video/basevideo.cpp
+        src/innertube/objects/video/compactvideo.cpp
         src/innertube/objects/video/upcomingeventdata.cpp
         src/innertube/objects/video/video.cpp
         src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
@@ -188,7 +190,9 @@ target_sources(innertube-qt
             src/innertube/objects/shelves/richshelf.h
             src/innertube/objects/shelves/shelf.h
             src/innertube/objects/shelves/videoshelves.h
+            src/innertube/objects/video/basevideo.h
             src/innertube/objects/video/channelthumbnailwithlink.h
+            src/innertube/objects/video/compactvideo.h
             src/innertube/objects/video/metadatasnippet.h
             src/innertube/objects/video/reel.h
             src/innertube/objects/video/upcomingeventdata.h

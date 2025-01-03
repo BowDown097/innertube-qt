@@ -1,13 +1,13 @@
 #pragma once
-#include "innertube/objects/video/video.h"
+#include "innertube/objects/video/compactvideo.h"
 #include "relatedchipcloud.h"
 
 namespace InnertubeObjects
 {
     struct WatchNextSecondaryResults
     {
-        QList<Video> feed;
-        std::optional<QString> feedContinuation;
+        QList<CompactVideo> feed;
+        QString feedContinuation;
         std::optional<RelatedChipCloud> relatedChipCloud;
 
         WatchNextSecondaryResults() = default;

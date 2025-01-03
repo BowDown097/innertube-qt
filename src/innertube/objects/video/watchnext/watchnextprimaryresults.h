@@ -10,7 +10,7 @@ namespace InnertubeObjects
     {
         std::optional<Clarification> clarification;
         std::optional<CommentsEntryPointHeader> commentsEntryPointHeader;
-        std::optional<QString> commentsSectionContinuation;
+        QString commentsSectionContinuation;
         VideoPrimaryInfo primaryInfo;
         VideoSecondaryInfo secondaryInfo;
 

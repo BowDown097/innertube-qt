@@ -15,7 +15,7 @@ namespace InnertubeEndpoints
                 {
                     if (continuationItem["compactVideoRenderer"].isObject())
                     {
-                        feed.append(InnertubeObjects::Video(continuationItem["compactVideoRenderer"]));
+                        feed.append(InnertubeObjects::CompactVideo(continuationItem["compactVideoRenderer"]));
                     }
                     else if (continuationItem["continuationItemRenderer"].isObject())
                     {
