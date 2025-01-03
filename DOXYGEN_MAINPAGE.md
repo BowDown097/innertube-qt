@@ -3,13 +3,13 @@ A Qt library to interface with YouTube's InnerTube API.
 ## Getting Started {#GettingStarted}
 To get started, use @ref InnerTube::createContext. This example code will create an ideal, working context for you:
 ```cpp
-InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::WEB, "2.20230718.01.00", "DESKTOP"));
+InnerTube::instance()->createClient(InnertubeClient::ClientType::WEB);
 ```
-Here, a context is created around a client of the WEB type, version 2.20230718.01.00, on the DESKTOP platform. If you're not using the WEB client, you probably want to take a look at the [Raw Requests](@ref RawRequests) section.<br><br>
+Here, a context is created around a client of the WEB type, on the latest version. If you're not using the WEB client, you probably want to take a look at the [Raw Requests](@ref RawRequests) section.<br><br>
 
 To make a request, use @ref InnerTube::get. This example code provides a good way to test if things are working:
 ```cpp
-auto reply = InnerTube::instance().get<InnertubeEndpoints::Next>("dQw4w9WgXcQ");
+auto reply = InnerTube::instance()->get<InnertubeEndpoints::Next>("dQw4w9WgXcQ");
 connect(reply, &InnertubeReply<InnertubeEndpoints::Next>::finished, this, [](const InnertubeEndpoints::Next& endpoint) {
     qDebug() << endpoint.response.primaryInfo.title.text;
 });
@@ -23,10 +23,9 @@ The WEB client is the only client officially supported by this library. If you a
 
 To make a **raw** request, use @ref InnerTube::getRaw. Like before, here's example code for getting the Rick Roll video's data, with client setup too as a bonus. We will be using the obscure ANDROID\_TESTSUITE client for this example.
 ```cpp
-InnerTube::instance().createContext(InnertubeClient(InnertubeClient::ClientType::ANDROID_TESTSUITE, "1.9", "MOBILE"));
+InnerTube::instance()->createClient(InnertubeClient::ClientType::ANDROID_TESTSUITE);
 
-auto reply = InnerTube::instance().getRaw<InnertubeEndpoints::Next>({
-    { "playbackContext", InnertubePlaybackContext(false, "").toJson() },
+auto reply = InnerTube::instance()->getRaw<InnertubeEndpoints::Next>({
     { "videoId", "dQw4w9WgXcQ" }
 });
 
