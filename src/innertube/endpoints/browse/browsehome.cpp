@@ -78,6 +78,8 @@ namespace InnertubeEndpoints
             {
                 if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
                     response.contents.append(InnertubeObjects::Video(video));
+                else if (const QJsonValue adSlot = richItem["content"]["adSlotRenderer"]; adSlot.isObject())
+                    response.contents.append(InnertubeObjects::AdSlot(adSlot));
             }
             else if (const QJsonValue richSection = v["richSectionRenderer"]; richSection.isObject())
             {

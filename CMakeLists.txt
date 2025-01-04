@@ -144,6 +144,12 @@ target_sources(innertube-qt
             src/innertube/objects/innertubestring.h
             src/innertube/objects/lottiedata.h
             src/innertube/objects/account_menu/activeaccountheader.h
+            src/innertube/objects/ad/adactiveview.h
+            src/innertube/objects/ad/adlayoutmetadata.h
+            src/innertube/objects/ad/adslot.h
+            src/innertube/objects/ad/adslotmetadata.h
+            src/innertube/objects/ad/displayad.h
+            src/innertube/objects/ad/infeedadlayout.h
             src/innertube/objects/backstage/backstageimage.h
             src/innertube/objects/backstage/backstagepost.h
             src/innertube/objects/backstage/poll/poll.h
@@ -197,6 +203,7 @@ target_sources(innertube-qt
             src/innertube/objects/video/reel.h
             src/innertube/objects/video/upcomingeventdata.h
             src/innertube/objects/video/video.h
+            src/innertube/objects/video/videodisplaybuttongroup.h
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayendorsement.h
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayinlineunplayable.h
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayloadingpreview.h
