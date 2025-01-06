@@ -21,6 +21,7 @@ namespace InnertubeObjects
               contentImage(lockupViewModel["contentImage"]["thumbnailViewModel"]),
               contentType(lockupViewModel["contentType"].toString()),
               itemPlayback(lockupViewModel["itemPlayback"]),
+              metadata(lockupViewModel["metadata"]["lockupMetadataViewModel"]),
               rendererContext(lockupViewModel["rendererContext"]) {}
 
         bool isLive() const;

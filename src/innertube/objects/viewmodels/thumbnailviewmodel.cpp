@@ -10,11 +10,23 @@ namespace InnertubeObjects
         const QJsonArray overlaysJson = thumbnailViewModel["overlays"].toArray();
         for (const QJsonValue& overlay : overlaysJson)
         {
+            if (const QJsonValue bottom = overlay["thumbnailBottomOverlayViewModel"]; bottom.isObject())
+                overlays.append(ThumbnailBottomOverlayViewModel(bottom));
+            else if (const QJsonValue hover = overlay["thumbnailHoverOverlayToggleActionsViewModel"]; hover.isObject())
+                overlays.append(ThumbnailHoverOverlayToggleActionsViewModel(hover));
+            else if (const QJsonValue badge = overlay["thumbnailOverlayBadgeViewModel"]; badge.isObject())
+                overlays.append(ThumbnailOverlayBadgeViewModel(badge));
+
+            /*
             auto begin = overlay.toObject().constBegin();
-            if (begin.key() == "thumbnailOverlayBadgeViewModel")
-                overlays.append(InnertubeObjects::ThumbnailOverlayBadgeViewModel(begin.value()));
-            else if (begin.key() == "thumbnailHoverOverlayToggleActionsViewModel")
-                overlays.append(InnertubeObjects::ThumbnailHoverOverlayToggleActionsViewModel(begin.value()));
+            const QString& key = begin.key();
+            if (key == "thumbnailBottomOverlayViewModel")
+                overlays.append(ThumbnailBottomOverlayViewModel(begin.value()));
+            else if (key == "thumbnailHoverOverlayToggleActionsViewModel")
+                overlays.append(ThumbnailHoverOverlayToggleActionsViewModel(begin.value()));
+            else if (key == "thumbnailOverlayBadgeViewModel")
+                overlays.append(ThumbnailOverlayBadgeViewModel(begin.value()));
+            */
         }
     }
 }

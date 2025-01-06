@@ -70,14 +70,12 @@ namespace InnertubeEndpoints
 
         for (const QJsonValue& v : std::as_const(contents))
         {
-            if (const QJsonValue lockupViewModel = v["lockupViewModel"]; lockupViewModel.isObject())
-            {
-                response.contents.append(InnertubeObjects::LockupViewModel(lockupViewModel));
-            }
-            else if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
+            if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
             {
                 if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
                     response.contents.append(InnertubeObjects::Video(video));
+                else if (const QJsonValue lockup2 = richItem["content"]["lockupViewModel"]; lockup2.isObject())
+                    response.contents.append(InnertubeObjects::LockupViewModel(lockup2));
                 else if (const QJsonValue adSlot = richItem["content"]["adSlotRenderer"]; adSlot.isObject())
                     response.contents.append(InnertubeObjects::AdSlot(adSlot));
             }
@@ -86,7 +84,7 @@ namespace InnertubeEndpoints
                 if (const QJsonValue richShelf = richSection["content"]["richShelfRenderer"]; richShelf.isObject())
                 {
                     response.contents.append(InnertubeObjects::RichVideoShelf(
-                        richShelf, { "shortsLockupViewModel", "videoRenderer" }));
+                        richShelf, { "lockupViewModel", "shortsLockupViewModel", "videoRenderer" }));
                 }
             }
             else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())

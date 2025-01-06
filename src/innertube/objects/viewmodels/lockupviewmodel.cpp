@@ -33,9 +33,10 @@ namespace InnertubeObjects
     {
         for (const auto& overlay : contentImage.overlays)
         {
-            const ThumbnailOverlayBadgeViewModel* badgeOverlay = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay);
-            if (badgeOverlay && !badgeOverlay->thumbnailBadges.empty())
-                return badgeOverlay->thumbnailBadges.constFirst().text;
+            if (const auto* badge = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay); badge && !badge->thumbnailBadges.empty())
+                return badge->thumbnailBadges.constFirst().text;
+            else if (const auto* bottom = std::get_if<ThumbnailBottomOverlayViewModel>(&overlay); bottom && !bottom->badges.empty())
+                return bottom->badges.constFirst().text;
         }
 
         return QString();
