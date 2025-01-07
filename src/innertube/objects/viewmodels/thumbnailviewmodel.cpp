@@ -16,17 +16,6 @@ namespace InnertubeObjects
                 overlays.append(ThumbnailHoverOverlayToggleActionsViewModel(hover));
             else if (const QJsonValue badge = overlay["thumbnailOverlayBadgeViewModel"]; badge.isObject())
                 overlays.append(ThumbnailOverlayBadgeViewModel(badge));
-
-            /*
-            auto begin = overlay.toObject().constBegin();
-            const QString& key = begin.key();
-            if (key == "thumbnailBottomOverlayViewModel")
-                overlays.append(ThumbnailBottomOverlayViewModel(begin.value()));
-            else if (key == "thumbnailHoverOverlayToggleActionsViewModel")
-                overlays.append(ThumbnailHoverOverlayToggleActionsViewModel(begin.value()));
-            else if (key == "thumbnailOverlayBadgeViewModel")
-                overlays.append(ThumbnailOverlayBadgeViewModel(begin.value()));
-            */
         }
     }
 }

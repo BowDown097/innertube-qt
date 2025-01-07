@@ -90,6 +90,7 @@ target_sources(innertube-qt
         src/innertube/objects/viewmodels/contentmetadataviewmodel.cpp
         src/innertube/objects/viewmodels/lockupviewmodel.cpp
         src/innertube/objects/viewmodels/subscribebuttonviewmodel.cpp
+        src/innertube/objects/viewmodels/thumbnailbottomoverlayviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailviewmodel.cpp
@@ -251,8 +252,10 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
             src/innertube/objects/viewmodels/thumbnailbadgeviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailbottomoverlayviewmodel.h
             src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.h
             src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.h
+            src/innertube/objects/viewmodels/thumbnailoverlayprogressbarviewmodel.h
             src/innertube/objects/viewmodels/thumbnailviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h
             src/innertube/responses/browse/channelresponse.h
