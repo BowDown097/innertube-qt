@@ -55,7 +55,7 @@ target_sources(innertube-qt
         src/innertube/itc-objects/innertuberequestconfig.cpp
         src/innertube/itc-objects/innertubeuserconfig.cpp
         src/innertube/objects/innertubestring.cpp
-        src/innertube/objects/backstage/backstagepost.cpp
+        src/innertube/objects/backstage/post.cpp
         src/innertube/objects/backstage/poll/poll.cpp
         src/innertube/objects/channel/aboutfullmetadata.cpp
         src/innertube/objects/channel/channel.cpp
@@ -153,6 +153,7 @@ target_sources(innertube-qt
             src/innertube/objects/ad/infeedadlayout.h
             src/innertube/objects/backstage/backstageimage.h
             src/innertube/objects/backstage/backstagepost.h
+            src/innertube/objects/backstage/post.h
             src/innertube/objects/backstage/poll/poll.h
             src/innertube/objects/backstage/poll/pollchoice.h
             src/innertube/objects/channel/aboutfullmetadata.h
@@ -248,6 +249,7 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/imagebannerviewmodel.h
             src/innertube/objects/viewmodels/lockupmetadataviewmodel.h
             src/innertube/objects/viewmodels/lockupviewmodel.h
+            src/innertube/objects/viewmodels/minigamecardviewmodel.h
             src/innertube/objects/viewmodels/shortslockupviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h

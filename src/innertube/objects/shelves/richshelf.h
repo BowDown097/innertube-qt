@@ -1,31 +1,43 @@
 #pragma once
+#include "innertube/objects/images/responsiveimage.h"
 #include "innertube/objects/items/button.h"
 #include "innertube/objects/items/menu/menu.h"
 #include <QJsonArray>
 
 namespace InnertubeObjects
 {
-    struct RichShelfBase
+    struct ResponsiveContainerConfiguration
     {
         bool enableContentSpecificAspectRatio;
+        explicit ResponsiveContainerConfiguration(const QJsonValue& responsiveContainerConfiguration)
+            : enableContentSpecificAspectRatio(
+                  responsiveContainerConfiguration["enableContentSpecificAspectRatio"].toBool()) {}
+    };
+
+    struct RichShelfBase
+    {
         QString iconType;
         bool isBottomDividerHidden;
         bool isExpanded;
         bool isTopDividerHidden;
         std::optional<Menu> menu;
+        ResponsiveContainerConfiguration responsiveContainerConfiguration;
         Button showLessButton;
         Button showMoreButton;
+        InnertubeString subtitle;
+        ResponsiveImage thumbnail;
         InnertubeString title;
 
         explicit RichShelfBase(const QJsonValue& richShelfRenderer)
-            : enableContentSpecificAspectRatio(
-                  richShelfRenderer["responsiveContainerConfiguration"]["enableContentSpecificAspectRatio"].toBool()),
-              iconType(richShelfRenderer["icon"]["iconType"].toString()),
+            : iconType(richShelfRenderer["icon"]["iconType"].toString()),
               isBottomDividerHidden(richShelfRenderer["isBottomDividerHidden"].toBool()),
               isExpanded(richShelfRenderer["isExpanded"].toBool()),
               isTopDividerHidden(richShelfRenderer["isTopDividerHidden"].toBool()),
+              responsiveContainerConfiguration(richShelfRenderer["responsiveContainerConfiguration"]),
               showLessButton(richShelfRenderer["showLessButton"]["buttonRenderer"]),
               showMoreButton(richShelfRenderer["showMoreButton"]["buttonRenderer"]),
+              subtitle(richShelfRenderer["subtitle"]),
+              thumbnail(richShelfRenderer["thumbnail"]["thumbnails"]),
               title(richShelfRenderer["title"])
         {
             if (const QJsonValue menuRenderer = richShelfRenderer["menu"]["menuRenderer"]; menuRenderer.isObject())

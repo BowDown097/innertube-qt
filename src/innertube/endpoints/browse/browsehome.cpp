@@ -20,11 +20,8 @@ namespace InnertubeEndpoints
         }
         else if (const QJsonValue baseContents = data["contents"]; baseContents.isObject())
         {
-            const QLatin1String baseRenderer(!baseContents["twoColumnBrowseResultsRenderer"].isUndefined()
-                                             ? "twoColumnBrowseResultsRenderer" : "singleColumnBrowseResultsRenderer");
-            const QJsonValue resultsRenderer = baseContents[baseRenderer];
-            if (!resultsRenderer.isObject())
-                throw InnertubeException(QStringLiteral("[BrowseHome] %1 not found").arg(baseRenderer));
+            const QJsonObject baseContentsObj = baseContents.toObject();
+            const QJsonValue& resultsRenderer = *baseContentsObj.begin();
 
             const QJsonArray tabs = resultsRenderer["tabs"].toArray();
             if (tabs.isEmpty())
@@ -83,8 +80,9 @@ namespace InnertubeEndpoints
             {
                 if (const QJsonValue richShelf = richSection["content"]["richShelfRenderer"]; richShelf.isObject())
                 {
-                    response.contents.append(InnertubeObjects::RichVideoShelf(
-                        richShelf, { "lockupViewModel", "shortsLockupViewModel", "videoRenderer" }));
+                    response.contents.append(InnertubeObjects::HomeRichShelf(
+                        richShelf, { "lockupViewModel", "miniGameCardViewModel", "postRenderer",
+                                     "shortsLockupViewModel", "videoRenderer" }));
                 }
             }
             else if (const QJsonValue shelf = v["shelfRenderer"]; shelf.isObject())
