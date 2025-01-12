@@ -5,7 +5,7 @@ add_library(innertube-qt)
 set_target_properties(innertube-qt
     PROPERTIES
         CXX_STANDARD 20
-        CXX_STANDARD_REQUIRED true)
+        CXX_STANDARD_REQUIRED ON)
 
 # Compilation options
 option(INNERTUBE_GET_STS "Fetch the signature timestamp for playback to avoid rate-limiting for custom player implementations." OFF)

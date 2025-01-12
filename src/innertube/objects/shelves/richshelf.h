@@ -3,6 +3,7 @@
 #include "innertube/objects/items/button.h"
 #include "innertube/objects/items/menu/menu.h"
 #include <QJsonArray>
+#include <span>
 
 namespace InnertubeObjects
 {
