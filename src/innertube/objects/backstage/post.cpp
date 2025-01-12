@@ -18,12 +18,14 @@ namespace InnertubeObjects
           voteStatus(postRenderer["voteStatus"].toString())
     {
         const QJsonValue backstageAttachmentJson = postRenderer["backstageAttachment"];
-        if (backstageAttachmentJson["pollRenderer"].isObject())
-            backstageAttachment = Poll(backstageAttachmentJson["pollRenderer"]);
-        else if (backstageAttachmentJson["backstageImageRenderer"].isObject())
-            backstageAttachment = BackstageImage(backstageAttachmentJson["backstageImageRenderer"]);
-        else if (backstageAttachmentJson["videoRenderer"].isObject())
-            backstageAttachment = Video(backstageAttachmentJson["videoRenderer"]);
+        if (const QJsonValue image = backstageAttachmentJson["backstageImageRenderer"]; image.isObject())
+            backstageAttachment = BackstageImage(image);
+        else if (const QJsonValue poll = backstageAttachmentJson["pollRenderer"]; poll.isObject())
+            backstageAttachment = Poll(poll);
+        else if (const QJsonValue quiz = backstageAttachmentJson["quizRenderer"]; quiz.isObject())
+            backstageAttachment = Quiz(quiz);
+        else if (const QJsonValue video = backstageAttachmentJson["videoRenderer"]; video.isObject())
+            backstageAttachment = Video(video);
 
         if (const QJsonValue voteButtonJson = postRenderer["voteButton"]; voteButtonJson.isObject())
             voteButton = Button(voteButtonJson["buttonRenderer"]);

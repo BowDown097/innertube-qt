@@ -57,6 +57,7 @@ target_sources(innertube-qt
         src/innertube/objects/innertubestring.cpp
         src/innertube/objects/backstage/post.cpp
         src/innertube/objects/backstage/poll/poll.cpp
+        src/innertube/objects/backstage/quiz/quiz.cpp
         src/innertube/objects/channel/aboutfullmetadata.cpp
         src/innertube/objects/channel/channel.cpp
         src/innertube/objects/channel/channelc4header.cpp
@@ -156,6 +157,8 @@ target_sources(innertube-qt
             src/innertube/objects/backstage/post.h
             src/innertube/objects/backstage/poll/poll.h
             src/innertube/objects/backstage/poll/pollchoice.h
+            src/innertube/objects/backstage/quiz/quiz.h
+            src/innertube/objects/backstage/quiz/quizchoice.h
             src/innertube/objects/channel/aboutfullmetadata.h
             src/innertube/objects/channel/channel.h
             src/innertube/objects/channel/channelc4header.h

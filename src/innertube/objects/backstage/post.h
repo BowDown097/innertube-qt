@@ -5,6 +5,7 @@
 #include "innertube/objects/video/video.h"
 #include "innertube/objects/video/watchnext/comments/commentactionbuttons.h"
 #include "poll/poll.h"
+#include "quiz/quiz.h"
 
 namespace InnertubeObjects
 {
@@ -16,7 +17,7 @@ namespace InnertubeObjects
         QJsonValue authorEndpoint;
         InnertubeString authorText;
         ResponsiveImage authorThumbnail;
-        std::variant<std::monostate, BackstageImage, Poll, Video> backstageAttachment;
+        std::variant<std::monostate, BackstageImage, Poll, Quiz, Video> backstageAttachment;
         InnertubeString contentText;
         QString pollStatus;
         QString postId;
