@@ -32,16 +32,18 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
     QWebEngineView* view = new QWebEngineView(authWindow);
     view->setFixedSize(authWindow->size());
 
-    QWebEnginePage* page = new QWebEnginePage(view);
+    QWebEngineProfile* profile = new QWebEngineProfile(view);
 # if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
-    page->profile()->setUrlRequestInterceptor(m_interceptor);
+    profile->setUrlRequestInterceptor(m_interceptor);
 # endif
 
+    QWebEnginePage* page = new QWebEnginePage(profile, view);
     view->setPage(page);
+
     view->load(QUrl("https://accounts.google.com/ServiceLogin/signinchooser?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3Dhttps%253A%252F%252Fwww.youtube.com%252F&hl=en&ec=65620&flowName=GlifWebSignIn&flowEntry=ServiceLogin"));
     view->show();
 
-    connect(QWebEngineProfile::defaultProfile()->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
+    connect(profile->cookieStore(), &QWebEngineCookieStore::cookieAdded, this, &InnertubeAuthStore::cookieAdded);
 # if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     connect(m_interceptor, &AuthStoreRequestInterceptor::foundVisitorId, this, &InnertubeAuthStore::interceptorFoundVisitorId);
 # endif
