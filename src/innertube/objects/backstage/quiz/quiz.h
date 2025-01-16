@@ -17,6 +17,7 @@ namespace InnertubeObjects
         QString type;
         InnertubeString votedText;
 
+        Quiz() = default;
         explicit Quiz(const QJsonValue& quizRenderer);
     };
 }
