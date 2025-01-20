@@ -5,10 +5,12 @@ namespace InnertubeObjects
 {
     struct InnertubeRun
     {
+        QJsonValue emoji;
         QJsonValue navigationEndpoint;
         QString text;
-        explicit InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = QJsonValue())
-            : navigationEndpoint(navigationEndpoint), text(text) {}
+
+        explicit InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = {}, const QJsonValue& emoji = {})
+            : emoji(emoji), navigationEndpoint(navigationEndpoint), text(text) {}
     };
 
     struct InnertubeString

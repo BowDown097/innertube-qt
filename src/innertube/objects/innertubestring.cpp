@@ -22,7 +22,7 @@ namespace InnertubeObjects
         const QJsonArray runsJson = textVal["runs"].toArray();
         for (const QJsonValue& v : runsJson)
         {
-            runs.append(InnertubeRun(v["text"].toString(), v["navigationEndpoint"]));
+            runs.append(InnertubeRun(v["text"].toString(), v["navigationEndpoint"], v["emoji"]));
             if (!hasSimpleText)
                 text += v["text"].toString();
         }
