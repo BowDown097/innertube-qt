@@ -17,13 +17,13 @@ namespace InnertubeObjects
 
     const NotificationState* NotificationPreferenceButton::getCurrentState() const
     {
-        auto it = std::ranges::find_if(states, [this](const NotificationState& ns) { return ns.stateId == currentStateId; });
+        auto it = std::ranges::find(states, currentStateId, &NotificationState::stateId);
         return it != states.end() ? &(*it) : nullptr;
     }
 
     const MenuServiceItem* NotificationPreferenceButton::getService(const QString& iconType) const
     {
-        auto it = std::ranges::find_if(popup.items, [iconType](const MenuServiceItem& msi) { return msi.iconType == iconType; });
+        auto it = std::ranges::find(popup.items, iconType, &MenuServiceItem::iconType);
         return it != popup.items.end() ? &(*it) : nullptr;
     }
 }
