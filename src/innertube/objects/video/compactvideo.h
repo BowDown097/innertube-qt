@@ -20,6 +20,7 @@ namespace InnertubeObjects
         CompactVideo() = default;
         explicit CompactVideo(const QJsonValue& compactVideoRenderer);
 
+        bool isLive() const;
         VideoOwner owner() const;
     };
 }

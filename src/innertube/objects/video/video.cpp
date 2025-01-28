@@ -41,7 +41,7 @@ namespace InnertubeObjects
 
     bool Video::isLive() const
     {
-        return std::ranges::any_of(badges, [](const MetadataBadge& b) { return b.style == "BADGE_STYLE_TYPE_LIVE_NOW"; });
+        return std::ranges::find(badges, "BADGE_STYLE_TYPE_LIVE_NOW", &MetadataBadge::style) != badges.end();
     }
 
     bool Video::isReel() const

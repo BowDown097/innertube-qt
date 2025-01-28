@@ -21,6 +21,11 @@ namespace InnertubeObjects
             ownerBadges.append(MetadataBadge(ownerBadge["metadataBadgeRenderer"]));
     }
 
+    bool CompactVideo::isLive() const
+    {
+        return std::ranges::find(badges, "BADGE_STYLE_TYPE_LIVE_NOW", &MetadataBadge::style) != badges.end();
+    }
+
     VideoOwner CompactVideo::owner() const
     {
         return VideoOwner {
