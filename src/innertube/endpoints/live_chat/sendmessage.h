@@ -9,6 +9,8 @@ namespace InnertubeEndpoints
     class SendMessage : public BaseEndpoint<"live_chat/send_message">
     {
         friend class ::InnerTube;
+    public:
+        QJsonValue data;
     protected:
         /**
          * @details In parameter details, @ref InnertubeEndpoints::GetLiveChat::liveChatContinuation["actionPanel"]["liveChatMessageInputRenderer"]["sendButton"]["buttonRenderer"]["serviceEndpoint"]["sendLiveChatMessageEndpoint"]
@@ -26,6 +28,8 @@ namespace InnertubeEndpoints
          */
         SendMessage(const InnertubeContext* context, const InnertubeAuthStore* authStore,
                     const QString& message, const QString& clientMessageId, const QString& params);
+
+        explicit SendMessage(const QJsonValue& data);
     private:
         static QJsonObject createBody(const InnertubeContext* context, const QJsonArray& textSegments,
                                       const QString& clientMessageId, const QString& params);
