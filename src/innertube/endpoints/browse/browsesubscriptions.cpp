@@ -10,32 +10,9 @@ namespace InnertubeEndpoints
 
     BrowseSubscriptions::BrowseSubscriptions(const QJsonValue& data)
     {
-        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
+        if (const QJsonValue contents = data["contents"]; contents.isObject())
         {
-            const QJsonArray onResponseReceivedActions = onResponseReceivedValue.toArray();
-            // this can just happen sometimes, so will only be minor
-            if (onResponseReceivedActions.isEmpty())
-                throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Severity::Minor);
-
-            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
-            // now this shouldn't just happen, so will not be minor
-            if (!appendItemsAction.isObject())
-                throw InnertubeException("[BrowseSubscriptions] Continuation has no appendContinuationItemsAction");
-
-            const QJsonArray continuationItems = appendItemsAction["continuationItems"].toArray();
-            for (const QJsonValue& v : continuationItems)
-            {
-                if (const QJsonValue itemSection = v["itemSectionRenderer"]; itemSection.isObject())
-                    handleItemSection(itemSection);
-                else if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
-                    handleRichItem(richItem);
-                else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
-                    continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
-            }
-        }
-        else
-        {
-            const QJsonValue tabRenderer = getTabRenderer(data, "BrowseSubscriptions");
+            const QJsonValue tabRenderer = getTabRenderer(contents, "BrowseSubscriptions");
             if (const QJsonValue richGrid = tabRenderer["richGridRenderer"]; richGrid.isObject())
             {
                 const QJsonArray richGridRenderer = richGrid["contents"].toArray();
@@ -68,6 +45,33 @@ namespace InnertubeEndpoints
             {
                 throw InnertubeException("[BrowseSubscriptions] Could not find richGridRenderer or sectionListRenderer");
             }
+        }
+        else if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
+        {
+            const QJsonArray onResponseReceivedActions = onResponseReceivedValue.toArray();
+            // this can just happen sometimes, so will only be minor
+            if (onResponseReceivedActions.isEmpty())
+                throw InnertubeException("[BrowseSubscriptions] Continuation has no actions", InnertubeException::Severity::Minor);
+
+            const QJsonValue appendItemsAction = onResponseReceivedActions[0]["appendContinuationItemsAction"];
+            // now this shouldn't just happen, so will not be minor
+            if (!appendItemsAction.isObject())
+                throw InnertubeException("[BrowseSubscriptions] Continuation has no appendContinuationItemsAction");
+
+            const QJsonArray continuationItems = appendItemsAction["continuationItems"].toArray();
+            for (const QJsonValue& v : continuationItems)
+            {
+                if (const QJsonValue itemSection = v["itemSectionRenderer"]; itemSection.isObject())
+                    handleItemSection(itemSection);
+                else if (const QJsonValue richItem = v["richItemRenderer"]; richItem.isObject())
+                    handleRichItem(richItem);
+                else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
+                    continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
+            }
+        }
+        else
+        {
+            throw InnertubeException("[BrowseSubscriptions] Failed to find any content");
         }
     }
 

@@ -11,7 +11,14 @@ namespace InnertubeEndpoints
     BrowseHistory::BrowseHistory(const QJsonValue& data)
     {
         QJsonArray sectionListRenderer;
-        if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
+        if (const QJsonValue contents = data["contents"]; contents.isObject())
+        {
+            const QJsonValue tabRenderer = getTabRenderer(contents, "BrowseHistory");
+            sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
+            if (sectionListRenderer.isEmpty())
+                throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
+        }
+        else if (const QJsonValue onResponseReceivedValue = data["onResponseReceivedActions"]; onResponseReceivedValue.isArray())
         {
             const QJsonArray onResponseReceivedActions = onResponseReceivedValue.toArray();
             // this can just happen sometimes, so will only be minor
@@ -27,10 +34,7 @@ namespace InnertubeEndpoints
         }
         else
         {
-            const QJsonValue tabRenderer = getTabRenderer(data, "BrowseHistory");
-            sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
-            if (sectionListRenderer.isEmpty())
-                throw InnertubeException("[BrowseHistory] sectionListRenderer has no contents");
+            throw InnertubeException("[BrowseHistory] Failed to find any content");
         }
 
         for (const QJsonValue& v : std::as_const(sectionListRenderer))

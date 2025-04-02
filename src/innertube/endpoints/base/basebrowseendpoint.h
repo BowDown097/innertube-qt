@@ -14,6 +14,6 @@ namespace InnertubeEndpoints
         static QJsonValue fetch(const QString& browseId, const InnertubeContext* context, const InnertubeAuthStore* authStore,
                                 const QString& continuationToken = "", const QString& query = "", const QString& params = "");
 
-        static QJsonValue getTabRenderer(const QJsonValue& data, const QString& name);
+        static QJsonValue getTabRenderer(const QJsonValue& contents, const QString& name);
     };
 }

@@ -21,12 +21,9 @@ namespace InnertubeEndpoints
         return get(context, authStore, body);
     }
 
-    QJsonValue BaseBrowseEndpoint::getTabRenderer(const QJsonValue& data, const QString& name)
+    QJsonValue BaseBrowseEndpoint::getTabRenderer(const QJsonValue& contents, const QString& name)
     {
-        if (!data["contents"].isObject())
-            throw InnertubeException(QStringLiteral("[%1] contents not found").arg(name));
-
-        const QJsonValue resultsRenderer = data["contents"]["twoColumnBrowseResultsRenderer"];
+        const QJsonValue resultsRenderer = contents["twoColumnBrowseResultsRenderer"];
         if (!resultsRenderer.isObject())
             throw InnertubeException(QStringLiteral("[%1] twoColumnBrowseResultsRenderer not found").arg(name));
 

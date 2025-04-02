@@ -10,7 +10,11 @@ namespace InnertubeEndpoints
 
     BrowseTrending::BrowseTrending(const QJsonValue& data)
     {
-        const QJsonValue tabRenderer = getTabRenderer(data, "BrowseTrending");
+        const QJsonValue contents = data["contents"];
+        if (!contents.isObject())
+            throw InnertubeException("[BrowseTrending] Failed to find any content");
+
+        const QJsonValue tabRenderer = getTabRenderer(contents, "BrowseTrending");
         const QJsonArray sectionListRenderer = tabRenderer["sectionListRenderer"]["contents"].toArray();
         if (sectionListRenderer.isEmpty())
             throw InnertubeException("[BrowseTrending] sectionListRenderer has no contents");
