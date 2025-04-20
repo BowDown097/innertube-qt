@@ -23,7 +23,6 @@ target_sources(innertube-qt
     PRIVATE
         src/innertube.cpp
         src/jsonutil.cpp
-        src/sslhttprequest.cpp
         src/innertube/endpoints/base/basebrowseendpoint.cpp
         src/innertube/endpoints/base/baseendpoint.cpp
         src/innertube/endpoints/browse/browsechannel.cpp
@@ -101,7 +100,6 @@ target_sources(innertube-qt
         FILE_SET HEADERS FILES
             src/innertube.h
             src/jsonutil.h
-            src/sslhttprequest.h
             src/innertube/innertubeexception.h
             src/innertube/innertubereply.h
             src/innertube/endpoints/innertubeendpoints.h

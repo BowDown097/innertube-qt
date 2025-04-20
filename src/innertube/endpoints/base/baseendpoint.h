@@ -1,21 +1,23 @@
 #pragma once
 #include "innertube/itc-objects/innertubecontext.h"
 #include <QJsonObject>
-#include <QVariantMap>
 
 class InnerTube;
 class InnertubeAuthStore;
+class QNetworkRequest;
 
 // the key thankfully works on any client, though in theory it shouldn't - hopefully this never changes
-#define YTI_REQUEST_TEMPLATE \
-QStringLiteral("https://www.youtube.com/youtubei/v1/%1?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false")
+constexpr QLatin1String RequestTemplate(
+    "https://www.youtube.com/youtubei/v1/%1?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false");
 
 namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body);
-        QVariantMap getNeededHeaders(const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        QJsonValue getData(const QString& path, const QJsonObject& body,
+                           const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        QNetworkRequest prepareRequest(
+            const QString& path, const InnertubeContext* context, const InnertubeAuthStore* authStore);
     }
 
     template<size_t N>
@@ -40,10 +42,7 @@ namespace InnertubeEndpoints
          */
         static QJsonValue get(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
         {
-            return EndpointMethods::getData(
-                YTI_REQUEST_TEMPLATE.arg(endpoint.data),
-                EndpointMethods::getNeededHeaders(context, authStore), body
-            );
+            return EndpointMethods::getData(RequestTemplate.arg(endpoint.data), body, context, authStore);
         }
     };
 }

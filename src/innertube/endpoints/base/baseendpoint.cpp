@@ -1,48 +1,54 @@
 #include "baseendpoint.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
-#include "sslhttprequest.h"
 #include <QEventLoop>
 #include <QJsonDocument>
+#include <QNetworkReply>
 
 namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QJsonValue getData(const QString& path, const QVariantMap& headers, const QJsonObject& body)
+        QJsonValue getData(const QString& path, const QJsonObject& body,
+                           const InnertubeContext* context, const InnertubeAuthStore* authStore)
         {
-            QScopedPointer<SslHttpRequest> req(new SslHttpRequest(path, SslHttpRequest::RequestMethod::Post));
-            req->setBody(body);
-            req->setHeaders(headers);
-            req->send();
+            static thread_local QNetworkAccessManager* nam = [] {
+                QNetworkAccessManager* nam = new QNetworkAccessManager;
+                nam->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+                return nam;
+            }();
+
+            QNetworkReply* rep = nam->post(
+                prepareRequest(path, context, authStore),
+                QJsonDocument(body).toJson(QJsonDocument::Compact));
+            QObject::connect(rep, &QNetworkReply::finished, rep, &QObject::deleteLater);
 
             QEventLoop loop;
-            QObject::connect(req.data(), &SslHttpRequest::finished, &loop, &QEventLoop::quit);
+            QObject::connect(rep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
             loop.exec();
 
-            return QJsonDocument::fromJson(req->payload()).object();
+            return QJsonDocument::fromJson(rep->readAll()).object();
         }
 
-        QVariantMap getNeededHeaders(const InnertubeContext* context, const InnertubeAuthStore* authStore)
+        QNetworkRequest prepareRequest(
+            const QString& path, const InnertubeContext* context, const InnertubeAuthStore* authStore)
         {
-            QVariantMap headers;
+            QNetworkRequest req(path);
+            req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
 
             if (authStore->populated())
             {
-                headers.insert({
-                    { "Authorization", authStore->generateSAPISIDHash() },
-                    { "Cookie", authStore->toCookieString() },
-                    { "X-Goog-AuthUser", "0" }
-                });
+                req.setRawHeader("Authorization", authStore->generateSAPISIDHash().toUtf8());
+                req.setRawHeader("Cookie", authStore->toCookieString().toUtf8());
+                req.setRawHeader("X-Goog-AuthUser", "0");
             }
 
-            headers.insert({
-                { "X-Goog-Visitor-Id", context->client.visitorData },
-                { "X-YOUTUBE-CLIENT-NAME", static_cast<int>(context->client.clientType) },
-                { "X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion },
-                { "X-ORIGIN", "https://www.youtube.com" }
-            });
+            req.setRawHeader("Content-Type", "application/json");
+            req.setRawHeader("X-Goog-Visitor-Id", context->client.visitorData.toUtf8());
+            req.setRawHeader("X-YOUTUBE-CLIENT-NAME", QByteArray::number(static_cast<int>(context->client.clientType)));
+            req.setRawHeader("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
+            req.setRawHeader("X-ORIGIN", "https://www.youtube.com");
 
-            return headers;
+            return req;
         }
     }
 }
