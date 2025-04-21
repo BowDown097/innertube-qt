@@ -2,10 +2,6 @@
 
 namespace InnertubeEndpoints
 {
-    PerformCommentAction::PerformCommentAction(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                               const QStringList& actions)
-        : PerformCommentAction(get(context, authStore, createBody(context, actions))) {}
-
     PerformCommentAction::PerformCommentAction(const QJsonValue& data)
     {
         response.actionResults = data["actionResults"].toArray();
@@ -18,5 +14,10 @@ namespace InnertubeEndpoints
             { "actions", QJsonArray::fromStringList(actions) },
             { "context", context->toJson() }
         };
+    }
+
+    QJsonObject PerformCommentAction::createBody(const InnertubeContext* context, const QString& action)
+    {
+        return createBody(context, QStringList(action));
     }
 }

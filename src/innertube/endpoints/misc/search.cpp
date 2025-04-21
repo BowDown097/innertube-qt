@@ -4,10 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    Search::Search(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& query,
-                   const QString& tokenIn, const QString& params)
-        : Search(get(context, authStore, createBody(context, query, tokenIn, params))) {}
-
     Search::Search(const QJsonValue& data)
     {
         response.estimatedResults = data["estimatedResults"].toString().toLongLong();
@@ -78,11 +74,12 @@ namespace InnertubeEndpoints
         }
     }
 
-    QJsonObject Search::createBody(const InnertubeContext* context, const QString& query,
-                                   const QString& tokenIn, const QString& params)
+    QJsonObject Search::createBody(
+        const InnertubeContext* context, const QString& query,
+        const QString& continuationToken, const QString& params)
     {
         QJsonObject body = { { "context", context->toJson() } };
-        if (tokenIn.isEmpty())
+        if (continuationToken.isEmpty())
         {
             body.insert("query", query);
             if (!params.isEmpty())
@@ -90,7 +87,7 @@ namespace InnertubeEndpoints
         }
         else
         {
-            body.insert("continuation", tokenIn);
+            body.insert("continuation", continuationToken);
         }
 
         return body;

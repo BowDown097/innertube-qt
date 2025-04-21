@@ -4,22 +4,18 @@
 namespace InnertubeEndpoints
 {
     template<CompTimeStr endpoint>
-    class BaseLikeEndpoint : public BaseEndpoint<endpoint>
+    struct BaseLikeEndpoint : BaseEndpoint<endpoint>
     {
-    protected:
         /**
          * @param params  Supplied by many sources - see QtTube code for usage.
          */
-        BaseLikeEndpoint(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                         const QString& videoId, const QString& params)
+        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId, const QString& params)
         {
-            const QJsonObject body {
+            return {
                 { "context", context->toJson() },
                 { "params", params },
                 { "target", QJsonObject { { "videoId", videoId } } }
             };
-
-            BaseEndpoint<endpoint>::get(context, authStore, body);
         }
     };
 }

@@ -3,9 +3,9 @@
 
 namespace InnertubeEndpoints
 {
-    QJsonValue BaseBrowseEndpoint::fetch(const QString& browseId, const InnertubeContext* context,
-                                         const InnertubeAuthStore* authStore, const QString& continuationToken,
-                                         const QString& query, const QString& params)
+    QJsonObject BaseBrowseEndpoint::_createBody(
+        const InnertubeContext* context, const QString& browseId, const QString& continuationToken,
+        const QString& query, const QString& params)
     {
         QJsonObject body = { { "context", context->toJson() } };
         if (continuationToken.isEmpty())
@@ -18,7 +18,7 @@ namespace InnertubeEndpoints
         if (!params.isEmpty())
             body.insert("params", params);
 
-        return get(context, authStore, body);
+        return body;
     }
 
     QJsonValue BaseBrowseEndpoint::getTabRenderer(const QJsonValue& contents, const QString& name)

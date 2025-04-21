@@ -10,14 +10,12 @@ namespace InnertubeEndpoints
      */
     class UpdatedMetadata : public BaseEndpoint<"updated_metadata">
     {
-        friend class ::InnerTube;
     public:
         UpdatedMetadataResponse response;
-    protected:
-        UpdatedMetadata(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId);
+
         explicit UpdatedMetadata(const QJsonValue& data);
-    private:
         static QJsonObject createBody(const InnertubeContext* context, const QString& videoId);
+    private:
         static QJsonValue findAction(const QJsonArray& actions, const QString& name);
     };
 }

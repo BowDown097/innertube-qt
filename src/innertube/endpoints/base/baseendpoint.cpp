@@ -4,29 +4,60 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 
+namespace
+{
+    QNetworkAccessManager* networkAccessManager()
+    {
+        static thread_local QNetworkAccessManager* nam = [] {
+            QNetworkAccessManager* nam = new QNetworkAccessManager;
+            nam->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+            return nam;
+        }();
+        return nam;
+    }
+}
+
 namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QJsonValue getData(const QString& path, const QJsonObject& body,
-                           const InnertubeContext* context, const InnertubeAuthStore* authStore)
+        QFuture<QJsonValue> getData(
+            const QString& path, const QJsonObject& body,
+            const InnertubeContext* context, const InnertubeAuthStore* authStore)
         {
-            static thread_local QNetworkAccessManager* nam = [] {
-                QNetworkAccessManager* nam = new QNetworkAccessManager;
-                nam->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
-                return nam;
-            }();
+            QFutureInterface<QJsonValue> futureInterface;
+            futureInterface.reportStarted();
 
-            QNetworkReply* rep = nam->post(
+            QNetworkReply* rep = networkAccessManager()->post(
                 prepareRequest(path, context, authStore),
                 QJsonDocument(body).toJson(QJsonDocument::Compact));
-            QObject::connect(rep, &QNetworkReply::finished, rep, &QObject::deleteLater);
 
-            QEventLoop loop;
-            QObject::connect(rep, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-            loop.exec();
+            QObject::connect(rep, &QNetworkReply::finished, [futureInterface, rep]() mutable {
+                rep->deleteLater();
+                futureInterface.reportResult(QJsonDocument::fromJson(rep->readAll()).object());
+                futureInterface.reportFinished();
+            });
 
-            return QJsonDocument::fromJson(rep->readAll()).object();
+            return futureInterface.future();
+        }
+
+        QFuture<void> getPlain(
+            const QString& path, const QJsonObject& body,
+            const InnertubeContext* context, const InnertubeAuthStore* authStore)
+        {
+            QFutureInterface<void> futureInterface;
+            futureInterface.reportStarted();
+
+            QNetworkReply* rep = networkAccessManager()->post(
+                prepareRequest(path, context, authStore),
+                QJsonDocument(body).toJson(QJsonDocument::Compact));
+
+            QObject::connect(rep, &QNetworkReply::finished, [futureInterface, rep]() mutable {
+                rep->deleteLater();
+                futureInterface.reportFinished();
+            });
+
+            return futureInterface.future();
         }
 
         QNetworkRequest prepareRequest(

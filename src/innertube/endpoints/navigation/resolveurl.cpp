@@ -3,9 +3,6 @@
 
 namespace InnertubeEndpoints
 {
-    ResolveUrl::ResolveUrl(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& url)
-        : ResolveUrl(get(context, authStore, createBody(context, url))) {}
-
     ResolveUrl::ResolveUrl(const QJsonValue& data)
     {
         if (const QJsonValue error = data["error"]; error.isObject())

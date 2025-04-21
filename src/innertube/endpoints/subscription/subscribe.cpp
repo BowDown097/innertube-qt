@@ -3,13 +3,13 @@
 
 namespace InnertubeEndpoints
 {
-    Subscribe::Subscribe(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QStringList& channelIds,
-                         const QString& params)
+    QJsonObject Subscribe::createBody(
+        const InnertubeContext* context, const QStringList& channelIds, const QString& params)
     {
-        get(context, authStore, QJsonObject {
+        return {
             { "channelIds", QJsonArray::fromStringList(channelIds) },
             { "context", context->toJson() },
             { "params", params }
-        });
+        };
     }
 }

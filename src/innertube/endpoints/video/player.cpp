@@ -6,9 +6,6 @@
 
 namespace InnertubeEndpoints
 {
-    Player::Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
-        : Player(get(context, authStore, createBody(context, videoId))) {}
-
     Player::Player(const QJsonValue& data)
     {
         const QString status = data["playabilityStatus"]["status"].toString();

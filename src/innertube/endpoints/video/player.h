@@ -7,15 +7,11 @@ namespace InnertubeEndpoints
     /**
      * @brief Data used for the player, such as streams, for a video.
      */
-    class Player : public BaseEndpoint<"player">
+    struct Player : BaseEndpoint<"player">
     {
-        friend class ::InnerTube;
-    public:
         PlayerResponse response;
-    protected:
-        Player(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId);
+
         explicit Player(const QJsonValue& data);
-    private:
         static QJsonObject createBody(const InnertubeContext* context, const QString& videoId);
     };
 }

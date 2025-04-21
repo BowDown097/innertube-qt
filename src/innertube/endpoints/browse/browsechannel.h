@@ -8,20 +8,18 @@ namespace InnertubeEndpoints
      * @brief Channel info.
      * @details Used on the channel page - youtube.com/c/XXX, youtube.com/channel/XXX, etc.
      */
-    class BrowseChannel : public BaseBrowseEndpoint
+    struct BrowseChannel : BaseBrowseEndpoint
     {
-        friend class ::InnerTube;
-    public:
         ChannelResponse response;
-    protected:
+
+        explicit BrowseChannel(const QJsonValue& data);
+
         /**
-         * @param tokenIn  Continuation token.
          * @param params  Supplied by response.contents["twoColumnBrowseResultsRenderer"]["tabs"][INDEX]["tabRenderer"]["endpoint"]["browseEndpoint"]["params"]
          * where INDEX is the current tab index.
          */
-        BrowseChannel(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                      const QString& channelId, const QString& tokenIn = "", const QString& params = "");
-
-        explicit BrowseChannel(const QJsonValue& data);
+        static QJsonObject createBody(
+            const InnertubeContext* context, const QString& channelId,
+            const QString& continuationToken = "", const QString& params = "");
     };
 }

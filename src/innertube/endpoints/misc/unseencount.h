@@ -6,12 +6,11 @@ namespace InnertubeEndpoints
     /**
      * @brief Unseen notification count.
      */
-    class UnseenCount : public BaseEndpoint<"notification/get_unseen_count">
+    struct UnseenCount : BaseEndpoint<"notification/get_unseen_count">
     {
-        friend class ::InnerTube;
-    public:
         int unseenCount;
-    protected:
-        UnseenCount(const InnertubeContext* context, const InnertubeAuthStore* authStore);
+
+        explicit UnseenCount(const QJsonValue& data);
+        static QJsonObject createBody(const InnertubeContext* context);
     };
 }

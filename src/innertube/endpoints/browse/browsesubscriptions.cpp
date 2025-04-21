@@ -4,10 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseSubscriptions::BrowseSubscriptions(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                             const QString& tokenIn)
-        : BrowseSubscriptions(fetch("FEsubscriptions", context, authStore, tokenIn)) {}
-
     BrowseSubscriptions::BrowseSubscriptions(const QJsonValue& data)
     {
         if (const QJsonValue contents = data["contents"]; contents.isObject())
@@ -73,6 +69,11 @@ namespace InnertubeEndpoints
         {
             throw InnertubeException("[BrowseSubscriptions] Failed to find any content");
         }
+    }
+
+    QJsonObject BrowseSubscriptions::createBody(const InnertubeContext* context, const QString& continuationToken)
+    {
+        return _createBody(context, "FEsubscriptions", continuationToken);
     }
 
     void BrowseSubscriptions::handleItemSection(const QJsonValue& itemSection)

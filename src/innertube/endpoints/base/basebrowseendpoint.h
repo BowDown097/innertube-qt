@@ -10,9 +10,9 @@ namespace InnertubeEndpoints
     class BaseBrowseEndpoint : public BaseEndpoint<"browse">
     {
     protected:
-        // named "fetch" so it doesn't override BaseEndpoint::get()
-        static QJsonValue fetch(const QString& browseId, const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                const QString& continuationToken = "", const QString& query = "", const QString& params = "");
+        static QJsonObject _createBody(
+            const InnertubeContext* context, const QString& browseId, const QString& continuationToken = "",
+            const QString& query = "", const QString& params = "");
 
         static QJsonValue getTabRenderer(const QJsonValue& contents, const QString& name);
     };

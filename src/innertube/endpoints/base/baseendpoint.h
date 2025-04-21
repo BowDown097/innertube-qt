@@ -1,8 +1,9 @@
 #pragma once
+#include "innertube/innertubeexception.h"
 #include "innertube/itc-objects/innertubecontext.h"
+#include <QFuture>
 #include <QJsonObject>
 
-class InnerTube;
 class InnertubeAuthStore;
 class QNetworkRequest;
 
@@ -14,8 +15,12 @@ namespace InnertubeEndpoints
 {
     namespace EndpointMethods
     {
-        QJsonValue getData(const QString& path, const QJsonObject& body,
-                           const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        QFuture<QJsonValue> getData(
+            const QString& path, const QJsonObject& body,
+            const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        QFuture<void> getPlain(
+            const QString& path, const QJsonObject& body,
+            const InnertubeContext* context, const InnertubeAuthStore* authStore);
         QNetworkRequest prepareRequest(
             const QString& path, const InnertubeContext* context, const InnertubeAuthStore* authStore);
     }
@@ -33,16 +38,42 @@ namespace InnertubeEndpoints
     template<CompTimeStr endpoint>
     struct BaseEndpoint
     {
-        /**
-         * @brief Gets the raw response of an Innertube request.
-         * @details Unless if you absolutely know what you're doing or are not using the WEB client, you likely want to use @ref InnerTube::get.
-         * @param endpoint  The raw endpoint name.
-         * @param body  The JSON body of the request.
-         * @return The request's response body.
-         */
-        static QJsonValue get(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
+        static QFuture<QJsonValue> get(
+            const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
         {
             return EndpointMethods::getData(RequestTemplate.arg(endpoint.data), body, context, authStore);
         }
+
+        static QFuture<void> getPlain(
+            const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
+        {
+            return EndpointMethods::getPlain(RequestTemplate.arg(endpoint.data), body, context, authStore);
+        }
     };
+
+    template<typename EndpointType>
+    static QFuture<EndpointType> prepare(
+        const InnertubeContext* context, const InnertubeAuthStore* authStore, const QJsonObject& body)
+    {
+        QFutureInterface<EndpointType> futureInterface;
+        futureInterface.reportStarted();
+
+        EndpointType::get(context, authStore, body).then([futureInterface](QFuture<QJsonValue> f) mutable {
+            try
+            {
+            #if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
+                futureInterface.reportAndEmplaceResult(-1, f.result());
+            #else
+                futureInterface.reportResult(EndpointType(f.result()));
+            #endif
+                futureInterface.reportFinished();
+            }
+            catch (const InnertubeException& ie)
+            {
+                futureInterface.reportException(ie);
+            }
+        });
+
+        return futureInterface.future();
+    }
 }

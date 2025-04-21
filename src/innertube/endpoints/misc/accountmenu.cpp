@@ -5,9 +5,6 @@
 
 namespace InnertubeEndpoints
 {
-    AccountMenu::AccountMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore)
-        : AccountMenu(get(context, authStore, createBody(context))) {}
-
     AccountMenu::AccountMenu(const QJsonValue& data)
     {
         const QJsonValue multiPageMenuRenderer = data["actions"][0]["openPopupAction"]["popup"]["multiPageMenuRenderer"];

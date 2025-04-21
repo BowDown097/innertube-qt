@@ -3,10 +3,6 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseChannel::BrowseChannel(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                 const QString& channelId, const QString& tokenIn, const QString& params)
-        : BrowseChannel(fetch(channelId, context, authStore, tokenIn, "", params)) {}
-
     BrowseChannel::BrowseChannel(const QJsonValue& data)
     {
         if (const QJsonValue contents = data["contents"]; contents.isObject())
@@ -40,5 +36,12 @@ namespace InnertubeEndpoints
                 response.contents = continueAction["continuationItems"];
             }
         }
+    }
+
+    QJsonObject BrowseChannel::createBody(
+        const InnertubeContext* context, const QString& channelId,
+        const QString& continuationToken, const QString& params)
+    {
+        return _createBody(context, channelId, continuationToken, "", params);
     }
 }

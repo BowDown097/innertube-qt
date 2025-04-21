@@ -4,10 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHistory::BrowseHistory(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                 const QString& query, const QString& tokenIn)
-        : BrowseHistory(fetch("FEhistory", context, authStore, tokenIn, query)) {}
-
     BrowseHistory::BrowseHistory(const QJsonValue& data)
     {
         QJsonArray sectionListRenderer;
@@ -54,5 +50,11 @@ namespace InnertubeEndpoints
                 continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
+    }
+
+    QJsonObject BrowseHistory::createBody(
+        const InnertubeContext* context, const QString& query, const QString& continuationToken)
+    {
+        return _createBody(context, "FEhistory", continuationToken, query);
     }
 }

@@ -10,17 +10,12 @@ namespace InnertubeEndpoints
      */
     class BrowseSubscriptions : public BaseBrowseEndpoint
     {
-        friend class ::InnerTube;
     public:
         QString continuationToken;
         SubscriptionsResponse response;
-    protected:
-        /**
-         * @param tokenIn  Continuation token.
-         */
-        BrowseSubscriptions(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn = "");
 
         explicit BrowseSubscriptions(const QJsonValue& data);
+        static QJsonObject createBody(const InnertubeContext* context, const QString& continuationToken = "");
     private:
         void handleItemSection(const QJsonValue& itemSection);
         void handleRichItem(const QJsonValue& richItem);

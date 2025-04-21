@@ -7,13 +7,11 @@ namespace InnertubeEndpoints
     /**
      * @brief Trending page.
      */
-    class BrowseTrending : public BaseBrowseEndpoint
+    struct BrowseTrending : BaseBrowseEndpoint
     {
-        friend class ::InnerTube;
-    public:
         TrendingResponse response;
-    protected:
-        BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore);
+
         explicit BrowseTrending(const QJsonValue& data);
+        static QJsonObject createBody(const InnertubeContext* context);
     };
 }

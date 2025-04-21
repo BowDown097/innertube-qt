@@ -6,12 +6,12 @@ namespace InnertubeEndpoints
     /**
      * @brief Send a live chat message.
      */
-    class SendMessage : public BaseEndpoint<"live_chat/send_message">
+    struct SendMessage : BaseEndpoint<"live_chat/send_message">
     {
-        friend class ::InnerTube;
-    public:
         QJsonValue data;
-    protected:
+
+        explicit SendMessage(const QJsonValue& data);
+
         /**
          * @details In parameter details, @ref InnertubeEndpoints::GetLiveChat::liveChatContinuation["actionPanel"]["liveChatMessageInputRenderer"]["sendButton"]["buttonRenderer"]["serviceEndpoint"]["sendLiveChatMessageEndpoint"]
          * is simply expressed as "sendEndpoint."
@@ -20,18 +20,16 @@ namespace InnertubeEndpoints
          * followed by the number of messages sent by the user in the current live chat session.
          * @param params  Supplied by sendEndpoint["params"].
          */
-        SendMessage(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                    const QJsonArray& textSegments, const QString& clientMessageId, const QString& params);
-        /**
-         * @brief Overload of main constructor just for text.
-         * @details See previous constructor for parameter details.
-         */
-        SendMessage(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                    const QString& message, const QString& clientMessageId, const QString& params);
+        static QJsonObject createBody(
+            const InnertubeContext* context, const QJsonArray& textSegments,
+            const QString& clientMessageId, const QString& params);
 
-        explicit SendMessage(const QJsonValue& data);
-    private:
-        static QJsonObject createBody(const InnertubeContext* context, const QJsonArray& textSegments,
-                                      const QString& clientMessageId, const QString& params);
+        /**
+         * @brief Overload of createBody() just for text.
+         * @details See primary definition for parameter details.
+         */
+        static QJsonObject createBody(
+            const InnertubeContext* context, const QString& message,
+            const QString& clientMessageId, const QString& params);
     };
 }

@@ -5,9 +5,6 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseTrending::BrowseTrending(const InnertubeContext* context, const InnertubeAuthStore* authStore)
-        : BrowseTrending(fetch("FEtrending", context, authStore)) {}
-
     BrowseTrending::BrowseTrending(const QJsonValue& data)
     {
         const QJsonValue contents = data["contents"];
@@ -70,5 +67,10 @@ namespace InnertubeEndpoints
                 }
             }
         }
+    }
+
+    QJsonObject BrowseTrending::createBody(const InnertubeContext* context)
+    {
+        return _createBody(context, "FEtrending");
     }
 }

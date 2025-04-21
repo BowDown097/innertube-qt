@@ -2,10 +2,10 @@
 #include "innertube/innertubeexception.h"
 #include "innertube/innertubereply.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
-#include "jsonutil.h"
+#include <QEventLoop>
+#include <QFutureWatcher>
 #include <mutex>
 #include <nonstd/expected.hpp>
-#include <QThreadPool>
 
 /**
  * @brief The main attraction. Pretty much all of the interfacing with the library happens here.
@@ -79,16 +79,13 @@ public:
     template<EndpointWithData E>
     InnertubeReply<E>* get(auto&&... args)
     {
-        auto argsTuple = std::make_tuple(std::forward<decltype(args)>(args)...);
         InnertubeReply<E>* reply = new InnertubeReply<E>;
 
-        QThreadPool::globalInstance()->start([this, argsTuple = std::move(argsTuple), reply] {
+        const QJsonObject body = E::createBody(m_context, std::forward<decltype(args)>(args)...);
+        InnertubeEndpoints::prepare<E>(m_context, m_authStore, body).then([reply](QFuture<E> f) {
             try
             {
-                auto endpoint = std::apply([this](auto&&... unpacked) {
-                    return getBlocking<E>(std::forward<decltype(unpacked)>(unpacked)...);
-                }, argsTuple);
-                emit reply->finished(endpoint);
+                emit reply->finished(f.result());
             }
             catch (const InnertubeException& ie)
             {
@@ -106,7 +103,57 @@ public:
      * @details See @ref get for more details.
      */
     template<EndpointWithData E>
-    E getBlocking(auto&&... args) { return E(m_context, m_authStore, std::forward<decltype(args)>(args)...); }
+    E getBlocking(auto&&... args)
+    {
+        const QJsonObject body = E::createBody(m_context, std::forward<decltype(args)>(args)...);
+
+        QFutureWatcher<E> watcher;
+        watcher.setFuture(InnertubeEndpoints::prepare<E>(m_context, m_authStore, body));
+
+        QEventLoop loop;
+        connect(&watcher, &QFutureWatcher<E>::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        return watcher.result();
+    }
+
+    /**
+     * @brief Make an Innertube request asynchronously without expecting any result object.
+     * @param args  Arguments to pass in. See individual endpoint constructor parameters, excluding the
+     * @ref InnertubeContext and @ref InnertubeAuthStore.
+     * @return @ref InnertubeReply "An object" that emits a signal when the request has finished.
+     * Don't worry, it's freed when the request finishes - you don't have to manually delete it.
+     */
+    template<innertube_derived_from_templated<InnertubeEndpoints::BaseEndpoint> E>
+    InnertubeReply<void>* getPlain(auto&&... args)
+    {
+        InnertubeReply<void>* reply = new InnertubeReply<void>;
+
+        const QJsonObject body = E::createBody(m_context, std::forward<decltype(args)>(args)...);
+        E::getPlain(m_context, m_authStore, body).then([reply] {
+            emit reply->finished();
+            reply->deleteLater();
+        });
+
+        return reply;
+    }
+
+    /**
+     * @brief Make an Innertube request synchronously without expecting any result object.
+     * @details See @ref getPlain for more details.
+     */
+    template<innertube_derived_from_templated<InnertubeEndpoints::BaseEndpoint> E>
+    void getPlainBlocking(auto&&... args)
+    {
+        const QJsonObject body = E::createBody(m_context, std::forward<decltype(args)>(args)...);
+
+        QFutureWatcher<void> watcher;
+        watcher.setFuture(E::getPlain(m_context, m_authStore, body));
+
+        QEventLoop loop;
+        connect(&watcher, &QFutureWatcher<void>::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+    }
 
     /**
      * @brief Get the raw result of an Innertube request asynchronously.
@@ -119,12 +166,14 @@ public:
     template<EndpointWithData E>
     InnertubeReply<E>* getRaw(QJsonObject body = {})
     {
+        addContext(body, browseIdForEndpoint<E>());
+
         InnertubeReply<E>* reply = new InnertubeReply<E>;
-        QThreadPool::globalInstance()->start([this, reply, body = std::move(body)] {
-            QJsonValue v = getRawBlocking<E>(std::move(body));
+        E::get(m_context, m_authStore, body).then([reply](const QJsonValue& v) {
             emit reply->finishedRaw(v);
             reply->deleteLater();
         });
+
         return reply;
     }
 
@@ -135,30 +184,16 @@ public:
     template<EndpointWithData E>
     QJsonValue getRawBlocking(QJsonObject body = {})
     {
-        // merge unique properties from context, so that properties can be overriden by the user
-        if (body["context"].isObject())
-        {
-            QJsonObject contextObj = m_context->toJson();
-            const QJsonObject bodyContext = body["context"].toObject();
-            JsonUtil::deepMerge(contextObj, bodyContext);
-            body["context"] = contextObj;
-        }
-        else
-        {
-            body.insert("context", m_context->toJson());
-        }
+        addContext(body, browseIdForEndpoint<E>());
 
-        // we can automatically resolve the browseId for the browse endpoints (excl. channels)
-        if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHistory>)
-            body.insert("browseId", "FEhistory");
-        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHome>)
-            body.insert("browseId", "FEwhat_to_watch");
-        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseSubscriptions>)
-            body.insert("browseId", "FEsubscriptions");
-        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseTrending>)
-            body.insert("browseId", "FEtrending");
+        QFutureWatcher<QJsonValue> watcher;
+        watcher.setFuture(E::get(m_context, m_authStore, body));
 
-        return E::get(m_context, m_authStore, std::move(body));
+        QEventLoop loop;
+        connect(&watcher, &QFutureWatcher<QJsonValue>::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        return watcher.result();
     }
 
     /**
@@ -194,4 +229,23 @@ private:
 
     InnertubeAuthStore* m_authStore;
     InnertubeContext* m_context{};
+
+    void addContext(QJsonObject& body, const QString& browseId);
+
+    template<EndpointWithData E>
+    QString browseIdForEndpoint()
+    {
+        if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHistory>)
+            return "FEhistory";
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseHome>)
+            return "FEwhat_to_watch";
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseSubscriptions>)
+            return "FEsubscriptions";
+        else if constexpr (std::same_as<E, InnertubeEndpoints::BrowseTrending>)
+            return "FEtrending";
+        else
+            return QString();
+    }
+
+    void subscribeImpl(const QJsonValue& endpoint, bool subscribing, bool blocking);
 };

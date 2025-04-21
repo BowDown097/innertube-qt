@@ -3,10 +3,6 @@
 
 namespace InnertubeEndpoints
 {
-    GetNotificationMenu::GetNotificationMenu(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-                                             const QString& notificationsMenuRequestType, const QString& tokenIn)
-        : GetNotificationMenu(get(context, authStore, createBody(context, notificationsMenuRequestType, tokenIn))) {}
-
     GetNotificationMenu::GetNotificationMenu(const QJsonValue& data)
     {
         QJsonArray items;
@@ -35,14 +31,15 @@ namespace InnertubeEndpoints
         }
     }
 
-    QJsonObject GetNotificationMenu::createBody(const InnertubeContext* context,
-        const QString& notificationsMenuRequestType, const QString& tokenIn)
+    QJsonObject GetNotificationMenu::createBody(
+        const InnertubeContext* context, const QString& notificationsMenuRequestType,
+        const QString& continuationToken)
     {
         QJsonObject body = { { "context", context->toJson() } };
-        if (tokenIn.isEmpty())
+        if (continuationToken.isEmpty())
             body.insert("notificationsMenuRequestType", notificationsMenuRequestType);
         else
-            body.insert("ctoken", tokenIn);
+            body.insert("ctoken", continuationToken);
 
         return body;
     }

@@ -4,9 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    UpdatedMetadata::UpdatedMetadata(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& videoId)
-        : UpdatedMetadata(get(context, authStore, createBody(context, videoId))) {}
-
     UpdatedMetadata::UpdatedMetadata(const QJsonValue& data)
     {
         const QJsonArray actions = data["actions"].toArray();

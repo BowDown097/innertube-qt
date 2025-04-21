@@ -4,9 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    BrowseHome::BrowseHome(const InnertubeContext* context, const InnertubeAuthStore* authStore, const QString& tokenIn)
-        : BrowseHome(fetch("FEwhat_to_watch", context, authStore, tokenIn)) {}
-
     BrowseHome::BrowseHome(const QJsonValue& data)
     {
         QJsonArray contents;
@@ -98,5 +95,10 @@ namespace InnertubeEndpoints
                 continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
             }
         }
+    }
+
+    QJsonObject BrowseHome::createBody(const InnertubeContext* context, const QString& continuationToken)
+    {
+        return _createBody(context, "FEwhat_to_watch", continuationToken);
     }
 }

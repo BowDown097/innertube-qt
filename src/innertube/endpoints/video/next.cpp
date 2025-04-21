@@ -4,10 +4,6 @@
 
 namespace InnertubeEndpoints
 {
-    Next::Next(const InnertubeContext* context, const InnertubeAuthStore* authStore,
-               const QString& videoId, const QString& tokenIn)
-        : Next(get(context, authStore, createBody(context, videoId, tokenIn))) {}
-
     Next::Next(const QJsonValue& data)
     {
         if (const QJsonValue contents = data["contents"]; contents.isObject())
@@ -30,13 +26,14 @@ namespace InnertubeEndpoints
         }
     }
 
-    QJsonObject Next::createBody(const InnertubeContext* context, const QString& videoId, const QString& tokenIn)
+    QJsonObject Next::createBody(
+        const InnertubeContext* context, const QString& videoId, const QString& continuationToken)
     {
-        if (!tokenIn.isEmpty())
+        if (!continuationToken.isEmpty())
         {
             return {
                 { "context", context->toJson() },
-                { "continuation", tokenIn }
+                { "continuation", continuationToken }
             };
         }
 
