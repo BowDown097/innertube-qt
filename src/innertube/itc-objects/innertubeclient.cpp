@@ -37,13 +37,9 @@ InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVer
       userInterfaceTheme(userInterfaceTheme),
       visitorData(generateVisitorData())
 {
-    if (useClientVersionAsFallback)
-        this->clientVersion = clientVersion;
-
     if (useClientVersionAsFallback || clientVersion.isEmpty())
     {
-        QString latestVersion = getLatestVersion(clientType);
-        if (!latestVersion.isEmpty())
+        if (const QString latestVersion = getLatestVersion(clientType); !latestVersion.isEmpty())
             this->clientVersion = latestVersion;
         else if (useClientVersionAsFallback)
             qWarning() << "Failed to get latest version for client " << resolveClientName(clientType) << ": using fallback version " << clientVersion;

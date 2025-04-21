@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 project(innertube-qt VERSION 1.0 LANGUAGES C CXX)
-add_library(innertube-qt
-    src/protobuf/protobufbuilder.h src/protobuf/protobufbuilder.cpp)
+add_library(innertube-qt)
 
 set_target_properties(innertube-qt
     PROPERTIES
@@ -96,6 +95,7 @@ target_sources(innertube-qt
         src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailviewmodel.cpp
         src/innertube/responses/video/nextcontinuationdata.cpp
+        src/protobuf/protobufbuilder.cpp
         src/protobuf/protobufcompiler.cpp
         src/protobuf/protobufutil.cpp
     PUBLIC
@@ -276,6 +276,7 @@ target_sources(innertube-qt
             src/innertube/responses/video/nextresponse.h
             src/innertube/responses/video/playerresponse.h
             src/innertube/responses/video/updatedmetadataresponse.h
+            src/protobuf/protobufbuilder.h
             src/protobuf/protobufcompiler.h
             src/protobuf/protobufutil.h)
 
