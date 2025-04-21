@@ -1,43 +1,57 @@
 #include "protobufcompiler.h"
+#include "protobufutil.h"
 #include <cmath>
 
 namespace ProtobufCompiler
 {
-    QByteArray uleb128(uint64_t val)
+    int resolveWireType(int metaType, const QVariant& variant)
     {
-        uint8_t buf[128];
-        size_t i = 0;
-        do
+        switch (metaType)
         {
-            if (i < 255)
+        case QMetaType::QVariantMap:
+        case QMetaType::QString:
+        case QMetaType::QByteArray:
+            return 2;
+        case QMetaType::Bool:
+            return 0;
+        case QMetaType::Int:
+        case QMetaType::UInt:
+    #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        case QMetaType::Char32:
+    #endif
+        case QMetaType::Float:
+            return 5;
+        case QMetaType::Double:
+        case QMetaType::Long:
+        case QMetaType::LongLong:
+        case QMetaType::ULong:
+        case QMetaType::ULongLong:
+            return 1;
+        default:
+            bool ok;
+            double value = variant.toDouble(&ok);
+            if (ok)
             {
-                uint8_t b = val & 0x7F;
-                val >>= 7;
-                if (val != 0)
-                    b |= 0x80;
-                buf[i++] = b;
+                if (value == floor(value))
+                    return 0;
+                else if (value == (int)value)
+                    return 5;
             }
-            else
-            {
-                return 0;
-            }
-        } while (val != 0);
-
-        return QByteArray(reinterpret_cast<char*>(buf), i);
+            return 1;
+        }
     }
-
     QByteArray compileKey(const QVariantList &keyField)
     {
         bool numOk, wireOk;
         int num = keyField[0].toInt(&numOk);
         int wireType = keyField[1].toInt(&wireOk);
-        return numOk && wireOk ? uleb128((num << 3) | wireType).toHex() : QByteArray("00");
+        return numOk && wireOk ? ProtobufUtil::uleb128((num << 3) | wireType).toHex() : QByteArray("00");
     }
 
     QByteArray compileLd(const QByteArray& in)
     {
         int ldLen = (in.length() + (in.length() % 2)) / 2;
-        return uleb128(ldLen).toHex() + in;
+        return ProtobufUtil::uleb128(ldLen).toHex() + in;
     }
 
     QByteArray compileKeyValuePair(const QString& key, const QVariant& val, const QVariantMap& fields)
@@ -59,7 +73,7 @@ namespace ProtobufCompiler
         switch (wireType)
         {
         case 0:
-            return keyHeader + uleb128(val.toInt()).toHex();
+            return keyHeader + ProtobufUtil::uleb128(val.toInt()).toHex();
         case 1: // may not work
             return keyHeader + (metaType == QMetaType::Double
                                     ? QByteArray::fromHex(QByteArray::number(val.toDouble()))
@@ -81,43 +95,6 @@ namespace ProtobufCompiler
         }
 
         return QByteArray();
-    }
-
-    int resolveWireType(int metaType, const QVariant& variant)
-    {
-        switch (metaType)
-        {
-        case QMetaType::QVariantMap:
-        case QMetaType::QString:
-        case QMetaType::QByteArray:
-            return 2;
-        case QMetaType::Bool:
-            return 0;
-        case QMetaType::Int:
-        case QMetaType::UInt:
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        case QMetaType::Char32:
-#endif
-        case QMetaType::Float:
-            return 5;
-        case QMetaType::Double:
-        case QMetaType::Long:
-        case QMetaType::LongLong:
-        case QMetaType::ULong:
-        case QMetaType::ULongLong:
-            return 1;
-        default:
-            bool ok;
-            double value = variant.toDouble(&ok);
-            if (ok)
-            {
-                if (value == floor(value))
-                    return 0;
-                else if (value == (int)value)
-                    return 5;
-            }
-            return 1;
-        }
     }
 
     QVariantMap compileFields(const QVariantMap& obj)
@@ -195,6 +172,12 @@ namespace ProtobufCompiler
 
     QByteArray padded(const QString& str)
     {
-        return QByteArray("\x0a" + uleb128(str.length()) + str.toLatin1() + "\x28" + uleb128(time(0))).toBase64().toPercentEncoding();
+        return QByteArray(
+            "\x0a" +
+            ProtobufUtil::uleb128(str.length()) +
+            str.toLatin1() +
+            "\x28" +
+            ProtobufUtil::uleb128(time(0)))
+            .toBase64().toPercentEncoding();
     }
 }

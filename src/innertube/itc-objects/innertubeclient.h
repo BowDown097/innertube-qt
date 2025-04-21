@@ -116,6 +116,7 @@ public:
 
     QJsonObject toJson() const;
 private:
+    QString generateVisitorData();
     static QString getVersionFromAppStore(const QString& bundleId);
     static QString getVersionFromGooglePlay(const QString& name);
     static QString getVersionFromPageBody(const QString& url);

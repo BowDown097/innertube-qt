@@ -1,8 +1,11 @@
 #include "innertubeclient.h"
 #include "http.h"
+#include "protobuf/protobufbuilder.h"
+#include "protobuf/protobufutil.h"
 #include <QEventLoop>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QRandomGenerator>
 
 InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVersion,
                                  bool useClientVersionAsFallback, const QString& platform,
@@ -31,20 +34,11 @@ InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVer
       screenPixelDensity(screenPixelDensity),
       timeZone(timeZone),
       userAgent(userAgent),
-      userInterfaceTheme(userInterfaceTheme)
+      userInterfaceTheme(userInterfaceTheme),
+      visitorData(generateVisitorData())
 {
     if (useClientVersionAsFallback)
         this->clientVersion = clientVersion;
-
-    const HttpReply* reply = Http::instance().get(QUrl("https://www.youtube.com/"));
-
-    QEventLoop loop;
-    QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    QString visitorBlock = reply->body().mid(reply->body().indexOf("visitorData") + 14);
-    visitorBlock = visitorBlock.left(visitorBlock.indexOf("%3D\"") + 3);
-    visitorData = visitorBlock;
 
     if (useClientVersionAsFallback || clientVersion.isEmpty())
     {
@@ -56,6 +50,22 @@ InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVer
         else
             qCritical() << "Failed to get latest version for client " << resolveClientName(clientType);
     }
+}
+
+// courtesy of https://github.com/kkdai/youtube/blob/master/client.go
+QString InnertubeClient::generateVisitorData()
+{
+    ProtobufBuilder pbe2 = ProtobufBuilder()
+        .string(2, "")
+        .varint(4, QRandomGenerator::global()->bounded(255) + 1);
+    ProtobufBuilder pbe = ProtobufBuilder()
+        .string(1, gl)
+        .bytes(2, pbe2.data());
+    ProtobufBuilder pb = ProtobufBuilder()
+        .string(1, ProtobufUtil::randomString(11))
+        .varint(5, time(0) - QRandomGenerator::global()->bounded(600000))
+        .bytes(6, pbe.data());
+    return pb.urlEncodedBase64();
 }
 
 QString InnertubeClient::getLatestVersion(ClientType clientType)
