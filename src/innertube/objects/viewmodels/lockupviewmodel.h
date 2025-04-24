@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/video/videoowner.h"
+#include "innertube/objects/channel/basicchannel.h"
 #include "lockupmetadataviewmodel.h"
 #include "thumbnailviewmodel.h"
 #include <optional>
@@ -27,6 +27,6 @@ namespace InnertubeObjects
         bool isLive() const;
         QTime length() const;
         QString lengthText() const;
-        std::optional<VideoOwner> owner() const;
+        std::optional<BasicChannel> owner() const;
     };
 }

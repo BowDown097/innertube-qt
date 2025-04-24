@@ -8,6 +8,6 @@ namespace InnertubeObjects
     {
         const QJsonArray thumbnailBadgesJson = thumbnailOverlayBadgeViewModel["thumbnailBadges"].toArray();
         for (const QJsonValue& thumbnailBadge : thumbnailBadgesJson)
-            thumbnailBadges.append(InnertubeObjects::ThumbnailBadgeViewModel(thumbnailBadge["thumbnailBadgeViewModel"]));
+            thumbnailBadges.append(ThumbnailBadgeViewModel(thumbnailBadge["thumbnailBadgeViewModel"]));
     }
 }

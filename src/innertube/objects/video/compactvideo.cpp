@@ -26,9 +26,9 @@ namespace InnertubeObjects
         return std::ranges::find(badges, "BADGE_STYLE_TYPE_LIVE_NOW", &MetadataBadge::style) != badges.end();
     }
 
-    VideoOwner CompactVideo::owner() const
+    BasicChannel CompactVideo::owner() const
     {
-        return VideoOwner {
+        return BasicChannel {
             .icon = channelThumbnail,
             .id = shortBylineText.runs[0].navigationEndpoint["browseEndpoint"]["browseId"].toString(),
             .name = shortBylineText.text

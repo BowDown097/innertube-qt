@@ -6,8 +6,8 @@ namespace InnertubeEndpoints
 {
     struct NextResponse
     {
+        InnertubeObjects::TwoColumnWatchNextResults contents;
         std::optional<NextContinuationData> continuationData;
-        InnertubeObjects::TwoColumnWatchNextResults results;
         QString videoId;
     };
 }

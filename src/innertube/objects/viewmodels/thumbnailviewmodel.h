@@ -6,13 +6,15 @@
 
 namespace InnertubeObjects
 {
+    using ThumbnailViewModelOverlay = std::variant<
+        ThumbnailBottomOverlayViewModel,
+        ThumbnailHoverOverlayToggleActionsViewModel,
+        ThumbnailOverlayBadgeViewModel>;
+
     struct ThumbnailViewModel
     {
         ResponsiveImage image;
-        QList<std::variant<
-            InnertubeObjects::ThumbnailBottomOverlayViewModel,
-            InnertubeObjects::ThumbnailHoverOverlayToggleActionsViewModel,
-            InnertubeObjects::ThumbnailOverlayBadgeViewModel>> overlays;
+        QList<ThumbnailViewModelOverlay> overlays;
 
         ThumbnailViewModel() = default;
         explicit ThumbnailViewModel(const QJsonValue& thumbnailViewModel);

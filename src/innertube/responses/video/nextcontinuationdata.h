@@ -9,7 +9,7 @@ namespace InnertubeEndpoints
     {
         std::optional<InnertubeObjects::CommentsHeader> commentsHeader;
         QList<InnertubeObjects::CommentThread> commentThreads;
-        std::optional<QString> continuationToken;
+        QString continuationToken;
         QList<InnertubeObjects::CompactVideo> feed;
 
         NextContinuationData() = default;

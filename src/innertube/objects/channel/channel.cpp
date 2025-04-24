@@ -9,8 +9,8 @@ namespace InnertubeObjects
           longBylineText(channelRenderer["longBylineText"]),
           navigationEndpoint(channelRenderer["navigationEndpoint"]),
           shortBylineText(channelRenderer["shortBylineText"]),
-          subscribed(channelRenderer["subscriptionButton"]["subscribed"].toBool()),
           subscriberCountText(channelRenderer["subscriberCountText"]),
+          subscriptionButton(channelRenderer["subscriptionButton"]),
           thumbnail(channelRenderer["thumbnail"]["thumbnails"]),
           title(channelRenderer["title"]),
           videoCountText(channelRenderer["videoCountText"])

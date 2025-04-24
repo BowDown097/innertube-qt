@@ -12,6 +12,6 @@ namespace InnertubeEndpoints
         PlayerResponse response;
 
         explicit Player(const QJsonValue& data);
-        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId);
+        static QJsonObject createBody(const InnertubeContext* context, const QString& videoId, const QString& poToken = {});
     };
 }

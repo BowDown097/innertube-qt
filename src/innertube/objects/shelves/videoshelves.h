@@ -6,7 +6,7 @@
 
 namespace InnertubeObjects
 {
-    using HorizontalVideoShelf = InnertubeObjects::Shelf<InnertubeObjects::HorizontalList<InnertubeObjects::Video>>;
-    using StandardVideoShelf = InnertubeObjects::Shelf<QList<InnertubeObjects::Video>>;
-    using VerticalVideoShelf = InnertubeObjects::Shelf<InnertubeObjects::VerticalList<InnertubeObjects::Video>>;
+    using HorizontalVideoShelf = Shelf<HorizontalList<Video>>;
+    using StandardVideoShelf = Shelf<QList<Video>>;
+    using VerticalVideoShelf = Shelf<VerticalList<Video>>;
 }

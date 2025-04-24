@@ -29,7 +29,7 @@ namespace InnertubeEndpoints
             response.captions.append(InnertubeObjects::CaptionTrack(v));
     }
 
-    QJsonObject Player::createBody(const InnertubeContext* context, const QString& videoId)
+    QJsonObject Player::createBody(const InnertubeContext* context, const QString& videoId, const QString& poToken)
     {
         QJsonObject body = {
             { "contentCheckOk", true },
@@ -38,6 +38,9 @@ namespace InnertubeEndpoints
             { "racyCheckOk", true },
             { "videoId", videoId }
         };
+
+        if (!poToken.isEmpty())
+            body.insert("serviceIntegrityDimensions", { { "poToken", poToken } });
 
         // streaming urls return 403 on ANDROID client without a "params" argument
         // so we work around this by using a random but authentic value for the argument

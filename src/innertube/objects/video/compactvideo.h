@@ -1,8 +1,8 @@
 #pragma once
 #include "basevideo.h"
+#include "innertube/objects/channel/basicchannel.h"
 #include "innertube/objects/channel/metadatabadge.h"
 #include "innertube/objects/images/movingthumbnail.h"
-#include "videoowner.h"
 
 namespace InnertubeObjects
 {
@@ -21,6 +21,6 @@ namespace InnertubeObjects
         explicit CompactVideo(const QJsonValue& compactVideoRenderer);
 
         bool isLive() const;
-        VideoOwner owner() const;
+        BasicChannel owner() const;
     };
 }

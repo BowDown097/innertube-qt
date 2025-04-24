@@ -8,8 +8,9 @@ namespace InnertubeObjects
     {
         InnertubeString dateText;
         InnertubeString relativeDateText;
-        std::optional<InnertubeString> superTitleLink;
+        InnertubeString superTitleLink;
         InnertubeString title;
+        QJsonValue updatedMetadataEndpoint;
         VideoActions videoActions;
         ViewCount viewCount;
 
@@ -17,9 +18,7 @@ namespace InnertubeObjects
         explicit VideoPrimaryInfo(const QJsonValue& primaryInfoRenderer)
             : dateText(primaryInfoRenderer["dateText"]),
               relativeDateText(primaryInfoRenderer["relativeDateText"]),
-              superTitleLink(primaryInfoRenderer["superTitleLink"].isObject()
-                  ? std::make_optional<InnertubeString>(primaryInfoRenderer["superTitleLink"])
-                  : std::nullopt),
+              superTitleLink(primaryInfoRenderer["superTitleLink"]),
               title(primaryInfoRenderer["title"]),
               videoActions(primaryInfoRenderer["videoActions"]["menuRenderer"]),
               viewCount(primaryInfoRenderer["viewCount"]["videoViewCountRenderer"]) {}

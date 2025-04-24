@@ -46,6 +46,6 @@ namespace InnertubeObjects
               unsubscribeButtonContent(subscribeButtonViewModel["unsubscribeButtonContent"]),
               unsubscribedStateStyle(subscribeButtonViewModel["buttonStyle"]["unsubscribedStateStyle"].toString()) {}
 
-        bool isSubscribed(const QList<InnertubeObjects::EntityMutation>& mutations) const;
+        bool isSubscribed(const QList<EntityMutation>& mutations) const;
     };
 }

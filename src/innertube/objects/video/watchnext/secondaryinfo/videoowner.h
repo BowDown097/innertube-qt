@@ -1,20 +1,23 @@
 #pragma once
 #include "innertube/objects/channel/metadatabadge.h"
+#include "innertube/objects/channel/subscriptionbutton.h"
 #include "innertube/objects/images/responsiveimage.h"
+#include "innertube/objects/items/button.h"
 #include "innertube/objects/innertubestring.h"
 
 namespace InnertubeObjects
 {
-    struct SecondaryInfoOwner
+    struct VideoOwner
     {
         QList<MetadataBadge> badges;
+        std::optional<Button> membershipButton;
         QJsonValue navigationEndpoint;
         InnertubeString subscriberCountText;
-        QString subscriptionType;
+        SubscriptionButton subscriptionButton;
         ResponsiveImage thumbnail;
         InnertubeString title;
 
-        SecondaryInfoOwner() = default;
-        explicit SecondaryInfoOwner(const QJsonValue& videoOwnerRenderer);
+        VideoOwner() = default;
+        explicit VideoOwner(const QJsonValue& videoOwnerRenderer);
     };
 }

@@ -4,7 +4,7 @@ namespace InnertubeObjects
 {
     bool LockupViewModel::isLive() const
     {
-        return std::ranges::any_of(contentImage.overlays, [](const auto& overlay) {
+        return std::ranges::any_of(contentImage.overlays, [](const ThumbnailViewModelOverlay& overlay) {
             if (const ThumbnailOverlayBadgeViewModel* badgeOverlay = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay))
             {
                 return std::ranges::any_of(badgeOverlay->thumbnailBadges, [](const ThumbnailBadgeViewModel& badge) {
@@ -31,7 +31,7 @@ namespace InnertubeObjects
 
     QString LockupViewModel::lengthText() const
     {
-        for (const auto& overlay : contentImage.overlays)
+        for (const ThumbnailViewModelOverlay& overlay : contentImage.overlays)
         {
             if (const auto* badge = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay); badge && !badge->thumbnailBadges.empty())
                 return badge->thumbnailBadges.constFirst().text;
@@ -42,13 +42,13 @@ namespace InnertubeObjects
         return QString();
     }
 
-    std::optional<VideoOwner> LockupViewModel::owner() const
+    std::optional<BasicChannel> LockupViewModel::owner() const
     {
         const QList<QList<DynamicText>>& metadataRows = metadata.metadata.metadataRows;
         if (metadataRows.empty() || metadataRows[0].empty())
             return std::nullopt;
 
-        return VideoOwner {
+        return BasicChannel {
             .icon = metadata.image.avatar.image,
             .id = metadataRows[0][0].commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
             .name = metadataRows[0][0].content

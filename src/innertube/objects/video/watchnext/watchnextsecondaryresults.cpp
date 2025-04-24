@@ -9,32 +9,36 @@ namespace InnertubeObjects
         const QJsonArray resultsArr = results.toArray();
         for (const QJsonValue& result : resultsArr)
         {
-            if (result["compactVideoRenderer"].isObject())
+            if (const QJsonValue itemSectionRenderer = result["itemSectionRenderer"];
+                itemSectionRenderer.isObject())
             {
-                feed.append(CompactVideo(result["compactVideoRenderer"]));
-            }
-            else if (result["continuationItemRenderer"].isObject())
-            {
-                feedContinuation = result["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
-            }
-            else if (result["itemSectionRenderer"].isObject())
-            {
-                QString sectionIdentifier = result["itemSectionRenderer"]["sectionIdentifier"].toString();
-                if (sectionIdentifier == "sid-wn-chips")
+                if (itemSectionRenderer["sectionIdentifier"].toString() == "sid-wn-chips")
                 {
-                    const QJsonArray feedContents = result["itemSectionRenderer"]["contents"].toArray();
+                    const QJsonArray feedContents = itemSectionRenderer["contents"].toArray();
                     for (const QJsonValue& feedEntry : feedContents)
                     {
-                        if (feedEntry["compactVideoRenderer"].isObject())
-                            feed.append(CompactVideo(feedEntry["compactVideoRenderer"]));
-                        else if (feedEntry["continuationItemRenderer"].isObject())
-                            feedContinuation = feedEntry["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                        if (const QJsonValue compactVideoRenderer = feedEntry["compactVideoRenderer"];
+                            compactVideoRenderer.isObject())
+                        {
+                            feed.append(CompactVideo(compactVideoRenderer));
+                        }
+                        else if (const QJsonValue adSlotRenderer = feedEntry["adSlotRenderer"];
+                                 adSlotRenderer.isObject())
+                        {
+                            feed.append(AdSlot(adSlotRenderer));
+                        }
+                        else if (const QJsonValue continuationItemRenderer = feedEntry["continuationItemRenderer"];
+                                 continuationItemRenderer.isObject())
+                        {
+                            feedContinuation = continuationItemRenderer["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                        }
                     }
                 }
             }
-            else if (result["relatedChipCloudRenderer"].isObject())
+            else if (const QJsonValue relatedChipCloudRenderer = result["relatedChipCloudRenderer"];
+                     relatedChipCloudRenderer.isObject())
             {
-                relatedChipCloud.emplace(result["relatedChipCloudRenderer"]);
+                relatedChipCloud.emplace(relatedChipCloudRenderer);
             }
         }
     }

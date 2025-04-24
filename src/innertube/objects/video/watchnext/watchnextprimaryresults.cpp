@@ -8,23 +8,40 @@ namespace InnertubeObjects
         const QJsonArray contentsArr = contents.toArray();
         for (const QJsonValue& result : contentsArr)
         {
-            if (result["itemSectionRenderer"].isObject())
+            if (const QJsonValue itemSectionRenderer = result["itemSectionRenderer"];
+                itemSectionRenderer.isObject())
             {
-                QJsonValue sectionItem = result["itemSectionRenderer"]["contents"][0];
-                if (sectionItem["clarificationRenderer"].isObject())
-                    clarification.emplace(sectionItem["clarificationRenderer"]);
-                else if (sectionItem["commentsEntryPointHeaderRenderer"].isObject())
-                    commentsEntryPointHeader.emplace(sectionItem["commentsEntryPointHeaderRenderer"]);
-                else if (sectionItem["continuationItemRenderer"].isObject())
-                    commentsSectionContinuation = sectionItem["continuationItemRenderer"]["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                const QJsonValue sectionItem = itemSectionRenderer["contents"][0];
+                if (const QJsonValue clarificationRenderer = sectionItem["clarificationRenderer"];
+                    clarificationRenderer.isObject())
+                {
+                    clarification.emplace(clarificationRenderer);
+                }
+                else if (const QJsonValue commentsEntryPointHeaderRenderer = sectionItem["commentsEntryPointHeaderRenderer"];
+                         commentsEntryPointHeaderRenderer.isObject())
+                {
+                    commentsEntryPointHeader.emplace(commentsEntryPointHeaderRenderer);
+                }
+                else if (const QJsonValue continuationItemRenderer = sectionItem["continuationItemRenderer"];
+                         continuationItemRenderer.isObject())
+                {
+                    commentsSectionContinuation = continuationItemRenderer["continuationEndpoint"]["continuationCommand"]["token"].toString();
+                }
+                else if (const QJsonValue videoMetadataCarouselViewModel = sectionItem["videoMetadataCarouselViewModel"];
+                         videoMetadataCarouselViewModel.isObject())
+                {
+                    videoMetadataCarousel.emplace(videoMetadataCarouselViewModel);
+                }
             }
-            else if (result["videoPrimaryInfoRenderer"].isObject())
+            else if (const QJsonValue videoPrimaryInfoRenderer = result["videoPrimaryInfoRenderer"];
+                     videoPrimaryInfoRenderer.isObject())
             {
-                primaryInfo = InnertubeObjects::VideoPrimaryInfo(result["videoPrimaryInfoRenderer"]);
+                primaryInfo = VideoPrimaryInfo(videoPrimaryInfoRenderer);
             }
-            else if (result["videoSecondaryInfoRenderer"].isObject())
+            else if (const QJsonValue videoSecondaryInfoRenderer = result["videoSecondaryInfoRenderer"];
+                     videoSecondaryInfoRenderer.isObject())
             {
-                secondaryInfo = InnertubeObjects::VideoSecondaryInfo(result["videoSecondaryInfoRenderer"]);
+                secondaryInfo = VideoSecondaryInfo(videoSecondaryInfoRenderer);
             }
         }
     }

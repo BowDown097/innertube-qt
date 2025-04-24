@@ -12,7 +12,7 @@ namespace InnertubeEndpoints
             if (!watchNextResults.isObject())
                 throw InnertubeException("[Next] twoColumnWatchNextResults is not an object");
 
-            response.results = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
+            response.contents = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
             response.videoId = data["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
         }
         else if (const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
@@ -38,7 +38,7 @@ namespace InnertubeEndpoints
         }
 
         return {
-            { "autonavState", "STATE_ON" },
+            { "autonavState", "STATE_NONE" },
             { "captionsRequested", false },
             { "contentCheckOk", false },
             { "context", context->toJson() },

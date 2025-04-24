@@ -3,7 +3,7 @@
 
 namespace InnertubeObjects
 {
-    struct VideoOwner
+    struct BasicChannel
     {
         ResponsiveImage icon;
         QString id;

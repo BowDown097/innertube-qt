@@ -10,6 +10,6 @@ namespace InnertubeObjects
     {
         const QJsonArray chipsJson = chipCloudRenderer["chips"].toArray();
         for (const QJsonValue& v : chipsJson)
-            chips.append(InnertubeObjects::ChipCloudChip(v["chipCloudChipRenderer"]));
+            chips.append(ChipCloudChip(v["chipCloudChipRenderer"]));
     }
 }

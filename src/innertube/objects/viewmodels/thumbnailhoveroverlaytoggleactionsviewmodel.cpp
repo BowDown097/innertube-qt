@@ -8,6 +8,6 @@ namespace InnertubeObjects
     {
         const QJsonArray buttonsJson = thumbnailHoverOverlayToggleActionsViewModel["buttons"].toArray();
         for (const QJsonValue& button : buttonsJson)
-            buttons.append(InnertubeObjects::ToggleButtonViewModel(button["toggleButtonViewModel"]));
+            buttons.append(ToggleButtonViewModel(button["toggleButtonViewModel"]));
     }
 }

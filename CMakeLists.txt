@@ -70,7 +70,6 @@ target_sources(innertube-qt
         src/innertube/objects/items/emoji/picker/emojipicker.cpp
         src/innertube/objects/items/emoji/picker/emojipickercategory.cpp
         src/innertube/objects/items/menu/menu.cpp
-        src/innertube/objects/live_chat/livechat.cpp
         src/innertube/objects/notification/notification.cpp
         src/innertube/objects/player/playervideodetails.cpp
         src/innertube/objects/player/streamingdata.cpp
@@ -79,6 +78,9 @@ target_sources(innertube-qt
         src/innertube/objects/video/compactvideo.cpp
         src/innertube/objects/video/upcomingeventdata.cpp
         src/innertube/objects/video/video.cpp
+        src/innertube/objects/video/watchnext/autoplaydata.cpp
+        src/innertube/objects/video/watchnext/livechat.cpp
+        src/innertube/objects/video/watchnext/twocolumnwatchnextresults.cpp
         src/innertube/objects/video/watchnext/watchnextprimaryresults.cpp
         src/innertube/objects/video/watchnext/watchnextsecondaryresults.cpp
         src/innertube/objects/video/watchnext/comments/commentreplies.cpp
@@ -86,7 +88,9 @@ target_sources(innertube-qt
         src/innertube/objects/video/watchnext/primaryinfo/videoactions.cpp
         src/innertube/objects/video/watchnext/secondaryinfo/metadatarow.cpp
         src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.cpp
-        src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.cpp
+        src/innertube/objects/video/watchnext/secondaryinfo/videoowner.cpp
+        src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.cpp
+        src/innertube/objects/viewmodels/carouselitemviewmodel.cpp
         src/innertube/objects/viewmodels/contentmetadataviewmodel.cpp
         src/innertube/objects/viewmodels/lockupviewmodel.cpp
         src/innertube/objects/viewmodels/subscribebuttonviewmodel.cpp
@@ -94,6 +98,7 @@ target_sources(innertube-qt
         src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailoverlaybadgeviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailviewmodel.cpp
+        src/innertube/objects/viewmodels/videometadatacarouselviewmodel.cpp
         src/innertube/responses/video/nextcontinuationdata.cpp
         src/protobuf/protobufbuilder.cpp
         src/protobuf/protobufcompiler.cpp
@@ -160,6 +165,7 @@ target_sources(innertube-qt
             src/innertube/objects/backstage/quiz/quiz.h
             src/innertube/objects/backstage/quiz/quizchoice.h
             src/innertube/objects/channel/aboutfullmetadata.h
+            src/innertube/objects/channel/basicchannel.h
             src/innertube/objects/channel/channel.h
             src/innertube/objects/channel/channelc4header.h
             src/innertube/objects/channel/channelheaderlink.h
@@ -170,6 +176,7 @@ target_sources(innertube-qt
             src/innertube/objects/channel/notificationpreferencebutton.h
             src/innertube/objects/channel/notificationstate.h
             src/innertube/objects/channel/subscribebutton.h
+            src/innertube/objects/channel/subscriptionbutton.h
             src/innertube/objects/images/genericthumbnail.h
             src/innertube/objects/images/imagewithaccessibility.h
             src/innertube/objects/images/imagewithcolorpalette.h
@@ -190,7 +197,6 @@ target_sources(innertube-qt
             src/innertube/objects/items/menu/menu.h
             src/innertube/objects/items/menu/menuflexibleitem.h
             src/innertube/objects/items/menu/menuserviceitem.h
-            src/innertube/objects/live_chat/livechat.h
             src/innertube/objects/notification/notification.h
             src/innertube/objects/player/captiontrack.h
             src/innertube/objects/player/playbacktracking.h
@@ -216,7 +222,9 @@ target_sources(innertube-qt
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlayresumeplayback.h
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlaytimestatus.h
             src/innertube/objects/video/thumbnail_overlays/thumbnailoverlaytogglebutton.h
+            src/innertube/objects/video/watchnext/autoplaydata.h
             src/innertube/objects/video/watchnext/clarification.h
+            src/innertube/objects/video/watchnext/livechat.h
             src/innertube/objects/video/watchnext/relatedchipcloud.h
             src/innertube/objects/video/watchnext/twocolumnwatchnextresults.h
             src/innertube/objects/video/watchnext/watchnextprimaryresults.h
@@ -241,10 +249,12 @@ target_sources(innertube-qt
             src/innertube/objects/video/watchnext/primaryinfo/likedislike/likedislikeviewmodel.h
             src/innertube/objects/video/watchnext/secondaryinfo/metadatarow.h
             src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.h
-            src/innertube/objects/video/watchnext/secondaryinfo/secondaryinfoowner.h
+            src/innertube/objects/video/watchnext/secondaryinfo/videoowner.h
             src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.h
             src/innertube/objects/viewmodels/avatarviewmodel.h
             src/innertube/objects/viewmodels/buttonviewmodel.h
+            src/innertube/objects/viewmodels/carouselitemviewmodel.h
+            src/innertube/objects/viewmodels/carouseltitleviewmodel.h
             src/innertube/objects/viewmodels/contentmetadataviewmodel.h
             src/innertube/objects/viewmodels/decoratedavatarviewmodel.h
             src/innertube/objects/viewmodels/dynamictextviewmodel.h
@@ -256,6 +266,7 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/shortslockupviewmodel.h
             src/innertube/objects/viewmodels/subscribebuttoncontent.h
             src/innertube/objects/viewmodels/subscribebuttonviewmodel.h
+            src/innertube/objects/viewmodels/textcarouselitemviewmodel.h
             src/innertube/objects/viewmodels/thumbnailbadgeviewmodel.h
             src/innertube/objects/viewmodels/thumbnailbottomoverlayviewmodel.h
             src/innertube/objects/viewmodels/thumbnailhoveroverlaytoggleactionsviewmodel.h
@@ -263,6 +274,7 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/thumbnailoverlayprogressbarviewmodel.h
             src/innertube/objects/viewmodels/thumbnailviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h
+            src/innertube/objects/viewmodels/videometadatacarouselviewmodel.h
             src/innertube/responses/browse/channelresponse.h
             src/innertube/responses/browse/historyresponse.h
             src/innertube/responses/browse/homeresponse.h

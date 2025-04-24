@@ -2,6 +2,7 @@
 #include "innertube/objects/images/responsiveimage.h"
 #include "metadatabadge.h"
 #include "subscribebutton.h"
+#include "subscriptionbutton.h"
 
 namespace InnertubeObjects
 {
@@ -14,7 +15,7 @@ namespace InnertubeObjects
         QList<MetadataBadge> ownerBadges;
         InnertubeString shortBylineText;
         std::variant<SubscribeButton, Button> subscribeButton; // will be plain Button if logged out
-        bool subscribed{};
+        SubscriptionButton subscriptionButton; // yes, subscribeButton and subscriptionButton are 2 different things
         InnertubeString subscriberCountText;
         ResponsiveImage thumbnail;
         InnertubeString title;
