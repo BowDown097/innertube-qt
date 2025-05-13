@@ -4,7 +4,6 @@
 #include "innertube/itc-objects/innertubeauthstore.h"
 #include <QEventLoop>
 #include <QFutureWatcher>
-#include <mutex>
 #include <nonstd/expected.hpp>
 
 /**
@@ -18,9 +17,9 @@
 class InnerTube : public QObject
 {
 public:
-    static InnerTube* instance();
     InnerTube(QObject* parent = nullptr)
         : m_authStore(new InnertubeAuthStore(this)), QObject(parent) {}
+    static InnerTube* instance() { static InnerTube _instance; return &_instance; }
 
     InnertubeAuthStore* authStore() const { return m_authStore; }
     InnertubeContext* context() const { return m_context; }
@@ -224,9 +223,6 @@ public:
     void subscribeBlocking(const QJsonValue& endpoint, bool subscribing);
     void subscribeBlocking(const QStringList& channelIds, bool subscribing);
 private:
-    static inline InnerTube* m_instance;
-    static inline std::once_flag m_onceFlag;
-
     InnertubeAuthStore* m_authStore;
     InnertubeContext* m_context{};
 

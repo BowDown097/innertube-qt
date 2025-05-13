@@ -1,12 +1,6 @@
 #include "innertube.h"
 #include "jsonutil.h"
 
-InnerTube* InnerTube::instance()
-{
-    std::call_once(m_onceFlag, [] { m_instance = new InnerTube; });
-    return m_instance;
-}
-
 void InnerTube::addContext(QJsonObject& body, const QString& browseId)
 {
     // merge unique properties from context, so that properties can be overriden by the user
