@@ -1,6 +1,7 @@
 #include "responsiveimage.h"
+#include <QApplication>
 #include <QJsonArray>
-#include <QSize>
+#include <QScreen>
 
 namespace InnertubeObjects
 {
@@ -23,11 +24,18 @@ namespace InnertubeObjects
 
     const GenericThumbnail* ResponsiveImage::recommendedQuality(const QSize& target) const
     {
-        auto absWidth = [target](const GenericThumbnail& a) { return std::abs(a.width - target.width()); };
-        auto it = std::ranges::min_element(*this, std::less(), absWidth);
-        if (it != end())
-            return &(*it);
-        else
+        if (isEmpty())
             return nullptr;
+
+        qreal targetWidth = target.width();
+        if (QScreen* screen = qApp->primaryScreen())
+            if (qreal dpr = screen->devicePixelRatio(); dpr > 1)
+                targetWidth *= dpr;
+
+        if (auto it = std::find_if(begin(), end(), [=](const GenericThumbnail& t) { return t.width >= targetWidth; }); it != end())
+            return &(*it);
+        if (auto rit = std::find_if(rbegin(), rend(), [=](const GenericThumbnail& t) { return t.width > 0; }); rit != rend())
+            return &(*rit);
+        return &front();
     }
 }
