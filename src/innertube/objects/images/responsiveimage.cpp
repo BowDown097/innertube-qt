@@ -24,7 +24,7 @@ namespace InnertubeObjects
     const GenericThumbnail* ResponsiveImage::recommendedQuality(const QSize& target) const
     {
         auto absWidth = [target](const GenericThumbnail& a) { return std::abs(a.width - target.width()); };
-        auto it = std::ranges::max_element(*this, std::less(), absWidth);
+        auto it = std::ranges::min_element(*this, std::less(), absWidth);
         if (it != end())
             return &(*it);
         else
