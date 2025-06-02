@@ -21,8 +21,10 @@ find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidget
 
 target_sources(innertube-qt
     PRIVATE
+        src/httprequest.cpp
         src/innertube.cpp
         src/jsonutil.cpp
+        src/localcache.cpp
         src/innertube/endpoints/base/basebrowseendpoint.cpp
         src/innertube/endpoints/base/baseendpoint.cpp
         src/innertube/endpoints/browse/browsechannel.cpp
@@ -105,8 +107,10 @@ target_sources(innertube-qt
         src/protobuf/protobufutil.cpp
     PUBLIC
         FILE_SET HEADERS FILES
+            src/httprequest.h
             src/innertube.h
             src/jsonutil.h
+            src/localcache.h
             src/innertube/innertubeexception.h
             src/innertube/innertubereply.h
             src/innertube/endpoints/innertubeendpoints.h
@@ -313,9 +317,8 @@ if(NOT expected-lite_FOUND)
 endif()
 
 # Include directories, libraries
-add_subdirectory(lib/http)
-target_include_directories(innertube-qt PUBLIC src lib/http/src lib/verdigris/src)
-target_link_libraries(innertube-qt PUBLIC http nonstd::expected-lite Qt::Core Qt::Gui Qt::Network)
+target_include_directories(innertube-qt PUBLIC src lib/verdigris/src)
+target_link_libraries(innertube-qt PUBLIC nonstd::expected-lite Qt::Core Qt::Gui Qt::Network)
 
 ## Optional
 if(NOT INNERTUBE_NO_WEBENGINE)

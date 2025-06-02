@@ -1,5 +1,5 @@
 #include "innertubeclient.h"
-#include "http.h"
+#include "httprequest.h"
 #include "protobuf/protobufbuilder.h"
 #include "protobuf/protobufutil.h"
 #include <QEventLoop>
@@ -187,32 +187,32 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
 
 QString InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 {
-    const HttpReply* reply = Http::instance().get(QUrl("https://itunes.apple.com/lookup?id=" + bundleId));
+    const HttpReply* reply = HttpRequest().get("https://itunes.apple.com/lookup?id=" + bundleId);
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
-    QJsonValue appResult = QJsonDocument::fromJson(reply->body())["results"][0];
+    QJsonValue appResult = QJsonDocument::fromJson(reply->readAll())["results"][0];
     return appResult["version"].toString();
 }
 
 QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
 {
-    const HttpReply* reply = Http::instance().get(QUrl(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name)));
+    const HttpReply* reply = HttpRequest().get(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name));
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
 
     static QRegularExpression softwareVersionRegex("softwareVersion\":\"([0-9\\.]+?)\"");
-    return softwareVersionRegex.match(reply->body()).captured(1);
+    return softwareVersionRegex.match(reply->readAll()).captured(1);
 }
 
 // mostly courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
 QString InnertubeClient::getVersionFromPageBody(const QString& url)
 {
-    const HttpReply* reply = Http::instance().get(QUrl(url));
+    const HttpReply* reply = HttpRequest().get(url);
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
@@ -220,7 +220,7 @@ QString InnertubeClient::getVersionFromPageBody(const QString& url)
 
     static QRegularExpression clientVersionRegex(
         "(INNERTUBE_CONTEXT_CLIENT_VERSION|innertubeContextClientVersion)\":\"([0-9\\.]+?)\"");
-    return clientVersionRegex.match(reply->body()).captured(2);
+    return clientVersionRegex.match(reply->readAll()).captured(2);
 }
 
 QString InnertubeClient::resolveClientName(ClientType clientType)

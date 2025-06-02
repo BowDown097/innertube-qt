@@ -9,7 +9,6 @@ class LocalCache
 {
 public:
     static LocalCache* instance(const char* name);
-    ~LocalCache();
     static QByteArray hash(const QByteArray& s);
 
     const QByteArray& getName() const { return name; }
@@ -27,10 +26,6 @@ private:
     void expire();
     bool isCached(const QString& path);
 
-#ifdef HTTP_DEBUG
-    void debugStats();
-#endif
-
     QString directory;
     uint insertCount{};
     uint maxSeconds = 86400 * 30;
@@ -38,9 +33,4 @@ private:
     QMutex mutex;
     QByteArray name;
     qint64 size{};
-
-#ifdef HTTP_DEBUG
-    uint hits;
-    uint misses;
-#endif
 };
