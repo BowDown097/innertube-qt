@@ -1,10 +1,8 @@
 #pragma once
-#include <QMap>
-#include <QObject>
+#include <QNetworkRequest>
 
 class QNetworkAccessManager;
 class QNetworkReply;
-class QNetworkRequest;
 
 class HttpReply : public QObject
 {
@@ -30,12 +28,12 @@ public:
     QByteArray readAll() const;
     int statusCode() const;
 
-    QByteArray requestHeader(const QByteArray& key) const { return m_requestHeaders.value(key); }
-    const QMap<QByteArray, QByteArray>& requestHeaders() const { return m_requestHeaders; }
+    QByteArray requestHeader(const QByteArray& headerName) const;
+    const QList<std::pair<QByteArray, QByteArray>>& requestHeaders() const { return m_requestHeaders; }
 private:
-    QMap<QByteArray, QByteArray> m_requestHeaders;
+    QList<std::pair<QByteArray, QByteArray>> m_requestHeaders;
 
-    explicit HttpReply(QMap<QByteArray, QByteArray>&& requestHeaders)
+    explicit HttpReply(QList<std::pair<QByteArray, QByteArray>>&& requestHeaders)
         : m_requestHeaders(std::move(requestHeaders)) {}
 signals:
     void finished(const HttpReply& request);
@@ -44,9 +42,14 @@ signals:
 class HttpRequest
 {
 public:
-    HttpRequest& withDiskCache(bool usingDiskCache = true) { m_usingDiskCache = usingDiskCache; return *this; }
-    HttpRequest& withHeader(const QByteArray& name, const QByteArray& value) { m_headers.insert(name, value); return *this; }
-    HttpRequest& withHeaders(const QMap<QByteArray, QByteArray>& headers) { m_headers = headers; return *this; }
+    HttpRequest& withAttribute(QNetworkRequest::Attribute code, const QVariant& value)
+    { m_attributes.emplaceBack(code, value); return *this; }
+    HttpRequest& withDiskCache(bool usingDiskCache = true)
+    { m_usingDiskCache = usingDiskCache; return *this; }
+    HttpRequest& withHeader(const QByteArray& name, const QByteArray& value)
+    { m_headers.emplaceBack(name, value); return *this; }
+    HttpRequest& withHeaders(const QList<std::pair<QByteArray, QByteArray>>& headers)
+    { m_headers = headers; return *this; }
 
     HttpReply* request(const QUrl& url, HttpReply::Operation operation, const QByteArray& data = {});
 
@@ -56,7 +59,8 @@ public:
     HttpReply* post(const QUrl& url, const QByteArray& data) { return request(url, HttpReply::PostOperation, data); }
     HttpReply* put(const QUrl& url, const QByteArray& data) { return request(url, HttpReply::PutOperation, data); }
 private:
-    QMap<QByteArray, QByteArray> m_headers;
+    QList<std::pair<QNetworkRequest::Attribute, QVariant>> m_attributes;
+    QList<std::pair<QByteArray, QByteArray>> m_headers;
     bool m_usingDiskCache{};
 
     QNetworkReply* networkReply(

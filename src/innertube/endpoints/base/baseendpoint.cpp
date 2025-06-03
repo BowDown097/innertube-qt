@@ -1,21 +1,7 @@
 #include "baseendpoint.h"
+#include "httprequest.h"
 #include "innertube/itc-objects/innertubeauthstore.h"
-#include <QEventLoop>
 #include <QJsonDocument>
-#include <QNetworkReply>
-
-namespace
-{
-    QNetworkAccessManager* networkAccessManager()
-    {
-        static thread_local QNetworkAccessManager* nam = [] {
-            QNetworkAccessManager* nam = new QNetworkAccessManager;
-            nam->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
-            return nam;
-        }();
-        return nam;
-    }
-}
 
 namespace InnertubeEndpoints
 {
@@ -28,17 +14,38 @@ namespace InnertubeEndpoints
             QFutureInterface<QJsonValue> futureInterface;
             futureInterface.reportStarted();
 
-            QNetworkReply* rep = networkAccessManager()->post(
-                prepareRequest(path, context, authStore),
-                QJsonDocument(body).toJson(QJsonDocument::Compact));
+            HttpReply* reply = HttpRequest()
+                .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
+                .withHeaders(getNeededHeaders(context, authStore))
+                .post(path, QJsonDocument(body).toJson(QJsonDocument::Compact));
 
-            QObject::connect(rep, &QNetworkReply::finished, [futureInterface, rep]() mutable {
-                rep->deleteLater();
-                futureInterface.reportResult(QJsonDocument::fromJson(rep->readAll()).object());
+            QObject::connect(reply, &HttpReply::finished, reply, [futureInterface](const HttpReply& reply) mutable {
+                futureInterface.reportResult(QJsonDocument::fromJson(reply.readAll()).object());
                 futureInterface.reportFinished();
             });
 
             return futureInterface.future();
+        }
+
+        QList<std::pair<QByteArray, QByteArray>> getNeededHeaders(
+            const InnertubeContext* context, const InnertubeAuthStore* authStore)
+        {
+            QList<std::pair<QByteArray, QByteArray>> headers;
+
+            if (authStore->populated())
+            {
+                headers.emplaceBack("Authorization", authStore->generateSAPISIDHash().toUtf8());
+                headers.emplaceBack("Cookie", authStore->toCookieString().toUtf8());
+                headers.emplaceBack("X-Goog-AuthUser", "0");
+            }
+
+            headers.emplaceBack("Content-Type", "application/json");
+            headers.emplaceBack("X-Goog-Visitor-Id", context->client.visitorData.toLatin1());
+            headers.emplaceBack("X-YOUTUBE-CLIENT-NAME", QByteArray::number(static_cast<int>(context->client.clientType)));
+            headers.emplaceBack("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
+            headers.emplaceBack("X-ORIGIN", "https://www.youtube.com");
+
+            return headers;
         }
 
         QFuture<void> getPlain(
@@ -48,38 +55,16 @@ namespace InnertubeEndpoints
             QFutureInterface<void> futureInterface;
             futureInterface.reportStarted();
 
-            QNetworkReply* rep = networkAccessManager()->post(
-                prepareRequest(path, context, authStore),
-                QJsonDocument(body).toJson(QJsonDocument::Compact));
+            HttpReply* reply = HttpRequest()
+                .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
+                .withHeaders(getNeededHeaders(context, authStore))
+                .post(path, QJsonDocument(body).toJson(QJsonDocument::Compact));
 
-            QObject::connect(rep, &QNetworkReply::finished, [futureInterface, rep]() mutable {
-                rep->deleteLater();
+            QObject::connect(reply, &HttpReply::finished, reply, [futureInterface]() mutable {
                 futureInterface.reportFinished();
             });
 
             return futureInterface.future();
-        }
-
-        QNetworkRequest prepareRequest(
-            const QString& path, const InnertubeContext* context, const InnertubeAuthStore* authStore)
-        {
-            QNetworkRequest req(path);
-            req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
-
-            if (authStore->populated())
-            {
-                req.setRawHeader("Authorization", authStore->generateSAPISIDHash().toUtf8());
-                req.setRawHeader("Cookie", authStore->toCookieString().toUtf8());
-                req.setRawHeader("X-Goog-AuthUser", "0");
-            }
-
-            req.setRawHeader("Content-Type", "application/json");
-            req.setRawHeader("X-Goog-Visitor-Id", context->client.visitorData.toUtf8());
-            req.setRawHeader("X-YOUTUBE-CLIENT-NAME", QByteArray::number(static_cast<int>(context->client.clientType)));
-            req.setRawHeader("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
-            req.setRawHeader("X-ORIGIN", "https://www.youtube.com");
-
-            return req;
         }
     }
 }

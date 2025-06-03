@@ -25,22 +25,6 @@ bool HttpReply::isSuccessful() const
     return status >= 200 && status < 300;
 }
 
-QByteArray HttpReply::readAll() const
-{
-    if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))
-        return reply->readAll();
-    else
-        throw std::runtime_error("Attempting to access reply when request has not been made");
-}
-
-int HttpReply::statusCode() const
-{
-    if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))
-        return reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    else
-        throw std::runtime_error("Attempting to access reply when request has not been made");
-}
-
 QNetworkAccessManager* HttpReply::networkAccessManager()
 {
     static thread_local QNetworkAccessManager* nam = [] {
@@ -57,6 +41,40 @@ QNetworkAccessManager* HttpReply::networkAccessManager()
     }();
 
     return nam;
+}
+
+QByteArray HttpReply::readAll() const
+{
+    if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))
+        return reply->readAll();
+    else
+        throw std::runtime_error("Attempting to access reply when request has not been made");
+}
+
+QByteArray HttpReply::requestHeader(const QByteArray& headerName) const
+{
+    QByteArray result;
+    const char* separator = "";
+
+    for (const auto& [name, value] : m_requestHeaders)
+    {
+        if (name.compare(headerName, Qt::CaseInsensitive) == 0)
+        {
+            result.append(separator);
+            result.append(value);
+            separator = "\n";
+        }
+    }
+
+    return result;
+}
+
+int HttpReply::statusCode() const
+{
+    if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))
+        return reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    else
+        throw std::runtime_error("Attempting to access reply when request has not been made");
 }
 
 QNetworkReply* HttpRequest::networkReply(
@@ -88,8 +106,10 @@ HttpReply* HttpRequest::request(
     req.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
     req.setAttribute(QNetworkRequest::CacheSaveControlAttribute, m_usingDiskCache);
 
-    for (auto it = result->m_requestHeaders.cbegin(); it != result->m_requestHeaders.cend(); ++it)
-        req.setRawHeader(it.key(), it.value());
+    for (const auto& [code, value] : std::as_const(m_attributes))
+        req.setAttribute(code, value);
+    for (const auto& [name, value] : std::as_const(result->m_requestHeaders))
+        req.setRawHeader(name, value);
 
     if (QNetworkReply* reply = networkReply(req, operation, data))
     {
