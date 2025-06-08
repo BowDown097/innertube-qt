@@ -11,6 +11,14 @@ QByteArray HttpReply::header(const QByteArray& key) const
         throw std::runtime_error("Attempting to access reply when request has not been made");
 }
 
+QByteArray HttpReply::header(QNetworkRequest::KnownHeaders header) const
+{
+    if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))
+        return reply->header(header).toByteArray();
+    else
+        throw std::runtime_error("Attempting to access reply when request has not been made");
+}
+
 const QList<std::pair<QByteArray, QByteArray>>& HttpReply::headers() const
 {
     if (QNetworkReply* reply = qobject_cast<QNetworkReply*>(parent()))

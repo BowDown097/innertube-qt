@@ -23,6 +23,8 @@ namespace InnertubeObjects
         explicit InnertubeString(const QString& text);
         explicit InnertubeString(const QJsonValue& textVal);
 
+        QString toRichText(bool useLinkText) const;
+
         friend bool operator==(const InnertubeString& lhs, const InnertubeString& rhs)
         { return lhs.text == rhs.text && lhs.accessibilityLabel == rhs.accessibilityLabel; }
         friend bool operator!=(const InnertubeString& lhs, const InnertubeString& rhs) { return !(lhs == rhs); }

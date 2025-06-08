@@ -23,6 +23,7 @@ public:
     static QNetworkAccessManager* networkAccessManager();
 
     QByteArray header(const QByteArray& key) const;
+    QByteArray header(QNetworkRequest::KnownHeaders header) const;
     const QList<std::pair<QByteArray, QByteArray>>& headers() const;
     bool isSuccessful() const;
     QByteArray readAll() const;
