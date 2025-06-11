@@ -4,12 +4,11 @@
 void InnerTube::addContext(QJsonObject& body, const QString& browseId)
 {
     // merge unique properties from context, so that properties can be overriden by the user
-    if (body["context"].isObject())
+    if (QJsonValueRef bodyContext = body["context"]; bodyContext.isObject())
     {
         QJsonObject contextObj = m_context->toJson();
-        const QJsonObject bodyContext = body["context"].toObject();
-        JsonUtil::deepMerge(contextObj, bodyContext);
-        body["context"] = contextObj;
+        JsonUtil::deepMerge(contextObj, bodyContext.toObject());
+        bodyContext = contextObj;
     }
     else
     {
