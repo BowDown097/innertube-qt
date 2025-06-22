@@ -31,11 +31,13 @@ public:
 
     QByteArray requestHeader(const QByteArray& headerName) const;
     const QList<std::pair<QByteArray, QByteArray>>& requestHeaders() const { return m_requestHeaders; }
+    const QUrl& url() const { return m_url; }
 private:
     QList<std::pair<QByteArray, QByteArray>> m_requestHeaders;
+    QUrl m_url;
 
-    explicit HttpReply(QList<std::pair<QByteArray, QByteArray>>&& requestHeaders)
-        : m_requestHeaders(std::move(requestHeaders)) {}
+    explicit HttpReply(QList<std::pair<QByteArray, QByteArray>>&& requestHeaders, const QUrl& url)
+        : m_requestHeaders(std::move(requestHeaders)), m_url(url) {}
 signals:
     void finished(const HttpReply& request);
 };

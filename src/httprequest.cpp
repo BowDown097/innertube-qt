@@ -108,9 +108,9 @@ QNetworkReply* HttpRequest::networkReply(
 HttpReply* HttpRequest::request(
     const QUrl& url, HttpReply::Operation operation, const QByteArray& data)
 {
-    HttpReply* result = new HttpReply(std::move(m_headers));
+    HttpReply* result = new HttpReply(std::move(m_headers), url);
 
-    QNetworkRequest req(url);
+    QNetworkRequest req(result->m_url);
     req.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
     req.setAttribute(QNetworkRequest::CacheSaveControlAttribute, m_usingDiskCache);
 
