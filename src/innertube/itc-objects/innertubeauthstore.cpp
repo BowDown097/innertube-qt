@@ -14,10 +14,14 @@
 # if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
 void AuthStoreRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo& info)
 {
-    if (!visitorIdFound && info.httpHeaders().contains("X-Goog-Visitor-Id"))
+    if (!visitorIdFound)
     {
-        emit foundVisitorId(info.httpHeaders()["X-Goog-Visitor-Id"]);
-        visitorIdFound = true;
+        QHash<QByteArray, QByteArray> headers = info.httpHeaders();
+        if (auto it = headers.find("X-Goog-Visitor-Id"); it != headers.end())
+        {
+            emit foundVisitorId(it.value());
+            visitorIdFound = true;
+        }
     }
 }
 # endif
@@ -101,7 +105,7 @@ void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeCo
 QString InnertubeAuthStore::generateSAPISIDHash() const
 {
     QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
-    QString hash(QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex());
+    QString hash = QCryptographicHash::hash(fmt.toUtf8(), QCryptographicHash::Sha1).toHex();
     return QStringLiteral("SAPISIDHASH %1_%2").arg(time(NULL)).arg(hash);
 }
 

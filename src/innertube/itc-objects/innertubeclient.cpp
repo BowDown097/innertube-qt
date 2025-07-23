@@ -187,7 +187,9 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
 
 QString InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 {
-    const HttpReply* reply = HttpRequest().get("https://itunes.apple.com/lookup?id=" + bundleId);
+    const HttpReply* reply = HttpRequest()
+        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
+        .get("https://itunes.apple.com/lookup?id=" + bundleId);
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
@@ -199,7 +201,9 @@ QString InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 
 QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
 {
-    const HttpReply* reply = HttpRequest().get(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name));
+    const HttpReply* reply = HttpRequest()
+        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
+        .get(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name));
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
@@ -212,7 +216,9 @@ QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
 // mostly courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
 QString InnertubeClient::getVersionFromPageBody(const QString& url)
 {
-    const HttpReply* reply = HttpRequest().get(url);
+    const HttpReply* reply = HttpRequest()
+        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
+        .get(url);
 
     QEventLoop loop;
     QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);

@@ -9,6 +9,7 @@ namespace InnertubeObjects
         QJsonValue navigationEndpoint;
         QString text;
 
+        InnertubeRun() = default;
         explicit InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = {}, const QJsonValue& emoji = {})
             : emoji(emoji), navigationEndpoint(navigationEndpoint), text(text) {}
     };
