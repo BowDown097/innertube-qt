@@ -1,10 +1,8 @@
 #include "innertubeauthstore.h"
 #include "protobuf/protobufcompiler.h"
 #include <QCryptographicHash>
-#include <QJsonObject>
 
 #ifndef INNERTUBE_NO_WEBENGINE
-#include <QEventLoop>
 #include <QWebEngineCookieStore>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
@@ -59,7 +57,7 @@ void InnertubeAuthStore::authenticate(InnertubeContext*& context)
 
 void InnertubeAuthStore::cookieAdded(const QNetworkCookie& cookie)
 {
-    if (populated())
+    if (populated() || cookie.domain() != ".youtube.com")
         return;
 
     qDebug().noquote().nospace() << "New cookie: " << cookie.name() << "=" << cookie.value();
@@ -92,16 +90,6 @@ void InnertubeAuthStore::interceptorFoundVisitorId(const QString& visitorId)
 # endif
 #endif
 
-void InnertubeAuthStore::authenticateFromJson(const QJsonValue& obj, InnertubeContext*& context)
-{
-    apisid = obj["apisid"].toString();
-    hsid = obj["hsid"].toString();
-    sapisid = obj["sapisid"].toString();
-    sid = obj["sid"].toString();
-    ssid = obj["ssid"].toString();
-    context->client.visitorData = visitorInfo = obj["visitorInfo"].toString();
-}
-
 QString InnertubeAuthStore::generateSAPISIDHash() const
 {
     QString fmt = QStringLiteral("%1 %2 https://www.youtube.com").arg(time(NULL)).arg(sapisid);
@@ -116,19 +104,8 @@ bool InnertubeAuthStore::populated() const
 
 QString InnertubeAuthStore::toCookieString() const
 {
-    return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5").arg(sid, hsid, ssid, apisid, sapisid);
-}
-
-QJsonObject InnertubeAuthStore::toJson() const
-{
-    return {
-        { "apisid", apisid },
-        { "hsid", hsid },
-        { "sapisid", sapisid },
-        { "sid", sid },
-        { "ssid", ssid },
-        { "visitorInfo", visitorInfo }
-    };
+    return QStringLiteral("SID=%1; HSID=%2; SSID=%3; APISID=%4; SAPISID=%5")
+        .arg(sid, hsid, ssid, apisid, sapisid);
 }
 
 void InnertubeAuthStore::unauthenticate(InnertubeContext*& context)

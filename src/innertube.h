@@ -37,11 +37,6 @@ public:
 #endif
 
     /**
-     * @brief Shorthand for @ref InnertubeAuthStore::authenticateFromJson.
-     */
-    void authenticateFromJson(const QJsonObject& obj) { m_authStore->authenticateFromJson(obj, m_context); }
-
-    /**
      * @brief Shorthand for @ref InnertubeAuthStore::unauthenticate.
      */
     void unauthenticate() { m_authStore->unauthenticate(m_context); }

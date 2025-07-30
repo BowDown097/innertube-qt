@@ -41,9 +41,9 @@ namespace InnertubeEndpoints
 
             headers.emplaceBack("Content-Type", "application/json");
             headers.emplaceBack("X-Goog-Visitor-Id", context->client.visitorData.toLatin1());
-            headers.emplaceBack("X-YOUTUBE-CLIENT-NAME", QByteArray::number(static_cast<int>(context->client.clientType)));
-            headers.emplaceBack("X-YOUTUBE-CLIENT-VERSION", context->client.clientVersion.toLatin1());
-            headers.emplaceBack("X-ORIGIN", "https://www.youtube.com");
+            headers.emplaceBack("X-Youtube-Client-Name", QByteArray::number(static_cast<int>(context->client.clientType)));
+            headers.emplaceBack("X-Youtube-Client-Version", context->client.clientVersion.toLatin1());
+            headers.emplaceBack("X-Origin", "https://www.youtube.com");
 
             return headers;
         }

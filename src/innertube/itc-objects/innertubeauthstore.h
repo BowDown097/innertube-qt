@@ -55,12 +55,6 @@ public:
 #endif
 
     /**
-     * @brief Store authentication credentials from JSON data returned by @ref toJson.
-     * @param context  @ref InnertubeContext to write visitor data to (encoded version of @ref visitorInfo).
-     */
-    void authenticateFromJson(const QJsonValue& obj, InnertubeContext*& context);
-
-    /**
      * @brief Clear all authentication credentials.
      * @param context  @ref InnertubeContext to clear visitor data from (encoded version of @ref visitorInfo).
      */
@@ -80,11 +74,6 @@ public:
      * @return A hashed version of the @ref sapisid "SAPISID" to be passed as the Authentication header in a web request.
      */
     QString generateSAPISIDHash() const;
-
-    /**
-     * @return The authentication credentials as a JSON object to be used with @ref authenticateFromJson.
-     */
-    QJsonObject toJson() const;
 
     void authenticateSuccess() W_SIGNAL(authenticateSuccess)
 #ifndef INNERTUBE_NO_WEBENGINE
