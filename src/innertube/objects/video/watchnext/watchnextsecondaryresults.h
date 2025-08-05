@@ -1,11 +1,11 @@
 #pragma once
 #include "innertube/objects/ad/adslot.h"
-#include "innertube/objects/video/compactvideo.h"
+#include "innertube/objects/viewmodels/lockupviewmodel.h"
 #include "relatedchipcloud.h"
 
 namespace InnertubeObjects
 {
-    using WatchNextFeedItem = std::variant<AdSlot, CompactVideo>;
+    using WatchNextFeedItem = std::variant<AdSlot, LockupViewModel>;
 
     struct WatchNextSecondaryResults
     {

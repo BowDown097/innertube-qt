@@ -17,10 +17,10 @@ namespace InnertubeObjects
                     const QJsonArray feedContents = itemSectionRenderer["contents"].toArray();
                     for (const QJsonValue& feedEntry : feedContents)
                     {
-                        if (const QJsonValue compactVideoRenderer = feedEntry["compactVideoRenderer"];
-                            compactVideoRenderer.isObject())
+                        if (const QJsonValue lockupViewModel = feedEntry["lockupViewModel"];
+                            lockupViewModel.isObject())
                         {
-                            feed.append(CompactVideo(compactVideoRenderer));
+                            feed.append(LockupViewModel(lockupViewModel));
                         }
                         else if (const QJsonValue adSlotRenderer = feedEntry["adSlotRenderer"];
                                  adSlotRenderer.isObject())
