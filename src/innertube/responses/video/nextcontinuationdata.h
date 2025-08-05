@@ -1,7 +1,7 @@
 #pragma once
-#include "innertube/objects/video/compactvideo.h"
 #include "innertube/objects/video/watchnext/comments/commentsheader.h"
 #include "innertube/objects/video/watchnext/comments/commentthread.h"
+#include "innertube/objects/viewmodels/lockupviewmodel.h"
 
 namespace InnertubeEndpoints
 {
@@ -10,7 +10,7 @@ namespace InnertubeEndpoints
         std::optional<InnertubeObjects::CommentsHeader> commentsHeader;
         QList<InnertubeObjects::CommentThread> commentThreads;
         QString continuationToken;
-        QList<InnertubeObjects::CompactVideo> feed;
+        QList<InnertubeObjects::LockupViewModel> feed;
 
         NextContinuationData() = default;
         explicit NextContinuationData(const QJsonValue& onResponseReceivedEndpoints);

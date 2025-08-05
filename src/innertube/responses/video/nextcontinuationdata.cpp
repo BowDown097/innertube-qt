@@ -8,44 +8,45 @@ namespace InnertubeEndpoints
         const QJsonArray endpointsArr = onResponseReceivedEndpoints.toArray();
         for (const QJsonValue& endpoint : endpointsArr)
         {
-            if (endpoint["appendContinuationItemsAction"].isObject())
+            if (const QJsonValue continuationItemsAction = endpoint["appendContinuationItemsAction"];
+                continuationItemsAction.isObject())
             {
-                const QJsonArray continuationItems = endpoint["appendContinuationItemsAction"]["continuationItems"].toArray();
+                const QJsonArray continuationItems = continuationItemsAction["continuationItems"].toArray();
                 for (const QJsonValue& continuationItem : continuationItems)
                 {
-                    if (continuationItem["compactVideoRenderer"].isObject())
+                    if (const QJsonValue lockupViewModel = continuationItem["lockupViewModel"];
+                        lockupViewModel.isObject())
                     {
-                        feed.append(InnertubeObjects::CompactVideo(continuationItem["compactVideoRenderer"]));
+                        feed.emplaceBack(lockupViewModel);
                     }
-                    else if (continuationItem["continuationItemRenderer"].isObject())
+                    else if (const QJsonValue continuation = continuationItem["continuationItemRenderer"];
+                             continuation.isObject())
                     {
-                        continuationToken = continuationItem["continuationItemRenderer"]["continuationEndpoint"]
-                                                            ["continuationCommand"]["token"].toString();
+                        continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
                     }
                 }
             }
-            else if (endpoint["reloadContinuationItemsCommand"].isObject())
+            else if (const QJsonValue reloadAction = endpoint["reloadContinuationItemsCommand"]; reloadAction.isObject())
             {
-                QJsonValue command = endpoint["reloadContinuationItemsCommand"];
-                QString slot = command["slot"].toString();
-
+                const QString slot = reloadAction["slot"].toString();
                 if (slot == "RELOAD_CONTINUATION_SLOT_HEADER")
                 {
-                    commentsHeader.emplace(command["continuationItems"][0]["commentsHeaderRenderer"]);
+                    commentsHeader.emplace(reloadAction["continuationItems"][0]["commentsHeaderRenderer"]);
                 }
                 else if (slot == "RELOAD_CONTINUATION_SLOT_BODY")
                 {
-                    const QJsonArray continuationItems = command["continuationItems"].toArray();
+                    const QJsonArray continuationItems = reloadAction["continuationItems"].toArray();
                     for (const QJsonValue& continuationItem : continuationItems)
                     {
-                        if (continuationItem["commentThreadRenderer"].isObject())
+                        if (const QJsonValue commentThreadRenderer = continuationItem["commentThreadRenderer"];
+                            commentThreadRenderer.isObject())
                         {
-                            commentThreads.append(InnertubeObjects::CommentThread(continuationItem["commentThreadRenderer"]));
+                            commentThreads.append(InnertubeObjects::CommentThread(commentThreadRenderer));
                         }
-                        else if (continuationItem["continuationItemRenderer"].isObject())
+                        else if (const QJsonValue continuation = continuationItem["continuationItemRenderer"];
+                                 continuation.isObject())
                         {
-                            continuationToken = continuationItem["continuationItemRenderer"]["continuationEndpoint"]
-                                                                ["continuationCommand"]["token"].toString();
+                            continuationToken = continuation["continuationEndpoint"]["continuationCommand"]["token"].toString();
                         }
                     }
                 }
