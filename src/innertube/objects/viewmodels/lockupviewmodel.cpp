@@ -48,10 +48,16 @@ namespace InnertubeObjects
         if (metadataRows.empty() || metadataRows[0].empty())
             return std::nullopt;
 
-        return BasicChannel {
+        BasicChannel result = {
             .icon = metadata.image.avatar.image,
             .id = metadataRows[0][0].commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
             .name = metadataRows[0][0].content
         };
+
+        // attempt fallback if we couldn't find ID
+        if (result.id.isEmpty())
+            result.id = metadata.image.rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
+
+        return result;
     }
 }
