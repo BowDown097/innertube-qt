@@ -4,6 +4,9 @@ add_library(innertube-qt)
 
 set_target_properties(innertube-qt
     PROPERTIES
+        AUTOMOC ON
+        AUTORCC ON
+        AUTOUIC ON
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON)
 
@@ -12,12 +15,8 @@ option(INNERTUBE_GET_STS "Fetch the signature timestamp for playback to avoid ra
 option(INNERTUBE_NO_WEBENGINE "Disable usage of Qt WebEngine. Please look at the wiki before doing this." OFF)
 
 # Qt packages
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-
-set(INNERTUBE_QT_VERSION_MAJOR ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use, defaults to ${QT_VERSION_MAJOR}")
-
-find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
-find_package(Qt${INNERTUBE_QT_VERSION_MAJOR} OPTIONAL_COMPONENTS WebEngineWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Gui Network)
+find_package(Qt6 OPTIONAL_COMPONENTS WebEngineWidgets)
 
 target_sources(innertube-qt
     PRIVATE
