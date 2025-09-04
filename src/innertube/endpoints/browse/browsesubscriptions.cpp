@@ -98,5 +98,7 @@ namespace InnertubeEndpoints
     {
         if (const QJsonValue video = richItem["content"]["videoRenderer"]; video.isObject())
             response.videos.append(InnertubeObjects::Video(video));
+        else if (const QJsonValue lockup = richItem["content"]["lockupViewModel"]; lockup.isObject())
+            response.videos.append(InnertubeObjects::LockupViewModel(lockup));
     }
 }
