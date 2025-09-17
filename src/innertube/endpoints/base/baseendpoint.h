@@ -18,11 +18,12 @@ namespace InnertubeEndpoints
         QFuture<QJsonValue> getData(
             const QString& path, const QJsonObject& body,
             const InnertubeContext* context, const InnertubeAuthStore* authStore);
-        QList<std::pair<QByteArray, QByteArray>> getNeededHeaders(
-            const InnertubeContext* context, const InnertubeAuthStore* authStore);
         QFuture<void> getPlain(
             const QString& path, const QJsonObject& body,
             const InnertubeContext* context, const InnertubeAuthStore* authStore);
+        void setNeededHeaders(
+            QNetworkRequest& req, const InnertubeContext* context,
+            const InnertubeAuthStore* authStore);
     }
 
     template<size_t N>

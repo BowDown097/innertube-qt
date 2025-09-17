@@ -1,10 +1,10 @@
 #include "innertubeclient.h"
-#include "httprequest.h"
 #include "protobuf/protobufbuilder.h"
 #include "protobuf/protobufutil.h"
 #include <QEventLoop>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QNetworkReply>
 #include <QRandomGenerator>
 
 InnertubeClient::InnertubeClient(ClientType clientType, const QString& clientVersion,
@@ -187,13 +187,18 @@ QString InnertubeClient::getLatestVersion(ClientType clientType)
 
 QString InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 {
-    const HttpReply* reply = HttpRequest()
-        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
-        .get("https://itunes.apple.com/lookup?id=" + bundleId);
+    QNetworkAccessManager* nam = new QNetworkAccessManager;
+
+    QNetworkRequest req("https://itunes.apple.com/lookup?id=" + bundleId);
+    req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    QNetworkReply* reply = nam->get(req);
 
     QEventLoop loop;
-    QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
+
+    nam->deleteLater();
+    reply->deleteLater();
 
     QJsonValue appResult = QJsonDocument::fromJson(reply->readAll())["results"][0];
     return appResult["version"].toString();
@@ -201,13 +206,18 @@ QString InnertubeClient::getVersionFromAppStore(const QString& bundleId)
 
 QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
 {
-    const HttpReply* reply = HttpRequest()
-        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
-        .get(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name));
+    QNetworkAccessManager* nam = new QNetworkAccessManager;
+
+    QNetworkRequest req(QStringLiteral("https://%1.en.uptodown.com/android/download").arg(name));
+    req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    QNetworkReply* reply = nam->get(req);
 
     QEventLoop loop;
-    QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
+
+    nam->deleteLater();
+    reply->deleteLater();
 
     static QRegularExpression softwareVersionRegex("softwareVersion\":\"([0-9\\.]+?)\"");
     return softwareVersionRegex.match(reply->readAll()).captured(1);
@@ -216,13 +226,18 @@ QString InnertubeClient::getVersionFromGooglePlay(const QString& name)
 // mostly courtesy of https://github.com/TeamNewPipe/NewPipeExtractor
 QString InnertubeClient::getVersionFromPageBody(const QString& url)
 {
-    const HttpReply* reply = HttpRequest()
-        .withAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual)
-        .get(url);
+    QNetworkAccessManager* nam = new QNetworkAccessManager;
+
+    QNetworkRequest req(url);
+    req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    QNetworkReply* reply = nam->get(req);
 
     QEventLoop loop;
-    QObject::connect(reply, &HttpReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
+
+    nam->deleteLater();
+    reply->deleteLater();
 
     static QRegularExpression clientVersionRegex(
         "(INNERTUBE_CONTEXT_CLIENT_VERSION|innertubeContextClientVersion)\":\"([0-9\\.]+?)\"");

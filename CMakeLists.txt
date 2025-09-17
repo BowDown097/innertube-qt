@@ -20,10 +20,8 @@ find_package(Qt6 OPTIONAL_COMPONENTS WebEngineWidgets)
 
 target_sources(innertube-qt
     PRIVATE
-        src/httprequest.cpp
         src/innertube.cpp
         src/jsonutil.cpp
-        src/localcache.cpp
         src/innertube/endpoints/base/basebrowseendpoint.cpp
         src/innertube/endpoints/base/baseendpoint.cpp
         src/innertube/endpoints/browse/browsechannel.cpp
@@ -106,10 +104,8 @@ target_sources(innertube-qt
         src/protobuf/protobufutil.cpp
     PUBLIC
         FILE_SET HEADERS FILES
-            src/httprequest.h
             src/innertube.h
             src/jsonutil.h
-            src/localcache.h
             src/innertube/innertubeexception.h
             src/innertube/innertubereply.h
             src/innertube/endpoints/innertubeendpoints.h

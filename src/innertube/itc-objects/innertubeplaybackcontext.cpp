@@ -2,8 +2,8 @@
 #include <QJsonObject>
 
 #ifdef INNERTUBE_GET_STS
-#include "httprequest.h"
 #include <QEventLoop>
+#include <QNetworkReply>
 #endif
 
 QJsonObject InnertubePlaybackContext::toJson() const
@@ -33,11 +33,15 @@ QJsonObject InnertubePlaybackContext::toJson() const
 #ifdef INNERTUBE_GET_STS
 int InnertubePlaybackContext::fetchSignatureTimestamp() const
 {
+    QNetworkAccessManager* nam = new QNetworkAccessManager;
+
     // get the body of the embed for "Me at the zoo", which is almost guaranteed to never go down as long as YouTube exists
-    const HttpReply* embedReply = HttpRequest().get(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw"));
+    QNetworkRequest embedRequest(QUrl("https://www.youtube.com/embed/jNQXAC9IVRw"));
+    embedRequest.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    QNetworkReply* embedReply = nam->get(embedRequest);
 
     QEventLoop embedLoop;
-    QObject::connect(embedReply, &HttpReply::finished, &embedLoop, &QEventLoop::quit);
+    QObject::connect(embedReply, &QNetworkReply::finished, &embedLoop, &QEventLoop::quit);
     embedLoop.exec();
 
     QByteArray embedBody = embedReply->readAll();
@@ -48,13 +52,20 @@ int InnertubePlaybackContext::fetchSignatureTimestamp() const
     QUrl playerJsUrl("https://www.youtube.com" + match.captured());
 
     // get the application body
-    const HttpReply* appReply = HttpRequest().get(playerJsUrl);
+    QNetworkRequest appRequest(playerJsUrl);
+    appRequest.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    QNetworkReply* appReply = nam->get(appRequest);
 
     QEventLoop appLoop;
-    QObject::connect(appReply, &HttpReply::finished, &appLoop, &QEventLoop::quit);
+    QObject::connect(appReply, &QNetworkReply::finished, &appLoop, &QEventLoop::quit);
     appLoop.exec();
 
     QByteArray appBody = appReply->readAll();
+
+    // free up stuff
+    nam->deleteLater();
+    appReply->deleteLater();
+    embedReply->deleteLater();
 
     // extract and return the sts body
     static QRegularExpression stsRegex("signatureTimestamp:?\\s*([0-9]*)");
