@@ -251,6 +251,7 @@ target_sources(innertube-qt
             src/innertube/objects/video/watchnext/secondaryinfo/videoowner.h
             src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.h
             src/innertube/objects/viewmodels/avatarviewmodel.h
+            src/innertube/objects/viewmodels/badgeviewmodel.h
             src/innertube/objects/viewmodels/buttonviewmodel.h
             src/innertube/objects/viewmodels/carouselitemviewmodel.h
             src/innertube/objects/viewmodels/carouseltitleviewmodel.h

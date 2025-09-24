@@ -33,10 +33,18 @@ namespace InnertubeObjects
     {
         for (const ThumbnailViewModelOverlay& overlay : contentImage.overlays)
         {
-            if (const auto* badge = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay); badge && !badge->thumbnailBadges.empty())
+            if (const auto* badge = std::get_if<ThumbnailOverlayBadgeViewModel>(&overlay);
+                badge && !badge->thumbnailBadges.empty())
+            {
                 return badge->thumbnailBadges.constFirst().text;
-            else if (const auto* bottom = std::get_if<ThumbnailBottomOverlayViewModel>(&overlay); bottom && !bottom->badges.empty())
-                return bottom->badges.constFirst().text;
+            }
+            else if (const auto* bottom = std::get_if<ThumbnailBottomOverlayViewModel>(&overlay);
+                     bottom && !bottom->badges.empty())
+            {
+                auto it = std::ranges::find_if_not(bottom->badges, &QString::isEmpty, &ThumbnailBadgeViewModel::text);
+                if (it != bottom->badges.end())
+                    return it->text;
+            }
         }
 
         return QString();
@@ -44,20 +52,24 @@ namespace InnertubeObjects
 
     std::optional<BasicChannel> LockupViewModel::owner() const
     {
-        const QList<QList<DynamicText>>& metadataRows = metadata.metadata.metadataRows;
-        if (metadataRows.empty() || metadataRows[0].empty())
-            return std::nullopt;
+        if (const auto& metadataRows = metadata.metadata.metadataRows; !metadataRows.empty())
+        {
+            if (const auto* dynamicText = std::get_if<QList<DynamicText>>(&metadataRows[0]))
+            {
+                BasicChannel result = {
+                    .icon = metadata.image.avatar.image,
+                    .id = dynamicText->at(0).commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
+                    .name = dynamicText->at(0).content
+                };
 
-        BasicChannel result = {
-            .icon = metadata.image.avatar.image,
-            .id = metadataRows[0][0].commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
-            .name = metadataRows[0][0].content
-        };
+                // attempt fallback if we couldn't find ID
+                if (result.id.isEmpty())
+                    result.id = metadata.image.rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
 
-        // attempt fallback if we couldn't find ID
-        if (result.id.isEmpty())
-            result.id = metadata.image.rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
+                return result;
+            }
+        }
 
-        return result;
+        return std::nullopt;
     }
 }

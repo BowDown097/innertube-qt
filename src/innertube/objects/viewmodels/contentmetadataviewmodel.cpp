@@ -1,5 +1,6 @@
 #include "contentmetadataviewmodel.h"
 #include <QJsonArray>
+#include <QJsonObject>
 
 namespace InnertubeObjects
 {
@@ -9,12 +10,27 @@ namespace InnertubeObjects
         const QJsonArray metadataRowsJson = contentMetadataViewModel["metadataRows"].toArray();
         for (const QJsonValue& row : metadataRowsJson)
         {
-            const QJsonArray metadataParts = row["metadataParts"].toArray();
-            QList<DynamicText> textParts;
-            textParts.reserve(metadataParts.size());
-            for (const QJsonValue& part : metadataParts)
-                textParts.append(DynamicText(part["text"]));
-            metadataRows.append(textParts);
+            const QJsonObject obj = row.toObject();
+            const QString key = obj.begin().key();
+
+            if (key == "metadataParts")
+            {
+                const QJsonArray metadataPartsJson = obj.begin()->toArray();
+                QList<DynamicText> metadataParts;
+                metadataParts.reserve(metadataPartsJson.size());
+                for (const QJsonValue& metadataPart : metadataPartsJson)
+                    metadataParts.append(DynamicText(metadataPart["text"]));
+                metadataRows.append(metadataParts);
+            }
+            else if (key == "badges")
+            {
+                const QJsonArray badgesJson = obj.begin()->toArray();
+                QList<BadgeViewModel> badges;
+                badges.reserve(badgesJson.size());
+                for (const QJsonValue& badge : badgesJson)
+                    badges.append(BadgeViewModel(badge["badgeViewModel"]));
+                metadataRows.append(badges);
+            }
         }
     }
 }

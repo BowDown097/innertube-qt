@@ -1,4 +1,5 @@
 #pragma once
+#include "badgeviewmodel.h"
 #include "innertube/objects/dynamictext.h"
 
 namespace InnertubeObjects
@@ -6,7 +7,7 @@ namespace InnertubeObjects
     struct ContentMetadataViewModel
     {
         QString delimiter;
-        QList<QList<DynamicText>> metadataRows;
+        QList<std::variant<QList<BadgeViewModel>, QList<DynamicText>>> metadataRows;
 
         ContentMetadataViewModel() = default;
         explicit ContentMetadataViewModel(const QJsonValue& contentMetadataViewModel);
