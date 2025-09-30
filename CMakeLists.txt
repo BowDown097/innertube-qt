@@ -52,6 +52,7 @@ target_sources(innertube-qt
         src/innertube/itc-objects/innertubeplaybackcontext.cpp
         src/innertube/itc-objects/innertuberequestconfig.cpp
         src/innertube/itc-objects/innertubeuserconfig.cpp
+        src/innertube/objects/dynamictext.cpp
         src/innertube/objects/innertubestring.cpp
         src/innertube/objects/backstage/post.cpp
         src/innertube/objects/backstage/poll/poll.cpp

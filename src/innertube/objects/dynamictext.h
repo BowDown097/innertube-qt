@@ -1,5 +1,5 @@
 #pragma once
-#include <QJsonValue>
+#include "innertubestring.h"
 
 namespace InnertubeObjects
 {
@@ -9,6 +9,7 @@ namespace InnertubeObjects
         QJsonValue commandRuns;
         QString content;
         QJsonValue decorationRuns;
+        QJsonValue paragraphStyleRuns;
         QJsonValue styleRuns;
 
         DynamicText() = default;
@@ -17,6 +18,9 @@ namespace InnertubeObjects
               commandRuns(textObject["commandRuns"]),
               content(textObject["content"].toString()),
               decorationRuns(textObject["decorationRuns"]),
+              paragraphStyleRuns(textObject["paragraphStyleRuns"]),
               styleRuns(textObject["styleRuns"]) {}
+
+        InnertubeString unattribute() const;
     };
 }

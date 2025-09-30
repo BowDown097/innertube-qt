@@ -29,7 +29,7 @@ void insertBrowseEndpoint(
     const QString browseId = browseEndpoint["browseId"].toString();
     if (browseId.startsWith("UC"))
     {
-        text.replace(text.indexOf('/'), 1, "").replace("/xc2/xa0", "");
+        text.replace(text.indexOf('/'), 1, "").replace("\u202A", "");
         if (text[0] != '@')
             text.prepend('@');
         href = "/channel/" + browseId;
@@ -110,9 +110,21 @@ void insertNavigationEndpoint(QString& str, const QJsonValue& navigationEndpoint
     str += QStringLiteral("<a href=\"%1\">%2</a>").arg(href, text);
 }
 
-void insertTextFormatted(QString& str, const QString& text)
+void insertTextFormatted(QString& str, const InnertubeObjects::InnertubeRun& run)
 {
-    str += text.toHtmlEscaped().replace('\n', "<br>");
+    QString style;
+    if (run.strikeOut)
+        style += "text-decoration: line-through;";
+    if (run.style != QFont::StyleNormal)
+        style += "font-style: italic;";
+    if (run.weight != QFont::Normal)
+        style += QStringLiteral("font-weight: %1;").arg(run.weight);
+
+    QString escaped = run.text.toHtmlEscaped().replace('\n', "<br>");
+    if (!style.isEmpty())
+        str += QStringLiteral("<span style=\"%1\">%2</span>").arg(style, escaped);
+    else
+        str += escaped;
 }
 
 namespace InnertubeObjects
@@ -155,7 +167,7 @@ namespace InnertubeObjects
             else if (run.navigationEndpoint.isObject())
                 insertNavigationEndpoint(out, run.navigationEndpoint, run.text, useLinkText);
             else
-                insertTextFormatted(out, run.text);
+                insertTextFormatted(out, run);
         }
 
         return out;

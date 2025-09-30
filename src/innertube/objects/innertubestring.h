@@ -1,13 +1,20 @@
 #pragma once
+#include <QFont>
 #include <QJsonValue>
 
 namespace InnertubeObjects
 {
     struct InnertubeRun
     {
+        // text properties
         QJsonValue emoji;
         QJsonValue navigationEndpoint;
         QString text;
+
+        // font properties
+        bool strikeOut{};
+        QFont::Style style = QFont::StyleNormal;
+        QFont::Weight weight = QFont::Normal;
 
         InnertubeRun() = default;
         explicit InnertubeRun(const QString& text, const QJsonValue& navigationEndpoint = {}, const QJsonValue& emoji = {})
