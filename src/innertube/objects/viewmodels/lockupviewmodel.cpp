@@ -52,9 +52,9 @@ namespace InnertubeObjects
 
     std::optional<BasicChannel> LockupViewModel::owner() const
     {
-        if (const auto& metadataRows = metadata.metadata.metadataRows; !metadataRows.empty())
+        if (const QList<ContentMetadataRow>& metadataRows = metadata.metadata.metadataRows; !metadataRows.empty())
         {
-            if (const auto* dynamicText = std::get_if<QList<DynamicText>>(&metadataRows[0]))
+            if (const auto* dynamicText = std::get_if<QList<DynamicText>>(&metadataRows[0].content))
             {
                 BasicChannel result = {
                     .icon = metadata.image.avatar.image,

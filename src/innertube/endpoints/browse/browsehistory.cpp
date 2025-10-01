@@ -42,8 +42,12 @@ namespace InnertubeEndpoints
                     throw InnertubeException("[BrowseHistory] itemSectionRenderer not found or has no content");
 
                 for (const QJsonValue& v2 : itemSectionContents)
+                {
                     if (const QJsonValue video = v2["videoRenderer"]; video.isObject())
                         response.videos.append(InnertubeObjects::Video(video));
+                    else if (const QJsonValue lockup = v2["lockupViewModel"]; lockup.isObject())
+                        response.videos.append(InnertubeObjects::LockupViewModel(lockup));
+                }
             }
             else if (const QJsonValue continuation = v["continuationItemRenderer"]; continuation.isObject())
             {
