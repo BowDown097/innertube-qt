@@ -1,6 +1,7 @@
 #include "watchnextsecondaryresults.h"
 #include <QJsonArray>
-#include <QJsonObject>
+
+using namespace Qt::StringLiterals;
 
 namespace InnertubeObjects
 {
@@ -9,37 +10,39 @@ namespace InnertubeObjects
         const QJsonArray resultsArr = results.toArray();
         for (const QJsonValue& result : resultsArr)
         {
-            if (const QJsonValue itemSectionRenderer = result["itemSectionRenderer"];
-                itemSectionRenderer.isObject())
+            const QJsonObject resultObj = result.toObject();
+            QJsonObject::const_iterator resultBegin = resultObj.begin();
+
+            if (resultBegin.key() == "itemSectionRenderer")
             {
-                if (itemSectionRenderer["sectionIdentifier"].toString() == "sid-wn-chips")
+                if (resultBegin.value()["sectionIdentifier"_L1].toString() == "sid-wn-chips")
                 {
-                    const QJsonArray feedContents = itemSectionRenderer["contents"].toArray();
-                    for (const QJsonValue& feedEntry : feedContents)
+                    const QJsonArray contents = resultBegin.value()["contents"_L1].toArray();
+                    for (const QJsonValue& item : contents)
                     {
-                        if (const QJsonValue lockupViewModel = feedEntry["lockupViewModel"];
-                            lockupViewModel.isObject())
-                        {
-                            feed.append(LockupViewModel(lockupViewModel));
-                        }
-                        else if (const QJsonValue adSlotRenderer = feedEntry["adSlotRenderer"];
-                                 adSlotRenderer.isObject())
-                        {
-                            feed.append(AdSlot(adSlotRenderer));
-                        }
-                        else if (const QJsonValue continuationItemRenderer = feedEntry["continuationItemRenderer"];
-                                 continuationItemRenderer.isObject())
-                        {
-                            feedContinuation = continuationItemRenderer["continuationEndpoint"]["continuationCommand"]["token"].toString();
-                        }
+                        const QJsonObject itemObj = item.toObject();
+                        handleItem(itemObj.begin());
                     }
                 }
             }
-            else if (const QJsonValue relatedChipCloudRenderer = result["relatedChipCloudRenderer"];
-                     relatedChipCloudRenderer.isObject())
+            else if (resultBegin.key() == "relatedChipCloudRenderer")
             {
-                relatedChipCloud.emplace(relatedChipCloudRenderer);
+                relatedChipCloud.emplace(resultBegin.value());
+            }
+            else
+            {
+                handleItem(resultBegin);
             }
         }
+    }
+
+    void WatchNextSecondaryResults::handleItem(QJsonObject::const_iterator item)
+    {
+        if (item.key() == "lockupViewModel")
+            feed.append(LockupViewModel(item.value()));
+        else if (item.key() == "adSlotRenderer")
+            feed.append(AdSlot(item.value()));
+        else if (item.key() == "continuationItemRenderer")
+            feedContinuation = item.value()["continuationEndpoint"_L1]["continuationCommand"_L1]["token"_L1].toString();
     }
 }
