@@ -6,10 +6,15 @@ class InnertubeException : public QException
 {
 public:
     enum class Severity { Normal, Minor };
+
     explicit InnertubeException(const QString& message, Severity severity = Severity::Normal)
         : m_message(message), m_severity(severity) {}
+
     const QString& message() const { return m_message; }
     Severity severity() const { return m_severity; }
+
+    void raise() const override { throw *this; }
+    InnertubeException* clone() const override { return new InnertubeException(*this); }
 private:
     QString m_message;
     Severity m_severity;

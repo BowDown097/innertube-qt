@@ -72,6 +72,7 @@ namespace InnertubeEndpoints
             catch (const InnertubeException& ie)
             {
                 futureInterface.reportException(ie);
+                futureInterface.reportFinished();
             }
         });
 
