@@ -8,16 +8,22 @@ namespace InnertubeEndpoints
 {
     Player::Player(const QJsonValue& data)
     {
-        const QString status = data["playabilityStatus"]["status"].toString();
+        const QJsonValue playabilityStatus = data["playabilityStatus"];
+        const QString status = playabilityStatus["status"].toString();
         static QStringList noErrorStatuses = { "OK", "LIVE_STREAM_OFFLINE", "CONTENT_CHECK_REQUIRED" };
 
         if (!noErrorStatuses.contains(status))
         {
-            const QString errorReason = data["playabilityStatus"]["reason"].toString();
-            if (!errorReason.isEmpty())
-                throw InnertubeException(QStringLiteral("[Player] Error: %1 - Playability status: %2").arg(errorReason, status));
-            else
-                throw InnertubeException(QStringLiteral("[Player] Playability status is %1 - no reason given.").arg(status));
+            // TODO: investigate this reload error further to find an actual fix.
+            // QtTube is just wrapping around the web player, and on that, this error does not happen somehow.
+            const QString errorReason = fetchErrorReason(playabilityStatus, status);
+            if (errorReason != "The page needs to be reloaded.")
+            {
+                if (!errorReason.isEmpty())
+                    throw InnertubeException(QStringLiteral("[Player] Error: %1 (%2)").arg(errorReason, status));
+                else
+                    throw InnertubeException(QStringLiteral("[Player] Video is %1 - no reason given.").arg(status));
+            }
         }
 
         response.playbackTracking = InnertubeObjects::PlaybackTracking(data["playbackTracking"]);
@@ -49,5 +55,18 @@ namespace InnertubeEndpoints
             body.insert("params", "CgIQBg");
 
         return body;
+    }
+
+    QString Player::fetchErrorReason(const QJsonValue& playabilityStatus, const QString& status)
+    {
+        if (status == "UNPLAYABLE")
+        {
+            InnertubeObjects::InnertubeString reason(
+                playabilityStatus["errorScreen"]["playerErrorMessageRenderer"]["reason"]);
+            if (!reason.text.isEmpty())
+                return reason.text;
+        }
+
+        return playabilityStatus["reason"].toString();
     }
 }
