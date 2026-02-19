@@ -20,7 +20,7 @@ template<class C>
 concept EndpointWithData =
     innertube_derived_from_templated<C, InnertubeEndpoints::BaseEndpoint> &&
     !innertube_derived_from_templated<C, InnertubeEndpoints::BaseLikeEndpoint> &&
-    !innertube_is_any_v<C, InnertubeEndpoints::SendMessage, InnertubeEndpoints::Subscribe, InnertubeEndpoints::Unsubscribe>;
+    !innertube_is_any_v<C, InnertubeEndpoints::Subscribe, InnertubeEndpoints::Unsubscribe>;
 
 /**
  * @brief An object that emits signals related to Innertube requests. Used by @ref InnerTube::get and @ref InnerTube::getRaw.
