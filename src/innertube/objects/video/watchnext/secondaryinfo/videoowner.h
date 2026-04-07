@@ -19,5 +19,7 @@ namespace InnertubeObjects
 
         VideoOwner() = default;
         explicit VideoOwner(const QJsonValue& videoOwnerRenderer);
+
+        QString channelId() const;
     };
 }

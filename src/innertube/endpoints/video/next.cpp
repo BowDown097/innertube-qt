@@ -14,6 +14,10 @@ namespace InnertubeEndpoints
 
             response.contents = InnertubeObjects::TwoColumnWatchNextResults(watchNextResults);
             response.videoId = data["currentVideoEndpoint"]["watchEndpoint"]["videoId"].toString();
+
+            const QJsonArray mutations = data["frameworkUpdates"]["entityBatchUpdate"]["mutations"].toArray();
+            for (const QJsonValue& mutation : mutations)
+                response.mutations.append(InnertubeObjects::EntityMutation(mutation));
         }
         else if (const QJsonValue onResponseReceivedEndpoints = data["onResponseReceivedEndpoints"];
                  onResponseReceivedEndpoints.isArray())

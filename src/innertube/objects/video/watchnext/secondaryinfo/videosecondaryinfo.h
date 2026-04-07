@@ -1,8 +1,9 @@
 #pragma once
-#include "metadatarowcontainer.h"
-#include "videoowner.h"
 #include "innertube/objects/dynamictext.h"
 #include "innertube/objects/channel/subscribebutton.h"
+#include "innertube/objects/viewmodels/subscribebuttonviewmodel.h"
+#include "metadatarowcontainer.h"
+#include "videoowner.h"
 
 namespace InnertubeObjects
 {
@@ -31,7 +32,7 @@ namespace InnertubeObjects
         QString showLessText;
         QJsonValue showMoreCommand;
         QString showMoreText;
-        SubscribeButton subscribeButton;
+        std::variant<SubscribeButton, SubscribeButtonViewModel> subscribeButton;
 
         VideoSecondaryInfo() = default;
         explicit VideoSecondaryInfo(const QJsonValue& secondaryInfoRenderer);

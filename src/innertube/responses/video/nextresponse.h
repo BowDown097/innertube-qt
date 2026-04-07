@@ -8,6 +8,7 @@ namespace InnertubeEndpoints
     {
         InnertubeObjects::TwoColumnWatchNextResults contents;
         std::optional<NextContinuationData> continuationData;
+        QList<InnertubeObjects::EntityMutation> mutations;
         QString videoId;
     };
 }
