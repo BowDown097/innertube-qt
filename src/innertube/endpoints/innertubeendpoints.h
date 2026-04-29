@@ -1,6 +1,8 @@
 #pragma once
 
-// This header just serves to include every supported endpoint. Nothing more!
+// This header includes every supported endpoint and registers them in the Verdigris type registry.
+#include "account/accountmenu.h"
+#include "account/accountslist.h"
 #include "browse/browsechannel.h"
 #include "browse/browsehistory.h"
 #include "browse/browsehome.h"
@@ -13,12 +15,11 @@
 #include "live_chat/getlivechat.h"
 #include "live_chat/getlivechatreplay.h"
 #include "live_chat/sendmessage.h"
-#include "misc/accountmenu.h"
 #include "misc/search.h"
-#include "misc/unseencount.h"
 #include "navigation/resolveurl.h"
 #include "notification/getnotificationmenu.h"
 #include "notification/modifychannelpreference.h"
+#include "notification/unseencount.h"
 #include "subscription/subscribe.h"
 #include "subscription/unsubscribe.h"
 #include "video/next.h"
@@ -27,6 +28,7 @@
 #include <wobjectdefs.h>
 
 W_REGISTER_ARGTYPE(InnertubeEndpoints::AccountMenu)
+W_REGISTER_ARGTYPE(InnertubeEndpoints::AccountsList)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::BrowseChannel)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::BrowseHistory)
 W_REGISTER_ARGTYPE(InnertubeEndpoints::BrowseHome)

@@ -22,6 +22,8 @@ target_sources(innertube-qt
     PRIVATE
         src/innertube.cpp
         src/jsonutil.cpp
+        src/innertube/endpoints/account/accountmenu.cpp
+        src/innertube/endpoints/account/accountslist.cpp
         src/innertube/endpoints/base/basebrowseendpoint.cpp
         src/innertube/endpoints/base/baseendpoint.cpp
         src/innertube/endpoints/browse/browsechannel.cpp
@@ -33,12 +35,11 @@ target_sources(innertube-qt
         src/innertube/endpoints/live_chat/getlivechat.cpp
         src/innertube/endpoints/live_chat/getlivechatreplay.cpp
         src/innertube/endpoints/live_chat/sendmessage.cpp
-        src/innertube/endpoints/misc/accountmenu.cpp
         src/innertube/endpoints/misc/search.cpp
-        src/innertube/endpoints/misc/unseencount.cpp
         src/innertube/endpoints/navigation/resolveurl.cpp
         src/innertube/endpoints/notification/getnotificationmenu.cpp
         src/innertube/endpoints/notification/modifychannelpreference.cpp
+        src/innertube/endpoints/notification/unseencount.cpp
         src/innertube/endpoints/subscription/subscribe.cpp
         src/innertube/endpoints/subscription/unsubscribe.cpp
         src/innertube/endpoints/video/next.cpp
@@ -54,6 +55,8 @@ target_sources(innertube-qt
         src/innertube/itc-objects/innertubeuserconfig.cpp
         src/innertube/objects/dynamictext.cpp
         src/innertube/objects/innertubestring.cpp
+        src/innertube/objects/account/accountitem.cpp
+        src/innertube/objects/account/channelswitcherpage.cpp
         src/innertube/objects/backstage/post.cpp
         src/innertube/objects/backstage/poll/poll.cpp
         src/innertube/objects/backstage/quiz/quiz.cpp
@@ -110,6 +113,8 @@ target_sources(innertube-qt
             src/innertube/innertubeexception.h
             src/innertube/innertubereply.h
             src/innertube/endpoints/innertubeendpoints.h
+            src/innertube/endpoints/account/accountmenu.h
+            src/innertube/endpoints/account/accountslist.h
             src/innertube/endpoints/base/basebrowseendpoint.h
             src/innertube/endpoints/base/baseendpoint.h
             src/innertube/endpoints/browse/browsechannel.h
@@ -125,12 +130,11 @@ target_sources(innertube-qt
             src/innertube/endpoints/live_chat/getlivechat.h
             src/innertube/endpoints/live_chat/getlivechatreplay.h
             src/innertube/endpoints/live_chat/sendmessage.h
-            src/innertube/endpoints/misc/accountmenu.h
             src/innertube/endpoints/misc/search.h
-            src/innertube/endpoints/misc/unseencount.h
             src/innertube/endpoints/navigation/resolveurl.h
             src/innertube/endpoints/notification/getnotificationmenu.h
             src/innertube/endpoints/notification/modifychannelpreference.h
+            src/innertube/endpoints/notification/unseencount.h
             src/innertube/endpoints/subscription/subscribe.h
             src/innertube/endpoints/subscription/unsubscribe.h
             src/innertube/endpoints/video/next.h
@@ -150,7 +154,10 @@ target_sources(innertube-qt
             src/innertube/objects/entitymutation.h
             src/innertube/objects/innertubestring.h
             src/innertube/objects/lottiedata.h
-            src/innertube/objects/account_menu/activeaccountheader.h
+            src/innertube/objects/account/accountitem.h
+            src/innertube/objects/account/activeaccountheader.h
+            src/innertube/objects/account/channelswitcherheader.h
+            src/innertube/objects/account/channelswitcherpage.h
             src/innertube/objects/ad/adactiveview.h
             src/innertube/objects/ad/adlayoutmetadata.h
             src/innertube/objects/ad/adslot.h
@@ -276,13 +283,14 @@ target_sources(innertube-qt
             src/innertube/objects/viewmodels/thumbnailviewmodel.h
             src/innertube/objects/viewmodels/togglebuttonviewmodel.h
             src/innertube/objects/viewmodels/videometadatacarouselviewmodel.h
+            src/innertube/responses/account/accountmenuresponse.h
+            src/innertube/responses/account/accountslistresponse.h
             src/innertube/responses/browse/channelresponse.h
             src/innertube/responses/browse/historyresponse.h
             src/innertube/responses/browse/homeresponse.h
             src/innertube/responses/browse/subscriptionsresponse.h
             src/innertube/responses/browse/trendingresponse.h
             src/innertube/responses/comment/commentactionresponse.h
-            src/innertube/responses/misc/accountmenuresponse.h
             src/innertube/responses/misc/searchresponse.h
             src/innertube/responses/notification/notificationmenuresponse.h
             src/innertube/responses/video/nextcontinuationdata.h

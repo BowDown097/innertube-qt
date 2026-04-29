@@ -1,6 +1,6 @@
 #pragma once
 #include "innertube/endpoints/base/baseendpoint.h"
-#include "innertube/responses/misc/accountmenuresponse.h"
+#include "innertube/responses/account/accountmenuresponse.h"
 
 namespace InnertubeEndpoints
 {
