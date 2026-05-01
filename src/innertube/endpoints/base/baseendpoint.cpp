@@ -26,10 +26,7 @@ namespace InnertubeEndpoints
                 nam->deleteLater();
                 reply->deleteLater();
 
-                QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-                qDebug().noquote() << doc.toJson();
-
-                futureInterface.reportResult(doc.object());
+                futureInterface.reportResult(QJsonDocument::fromJson(reply->readAll()).object());
                 futureInterface.reportFinished();
             });
 
