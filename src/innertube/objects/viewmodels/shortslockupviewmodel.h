@@ -1,5 +1,5 @@
 #pragma once
-#include "innertube/objects/images/responsiveimage.h"
+#include "thumbnailviewmodel.h"
 
 namespace InnertubeObjects
 {
@@ -14,7 +14,7 @@ namespace InnertubeObjects
         QJsonValue onTap;
         QString primaryText;
         QString secondaryText;
-        ResponsiveImage thumbnail;
+        ThumbnailViewModel thumbnailViewModel;
         QString videoId;
 
         explicit ShortsLockupViewModel(const QJsonValue& shortsLockupViewModel)
@@ -27,7 +27,7 @@ namespace InnertubeObjects
               onTap(shortsLockupViewModel["onTap"]),
               primaryText(shortsLockupViewModel["overlayMetadata"]["primaryText"]["content"].toString()),
               secondaryText(shortsLockupViewModel["overlayMetadata"]["secondaryText"]["content"].toString()),
-              thumbnail(shortsLockupViewModel["thumbnail"]["sources"]),
+              thumbnailViewModel(shortsLockupViewModel["thumbnailViewModel"]["thumbnailViewModel"]),
               videoId(onTap["innertubeCommand"]["reelWatchEndpoint"]["videoId"].toString()) {}
     };
 }
