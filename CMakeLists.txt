@@ -93,8 +93,10 @@ target_sources(innertube-qt
         src/innertube/objects/video/watchnext/secondaryinfo/metadatarowcontainer.cpp
         src/innertube/objects/video/watchnext/secondaryinfo/videoowner.cpp
         src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.cpp
+        src/innertube/objects/viewmodels/avatarstackviewmodel.cpp
         src/innertube/objects/viewmodels/carouselitemviewmodel.cpp
         src/innertube/objects/viewmodels/contentmetadataviewmodel.cpp
+        src/innertube/objects/viewmodels/lockupmetadataviewmodel.cpp
         src/innertube/objects/viewmodels/lockupviewmodel.cpp
         src/innertube/objects/viewmodels/subscribebuttonviewmodel.cpp
         src/innertube/objects/viewmodels/thumbnailbottomoverlayviewmodel.cpp
@@ -259,6 +261,7 @@ target_sources(innertube-qt
             src/innertube/objects/video/watchnext/secondaryinfo/videoowner.h
             src/innertube/objects/video/watchnext/secondaryinfo/videosecondaryinfo.h
             src/innertube/objects/viewmodels/avatarviewmodel.h
+            src/innertube/objects/viewmodels/avatarstackviewmodel.h
             src/innertube/objects/viewmodels/badgeviewmodel.h
             src/innertube/objects/viewmodels/buttonviewmodel.h
             src/innertube/objects/viewmodels/carouselitemviewmodel.h

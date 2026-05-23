@@ -56,17 +56,33 @@ namespace InnertubeObjects
         {
             if (const auto* dynamicText = std::get_if<QList<DynamicText>>(&metadataRows[0].content))
             {
-                BasicChannel result = {
-                    .icon = metadata.image.avatar.image,
-                    .id = dynamicText->at(0).commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
-                    .name = dynamicText->at(0).content
-                };
-
-                // attempt fallback if we couldn't find ID
-                if (result.id.isEmpty())
-                    result.id = metadata.image.rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
-
-                return result;
+                if (const auto* avatar = std::get_if<DecoratedAvatarViewModel>(&metadata.image))
+                {
+                    return BasicChannel {
+                        .icon = avatar->avatar.image,
+                        .id = avatar->rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
+                        .name = dynamicText->at(0).content
+                    };
+                }
+                else if (const auto* stack = std::get_if<AvatarStackViewModel>(&metadata.image))
+                {
+                    return BasicChannel {
+                        .icon = stack->avatars[0].image,
+                        .id = stack->rendererContext["commandContext"]["onTap"]["innertubeCommand"]
+                            ["showDialogCommand"]["panelLoadingStrategy"]["inlineContent"]
+                            ["dialogViewModel"]["customContent"]["listViewModel"]["listItems"]
+                            [0]["listItemViewModel"]["rendererContext"]["commandContext"]
+                            ["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
+                        .name = dynamicText->at(0).content
+                    };
+                }
+                else if (dynamicText->at(0).commandRuns.isArray())
+                {
+                    return BasicChannel {
+                        .id = dynamicText->at(0).commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
+                        .name = dynamicText->at(0).content
+                    };
+                }
             }
         }
 
