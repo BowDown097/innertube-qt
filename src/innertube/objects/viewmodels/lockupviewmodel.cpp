@@ -58,9 +58,13 @@ namespace InnertubeObjects
             {
                 if (const auto* avatar = std::get_if<DecoratedAvatarViewModel>(&metadata.image))
                 {
+                    QString channelId = dynamicText->at(0).commandRuns[0]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
+                    if (channelId.isEmpty())
+                        channelId = avatar->rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString();
+
                     return BasicChannel {
                         .icon = avatar->avatar.image,
-                        .id = avatar->rendererContext["commandContext"]["onTap"]["innertubeCommand"]["browseEndpoint"]["browseId"].toString(),
+                        .id = channelId,
                         .name = dynamicText->at(0).content
                     };
                 }
